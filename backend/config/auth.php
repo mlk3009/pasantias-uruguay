@@ -99,6 +99,12 @@ return [
         ],
     ],
 
+    'features' => [
+        'registration' => env('AUTH_FEATURE_REGISTRATION', true),
+        'reset_passwords' => env('AUTH_FEATURE_RESET_PASSWORDS', true),
+        'email_verification' => env('AUTH_FEATURE_EMAIL_VERIFICATION', true),
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Password Confirmation Timeout

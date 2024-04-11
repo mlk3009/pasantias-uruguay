@@ -9,10 +9,21 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Http\Controllers\Api\PHPMailerController;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\URL;
+
 
 
 class UserController extends Controller
 {
+    
+    protected $mailer;
+
+    public function __construct(PHPMailerController $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
 
     public function loginUser(Request $request)
     {
@@ -30,6 +41,11 @@ class UserController extends Controller
 
         if (Auth::attempt(['email' => $jsonData['email'], 'password' => $jsonData['password']])) {
             $user = Auth::user();
+            
+            // Verificar si el correo electrónico del usuario ha sido verificado
+            if ($user->email_verified_at === null) {
+            return Response(['message' => 'Email not verified'], 401);
+            }
             $success = $user->createToken('MyApp')->plainTextToken;
             return Response(['token' => $success], 200);
         }
@@ -91,6 +107,25 @@ class UserController extends Controller
                 'email' => $jsonData['email'],
                 'password' => bcrypt($jsonData['password'])
             ]);
+            
+
+             // Generar el enlace de verificación
+            $url = URL::temporarySignedRoute(
+            'verification.verify',
+            now()->addMinutes(60),
+            ['id' => $user->id, 'hash' => sha1($user->email)]
+            );
+
+            // Enviar correo electrónico de verificación
+            $email = $jsonData['email'];
+            $subject = 'Verificación de correo electrónico';
+            $body = 'Por favor, haz clic en el enlace para verificar tu correo electrónico: ' . $url;
+            $this->mailer->sendEmail($email, $subject, $body);
+            
+            
+            event(new Registered($user));
+
+
             $data = [
                 'status' => 'success',
                 'message' => 'User created successfully',
