@@ -41,26 +41,30 @@ export class LoginComponent {
     }
   }
 
-  login(form: any) {
-    this.loading = true;
+login(form: any) {
+  this.loading = true;
 
-    this._userService.login(this.user).subscribe(
-      response => {
-        this.loading = false;
-        this._cookieService.set('token', response.token);
-        this._router.navigate(['/inicio']);
-      },
-      error => {
-        this.loading = false;
-        if (error.status == 400 || error.status == 401 || error.status == 404 || error.status == 500) {
+  this._userService.login(this.user).subscribe(
+    response => {
+      this.loading = false;
+      this._cookieService.set('token', response.token);
+      this._router.navigate(['/inicio']);
+    },
+    error => {
+      this.loading = false;
+      if (error.status == 400 || error.status == 401 || error.status == 404 || error.status == 500) {
+        if (error.error.message === 'Email not verified') {
+          this.showError = true;
+          this.status = 'Esta cuenta necesita verificarse primero';
+        } else {
           this.showError = true;
           this.status = 'Usuario o contraseña incorrectos';
-        } else if (error.status == 0) {
-          this.showError = true;
-          this.status = 'Error de conexión';
         }
+      } else if (error.status == 0) {
+        this.showError = true;
+        this.status = 'Error de conexión';
       }
-    );
-  }
+    }
+  );
 }
-
+}
