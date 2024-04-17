@@ -120,8 +120,10 @@ class UserController extends Controller
             $email = $jsonData['email'];
             $subject = 'Verificación de correo electrónico';
             $body = 'Por favor, haz clic en el enlace para verificar tu correo electrónico: ' . $url;
+
+            ob_start(); // Iniciar el búfer de salida
             $this->mailer->sendEmail($email, $subject, $body);
-            
+            $smtpLog = ob_get_clean(); // Capturar y limpiar la salida del búfer
             
             event(new Registered($user));
 
@@ -130,6 +132,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'message' => 'User created successfully',
                 'data' => $user,
+                'smtpLog' => $smtpLog, // Incluir el registro SMTP en la respuesta
                 'code' => 201
             ];
         }
