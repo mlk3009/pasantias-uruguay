@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Email;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
@@ -45,4 +46,15 @@ class User extends Authenticatable implements MustVerifyEmail
             'password' => 'hashed',
         ];
     }
+
+
+    protected static function booted()
+    {
+        static::updated(function ($user) {
+            if ($user->isDirty('email_verified_at') && $user->email_verified_at !== null) {
+                Email::where('email', $user->email)->delete();
+            }
+        });
+    }
+
 }
