@@ -70,16 +70,11 @@ export class RegisterComponent {
     this.loading = true;
 
     this._userService.register(this.user).subscribe(
-      response => {
-        this._userService.login(this.user).subscribe(
-          response => {
-            this.loading = false;
-            this._cookieService.set('token', response.token);
-            this._router.navigate(['/inicio']);
-          },
-        );
+      (response) => {
+        this.loading = false;
+        this._router.navigate(['/login']);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.showError = true;
 

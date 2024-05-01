@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, ViewportScroller  } from '@angular/common';
 import { Router, RouterOutlet, RouterModule } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { CookieService } from 'ngx-cookie-service';
+import { HostListener } from '@angular/core';
 
 import { UserService } from '../../../services/user.service';
 
@@ -12,7 +13,7 @@ import { UserService } from '../../../services/user.service';
   imports: [
     CommonModule,
     RouterOutlet,
-    RouterModule
+    RouterModule,
   ],
   templateUrl: './nav.component.html',
   styleUrl: './nav.component.css'
@@ -25,8 +26,10 @@ export class NavComponent {
   public register: boolean = false;
 
   public emprise = false;
+  public scroll_var = true;
 
   constructor(
+    private viewportScroller: ViewportScroller,
     private _userService: UserService,
     private _cookieService: CookieService
   ) {
@@ -56,5 +59,33 @@ export class NavComponent {
   logout() {
     this._cookieService.delete('token');
     this.register = false;
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event: Event): void {
+    const scrollPosition = this.viewportScroller.getScrollPosition();
+    console.log(scrollPosition[1])
+    // De cide qué opción del menú debería estar activa
+    if (scrollPosition[1] == 0) {
+      this.scroll_var = true;
+      console.log(scrollPosition[1])
+    }
+    else { this.scroll_var = false;
+      console.log(scrollPosition[1])
+    }
+  }
+
+  @HostListener('window:scroll', ['$event'])
+  onScroll2(event: Event): void {
+    const scrollPosition = this.viewportScroller.getScrollPosition();
+    console.log(scrollPosition[1])
+    // De cide qué opción del menú debería estar activa
+    if (scrollPosition[1] == 0) {
+      this.scroll_var = true;
+      console.log(scrollPosition[1])
+    }
+    else { this.scroll_var = false;
+      console.log(scrollPosition[1])
+    }
   }
 }

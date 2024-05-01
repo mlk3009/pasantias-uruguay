@@ -1,0 +1,23 @@
+body{
+    height: 100vh;
+    background-image: url(../../../assets/img/principalimage_edit2.jpg);
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.pbAllow{
+    background-color: #3fa2a2;
+} 
+.pbAllow:hover{
+    background-color: #15c3c3;
+}
+.principalButton{
+    background-color: rgb(203, 203, 203);
+}
+.principalButton:hover{
+    background-color: rgb(203, 203, 203);
+}
+.span1{
+    color: white;
+}
