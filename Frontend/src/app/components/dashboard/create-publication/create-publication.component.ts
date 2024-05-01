@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Publication } from '../../models/publication';
-import { Requeriments } from '../../models/publication';
+import { Publication } from '../../../models/publication';
+import { Requeriments } from '../../../models/publication';
 import { Router } from '@angular/router';
-import { PublicationService } from '../../services/publication.service';
+import { PublicationService } from '../../../services/publication.service';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { initFlowbite } from 'flowbite';
 @Component({
   selector: 'app-create-publication',
   standalone: true,
@@ -26,6 +27,7 @@ export class CreatePublicationComponent {
   ) {}
 
   ngOninit() {
+    initFlowbite();
     if (!this.token) {
       this._router.navigate(['/login']);
     }
