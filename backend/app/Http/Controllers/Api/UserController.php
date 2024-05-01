@@ -123,13 +123,13 @@ class UserController extends Controller
     public function store(Request $request)
     {
         $jsonData = $request->json()->all();
-
+    
         $validator = Validator::make($jsonData, [
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required'
         ]);
-
+    
         if ($validator->fails()) {
             $data = [
                 'status' => 'error',
@@ -143,34 +143,30 @@ class UserController extends Controller
                 'email' => $jsonData['email'],
                 'password' => bcrypt($jsonData['password'])
             ]);
-
-
-
+    
             // Generar el código de verificación
             $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             $codeLength = 6;
             $code = '';
-
+    
             for ($i = 0; $i < $codeLength; $i++) {
                 $code .= $characters[random_int(0, strlen($characters) - 1)];
             }
-
-
-
+    
             // Guardar el código en la base de datos
             $email = Email::create([
-                'email' => $request->input('email'),
-                'code' => $code
-            ]);
-
-
-
+            'email' => $jsonData['email'],
+            'code' => $code
+        ]);
+    
             // Enviar correo electrónico de verificación
             $subject = 'Verificación de correo electrónico';
             $body = 'El código para verificar tu correo electrónico es: ' . $code;
-
+    
+            ob_start(); 
+    
             $phpMailer = new PHPMailerController();
-
+    
             if ($phpMailer->sendEmail($jsonData['email'], $subject, $body) == false) {
                 $data = [
                     'status' => 'error',
@@ -179,8 +175,8 @@ class UserController extends Controller
                 ];
                 return response()->json($data, $data['code']);
             } else {
-                $smtpLog = ob_get_clean();
-
+                $smtpLog = ob_get_clean(); 
+    
                 $data = [
                     'status' => 'success',
                     'message' => 'User created successfully',
@@ -190,7 +186,7 @@ class UserController extends Controller
                 ];
             }
         }
-
+    
         return response()->json($data, $data['code']);
     }
 

@@ -35,8 +35,8 @@
                     <div>
                         <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Su
                             nombre y apellido</label>
-                        <input type="text" name="name" id="name" [(ngModel)]="user.name" #name="ngModel"
-                            pattern="[a-zA-Z]+(\s[a-zA-Z]+)+(\s[a-zA-Z]+)*"
+                            <input type="text" name="name" id="name" [(ngModel)]="user.name" #name="ngModel"
+                            pattern="[a-zA-ZáéíóúÁÉÍÓÚ]+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)*"
                             class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="nombre y apellido" required="">
                         <small *ngIf="name.invalid && name.touched" class="text-red-500">
