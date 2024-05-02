@@ -1,0 +1,34 @@
+body{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.049);
+    background-color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    margin-bottom: 5vh;
+}
+.section{
+    width: 80%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 20vh;
+    background-color: white;
+}
+.text{
+    color: rgb(1, 6, 16);
+    margin-top: 2vh;
+    margin-bottom: 5vh;
+}
+.title{
+    width: 80%;
+}
+.button1{
+    width: 35%;
+    margin-top: -5vh;
+    background-color: #008fa8;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.button1:hover{
+    background-color: #15c3c3;
+}

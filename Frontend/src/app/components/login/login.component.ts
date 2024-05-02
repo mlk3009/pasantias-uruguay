@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user.service';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
-import { SpinnerModule } from '../spinner/spinner.module';
+
 
 import { routes } from '../../app.routes';
 
@@ -14,7 +14,7 @@ import { CookieService } from 'ngx-cookie-service';
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule, HttpClientModule, SpinnerModule],
+  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule, HttpClientModule],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
   providers: [UserService]

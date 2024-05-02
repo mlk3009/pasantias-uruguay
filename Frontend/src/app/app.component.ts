@@ -10,8 +10,6 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { RestoreComponent } from './components/restore/restore.component';
-
-import { SpinnerModule } from './components/spinner/spinner.module';
 import { UserService } from './services/user.service';
 
 @Component({
@@ -24,8 +22,8 @@ import { UserService } from './services/user.service';
     RegisterComponent,
     HomeComponent,
     HttpClientModule,
-    RestoreComponent,
-    SpinnerModule],
+    RestoreComponent
+    ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers: [UserService]

@@ -108,7 +108,7 @@ class ApplicationBuilder
     }
 
     /**
-     * Register the braodcasting services for the application.
+     * Register the broadcasting services for the application.
      *
      * @param  string  $channels
      * @param  array  $attributes
@@ -289,7 +289,7 @@ class ApplicationBuilder
     /**
      * Register the scheduled tasks for the application.
      *
-     * @param  callable(Schedule $schedule): void  $callback
+     * @param  callable(\Illuminate\Console\Scheduling\Schedule $schedule): void  $callback
      * @return $this
      */
     public function withSchedule(callable $callback)

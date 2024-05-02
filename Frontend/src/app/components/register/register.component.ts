@@ -9,7 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { routes } from '../../app.routes';
 import { CookieService } from 'ngx-cookie-service';
 
-import { SpinnerModule } from '../spinner/spinner.module';
+
 
 @Component({
   selector: 'app-register',
@@ -19,8 +19,7 @@ import { SpinnerModule } from '../spinner/spinner.module';
     FormsModule,
     CommonModule,
     RouterModule,
-    HttpClientModule,
-    SpinnerModule
+    HttpClientModule
   ],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
@@ -66,18 +65,18 @@ export class RegisterComponent {
   register(form: any) {
     this.user.name = this.capitalize(this.user.name);
     this.user.email = this.user.email.toLowerCase();
-  
+
     this.loading = true;
-  
+
     this._userService.register(this.user).subscribe(
-      response => {
+      (response) => {
         this.loading = false;
         this._router.navigate(['/login']);
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.showError = true;
-  
+
         if (error.status == 400 || error.status == 401 || error.status == 404 || error.status == 500) {
           this.status = 'Error al registrar usuario';
         } else if (error.status == 422) {
