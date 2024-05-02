@@ -1,22 +1,19 @@
-body{
-    background-image: url(../../../assets/img/principalimage_edit2.jpg);
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+section {
+  background-image: url(../../../assets/img/principalimage_edit2.jpg);
+  background-size: cover;
 }
-.pbAllow{
-    background-color: #3fa2a2;
-} 
-.pbAllow:hover{
-    background-color: #15c3c3;
+.pbAllow {
+  background-color: #3fa2a2;
 }
-.principalButton{
-    background-color: rgb(203, 203, 203);
+.pbAllow:hover {
+  background-color: #15c3c3;
 }
-.principalButton:hover{
-    background-color: rgb(203, 203, 203);
+.principalButton {
+  background-color: rgb(203, 203, 203);
 }
-.span1{
-    color: white;
+.principalButton:hover {
+  background-color: rgb(203, 203, 203);
+}
+.span1 {
+  color: white;
 }
