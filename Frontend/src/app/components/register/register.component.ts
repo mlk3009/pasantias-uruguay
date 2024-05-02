@@ -66,23 +66,18 @@ export class RegisterComponent {
   register(form: any) {
     this.user.name = this.capitalize(this.user.name);
     this.user.email = this.user.email.toLowerCase();
-
+  
     this.loading = true;
-
+  
     this._userService.register(this.user).subscribe(
       response => {
-        this._userService.login(this.user).subscribe(
-          response => {
-            this.loading = false;
-            this._cookieService.set('token', response.token);
-            this._router.navigate(['/inicio']);
-          },
-        );
+        this.loading = false;
+        this._router.navigate(['/login']);
       },
       error => {
         this.loading = false;
         this.showError = true;
-
+  
         if (error.status == 400 || error.status == 401 || error.status == 404 || error.status == 500) {
           this.status = 'Error al registrar usuario';
         } else if (error.status == 422) {

@@ -8,11 +8,56 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use App\Models\Email;
 use App\Http\Controllers\Api\PHPMailerController;
+use Illuminate\Auth\Events\Registered;
+use Illuminate\Support\Facades\URL;
+
 
 
 class UserController extends Controller
 {
+    
+    protected $mailer;
+
+    public function __construct(PHPMailerController $mailer)
+    {
+        $this->mailer = $mailer;
+    }
+
+
+    public function checkEmailCode(Request $request)
+{
+    $request->validate([
+        'email' => 'required|email',
+        'code' => 'required'
+    ]);
+
+    $email = $request->input('email');
+    $code = $request->input('code');
+
+    $Emailuser = Email::where('email', $email)->where('code', $code)->first();
+
+    if ($Emailuser) {
+        $user = User::where('email', $email)->first();
+
+        // Verificar el correo electrónico
+        $user->email_verified_at = now();
+        $user->save();
+
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Code is correct.',
+            'code' => 200
+        ]);
+    } else {
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Code is incorrect.',
+            'code' => 401
+        ]);
+    }
+}
 
     public function loginUser(Request $request)
     {
@@ -30,6 +75,11 @@ class UserController extends Controller
 
         if (Auth::attempt(['email' => $jsonData['email'], 'password' => $jsonData['password']])) {
             $user = Auth::user();
+            
+            // Verificar si el correo electrónico del usuario ha sido verificado
+            if ($user->email_verified_at === null) {
+            return Response(['message' => 'Email not verified'], 401);
+            }
             $success = $user->createToken('MyApp')->plainTextToken;
             return Response(['token' => $success], 200);
         }
@@ -67,17 +117,19 @@ class UserController extends Controller
     {
     }
 
+
+
+
     public function store(Request $request)
     {
-
         $jsonData = $request->json()->all();
-
+    
         $validator = Validator::make($jsonData, [
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required'
         ]);
-
+    
         if ($validator->fails()) {
             $data = [
                 'status' => 'error',
@@ -91,16 +143,55 @@ class UserController extends Controller
                 'email' => $jsonData['email'],
                 'password' => bcrypt($jsonData['password'])
             ]);
-            $data = [
-                'status' => 'success',
-                'message' => 'User created successfully',
-                'data' => $user,
-                'code' => 201
-            ];
+    
+            // Generar el código de verificación
+            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            $codeLength = 6;
+            $code = '';
+    
+            for ($i = 0; $i < $codeLength; $i++) {
+                $code .= $characters[random_int(0, strlen($characters) - 1)];
+            }
+    
+            // Guardar el código en la base de datos
+            $email = Email::create([
+            'email' => $jsonData['email'],
+            'code' => $code
+        ]);
+    
+            // Enviar correo electrónico de verificación
+            $subject = 'Verificación de correo electrónico';
+            $body = 'El código para verificar tu correo electrónico es: ' . $code;
+    
+            ob_start(); 
+    
+            $phpMailer = new PHPMailerController();
+    
+            if ($phpMailer->sendEmail($jsonData['email'], $subject, $body) == false) {
+                $data = [
+                    'status' => 'error',
+                    'message' => 'Email not sent',
+                    'code' => 400
+                ];
+                return response()->json($data, $data['code']);
+            } else {
+                $smtpLog = ob_get_clean(); 
+    
+                $data = [
+                    'status' => 'success',
+                    'message' => 'User created successfully',
+                    'data' => $user,
+                    'smtpLog' => $smtpLog,
+                    'code' => 201
+                ];
+            }
         }
-
+    
         return response()->json($data, $data['code']);
     }
+
+
+
 
     public function show()
     {

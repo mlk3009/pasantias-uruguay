@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Email;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasApiTokens;
 
@@ -45,4 +46,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+
+    protected static function booted()
+    {
+        static::updated(function ($user) {
+            if ($user->isDirty('email_verified_at') && $user->email_verified_at !== null) {
+                Email::where('email', $user->email)->delete();
+            }
+        });
+    }
+
 }
