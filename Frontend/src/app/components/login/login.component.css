@@ -13,14 +13,6 @@
 .span1{
     color: white;
 }
-body{
+.section2{
     background-image: url(../../../assets/img/principalimage_edit2.jpg);
-    background-size: cover;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.background1{
-    height: 75vh;
-    width: 50vw;
 }
