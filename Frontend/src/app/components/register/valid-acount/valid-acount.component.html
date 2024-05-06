@@ -1,10 +1,30 @@
-<body class="bg-transparent flex justify-center items-center h-screen backdrop-blur-xl">
-    <section class="bg-white w-3/4 h-3/5 flex flex-col justify-evenly items-center">
-        <div class="c1 flex justify-center items-center flex-col">
-            <a
+<section class="bg-gray-50 dark:bg-gray-900">
+  <div
+    class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0"
+  >
+    <a
+      href="#"
+      class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white"
+    >
+      <img class="w-8 h-8 mr-2" src="../../assets/img/logo.png" alt="logo" />
+      Pasantías Uy
+    </a>
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div
+          class="flex items-center font-bold justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+        >
+          <h1
+            class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
+          >
+            Validar email
+          </h1>
+          <a
             routerLink="/inicio"
             type="button"
-            class="mb-3 lg:ml-end-2.5 text-gray-400 bg-transparent hover:cursor-pointer hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            class="mb-3 lg:ml-end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
           >
             <svg
               class="w-3 h-3"
@@ -23,39 +43,45 @@
             </svg>
             <span class="sr-only">Close modal</span>
           </a>
-            
         </div>
-        <h1 class="xd text-2xl font-bold leading-tight tracking-tight pb-6 w-3/5 text-center">Validar cuenta</h1>
-        <p>Enviamos un código al mail que asignaste a la hora del registro</p>
-        <form class="max-w-md mx-auto">
-            <div class="flex mb-2 space-x-2 rtl:space-x-reverse">
-                <div>
-                    <label for="code-1" class="sr-only">First code</label>
-                    <input type="text" maxlength="1" data-focus-input-init data-focus-input-next="code-2" id="code-1" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
-                </div>
-                <div>
-                    <label for="code-2" class="sr-only">Second code</label>
-                    <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-1" data-focus-input-next="code-3" id="code-2" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
-                </div>
-                <div>
-                    <label for="code-3" class="sr-only">Third code</label>
-                    <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-2" data-focus-input-next="code-4" id="code-3" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
-                </div>
-                <div>
-                    <label for="code-4" class="sr-only">Fourth code</label>
-                    <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-3" data-focus-input-next="code-5" id="code-4" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
-                </div>
-                <div>
-                    <label for="code-5" class="sr-only">Fifth code</label>
-                    <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-4" data-focus-input-next="code-6" id="code-5" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
-                </div>
-                <div>
-                    <label for="code-6" class="sr-only">Sixth code</label>
-                    <input type="text" maxlength="1" data-focus-input-init data-focus-input-prev="code-5" id="code-6" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
-                </div>
-            </div>
+        <form class="space-y-4 md:space-y-6" #loginForm="ngForm">
+          @if(showError){
+          <small class="text-red-500">
+            {{ status }}
+          </small>
+          }
+          <div>
+            <label
+              for="code"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Código de verificación</label
+            >
+            <input
+              type="text"
+              name="code"
+              id="code"
+              [ngModel]="code"
+              (ngModelChange)="chargeCode($event)"
+              #pwdCode="ngModel"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="123456"
+              required=""
+            />
+          </div>
+
+          <button
+            (click)="changePassword()"
+            [disabled]="!loginForm.valid || loading"
+            [ngClass]="{
+              'bg-gray-300 hover:bg-gray-300 cursor-not-allowed':
+                !loginForm.valid || loading
+            }"
+            class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            Validar
+          </button>
         </form>
-        <p id="helper-text-explanation" class="mt-2 text-sm text-gray-500 dark:text-gray-400">Por favor introduce el código de 6 dígitos que enviámos a tu mail.</p>
-        <button type="button" class="shadow-lg text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Validar</button>
-    </section>
-</body>
+      </div>
+    </div>
+  </div>
+</section>
