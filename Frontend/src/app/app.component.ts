@@ -11,6 +11,7 @@ import { RegisterComponent } from './components/register/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { RestoreComponent } from './components/restore/restore.component';
 import { UserService } from './services/user.service';
+import { ValidAcountComponent } from './components/register/valid-acount/valid-acount.component';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ import { UserService } from './services/user.service';
     RegisterComponent,
     HomeComponent,
     HttpClientModule,
-    RestoreComponent
+    RestoreComponent,
+    ValidAcountComponent
     ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

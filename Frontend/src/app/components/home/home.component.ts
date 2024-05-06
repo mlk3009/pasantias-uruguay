@@ -8,13 +8,14 @@ import { OfertasComponent} from './ofertas/ofertas.component';
 import { FooterComponent} from './footer/footer.component';
 import { PublicacionesComponent} from './publicaciones/publicaciones.component';
 import { ContactComponent } from './contact/contact.component';
+import { ValidAcountComponent } from '../register/valid-acount/valid-acount.component';
 
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent],
+  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent, ValidAcountComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
