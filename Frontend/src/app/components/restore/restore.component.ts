@@ -7,12 +7,18 @@ import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 
 @Component({
-  selector: 'app-login',
+  selector: 'app-restore',
   standalone: true,
-  imports: [ReactiveFormsModule, FormsModule, CommonModule, RouterModule, HttpClientModule],
+  imports: [
+    ReactiveFormsModule,
+    FormsModule,
+    CommonModule,
+    RouterModule,
+    HttpClientModule,
+  ],
   templateUrl: './restore.component.html',
   styleUrl: './restore.component.css',
-  providers: [UserService]
+  providers: [UserService],
 })
 export class RestoreComponent {
   public user: User;
@@ -21,19 +27,14 @@ export class RestoreComponent {
   public loading: boolean = false;
   public codeSend: boolean = false;
 
-
   public code = '';
   public password_confirmation = '';
 
   public confirmation: boolean = false;
 
-
   public showError: boolean = false;
 
-  constructor(
-    private _userService: UserService,
-    private router: Router
-  ) {
+  constructor(private _userService: UserService, private router: Router) {
     this.user = new User(0, '', '', '');
   }
 
@@ -49,12 +50,12 @@ export class RestoreComponent {
     this.loading = true;
 
     this._userService.restore(this.user).subscribe(
-      response => {
+      (response) => {
         this.codeSend = true;
         this.loading = false;
         this.showError = false;
       },
-      error => {
+      (error) => {
         this.loading = false;
         this.codeSend = false;
         this.showError = true;
@@ -68,32 +69,33 @@ export class RestoreComponent {
     this.loading = true;
 
     this._userService.checkCode(this.user.email, this.code).subscribe(
-      response => {
-        console.log(response)
+      (response) => {
+        console.log(response);
         if (response.code == 401) {
           this.loading = false;
           this.showError = true;
-          this.status = "Código incorrecto";
+          this.status = 'Código incorrecto';
         } else {
-          this._userService.changePassword(this.user.email, this.user.password).subscribe(
-            response => { 
-              this.status = 'success';
-              this.loading = false;
-              this.router.navigate(['/login']);
-            },
-            error => {
-              this.loading = false;
-              this.status = 'error';
-              console.log(<any>error);
-            }
-          );
+          this._userService
+            .changePassword(this.user.email, this.user.password)
+            .subscribe(
+              (response) => {
+                this.status = 'success';
+                this.loading = false;
+                this.router.navigate(['/login']);
+              },
+              (error) => {
+                this.loading = false;
+                this.status = 'error';
+                console.log(<any>error);
+              }
+            );
         }
       },
-      error => {
+      (error) => {
         this.status = 'error';
         console.log(<any>error);
       }
     );
   }
-
 }
