@@ -5,6 +5,10 @@ import { CommonModule } from '@angular/common';
 import { ValidationService } from '../../../services/validation.service';
 import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { UserService } from '../../../services/user.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatDialogModule } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-valid-acount',
@@ -15,9 +19,10 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     RouterModule,
     HttpClientModule,
+    MatDialogModule,
   ],
   templateUrl: './valid-acount.component.html',
-  providers: [ValidationService],
+  providers: [ValidationService, UserService, CookieService],
 })
 export class ValidAcountComponent {
   public user: User;
@@ -34,7 +39,11 @@ export class ValidAcountComponent {
 
   constructor(
     private _validateService: ValidationService,
-    private router: Router
+    private router: Router,
+    private _cookieService: CookieService,
+    private _userService: UserService,
+    private _router: Router,
+    private dialog: MatDialog
   ) {
     this.user = new User(0, '', '', '');
   }
@@ -46,7 +55,14 @@ export class ValidAcountComponent {
   changePassword() {
     this.loading = true;
 
-    this._validateService.validateEmail(this.user.email, this.code).subscribe(
+    let email = localStorage.getItem('email') || '';
+
+    if (email == '') {
+      this.status = 'error';
+      return;
+    }
+
+    this._validateService.validateEmail(email, this.code).subscribe(
       (response) => {
         console.log(response);
         if (response.code == 401) {
@@ -54,7 +70,8 @@ export class ValidAcountComponent {
           this.showError = true;
           this.status = 'Código incorrecto';
         } else {
-          this.router.navigate(['/Inicio']);
+          this.dialog.closeAll();
+          this._router.navigate(['/login']);
         }
       },
       (error) => {

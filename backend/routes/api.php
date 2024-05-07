@@ -14,7 +14,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// USER
+// USER 
 Route::post('login', [UserController::class, 'loginUser']);
 Route::post('register', [UserController::class, 'store']);
 
@@ -34,7 +34,6 @@ Route::put('changePassword', [UserController::class, 'changePassword']);
 // EMAIL VERIFICATION
 // Ruta para verificar el correo electrónico
 Route::post('checkEmailCode', [UserController::class, 'checkEmailCode']);
-
 
 
 Route::get('/publications', [PublicationController::class, 'index']);

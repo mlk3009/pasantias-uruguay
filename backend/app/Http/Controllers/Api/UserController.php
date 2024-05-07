@@ -76,10 +76,6 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $jsonData['email'], 'password' => $jsonData['password']])) {
             $user = Auth::user();
             
-            // Verificar si el correo electrónico del usuario ha sido verificado
-            if ($user->email_verified_at === null) {
-            return Response(['message' => 'Email not verified'], 401);
-            }
             $success = $user->createToken('MyApp')->plainTextToken;
             return Response(['token' => $success], 200);
         }

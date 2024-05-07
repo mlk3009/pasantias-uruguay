@@ -12,13 +12,15 @@ export class ValidationService {
 
   // Validar email
   validateEmail(email: string, code: string): Observable<any> {
-    let params = JSON.stringify({ email, code });
+    let params = { email: email, code: code };
+
+    console.log(params);
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
 
-    return this._http.post(global.url + '/checkEmailCode', params, {
+    return this._http.post(global.url + 'checkEmailCode', params, {
       headers: headers,
     });
   }
