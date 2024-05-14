@@ -76,6 +76,54 @@ class UserController extends Controller
         if (Auth::attempt(['email' => $jsonData['email'], 'password' => $jsonData['password']])) {
             $user = Auth::user();
             
+            // Verificar si el correo electrónico del usuario ha sido verificado
+            if ($user->email_verified_at === null) {
+                
+
+
+            // Generar el código de verificación
+            $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+            $codeLength = 6;
+            $code = '';
+    
+            for ($i = 0; $i < $codeLength; $i++) {
+                $code .= $characters[random_int(0, strlen($characters) - 1)];
+            }
+
+            // Actualizar el código en la base de datos
+            $email = Email::where('email', $jsonData['email'])
+            ->update(['code' => $code]);
+
+
+    
+            // Enviar correo electrónico de verificación
+            $subject = 'Verificación de correo electrónico';
+            $body = 'El nuevo código para verificar tu correo electrónico es: ' . $code;
+    
+            ob_start(); 
+    
+            $phpMailer = new PHPMailerController();
+    
+            if ($phpMailer->sendEmail($jsonData['email'], $subject, $body) == false) {
+                $data = [
+                    'status' => 'error',
+                    'message' => 'Email not sent',
+                    'code' => 400
+                ];
+                return response()->json($data, $data['code']);
+            } else {
+                $smtpLog = ob_get_clean(); 
+    
+                $data = [
+                    'status' => 'success',
+                    'message' => 'User logged in successfully',
+                    'data' => $user,
+                    'smtpLog' => $smtpLog,
+                    'code' => 201
+                ];
+            }
+
+            }
             $success = $user->createToken('MyApp')->plainTextToken;
             return Response(['token' => $success], 200);
         }

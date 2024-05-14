@@ -39,6 +39,11 @@ export class RegisterComponent {
 
   public loading: boolean = false;
 
+  public inputType: string = 'password';
+  public inputType2: string = 'password';
+
+
+
   constructor(
     private _userService: UserService,
     private _router: Router,
@@ -68,6 +73,18 @@ export class RegisterComponent {
     }
   }
 
+
+  showPassword() {
+    return (this.inputType =
+      this.inputType === 'password' ? 'text' : 'password');
+  }
+  showPassword2() {
+    return (this.inputType2 =
+      this.inputType2 === 'password' ? 'text' : 'password');
+  }
+
+
+  
   register(form: any) {
     this.user.name = this.capitalize(this.user.name);
     this.user.email = this.user.email.toLowerCase();

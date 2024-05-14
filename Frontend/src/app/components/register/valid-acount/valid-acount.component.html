@@ -1,9 +1,7 @@
-<div
-  class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700"
->
+
   <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
     <div
-      class="flex items-center font-bold justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600"
+      class="flex items-center font-bold justify-between p-15 md:p-5 border-b rounded-t dark:border-gray-600"
     >
       <h1
         class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
@@ -33,42 +31,37 @@
         <span class="sr-only">Close modal</span>
       </a>
     </div>
-    <form class="space-y-4 md:space-y-6" #loginForm="ngForm">
-      @if(showError){
-      <small class="text-red-500">
-        {{ status }}
-      </small>
-      }
-      <div>
-        <label
-          for="code"
-          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-          >Código de verificación</label
-        >
-        <input
-          type="text"
-          name="code"
-          id="code"
-          [ngModel]="code"
-          (ngModelChange)="chargeCode($event)"
-          #pwdCode="ngModel"
-          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          placeholder="123456"
-          required=""
-        />
+    <form class="max-w-md mx-auto" #loginForm="ngForm">
+      <div class="flex mb-2 space-x-2 rtl:space-x-reverse">
+          <div>
+              <label for="code" class="sr-only">First code</label>
+              <input type="text" name="code" id="code" [ngModel]="code" (ngModelChange)="chargeCode($event)" #pwdCode="ngModel" maxlength="1" data-focus-input-init data-focus-input-next="code-2" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
+          </div>
+          <div>
+              <label for="code" class="sr-only">Second code</label>
+              <input type="text" name="code" id="code" maxlength="1" data-focus-input-init data-focus-input-prev="code-1" data-focus-input-next="code-3"  class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
+          </div>
+          <div>
+              <label for="code" class="sr-only">Third code</label>
+              <input type="text" name="code" id="code" maxlength="1" data-focus-input-init data-focus-input-prev="code-2" data-focus-input-next="code-4"  class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
+          </div>
+          <div>
+              <label for="code" class="sr-only">Fourth code</label>
+              <input type="text" name="code" id="code" maxlength="1" data-focus-input-init data-focus-input-prev="code-3" data-focus-input-next="code-5"  class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
+          </div>
+          <div>
+              <label for="code-5" class="sr-only">Fifth code</label>
+              <input type="text" name="code" id="code" maxlength="1" data-focus-input-init data-focus-input-prev="code-4" data-focus-input-next="code-6" id="code-5" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
+          </div>
+          <div>
+              <label for="code-6" class="sr-only">Sixth code</label>
+              <input type="text" name="code" id="code" maxlength="1" data-focus-input-init data-focus-input-prev="code-5" id="code-6" class="block w-12 h-12 py-3 text-sm font-extrabold text-center text-gray-900 bg-white border border-gray-300 rounded-lg focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" required />
+          </div>
       </div>
-
-      <button
-        (click)="changePassword()"
-        [disabled]="!loginForm.valid || loading"
-        [ngClass]="{
-          'bg-gray-300 hover:bg-gray-300 cursor-not-allowed':
-            !loginForm.valid || loading
-        }"
-        class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-      >
-        Validar
-      </button>
-    </form>
+      
+  </form>
+  <button (click)="changePassword()" [disabled]="!loginForm.valid || loading" [ngClass]="{
+    'bg-gray-300 hover:bg-gray-300 cursor-not-allowed':
+      !loginForm.valid || loading
+  }" type="button" class="shadow-lg text-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Validar</button>
   </div>
-</div>

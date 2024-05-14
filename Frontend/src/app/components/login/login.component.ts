@@ -32,6 +32,8 @@ export class LoginComponent {
 
   public showError: boolean = false;
 
+  public inputType: string = 'password';
+
   constructor(
     private _userService: UserService,
     private _router: Router,
@@ -44,6 +46,11 @@ export class LoginComponent {
     if (this._cookieService.get('token')) {
       this._router.navigate(['/inicio']);
     }
+  }
+
+  showPassword() {
+    return (this.inputType =
+      this.inputType === 'password' ? 'text' : 'password');
   }
 
   login(form: any) {

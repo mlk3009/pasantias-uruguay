@@ -22,6 +22,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule,
   ],
   templateUrl: './valid-acount.component.html',
+  styleUrl: './valid-acount.component.css',
   providers: [ValidationService, UserService, CookieService],
 })
 export class ValidAcountComponent {

@@ -1,3 +1,6 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
 .pbAllow{
     background-color: #3fa2a2;
 } 
@@ -18,4 +21,7 @@
 }
 .section1{
     height: 90%;
+}
+.svg{
+    margin-left: -.150rem;
 }

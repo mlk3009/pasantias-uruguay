@@ -48,3 +48,6 @@ h3{
     justify-content: space-between;
     flex-direction: column;
 }
+.font{
+    font-family: Arial, Helvetica, sans-serif;
+}
