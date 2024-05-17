@@ -32,6 +32,12 @@ export class ValidAcountComponent {
   public loading: boolean = false;
   public codeSend: boolean = true;
 
+  public code1 = '';
+  public code2 = '';
+  public code3 = '';
+  public code4 = '';
+  public code5 = '';
+  public code6 = '';
   public code = '';
 
   public confirmation: boolean = false;
@@ -49,8 +55,8 @@ export class ValidAcountComponent {
     this.user = new User(0, '', '', '');
   }
 
-  chargeCode(newValue: string) {
-    this.code = newValue;
+  concatenateCodes(code1: string, code2: string, code3: string, code4: string, code5: string, code6: string) {
+    this.code = code1 + code2 + code3 + code4 + code5 + code6;
   }
 
   changePassword() {
