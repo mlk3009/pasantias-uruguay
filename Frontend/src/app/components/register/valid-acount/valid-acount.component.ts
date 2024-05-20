@@ -59,6 +59,39 @@ export class ValidAcountComponent {
     this.code = code1 + code2 + code3 + code4 + code5 + code6;
   }
 
+
+onPaste(event: ClipboardEvent, index: number) {
+  // Prevenir el comportamiento de pegado predeterminado
+  event.preventDefault();
+
+  // Comprobar que event.clipboardData no es nulo
+  if (event.clipboardData) {
+    // Obtener el texto pegado
+    let pastedText = event.clipboardData.getData('text');
+
+    // Si el texto pegado tiene más de 6 caracteres, recórtalo
+    if (pastedText.length > 6) {
+      pastedText = pastedText.substring(0, 6);
+    }
+
+    // Dividir el texto pegado en caracteres
+    const characters = pastedText.split('');
+
+    // Distribuir los caracteres entre los campos de entrada
+    if (characters.length > 0) this.code1 = characters[0];
+    if (characters.length > 1) this.code2 = characters[1];
+    if (characters.length > 2) this.code3 = characters[2];
+    if (characters.length > 3) this.code4 = characters[3];
+    if (characters.length > 4) this.code5 = characters[4];
+    if (characters.length > 5) this.code6 = characters[5];
+
+    // Llamar a la función concatenateCodes para actualizar el código completo
+    this.concatenateCodes(this.code1, this.code2, this.code3, this.code4, this.code5, this.code6);
+  }
+}
+
+
+
   changePassword() {
     this.loading = true;
 
