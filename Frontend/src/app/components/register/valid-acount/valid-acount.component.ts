@@ -111,13 +111,20 @@ onPaste(event: ClipboardEvent, index: number) {
           this.status = 'Código incorrecto';
         } else {
           this.dialog.closeAll();
-          this._router.navigate(['/login']);
+          
+          // Con este codigo agarro la URL actual
+          const currentUrl = this._router.createUrlTree([], {relativeTo: this._router.routerState.root}).toString();
+          if (currentUrl === '/login') {
+            this._router.navigate(['/inicio']);
+          } else {
+            this._router.navigate(['/login']);
+          }
         }
       },
       (error) => {
         this.status = 'error';
         console.log(<any>error);
       }
+    
     );
-  }
-}
+} }
