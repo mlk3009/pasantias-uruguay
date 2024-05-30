@@ -39,6 +39,13 @@ export const routes: Routes = [
         (m) => m.DashboardComponent
       ),
   },
+  {
+    path: 'publications',
+    loadComponent: () =>
+      import('./components/publications/publications.component').then(
+        (m) => m.PublicationsComponent
+      ),
+  },
   // Dejar '**' siempre al final
   {
     path: '**',

@@ -13,7 +13,7 @@ export class PublicationService {
   // Obtener publicaciones
   getPublications(): Observable<any> {
     const headers = new HttpHeaders({});
-    return this._http.get(global.url + '/publications', { headers: headers });
+    return this._http.get(global.url + 'publications', { headers: headers });
   }
 
   // Cargar publicaciones

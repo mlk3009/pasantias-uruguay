@@ -40,6 +40,12 @@ trait ConfiguresPrompts
             $prompt->validate
         ));
 
+        TextareaPrompt::fallbackUsing(fn (TextareaPrompt $prompt) => $this->promptUntilValid(
+            fn () => $this->components->ask($prompt->label, $prompt->default ?: null, multiline: true) ?? '',
+            $prompt->required,
+            $prompt->validate
+        ));
+
         PasswordPrompt::fallbackUsing(fn (PasswordPrompt $prompt) => $this->promptUntilValid(
             fn () => $this->components->secret($prompt->label) ?? '',
             $prompt->required,
