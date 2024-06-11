@@ -1,0 +1,27 @@
+*{
+    font-family: Arial, Helvetica, sans-serif;
+}
+.pbAllow{
+    background-color: #3fa2a2;
+} 
+.pbAllow:hover{
+    background-color: #15c3c3;
+}
+.principalButton{
+    background-color: rgb(203, 203, 203);
+}
+.principalButton:hover{
+    background-color: rgb(203, 203, 203);
+}
+.span1{
+    color: white;
+}
+.section2{
+    background-image: url(../../../assets/img/principalimage_edit2.jpg);
+}
+.section1{
+    height: 90%;
+}
+.svg{
+    margin-left: -.150rem;
+}
