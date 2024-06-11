@@ -26,6 +26,7 @@ phpmyadmin: `localhost:7000`
 
 ## INICIAR DOCKER
 
+`cp .env.example .env`
 Si necesitas iniciar nuevamente los contenedores de Docker, puedes usar el comando que usaste al principio:
 
 `docker-compose up -d`
