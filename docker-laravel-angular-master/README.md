@@ -26,7 +26,6 @@ phpmyadmin: `localhost:7000`
 
 ## INICIAR DOCKER
 
-`cp .env.example .env`
 Si necesitas iniciar nuevamente los contenedores de Docker, puedes usar el comando que usaste al principio:
 
 `docker-compose up -d`
@@ -37,7 +36,7 @@ Luego de eso hay que usar el comando:
 
 `docker exec -t -i PasantiasUY_backend /bin/bash`
 
-Este paso solo se hace en caso de que no se levante la pagina o el phpmyadmin, dentro de la maquina del backend, hay que usar:
+Dentro de la maquina del backend, hay que usar:
 
 `composer update`
 
