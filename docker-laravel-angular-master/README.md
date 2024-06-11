@@ -37,7 +37,7 @@ Luego de eso hay que usar el comando:
 
 `docker exec -t -i PasantiasUY_backend /bin/bash`
 
-Dentro de la maquina del backend, hay que usar:
+Este paso solo se hace en caso de que no se levante la pagina o el phpmyadmin, dentro de la maquina del backend, hay que usar:
 
 `composer update`
 
