@@ -1,0 +1,91 @@
+<nav [ngClass]="scroll_var?'':'down'" 
+class="bg-white border-gray-200 dark:bg-gray-900 nav001">
+    <div class="flex flex-wrap items-center justify-around max-w-screen-xl mx-auto p-4">
+        <a routerLink="/inicio" class="logotext flex items-center space-x-3 rtl:space-x-reverse">
+            <img src="../../../../assets/img/logo_ 3.png" class="h-10" alt="xexperience" />
+            <span class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white">Pasantías UY</span>
+        </a>
+        <div class="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
+
+            <div *ngIf="register == true">
+                <div class="relative">
+                    <div>
+                        <button (click)="changeDropdown()"
+                            class="flex font-medium items-center justify-between w-full py-2 px-3 text-withe rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
+                            {{ username.split(' ')[0] }}
+                            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                                fill="none" viewBox="0 0 10 6">
+                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
+                                    stroke-width="2" d="m1 1 4 4 4-4" />
+                            </svg></button>
+                    </div>
+                    <div class="absolute">
+                        <div id="dropdownNavbar" *ngIf="dropdown"
+                            class="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
+                            <ul class="md:py-2 text-sm text-gray-700 dark:text-gray-400 "
+                                aria-labelledby="dropdownLargeButton">
+                                <li>
+                                    <a routerLink="/dashboard"
+                                        class="hover:cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
+
+                                    <a routerLink="/ficha"
+                                        class="hover:cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Ficha
+                                        <svg class="w-8 inline pb-2" viewBox="0 0 24 24" fill="none"
+                                            xmlns="http://www.w3.org/2000/svg">
+                                            <circle cx="12" cy="12" r="2" fill="#FF0000" />
+                                        </svg>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a data-modal-target="edit" data-modal-toggle="edit"
+                                        class="hover:cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Ajustes</a>
+                                </li>
+                            </ul>
+                            <div class="py-1">
+                                <a (click)="logout()"
+                                    class="hover:cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Cerrar
+                                    sesión</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="register == false">
+                <a routerLink="/login"
+                    class=" iniciosesion text-white-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Iniciar
+                    sesión</a>
+                <a routerLink="/register"
+                    class=" registro text-white bg-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Registrarme</a>
+            </div>
+
+            <button data-collapse-toggle="mega-menu" type="button"
+                class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-gray-500 rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
+                aria-controls="mega-menu" aria-expanded="false">
+                <span class="sr-only">Open main menu</span>
+                <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
+                    viewBox="0 0 17 14">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M1 1h15M1 7h15M1 13h15" />
+                </svg>
+            </button>
+        </div>
+        <div id="mega-menu" class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1">
+            <ul class="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse">
+                <li>
+                    <a routerLink="/inicio"
+                        class=" inicio block py-2 px-3 text-blue-600 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-blue-500 md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+                        aria-current="page">Inicio</a>
+                </li>
+                <li>
+                    <a routerLink="/nosotros"
+                        class="resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Contacto</a>
+                </li>
+                <li>
+                    <a routerLink="/contacto"
+                        class="resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700">Nosotros</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
