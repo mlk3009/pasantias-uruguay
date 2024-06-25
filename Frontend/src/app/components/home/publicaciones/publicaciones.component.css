@@ -1,0 +1,24 @@
+.principal{
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: 82%;
+    margin: 0 auto;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.049);
+}
+.h1{
+    font-size: 1.8em;
+}
+.button1{
+    background-color: #008fa8;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.button1:hover{
+    background-color: #15c3c3;
+}
+.opciones{
+    margin-top: 5vh;
+}
+.opciones p{
+    width: 100%;
+    text-align: start;
+}

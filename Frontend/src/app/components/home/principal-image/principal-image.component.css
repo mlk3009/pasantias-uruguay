@@ -1,0 +1,52 @@
+.principalImage{
+    background-image: url(../../../../assets/img/principalimage_edit2.jpg);
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+}
+.principalImage h1{
+    color: white;
+    font-size: 2em;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 18vh;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.searcher{
+    margin-top: 8vh;
+    z-index: 1;
+}
+.button1{
+    background-color: #03051e;
+}
+h2{
+    color: white;
+    font-size: 1.3em;
+    font-weight: 300;
+    text-align: center;
+    margin-top: 8vh;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: .5px;
+    margin-bottom: 5vh;
+}
+h3{
+    /* color: white; */
+    color: #90ecec;
+    font-size: 1.1em;
+    font-weight: 600;
+    text-align: center;
+    padding-top: 6vh;
+    font-family: Arial, Helvetica, sans-serif;
+    letter-spacing: .2px;
+}
+.stats{
+    margin-top: 2vh;
+}
+.lowwave{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+.font{
+    font-family: Arial, Helvetica, sans-serif;
+}
