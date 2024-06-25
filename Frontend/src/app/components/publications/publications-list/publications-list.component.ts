@@ -15,19 +15,32 @@ export class PublicationsListComponent implements AfterViewInit {
   ngAfterViewInit() {
   }
 
-  onArrowLeftClick() {
-    const carousel = document.getElementById('carousel');
-    const cardWidth = document.getElementsByClassName('card')[0]?.clientWidth || 0;
+  
+  onArrowLeftClick(event: MouseEvent) {
+    // Encuentra el contenedor del carousel específico
+    const carouselContainer = (event.target as HTMLElement).closest('.section1');
+    if (!carouselContainer) return;
+  
+    // Selecciona solo el carousel dentro del contenedor específico
+    const carousel = carouselContainer.querySelector('.carousel');
+    const cardWidth = carouselContainer.querySelector('.card')?.clientWidth || 0;
     if (carousel) {
       carousel.scrollLeft -= cardWidth;
     }
   }
-
-  onArrowRightClick() {
-    const carousel = document.getElementById('carousel');
-    const cardWidth = document.getElementsByClassName('card')[0]?.clientWidth || 0;
+  
+  onArrowRightClick(event: MouseEvent) {
+    // Encuentra el contenedor del carousel específico
+    const carouselContainer = (event.target as HTMLElement).closest('.section1');
+    if (!carouselContainer) return;
+  
+    // Selecciona solo el carousel dentro del contenedor específico
+    const carousel = carouselContainer.querySelector('.carousel');
+    const cardWidth = carouselContainer.querySelector('.card')?.clientWidth || 0;
     if (carousel) {
       carousel.scrollLeft += cardWidth;
     }
   }
+
+
 }
