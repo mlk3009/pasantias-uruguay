@@ -171,7 +171,9 @@ class UserController extends Controller
         $validator = Validator::make($jsonData, [
             'name' => 'required',
             'email' => 'required|email|unique:users',
-            'password' => 'required'
+            'password' => 'required',
+            'location' => 'required|string|in:Artigas,Canelones,Cerro Largo,Colonia,
+            Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres'
         ]);
     
         if ($validator->fails()) {
@@ -185,7 +187,8 @@ class UserController extends Controller
             $user = User::create([
                 'name' => $jsonData['name'],
                 'email' => $jsonData['email'],
-                'password' => bcrypt($jsonData['password'])
+                'password' => bcrypt($jsonData['password']),
+                'location' => $jsonData['location']
             ]);
     
             // Generar el código de verificación

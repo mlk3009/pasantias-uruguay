@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -17,8 +14,26 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->string('remember_token', 100)->nullable();
+            $table->enum('rol', ['administrador', 'estudiante', 'empresa']);
             $table->timestamps();
+        });
+
+        Schema::create('administrador', function (Blueprint $table) {
+            $table->string('ci_admin', 8);
+            $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->primary('id');
+        });
+
+        Schema::create('empresa', function (Blueprint $table) {
+            $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->primary('id');
+        });
+
+        Schema::create('estudiante', function (Blueprint $table) {
+            $table->string('ci_estudiante', 8);
+            $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->primary('id');
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
@@ -37,11 +52,11 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
+        Schema::dropIfExists('estudiante');
+        Schema::dropIfExists('empresa');
+        Schema::dropIfExists('administrador');
         Schema::dropIfExists('users');
         Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
