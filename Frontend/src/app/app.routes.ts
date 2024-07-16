@@ -53,10 +53,18 @@ export const routes: Routes = [
         (m) => m.PublicationsInComponent
       ),
   },
+  {
+    path: 'register-p2',
+    loadComponent: () =>
+      import('./components/register-p2/register-p2.component').then(
+        (m) => m.RegisterP2Component
+      ),
+  },
   // Dejar '**' siempre al final
   {
     path: '**',
     redirectTo: 'inicio',
     pathMatch: 'full',
   },
+  
 ];
