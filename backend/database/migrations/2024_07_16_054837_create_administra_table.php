@@ -14,8 +14,8 @@ class CreateAdministraTable extends Migration
     public function up()
     {
         Schema::create('administra', function (Blueprint $table) {
-            $table->unsignedInteger('administrador_id');
-            $table->unsignedInteger('publication_id');
+            $table->unsignedBigInteger('administrador_id'); 
+            $table->unsignedBigInteger('publication_id'); 
             $table->enum('action', ['edicion', 'baja']);
             $table->timestamp('created_at')->useCurrent(); 
 
@@ -30,6 +30,8 @@ class CreateAdministraTable extends Migration
                 ->references('id')
                 ->on('publications')
                 ->onDelete('cascade');
+
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
     }
 

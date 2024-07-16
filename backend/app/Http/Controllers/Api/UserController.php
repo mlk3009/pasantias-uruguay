@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Email;
+use App\Models\Estudiante;
 use App\Http\Controllers\Api\PHPMailerController;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\URL;
@@ -165,31 +166,42 @@ class UserController extends Controller
 
 
     public function store(Request $request)
-    {
-        $jsonData = $request->json()->all();
+{
+    $jsonData = $request->json()->all();
     
-        $validator = Validator::make($jsonData, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required',
-            'location' => 'required|string|in:Artigas,Canelones,Cerro Largo,Colonia,
-            Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres'
+    $validator = Validator::make($jsonData, [
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required',
+        'rol' => 'required|in:administrador,estudiante,empresa',
+        'location' => 'required_if:rol,estudiante|string|in:Artigas,Canelones,Cerro Largo,Colonia,
+        Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
+        'ci_estudiante' => 'required_if:rol,estudiante|string|max:8', // Validación específica para estudiantes
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'status' => 'error',
+            'message' => 'Validation Error',
+            'errors' => $validator->errors(),
+            'code' => 422
+        ];
+    } else {
+        $user = User::create([
+            'name' => $jsonData['name'],
+            'email' => $jsonData['email'],
+            'password' => bcrypt($jsonData['password']),
+            'location' => $jsonData['location'],
+            'rol' => $jsonData['rol']
         ]);
-    
-        if ($validator->fails()) {
-            $data = [
-                'status' => 'error',
-                'message' => 'Validation Error',
-                'errors' => $validator->errors(),
-                'code' => 422
-            ];
-        } else {
-            $user = User::create([
-                'name' => $jsonData['name'],
-                'email' => $jsonData['email'],
-                'password' => bcrypt($jsonData['password']),
-                'location' => $jsonData['location']
+
+        // Crear estudiante si el rol es estudiante
+        if ($jsonData['rol'] === 'estudiante') {
+            Estudiante::create([
+                'ci_estudiante' => $jsonData['ci_estudiante'],
+                'id' => $user->id
             ]);
+        }
     
             // Generar el código de verificación
             $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

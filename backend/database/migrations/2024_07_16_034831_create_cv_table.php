@@ -25,8 +25,9 @@ class CreateCvTable extends Migration
             $table->string('experiencia', 500)->nullable();
             $table->string('carnet_de_conducir', 255)->nullable();
             $table->text('idiomas')->nullable();
-            $table->foreign('estudiante_id')->references('id')->on('estudiantes');
-            $table->timestamps(); // Agrega las columnas created_at y updated_at
+            $table->foreign('estudiante_id')->references('id')->on('estudiante')->onDelete('cascade'); 
+            $table->timestamps(); 
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
     }
 
