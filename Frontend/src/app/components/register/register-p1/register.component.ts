@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { User } from '../../models/user';
+import { User } from '../../../models/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { routes } from '../../app.routes';
+import { routes } from '../../../app.routes';
 import { CookieService } from 'ngx-cookie-service';
 
-import { ValidAcountComponent } from '../register/valid-acount/valid-acount.component';
+import { ValidAcountComponent } from '../valid-acount/valid-acount.component';
 
 @Component({
   selector: 'app-register',
@@ -36,13 +36,10 @@ export class RegisterComponent {
   public confirmPassword: any;
   public status: string = '';
   public showError: boolean = false;
-
   public loading: boolean = false;
-
   public inputType: string = 'password';
   public inputType2: string = 'password';
-
-
+  public location: any;
 
   constructor(
     private _userService: UserService,
@@ -50,7 +47,7 @@ export class RegisterComponent {
     private _cookieService: CookieService,
     private dialog: MatDialog
   ) {
-    this.user = new User(0, '', '', '');
+    this.user = new User(0, '', '', '', '');
   }
 
   capitalize(sentence: string): string {
@@ -73,7 +70,6 @@ export class RegisterComponent {
     }
   }
 
-
   showPassword() {
     return (this.inputType =
       this.inputType === 'password' ? 'text' : 'password');
@@ -83,12 +79,17 @@ export class RegisterComponent {
       this.inputType2 === 'password' ? 'text' : 'password');
   }
 
-
-  
   register(form: any) {
+    if (this.user.password !== this.confirmPassword) {
+      this.status = 'Las contraseñas no coinciden';
+      this.showError = true;
+      return;
+    }
+  
     this.user.name = this.capitalize(this.user.name);
     this.user.email = this.user.email.toLowerCase();
-
+    this.user.location;
+  
     this.loading = true;
 
     this._userService.register(this.user).subscribe(
@@ -101,18 +102,16 @@ export class RegisterComponent {
       (error) => {
         this.loading = false;
         this.showError = true;
-
+  
         if (
           error.status == 400 ||
           error.status == 401 ||
           error.status == 404 ||
           error.status == 500
         ) {
-          this.status = 'Error al registrar usuario';
-        } else if (error.status == 422) {
-          this.status = 'El correo ya está registrado';
-        } else if (error.status == 0) {
-          this.status = 'Error de conexión';
+          this.status = 'Error en el servidor';
+        } else {
+          this.status = 'Error desconocido';
         }
       }
     );

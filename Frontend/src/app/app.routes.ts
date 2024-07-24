@@ -21,7 +21,7 @@ export const routes: Routes = [
   {
     path: 'register',
     loadComponent: () =>
-      import('./components/register/register.component').then(
+      import('./components/register/register-p1/register.component').then(
         (m) => m.RegisterComponent
       ),
   },
@@ -56,7 +56,7 @@ export const routes: Routes = [
   {
     path: 'register-p2',
     loadComponent: () =>
-      import('./components/register-p2/register-p2.component').then(
+      import('./components/register/register-p2/register-p2.component').then(
         (m) => m.RegisterP2Component
       ),
   },

@@ -7,7 +7,7 @@ import { OnInit } from '@angular/core';
 import { initFlowbite } from 'flowbite';
 
 import { LoginComponent } from './components/login/login.component';
-import { RegisterComponent } from './components/register/register.component';
+import { RegisterComponent } from './components/register/register-p1/register.component';
 import { HomeComponent } from './components/home/home.component';
 import { RestoreComponent } from './components/restore/restore.component';
 import { UserService } from './services/user.service';

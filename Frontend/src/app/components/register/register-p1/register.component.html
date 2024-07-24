@@ -107,7 +107,7 @@
               >Su email</label
             >
             <div class="relative mb-6">
-              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
                     <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
                     <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
@@ -127,7 +127,7 @@
               >Contraseña</label
             >
             <div class="relative mb-6">
-              <a (click)="showPassword()" class="cursor-pointer text-gray-500 absolute inset-y-0 start-0 flex items-center ps-3.5">
+              <a (click)="showPassword()" class="cursor-pointer text-gray-500 absolute inset-y-0 start-0 flex items-center ps-2.5">
                       @if(inputType == "text"){
                           <svg class="w-6 h-6 svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path class="w-8 h-8" fill-rule="evenodd" clip-rule="evenodd" d="M12 5C10.3431 5 9 6.34315 9 8V11H16C17.6569 11 19 12.3431 19 14V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V14C5 12.6938 5.83481 11.5825 7 11.1707V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V8.1C17 8.65228 16.5523 9.1 16 9.1C15.4477 9.1 15 8.65228 15 8.1V8C15 6.34315 13.6569 5 12 5ZM8 13C7.44772 13 7 13.4477 7 14V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V14C17 13.4477 16.5523 13 16 13H8Z" fill="#6B7276"/>
@@ -140,7 +140,7 @@
                       }
 
               </a>
-            <input [disabled]="loading" [type]="inputType" name="password" id="password" placeholder="••••••••" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+            <input [disabled]="loading" [type]="inputType" name="password" id="password" placeholder="••••••••••••" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
               [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" #pwd="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
             </div>
 
@@ -159,7 +159,7 @@
               >Confirmar contraseña</label
             >
             <div class="relative mb-6">
-              <a (click)="showPassword2()" class="cursor-pointer text-gray-500 absolute inset-y-0 start-0 flex items-center ps-3.5">
+              <a (click)="showPassword2()" class="cursor-pointer text-gray-500 absolute inset-y-0 start-0 flex items-center ps-2.5">
                       @if(inputType2 == "text"){
                           <svg class="w-6 h-6 svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                               <path class="w-8 h-8" fill-rule="evenodd" clip-rule="evenodd" d="M12 5C10.3431 5 9 6.34315 9 8V11H16C17.6569 11 19 12.3431 19 14V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V14C5 12.6938 5.83481 11.5825 7 11.1707V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V8.1C17 8.65228 16.5523 9.1 16 9.1C15.4477 9.1 15 8.65228 15 8.1V8C15 6.34315 13.6569 5 12 5ZM8 13C7.44772 13 7 13.4477 7 14V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V14C17 13.4477 16.5523 13 16 13H8Z" fill="#6B7276"/>
@@ -172,7 +172,7 @@
                       }
 
               </a>
-            <input [disabled]="loading" [type]="inputType2" name="confirm-password" id="confirm-password" placeholder="••••••••"
+            <input [disabled]="loading" [type]="inputType2" name="confirm-password" id="confirm-password" placeholder="••••••••••••"
               [(ngModel)]="confirmPassword" [ngModelOptions]="{standalone: true}" #confirmPwd="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
           </div>
             @if(pwd.value !== confirmPwd.value && confirmPwd.touched){
@@ -184,7 +184,7 @@
             <label
               for="name"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Puesto de trabajo deseado</label
+              >Puesto de trabajo deseado <span class="text-gray-600">(Opcional)</span></label
             >
             <div class="flex">
               <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
@@ -198,52 +198,64 @@
                   
                   </svg>
               </span>
-              <input type="text" name="name" id="name" [(ngModel)]="user.name" #name="ngModel" pattern="[a-zA-ZáéíóúÁÉÍÓÚ]+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)*" [disabled]="loading" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Puesto de trabajo">
+              <select id="countries" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option style="display: none;" selected>Puesto de trabajo deseado</option>
+                <option class="text-gray-900" value="IN">Informática</option>
+              </select>  
             </div>
-            <small *ngIf="name.invalid && name.touched" class="text-red-500">
-              Apellido
-            </small>
           </div>
 
+          
           <div>
             <label
-              for="name"
+              for="location"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Departamento</label
-            >
+            >Departamento</label>
             <div class="flex">
               <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                 <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-
-                  <g id="SVGRepo_bgCarrier" stroke-width="0"/>
-                  
-                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
-                  
-                  <g id="SVGRepo_iconCarrier">
-                  
                   <path d="M17 10C17 11.7279 15.0424 14.9907 13.577 17.3543C12.8967 18.4514 12.5566 19 12 19C11.4434 19 11.1033 18.4514 10.423 17.3543C8.95763 14.9907 7 11.7279 7 10C7 7.23858 9.23858 5 12 5C14.7614 5 17 7.23858 17 10Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
-                  
                   <path d="M14.5 10C14.5 11.3807 13.3807 12.5 12 12.5C10.6193 12.5 9.5 11.3807 9.5 10C9.5 8.61929 10.6193 7.5 12 7.5C13.3807 7.5 14.5 8.61929 14.5 10Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
-                  
-                  </g>
-                  
-                  </svg>
+                </svg>
               </span>
-              
-              <select id="countries" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option selected>Elije un Departamento</option>
-                <option value="US">Montevideo</option>
-                <option value="CA">Maldonado</option>
-                <option value="FR">Canelones</option>
-                <option value="DE">Artigas</option>
+              <select
+                id="location"
+                name="location"
+                [(ngModel)]="user.location"
+                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required>
+                <option value="" disabled selected style="display: none;">Elije un Departamento</option>
+                <option class="text-gray-900" value="Montevideo">Montevideo</option>
+                <option class="text-gray-900" value="Salto">Salto</option>
+                <option class="text-gray-900" value="Paysandú">Paysandú</option>
+                <option class="text-gray-900" value="Maldonado">Maldonado</option>
+                <option class="text-gray-900" value="Tacuarembó">Tacuarembó</option>
+                <option class="text-gray-900" value="Canelones">Canelones</option>
+                <option class="text-gray-900" value="Cerro Largo">Cerro Largo</option>
+                <option class="text-gray-900" value="Rivera">Rivera</option>
+                <option class="text-gray-900" value="Soriano">Soriano</option>
+                <option class="text-gray-900" value="Colonia">Colonia</option>
+                <option class="text-gray-900" value="Durazno">Durazno</option>
+                <option class="text-gray-900" value="Rocha">Rocha</option>
+                <option class="text-gray-900" value="Florida">Florida</option>
+                <option class="text-gray-900" value="Treinta y Tres">Treinta y Tres</option>
+                <option class="text-gray-900" value="Artigas">Artigas</option>
+                <option class="text-gray-900" value="San José">San José</option>
+                <option class="text-gray-900" value="Flores">Flores</option>
+                <option class="text-gray-900" value="Lavalleja">Lavalleja</option>
+                <option class="text-gray-900" value="Río Negro">Río Negro</option>
+                <option class="text-gray-900" value="San José de Mayo">San José de Mayo</option>
               </select>
             </div>
+
+          
             <small *ngIf="name.invalid && name.touched" class="text-red-500">
               Apellido
             </small>
           </div>
 
-          <button
+          <div class="w-full flex justify-between flex-col items-center">
+            <button
             type="submit"
             [ngClass]="{
               'principalButton bg-gray-300 hover:bg-gray-300 cursor-not-allowed':
@@ -255,7 +267,7 @@
               registerForm.value.password !==
                 registerForm.value['confirm-password']
             "
-            class="pbAllow w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+            class="pbAllow w-3/5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >
             @if(loading){
             <div
@@ -282,17 +294,18 @@
               </div>
             </div>
             }@else {
-            <span>Registrarme</span>
+            <span>Siguiente</span>
             }
           </button>
-          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-3">
             Ya registrado?
             <a
               routerLink="/login"
               class="finalText font-medium text-primary-600 hover:underline dark:text-primary-500"
-              >Iniciar sesión</a
+              >Iniciar sesiÃ³n</a
             >
           </p>
+          </div>
         </form>
       </div>
     </div>

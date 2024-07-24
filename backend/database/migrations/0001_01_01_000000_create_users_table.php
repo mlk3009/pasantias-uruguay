@@ -34,7 +34,9 @@ return new class extends Migration
         });
 
         Schema::create('estudiante', function (Blueprint $table) {
-            $table->string('ci_estudiante', 8);
+           // $table->string('ci_estudiante', 8);
+           // $table->string('fec_nacimiento');
+            //$table->string('cod_postal', 5);
             $table->enum('location', [
                 'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
                 'Maldonado','Montevideo','Paysandu','Río Negro','Rivera','Rocha','Salto','San José',

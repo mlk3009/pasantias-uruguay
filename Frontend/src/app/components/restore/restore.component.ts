@@ -34,7 +34,7 @@ export class RestoreComponent {
     private _userService: UserService,
     private router: Router
   ) {
-    this.user = new User(0, '', '', '');
+    this.user = new User(0, '', '', '', '');
   }
 
   checkPassword(password: string, confirmation: string) {

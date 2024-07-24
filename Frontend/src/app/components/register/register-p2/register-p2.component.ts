@@ -1,18 +1,18 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, RouterOutlet } from '@angular/router';
-import { User } from '../../models/user';
+import { User } from '../../../models/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user.service';
+import { UserService } from '../../../services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { routes } from '../../app.routes';
+import { routes } from '../../../app.routes';
 import { CookieService } from 'ngx-cookie-service';
 
-import { ValidAcountComponent } from '../register/valid-acount/valid-acount.component';
+import { ValidAcountComponent } from '../../register/valid-acount/valid-acount.component';
 
 @Component({
   selector: 'app-register-p2',
@@ -49,7 +49,7 @@ export class RegisterP2Component {
     private _cookieService: CookieService,
     private dialog: MatDialog
   ) {
-    this.user = new User(0, '', '', '');
+    this.user = new User(0, '', '', '', '');
   }
 
   capitalize(sentence: string): string {
@@ -72,15 +72,6 @@ export class RegisterP2Component {
     }
   }
 
-
-  showPassword() {
-    return (this.inputType =
-      this.inputType === 'password' ? 'text' : 'password');
-  }
-  showPassword2() {
-    return (this.inputType2 =
-      this.inputType2 === 'password' ? 'text' : 'password');
-  }
 
 
   
