@@ -13,6 +13,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone', 9);
             $table->string('password');
             $table->string('remember_token', 100)->nullable();
             $table->enum('rol', ['administrador', 'estudiante', 'empresa']);
@@ -34,9 +35,9 @@ return new class extends Migration
         });
 
         Schema::create('estudiante', function (Blueprint $table) {
-           // $table->string('ci_estudiante', 8);
-           // $table->string('fec_nacimiento');
-            //$table->string('cod_postal', 5);
+            $table->string('ci_estudiante', 8);
+            //$table->string('fec_nacimiento');
+            $table->string('cod_postal', 5);
             $table->enum('location', [
                 'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
                 'Maldonado','Montevideo','Paysandu','Río Negro','Rivera','Rocha','Salto','San José',

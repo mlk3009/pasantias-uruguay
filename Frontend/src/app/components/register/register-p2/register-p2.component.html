@@ -61,7 +61,7 @@
           }
           <div>
             <label
-              for="name"
+              for="fec_nac"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Fecha de nacimiento</label
             >
@@ -176,14 +176,14 @@
               >Identificación</label
             >
             <div class="flex">
-              <select id="" style="margin: 5px; width: 50%;" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option style="display: none;" selected>Selecciona que tipo de Identificaión</option>
+            <!-- <select id="" style="margin: 5px; width: 50%;" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option style="display: none;" selected>Selecciona que tipo de Identificaión</option> 
                 <option value="US">Cédula de identidad</option>
-              </select>
-              <input type="text" name="name" style="margin: 5px;" id="name" [(ngModel)]="user.name" #name="ngModel" pattern="[a-zA-ZáéíóúÁÉÍÓÚ]+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)*" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-500 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Identificaión">
+              </select>  -->
+              <input type="text" name="ci_estudiante" style="margin: 5px;" id="documento" [(ngModel)]="user.ci_estudiante" #ci_estudiante="ngModel" pattern="^\d{8}$" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Identificaión" required>
             </div>
-            <small *ngIf="name.invalid && name.touched" class="text-red-500">
-              Identificación requerida
+            <small *ngIf="ci_estudiante.invalid && ci_estudiante.touched" class="text-red-500">
+              Identificación requerida (8 Digitos)
             </small>
           </div>
 
@@ -194,10 +194,10 @@
               >Teléfono</label
             >
             <div class="flex">
-              <input type="text" name="name" id="name" [(ngModel)]="user.name" #name="ngModel" pattern="[a-zA-ZáéíóúÁÉÍÓÚ]+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)*" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Teléfono">
+              <input type="text" name="phone" id="phone" [(ngModel)]="user.phone" #phone="ngModel" pattern="^\d{8,9}$" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Teléfono" required>
             </div>
-            <small *ngIf="name.invalid && name.touched" class="text-red-500">
-              Teléfono requerido
+            <small *ngIf="phone.invalid && phone.touched" class="text-red-500">
+              Teléfono requerido (8 Digitos celular, 9 Digitos fijo)
             </small>
           </div>
 
@@ -231,10 +231,10 @@
               >Código postal</label
             >
             <div class="flex">
-              <input type="text" name="name" id="name" [(ngModel)]="user.name" #name="ngModel" pattern="[a-zA-ZáéíóúÁÉÍÓÚ]+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)*" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe tu código postal">
+              <input type="text" name="cod_postal" id="cod_postal" [(ngModel)]="user.cod_postal" #cod_postal="ngModel" pattern="^\d{5}$" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe tu código postal" required>
             </div>
-            <small *ngIf="name.invalid && name.touched" class="text-red-500">
-              Código postal requerido
+            <small *ngIf="cod_postal.invalid && cod_postal.touched" class="text-red-500">
+              Código postal requerido (5 Digitos)
             </small>
           </div>
           
@@ -247,9 +247,7 @@
                 !registerForm.valid
             }"[disabled]="
               loading ||
-              !registerForm.valid ||
-              registerForm.value.password !==
-                registerForm.value['confirm-password']
+              !registerForm.valid 
             " 
             class="pbAllow w-3/5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
           >

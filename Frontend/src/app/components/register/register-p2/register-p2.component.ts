@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { User } from '../../../models/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -32,14 +32,9 @@ import { ValidAcountComponent } from '../../register/valid-acount/valid-acount.c
 export class RegisterP2Component {
   public user: User;
   public token: any;
-  public confirmPassword: any;
   public status: string = '';
   public showError: boolean = false;
-
   public loading: boolean = false;
-
-  public inputType: string = 'password';
-  public inputType2: string = 'password';
 
 
 
@@ -47,11 +42,28 @@ export class RegisterP2Component {
     private _userService: UserService,
     private _router: Router,
     private _cookieService: CookieService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private route: ActivatedRoute
   ) {
-    this.user = new User(0, '', '', '', '');
+    this.user = new User(0, '', '', '', '','', '','');
+
+    const navigation = this._router.getCurrentNavigation();
+    if (navigation?.extras?.state) {
+      const state = navigation.extras.state as User;
+      this.user = new User(
+        state.id || 0,
+        state.name || '',
+        state.email || '',
+        state.password || '',
+        state.location || '',
+        state.ci_estudiante || '',
+        state.phone || '',
+        state.cod_postal || ''
+      );
+    } 
   }
 
+  
   capitalize(sentence: string): string {
     const words = sentence.split(' ');
 
@@ -76,9 +88,14 @@ export class RegisterP2Component {
 
   
   register(form: any) {
+
+    this.user.password;
     this.user.name = this.capitalize(this.user.name);
     this.user.email = this.user.email.toLowerCase();
-
+    this.user.location;
+    this.user.ci_estudiante;
+    this.user.cod_postal;
+    this.user.phone;
     this.loading = true;
 
     this._userService.register(this.user).subscribe(
@@ -91,18 +108,16 @@ export class RegisterP2Component {
       (error) => {
         this.loading = false;
         this.showError = true;
-
+  
         if (
           error.status == 400 ||
           error.status == 401 ||
           error.status == 404 ||
           error.status == 500
         ) {
-          this.status = 'Error al registrar usuario';
-        } else if (error.status == 422) {
-          this.status = 'El correo ya está registrado';
-        } else if (error.status == 0) {
-          this.status = 'Error de conexión';
+          this.status = 'Error en el servidor';
+        } else {
+          this.status = 'Error desconocido';
         }
       }
     );

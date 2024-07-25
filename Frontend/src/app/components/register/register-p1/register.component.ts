@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule, RouterOutlet } from '@angular/router';
+import { Router, RouterModule, NavigationExtras } from '@angular/router';
 import { User } from '../../../models/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -39,7 +39,9 @@ export class RegisterComponent {
   public loading: boolean = false;
   public inputType: string = 'password';
   public inputType2: string = 'password';
+  public surName: string = '';
   public location: any;
+
 
   constructor(
     private _userService: UserService,
@@ -47,7 +49,7 @@ export class RegisterComponent {
     private _cookieService: CookieService,
     private dialog: MatDialog
   ) {
-    this.user = new User(0, '', '', '', '');
+    this.user = new User(0, '', '', '', '','', '','');
   }
 
   capitalize(sentence: string): string {
@@ -68,6 +70,7 @@ export class RegisterComponent {
     if (this._cookieService.get('token')) {
       this._router.navigate(['/inicio']);
     }
+    
   }
 
   showPassword() {
@@ -85,35 +88,20 @@ export class RegisterComponent {
       this.showError = true;
       return;
     }
-  
-    this.user.name = this.capitalize(this.user.name);
-    this.user.email = this.user.email.toLowerCase();
-    this.user.location;
-  
-    this.loading = true;
 
-    this._userService.register(this.user).subscribe(
-      (response) => {
-        this.loading = false;
-        //validar email
-        localStorage.setItem('email', this.user.email);
-        this.dialog.open(ValidAcountComponent);
-      },
-      (error) => {
-        this.loading = false;
-        this.showError = true;
-  
-        if (
-          error.status == 400 ||
-          error.status == 401 ||
-          error.status == 404 ||
-          error.status == 500
-        ) {
-          this.status = 'Error en el servidor';
-        } else {
-          this.status = 'Error desconocido';
-        }
+    this.user.name = this.capitalize(this.user.name) + ' ' + this.capitalize(this.surName);
+    this.user.email = this.user.email.toLowerCase();
+
+    const navigationExtras: NavigationExtras = {
+      state: {
+        name: this.user.name,
+        email: this.user.email,
+        password: this.user.password,
+        location: this.user.location
       }
-    );
+    };
+
+    this._router.navigate(['register-p2'], navigationExtras);
   }
+
 }

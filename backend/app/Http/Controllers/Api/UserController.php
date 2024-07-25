@@ -173,12 +173,13 @@ class UserController extends Controller
         'name' => 'required',
         'email' => 'required|email|unique:users',
         'password' => 'required',
+        'phone' => 'required|string|max:9',
         'rol' => 'required|in:estudiante,administrador,empresa',
         'location' => 'required_if:rol,estudiante|string|in:Artigas,Canelones,Cerro Largo,Colonia,
         Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
-        //'ci_estudiante' => 'required_if:rol,estudiante|string|max:8', // Validación específica para estudiantes
+        'ci_estudiante' => 'required_if:rol,estudiante|string|max:8', 
         //'fec_nacimiento' => 'required_if:rol,estudiante|string|max:10',
-        //'cod_postal' => 'required_if:rol,estudiante|string|max:5',
+        'cod_postal' => 'required_if:rol,estudiante|string|max:5',
     ]);
 
     if ($validator->fails()) {
@@ -194,14 +195,15 @@ class UserController extends Controller
             'email' => $jsonData['email'],
             'password' => bcrypt($jsonData['password']),
             'rol' => $jsonData['rol'],
+            'phone' => $jsonData['phone'],
         ]);
 
         // Crear estudiante si el rol es estudiante
         if ($jsonData['rol'] === 'estudiante') {
             Estudiante::create([
-                //'ci_estudiante' => $jsonData['ci_estudiante'],
+                'ci_estudiante' => $jsonData['ci_estudiante'],
                 'id' => $user->id,
-                //'cod_postal' => $jsonData['cod_postal'],
+                'cod_postal' => $jsonData['cod_postal'],
                 'location' => $jsonData['location'],
                 //'fec_nacimiento' => $jsonData['fec_nacimiento']
             ]);

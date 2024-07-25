@@ -9,11 +9,11 @@ class Estudiante extends Model
     protected $table = 'estudiante';
 
     protected $fillable = [
-        //'ci_estudiante',
+        'ci_estudiante',
         'id',
-        'location'
+        'location',
         //'fec_nacimiento',
-        //'cod_postal'
+        'cod_postal'
     ];
 
     public $timestamps = false;
