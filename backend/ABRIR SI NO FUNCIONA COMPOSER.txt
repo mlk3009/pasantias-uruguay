@@ -1,0 +1,7 @@
+Hay que hacer lo siguiente:
+
+composer clear-cache
+Remove-Item -Recurse -Force .\vendor
+Remove-Item -Force .\composer.lock
+composer install
+composer update
