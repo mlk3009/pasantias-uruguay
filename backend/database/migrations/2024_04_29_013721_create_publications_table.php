@@ -21,8 +21,9 @@ return new class extends Migration
             $table->string('time');
             $table->string('deathline');
             $table->string('postulation_way');
-            $table->unsignedBigInteger('user_id')->references('id')->on('user');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
             $table->timestamps();
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
     }
 

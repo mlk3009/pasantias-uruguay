@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\PublicationController;
 
-
+//asd
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {

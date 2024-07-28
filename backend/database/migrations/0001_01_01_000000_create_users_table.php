@@ -6,9 +6,6 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up(): void
     {
         Schema::create('users', function (Blueprint $table) {
@@ -16,15 +13,45 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
+            $table->string('phone', 9);
             $table->string('password');
-            $table->rememberToken();
+            $table->string('remember_token', 100)->nullable();
+            $table->enum('rol', ['administrador', 'estudiante', 'empresa']);
             $table->timestamps();
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+        });
+
+        Schema::create('administrador', function (Blueprint $table) {
+            $table->string('ci_admin', 8);
+            $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->primary('id');
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+        });
+
+        Schema::create('empresa', function (Blueprint $table) {
+            $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->primary('id');
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+        });
+
+        Schema::create('estudiante', function (Blueprint $table) {
+            $table->string('ci_estudiante', 8);
+            //$table->string('fec_nacimiento');
+            $table->string('cod_postal', 5);
+            $table->enum('location', [
+                'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
+                'Maldonado','Montevideo','Paysandu','Río Negro','Rivera','Rocha','Salto','San José',
+                'Soriano','Tacuarembo','Treinta y Tres']);
+            $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->primary('id');
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
 
         Schema::create('sessions', function (Blueprint $table) {
@@ -34,16 +61,17 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('estudiante');
+        Schema::dropIfExists('empresa');
+        Schema::dropIfExists('administrador');
+        Schema::dropIfExists('users');
     }
 };

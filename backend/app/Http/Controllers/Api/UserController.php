@@ -9,6 +9,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Email;
+use App\Models\Estudiante;
 use App\Http\Controllers\Api\PHPMailerController;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\URL;
@@ -78,22 +79,22 @@ class UserController extends Controller
             
             // Verificar si el correo electrónico del usuario ha sido verificado
             if ($user->email_verified_at === null) {
+            
                 
-
-
             // Generar el código de verificación
             $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
             $codeLength = 6;
             $code = '';
     
+
             for ($i = 0; $i < $codeLength; $i++) {
                 $code .= $characters[random_int(0, strlen($characters) - 1)];
             }
 
+
             // Actualizar el código en la base de datos
             $email = Email::where('email', $jsonData['email'])
             ->update(['code' => $code]);
-
 
     
             // Enviar correo electrónico de verificación
@@ -165,28 +166,48 @@ class UserController extends Controller
 
 
     public function store(Request $request)
-    {
-        $jsonData = $request->json()->all();
-    
-        $validator = Validator::make($jsonData, [
-            'name' => 'required',
-            'email' => 'required|email|unique:users',
-            'password' => 'required'
+{
+    $jsonData = $request->json()->all();
+    $jsonData['rol'] = $jsonData['rol'] ?? 'estudiante';
+    $validator = Validator::make($jsonData, [
+        'name' => 'required',
+        'email' => 'required|email|unique:users',
+        'password' => 'required',
+        'phone' => 'required|string|max:9',
+        'rol' => 'required|in:estudiante,administrador,empresa',
+        'location' => 'required_if:rol,estudiante|string|in:Artigas,Canelones,Cerro Largo,Colonia,
+        Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
+        'ci_estudiante' => 'required_if:rol,estudiante|string|max:8', 
+        //'fec_nacimiento' => 'required_if:rol,estudiante|string|max:10',
+        'cod_postal' => 'required_if:rol,estudiante|string|max:5',
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'status' => 'error',
+            'message' => 'Validation Error',
+            'errors' => $validator->errors(),
+            'code' => 422
+        ];
+    } else {
+        $user = User::create([
+            'name' => $jsonData['name'],
+            'email' => $jsonData['email'],
+            'password' => bcrypt($jsonData['password']),
+            'rol' => $jsonData['rol'],
+            'phone' => $jsonData['phone'],
         ]);
-    
-        if ($validator->fails()) {
-            $data = [
-                'status' => 'error',
-                'message' => 'Validation Error',
-                'errors' => $validator->errors(),
-                'code' => 422
-            ];
-        } else {
-            $user = User::create([
-                'name' => $jsonData['name'],
-                'email' => $jsonData['email'],
-                'password' => bcrypt($jsonData['password'])
+
+        // Crear estudiante si el rol es estudiante
+        if ($jsonData['rol'] === 'estudiante') {
+            Estudiante::create([
+                'ci_estudiante' => $jsonData['ci_estudiante'],
+                'id' => $user->id,
+                'cod_postal' => $jsonData['cod_postal'],
+                'location' => $jsonData['location'],
+                //'fec_nacimiento' => $jsonData['fec_nacimiento']
             ]);
+        }
     
             // Generar el código de verificación
             $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Validator;
 
 class PublicationController extends Controller
 {
-
     public function index()
-    {
-        $publications = Publication::all();
+    {   
+        // Consulta a la base de datos para obtener todas las publicaciones
+        $publications = Publication::all(); 
 
         if ($publications->isEmpty()) {
             $data = [
@@ -43,10 +43,7 @@ class PublicationController extends Controller
         'time' => 'required|string',
         'deathline' => 'required|date',
         'postulation_way' => 'required|string',
-        'user_id' => 'required|numeric',
-        'requirements' => 'required|array',
-        'requirements.*.title' => 'required|string',
-        'requirements.*.level' => 'required|string'
+        'user_id' => 'required|numeric'
     ]);
 
     if($validator->fails()) {
@@ -57,8 +54,7 @@ class PublicationController extends Controller
         ];
         return response()->json($data, 400);
     } else {
-        $publication = Publication::create($jsonData);
-        $publication->requirements()->createMany($jsonData['requirements']);
+        $publication = Publication::create($jsonData); // Inserción en la base de datos
         $data = [
             'publication' => $publication,
             'status' => 201
@@ -69,11 +65,9 @@ class PublicationController extends Controller
 
 
 
-
 public function show($id)
 {
-    $publication = Publication::find($id);
-
+    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
     if (!$publication) {
         $data = [
             'message' => 'Publicación no encontrada',
@@ -81,28 +75,18 @@ public function show($id)
         ];
         return response()->json($data, 404);
     }
-
     $data = [
         'publication' => $publication,
         'status' => 200
     ];
-
     return response()->json($data, 200);
 }
-
-
-
-
-
-
-
 
 
 
 public function destroy($id)
 {
-    $publication = Publication::find($id);
-
+    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
     if (!$publication) {
         $data = [
             'message' => 'Publicación no encontrada',
@@ -110,24 +94,19 @@ public function destroy($id)
         ];
         return response()->json($data, 404);
     }
-
-    $publication->delete();
-
+    $publication->delete(); // Eliminación de la publicación
     $data = [
         'message' => 'Publicación eliminada',
         'status' => 200
     ];
-
     return response()->json($data, 200);
 }
 
 
 
-
-
 public function update(Request $request, $id)
 {
-    $publication = Publication::find($id);
+    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
 
     if (!$publication) {
         $data = [
@@ -148,10 +127,7 @@ public function update(Request $request, $id)
         'time' => 'required|string',
         'deathline' => 'required|date',
         'postulation_way' => 'required|string',
-        'user_id' => 'required|numeric',
-        'requirements' => 'required|array',
-        'requirements.*.title' => 'required|string',
-        'requirements.*.level' => 'required|string'
+        'user_id' => 'required|numeric'
     ]);
 
     if($validator->fails()) {
@@ -163,8 +139,6 @@ public function update(Request $request, $id)
         return response()->json($data, 400);
     } else {
         $publication->update($jsonData);
-        $publication->requirements()->delete();
-        $publication->requirements()->createMany($jsonData['requirements']);
         $data = [
             'publication' => $publication,
             'status' => 200
@@ -173,10 +147,11 @@ public function update(Request $request, $id)
     }
 }
 
+
+
 public function updatePartial(Request $request, $id)
 {
-    $publication = Publication::find($id);
-
+    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
     if (!$publication) {
         $data = [
             'message' => 'Publicación no encontrada',
@@ -184,9 +159,7 @@ public function updatePartial(Request $request, $id)
         ];
         return response()->json($data, 404);
     }
-
     $jsonData = $request->json()->all();
-    
     $validator = Validator::make($jsonData, [
         'title' => 'sometimes|required|string',
         'description' => 'sometimes|required|string',
@@ -197,11 +170,7 @@ public function updatePartial(Request $request, $id)
         'deathline' => 'sometimes|required|date',
         'postulation_way' => 'sometimes|required|string',
         'user_id' => 'sometimes|required|numeric',
-        'requirements' => 'sometimes|required|array',
-        'requirements.*.title' => 'sometimes|required|string',
-        'requirements.*.level' => 'sometimes|required|string'
-    ]);
-
+        ]);
     if($validator->fails()) {
         $data = [
             'message' => 'Error al actualizar parcialmente la publicación',
@@ -210,11 +179,7 @@ public function updatePartial(Request $request, $id)
         ];
         return response()->json($data, 400);
     } else {
-        $publication->update($jsonData);
-        if (isset($jsonData['requirements'])) {
-            $publication->requirements()->delete();
-            $publication->requirements()->createMany($jsonData['requirements']);
-        }
+        $publication->update($jsonData); // Actualización en la base de datos si los datos son correctos
         $data = [
             'publication' => $publication,
             'status' => 200

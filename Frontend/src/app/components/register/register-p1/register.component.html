@@ -1,0 +1,308 @@
+<section class="section2 fixed z-10 h-screen w-full bg-cover">
+  
+</section>
+<section class=" bg-transparent h-screen z-50 absolute mx-auto w-full">
+  <div class="flex flex-col items-center px-6 py-8 mx-auto">
+    <div class="title">
+      <a
+      routerLink="/inicio"
+      class="flex w-full items-center mb-6 text-2xl font-bold text-gray-900 dark:text-white"
+    >
+      <img
+        class="w-10 h-10 mr-2"
+        src="../../../assets/img/logo_ 3.png"
+        alt="logo"
+      />
+      <span class="span1">Pasantías UY</span>
+    </a>
+    </div>
+
+    <a
+            routerLink="/inicio"
+            type="button"
+            class="cruz mb-3 lg:ml-end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </a>
+
+    <div
+      class=" principal_container w-full bg-white rounded-lg shadow dark:border md:mt-0  xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="subtitle">
+        <h1>Registro</h1>
+        <div></div>
+        <h2>Datos escenciales</h2>
+      </div>
+      <div class="main_container p-6 space-y-4 md:space-y-6 sm:p-8">
+        <form
+          class="space-y-4 md:space-y-6"
+          #registerForm="ngForm"
+          (ngSubmit)="register(registerForm)"
+        >
+          @if(showError){
+          <small class="text-red-500">
+            {{ status }}
+          </small>
+          }
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Primer nombre</label
+            >
+            <div class="flex">
+              <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                </svg>
+              </span>
+              <input type="text" name="name" id="name" [(ngModel)]="user.name" #name="ngModel" pattern="[a-zA-ZáéíóúÁÉÍÓÚ]+" [disabled]="loading" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Nombre" required>
+            </div>
+            <small *ngIf="name.invalid && name.touched" class="text-red-500">
+              Ingrese su nombre sin caracteres especiales ni espacio al final.
+            </small>
+          </div>
+          
+
+          <div>
+            <label
+              for="surName"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Primer apellido</label
+            >
+            <div class="flex">
+              <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <path d="M10 0a10 10 0 1 0 10 10A10.011 10.011 0 0 0 10 0Zm0 5a3 3 0 1 1 0 6 3 3 0 0 1 0-6Zm0 13a8.949 8.949 0 0 1-4.951-1.488A3.987 3.987 0 0 1 9 13h2a3.987 3.987 0 0 1 3.951 3.512A8.949 8.949 0 0 1 10 18Z"/>
+                </svg>
+              </span>
+              <input type="text" name="surName" id="surName" [(ngModel)]="this.surName" #ssurName="ngModel" pattern="[a-zA-ZáéíóúÁÉÍÓÚ]+(\s[a-zA-ZáéíóúÁÉÍÓÚ]+)?" [disabled]="loading" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Apellido" required>
+            </div>
+            <small *ngIf="ssurName.invalid && ssurName.touched" class="text-red-500">
+              Ingrese su apellido sin caracteres especiales ni espacio al final.
+            </small>
+          </div>
+
+
+
+          <div>
+            <label
+              for="email"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Su email</label
+            >
+            <div class="relative mb-6">
+              <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
+                    <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
+                    <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
+                </svg>
+              </div>
+              <input [disabled]="loading" type="email" name="email" id="email" [(ngModel)]="user.email" #email="ngModel"
+              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@pasantiasuy.com" required>
+            </div>
+            <small *ngIf="email.invalid && email.touched" class="text-red-500">
+              El email es invalido
+            </small>
+          </div>
+          <div>
+            <label
+              for="password"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Contraseña</label
+            >
+            <div class="relative mb-6">
+              <a (click)="showPassword()" class="cursor-pointer text-gray-500 absolute inset-y-0 start-0 flex items-center ps-2.5">
+                      @if(inputType == "text"){
+                          <svg class="w-6 h-6 svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path class="w-8 h-8" fill-rule="evenodd" clip-rule="evenodd" d="M12 5C10.3431 5 9 6.34315 9 8V11H16C17.6569 11 19 12.3431 19 14V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V14C5 12.6938 5.83481 11.5825 7 11.1707V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V8.1C17 8.65228 16.5523 9.1 16 9.1C15.4477 9.1 15 8.65228 15 8.1V8C15 6.34315 13.6569 5 12 5ZM8 13C7.44772 13 7 13.4477 7 14V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V14C17 13.4477 16.5523 13 16 13H8Z" fill="#6B7276"/>
+                          </svg>
+                      }
+                      @else{
+                          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288" stroke="#6B7276" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                      }
+
+              </a>
+            <input [disabled]="loading" [type]="inputType" name="password" id="password" placeholder="••••••••••••" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}"
+              [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" #pwd="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+            </div>
+
+            
+
+            
+            <small *ngIf="pwd.invalid && pwd.touched" class="text-red-500"
+              >La contraseña debe tener al menos 8 caracteres, una mayúscula,
+              una minúscula y un número.</small
+            >
+          </div>
+          <div>
+            <label
+              for="confirm-password"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Confirmar contraseña</label
+            >
+            <div class="relative mb-6">
+              <a (click)="showPassword2()" class="cursor-pointer text-gray-500 absolute inset-y-0 start-0 flex items-center ps-2.5">
+                      @if(inputType2 == "text"){
+                          <svg class="w-6 h-6 svg" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path class="w-8 h-8" fill-rule="evenodd" clip-rule="evenodd" d="M12 5C10.3431 5 9 6.34315 9 8V11H16C17.6569 11 19 12.3431 19 14V18C19 19.6569 17.6569 21 16 21H8C6.34315 21 5 19.6569 5 18V14C5 12.6938 5.83481 11.5825 7 11.1707V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V8.1C17 8.65228 16.5523 9.1 16 9.1C15.4477 9.1 15 8.65228 15 8.1V8C15 6.34315 13.6569 5 12 5ZM8 13C7.44772 13 7 13.4477 7 14V18C7 18.5523 7.44772 19 8 19H16C16.5523 19 17 18.5523 17 18V14C17 13.4477 16.5523 13 16 13H8Z" fill="#6B7276"/>
+                          </svg>
+                      }
+                      @else{
+                          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                              <path d="M7 10.0288C7.47142 10 8.05259 10 8.8 10H15.2C15.9474 10 16.5286 10 17 10.0288M7 10.0288C6.41168 10.0647 5.99429 10.1455 5.63803 10.327C5.07354 10.6146 4.6146 11.0735 4.32698 11.638C4 12.2798 4 13.1198 4 14.8V16.2C4 17.8802 4 18.7202 4.32698 19.362C4.6146 19.9265 5.07354 20.3854 5.63803 20.673C6.27976 21 7.11984 21 8.8 21H15.2C16.8802 21 17.7202 21 18.362 20.673C18.9265 20.3854 19.3854 19.9265 19.673 19.362C20 18.7202 20 17.8802 20 16.2V14.8C20 13.1198 20 12.2798 19.673 11.638C19.3854 11.0735 18.9265 10.6146 18.362 10.327C18.0057 10.1455 17.5883 10.0647 17 10.0288M7 10.0288V8C7 5.23858 9.23858 3 12 3C14.7614 3 17 5.23858 17 8V10.0288" stroke="#6B7276" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                      }
+
+              </a>
+            <input [disabled]="loading" [type]="inputType2" name="confirm-password" id="confirm-password" placeholder="••••••••••••"
+              [(ngModel)]="confirmPassword" [ngModelOptions]="{standalone: true}" #confirmPwd="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+          </div>
+            @if(pwd.value !== confirmPwd.value && confirmPwd.touched){
+            <small class="text-red-500">Las contraseñas no coinciden.</small>
+            }
+          </div>
+
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Puesto de trabajo deseado <span class="text-gray-600">(Opcional)</span></label
+            >
+            <div class="flex">
+              <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                <svg width="1rem" height="1rem" viewBox="0 -0.5 17 17" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" class="si-glyph si-glyph-tool-box" fill="#000000">
+
+                  <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                  
+                  <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                  
+                  <g id="SVGRepo_iconCarrier"> <title>1017</title> <defs> </defs> <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g transform="translate(1.000000, 1.000000)" fill="#6e6e6e"> <path d="M11.988,8.031 L11.988,7 L4.031,7 L4.031,8.031 L1.938,8.031 L1.938,7 L0.0139770486,7 L0.0139770486,13 L16,13 L16,7 L14.031,7 L14.031,8.031 L11.988,8.031 Z" class="si-glyph-fill"> </path> <path d="M4,4.9855957 L4,5.96789551 L12,5.96789551 L12,4.9855957 L14,4.9855957 L14,5.96789551 L15.9873047,5.96789551 L15.9873045,3 L0,3 L2.21252548e-07,5.96789551 L1.97381592,5.96789551 L1.97381606,4.9855957 L4,4.9855957 Z" class="si-glyph-fill"> </path> <path d="M6.0029298,1.943 L5.01,1.943 L5.01,0.031 L10.969,0.031 L10.969,1.94299991 L10.0092771,1.94299994 L10.009277,0.986999997 L6.0029297,0.98699997 L6.0029298,1.943 Z" class="si-glyph-fill"> </path> </g> </g> </g>
+                  
+                  </svg>
+              </span>
+              <select id="countries" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option style="display: none;" selected>Puesto de trabajo deseado</option>
+                <option class="text-gray-900" value="IN">Informática</option>
+              </select>  
+            </div>
+          </div>
+
+          
+          <div>
+            <label
+              for="location"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >Departamento</label>
+            <div class="flex">
+              <span class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
+                <svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M17 10C17 11.7279 15.0424 14.9907 13.577 17.3543C12.8967 18.4514 12.5566 19 12 19C11.4434 19 11.1033 18.4514 10.423 17.3543C8.95763 14.9907 7 11.7279 7 10C7 7.23858 9.23858 5 12 5C14.7614 5 17 7.23858 17 10Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M14.5 10C14.5 11.3807 13.3807 12.5 12 12.5C10.6193 12.5 9.5 11.3807 9.5 10C9.5 8.61929 10.6193 7.5 12 7.5C13.3807 7.5 14.5 8.61929 14.5 10Z" stroke="#464455" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </span>
+              <select
+                id="location"
+                name="location"
+                [(ngModel)]="user.location"
+                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                required>
+                <option value="" disabled selected style="display: none;">Elije un Departamento</option>
+                <option class="text-gray-900" value="Montevideo">Montevideo</option>
+                <option class="text-gray-900" value="Salto">Salto</option>
+                <option class="text-gray-900" value="Paysandú">Paysandú</option>
+                <option class="text-gray-900" value="Maldonado">Maldonado</option>
+                <option class="text-gray-900" value="Tacuarembó">Tacuarembó</option>
+                <option class="text-gray-900" value="Canelones">Canelones</option>
+                <option class="text-gray-900" value="Cerro Largo">Cerro Largo</option>
+                <option class="text-gray-900" value="Rivera">Rivera</option>
+                <option class="text-gray-900" value="Soriano">Soriano</option>
+                <option class="text-gray-900" value="Colonia">Colonia</option>
+                <option class="text-gray-900" value="Durazno">Durazno</option>
+                <option class="text-gray-900" value="Rocha">Rocha</option>
+                <option class="text-gray-900" value="Florida">Florida</option>
+                <option class="text-gray-900" value="Treinta y Tres">Treinta y Tres</option>
+                <option class="text-gray-900" value="Artigas">Artigas</option>
+                <option class="text-gray-900" value="San José">San José</option>
+                <option class="text-gray-900" value="Flores">Flores</option>
+                <option class="text-gray-900" value="Lavalleja">Lavalleja</option>
+                <option class="text-gray-900" value="Río Negro">Río Negro</option>
+                <option class="text-gray-900" value="San José de Mayo">San José de Mayo</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="w-full flex justify-between flex-col items-center">
+            <button
+            type="submit"
+            [ngClass]="{
+              'principalButton bg-gray-300 hover:bg-gray-300 cursor-not-allowed':
+                !registerForm.valid || pwd.value !== confirmPwd.value
+            }"
+            [disabled]="
+              loading ||
+              !registerForm.valid ||
+              registerForm.value.password !==
+                registerForm.value['confirm-password']
+            "
+            class="pbAllow w-3/5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            @if(loading){
+            <div
+              class="flex items-center justify-center bg-transparent rounded-lg"
+            >
+              <div role="status">
+                <svg
+                  aria-hidden="true"
+                  class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  viewBox="0 0 100 101"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill"
+                  />
+                </svg>
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            }@else {
+            <span>Siguiente</span>
+            }
+          </button>
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-3">
+            Ya registrado?
+            <a
+              routerLink="/login"
+              class="finalText font-medium text-primary-600 hover:underline dark:text-primary-500"
+              >Iniciar sesiÃ³n</a
+            >
+          </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>

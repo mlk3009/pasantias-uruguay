@@ -52,7 +52,7 @@ export class ValidAcountComponent {
     private _router: Router,
     private dialog: MatDialog
   ) {
-    this.user = new User(0, '', '', '');
+    this.user = new User(0, '', '', '', '','', '','');
   }
 
   concatenateCodes(code1: string, code2: string, code3: string, code4: string, code5: string, code6: string) {

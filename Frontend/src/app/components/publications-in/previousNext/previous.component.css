@@ -1,0 +1,17 @@
+.body{
+    border-bottom: 1px solid #c8c8c8;
+    padding-bottom: 18vh;
+    margin-top: 15vh;
+}
+.button{
+    color: rgb(49, 49, 49);
+    background-color: white;
+    border: 1px solid rgb(129, 129, 129);
+}
+.button:hover{
+    background-color: #15c3c311;
+    color: black;
+}
+.span{
+    margin: auto 2.5rem;
+}

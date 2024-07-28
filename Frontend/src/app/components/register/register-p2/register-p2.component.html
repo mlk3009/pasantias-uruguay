@@ -1,0 +1,295 @@
+<section class="section2 fixed z-10 h-screen w-full bg-cover">
+  
+</section>
+<section class=" bg-transparent h-screen z-50 absolute mx-auto w-full">
+  <div class="flex flex-col items-center px-6 py-8 mx-auto">
+    <div class="title">
+      <a
+      routerLink="/inicio"
+      class="flex w-full items-center mb-6 text-2xl font-bold text-gray-900 dark:text-white"
+    >
+      <img
+        class="w-10 h-10 mr-2"
+        src="../../../assets/img/logo_ 3.png"
+        alt="logo"
+      />
+      <span class="span1">Pasantías UY</span>
+    </a>
+    </div>
+
+    <a
+            routerLink="/inicio"
+            type="button"
+            class="cruz mb-3 lg:ml-end-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+          >
+            <svg
+              class="w-3 h-3"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 14 14"
+            >
+              <path
+                stroke="currentColor"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
+              />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </a>
+
+    <div
+      class=" principal_container w-full bg-white rounded-lg shadow dark:border md:mt-0  xl:p-0 dark:bg-gray-800 dark:border-gray-700"
+    >
+      <div class="subtitle">
+        <h1>Registro</h1>
+        <div></div>
+        <h2 class="text-gray-900">Datos personales</h2>
+      </div>
+      <div class="main_container p-6 space-y-4 md:space-y-6 sm:p-8">
+        <form
+          class="space-y-4 md:space-y-6"
+          #registerForm="ngForm"
+          (ngSubmit)="register(registerForm)"
+        >
+          @if(showError){
+          <small class="text-red-500">
+            {{ status }}
+          </small>
+          }
+          <div>
+            <label
+              for="fec_nac"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Fecha de nacimiento</label
+            >
+            <div class="flex">
+              <select id="dia" style="margin: 5px;" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Día</option>
+                <option value="">1</option>
+                <option value="">2</option>
+                <option value="">3</option>
+                <option value="">4</option>
+                <option value="">5</option>
+                <option value="">6</option>
+                <option value="">7</option>
+                <option value="">8</option>
+                <option value="">9</option>
+                <option value="">10</option>
+                <option value="">11</option>
+                <option value="">12</option>
+                <option value="">13</option>
+                <option value="">14</option>
+                <option value="">15</option>
+                <option value="">16</option>
+                <option value="">17</option>
+                <option value="">18</option>
+                <option value="">19</option>
+                <option value="">20</option>
+                <option value="">21</option>
+                <option value="">22</option>
+                <option value="">23</option>
+                <option value="">24</option>
+                <option value="">25</option>
+                <option value="">26</option>
+                <option value="">27</option>
+                <option value="">28</option>
+                <option value="">29</option>
+                <option value="">30</option>
+                <option value="">31</option>
+
+              </select>
+
+              <select id="mes" style="margin: 5px;" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Mes</option>
+                <option value="">Enero</option>
+                <option value="">Febrero</option>
+                <option value="">Marzo</option>
+                <option value="">Abril</option>
+                <option value="">Mayo</option>
+                <option value="">Junio</option>
+                <option value="">Julio</option>
+                <option value="">Agosto</option>
+                <option value="">Setiembre</option>
+                <option value="">Octubre</option>
+                <option value="">Noviembre</option>
+                <option value="">Diciembre</option>
+              </select>
+
+              <select id="año" style="margin: 5px;" class="cursor-pointer bg-gray-50 border border-gray-300 text-gray-900 text-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option selected>Año</option>
+                <option value="">2024</option>
+                <option value="">2023</option>
+                <option value="">2022</option>
+                <option value="">2021</option>
+                <option value="">2020</option>
+                <option value="">2019</option>
+                <option value="">2018</option>
+                <option value="">2017</option>
+                <option value="">2016</option>
+                <option value="">2015</option>
+                <option value="">2014</option>
+                <option value="">2013</option>
+                <option value="">2012</option>
+                <option value="">2011</option>
+                <option value="">2010</option>
+                <option value="">2009</option>
+                <option value="">2008</option>
+                <option value="">2007</option>
+                <option value="">2006</option>
+                <option value="">2005</option>
+                <option value="">2004</option>
+                <option value="">2003</option>
+                <option value="">2002</option>
+                <option value="">2001</option>
+                <option value="">2000</option>
+                <option value="">1999</option>
+                <option value="">1998</option>
+                <option value="">1997</option>
+                <option value="">1996</option>
+                <option value="">1995</option>
+                <option value="">1994</option>
+                <option value="">1993</option>
+                <option value="">1992</option>
+                <option value="">1991</option>
+                <option value="">1990</option>
+                <option value="">1989</option>
+                <option value="">1988</option>
+                <option value="">1987</option>
+                <option value="">1986</option>
+                <option value="">1985</option>
+                <option value="">1984</option>
+                <option value="">1983</option>
+                <option value="">1982</option>
+                <option value="">1981</option>
+                <option value="">1980</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Identificación</label
+            >
+            <div class="flex">
+            <!-- <select id="" style="margin: 5px; width: 50%;" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option style="display: none;" selected>Selecciona que tipo de Identificaión</option> 
+                <option value="US">Cédula de identidad</option>
+              </select>  -->
+              <input type="text" name="ci_estudiante" style="margin: 5px;" id="documento" [(ngModel)]="user.ci_estudiante" #ci_estudiante="ngModel" pattern="^\d{8}$" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Identificaión" required>
+            </div>
+            <small *ngIf="ci_estudiante.invalid && ci_estudiante.touched" class="text-red-500">
+              Identificación requerida (8 Digitos)
+            </small>
+          </div>
+
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Teléfono</label
+            >
+            <div class="flex">
+              <input type="text" name="phone" id="phone" [(ngModel)]="user.phone" #phone="ngModel" pattern="^\d{8,9}$" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Teléfono" required>
+            </div>
+            <small *ngIf="phone.invalid && phone.touched" class="text-red-500">
+              Teléfono requerido (8 Digitos celular, 9 Digitos fijo)
+            </small>
+          </div>
+
+          <div class="flex justify-between">
+            <div class="">
+              <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Foto</label>
+              <p class="text-xs text-gray-600">Si no tienes una, la puedes añadir mas adelante</p>
+            </div>
+            <div class="flex items-center justify-center w-2/4 mr-12" >
+              <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-44 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-gray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                  <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                      <svg class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+                      </svg>
+                      <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click para cargar</span> o arrastra y suelta</p>
+                      <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
+                  </div>
+                  <input id="dropzone-file" type="file" class="hidden" />
+              </label>
+          </div> 
+          </div>
+
+
+          <div>
+            <label
+              for="name"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Código postal</label
+            >
+            <div class="flex">
+              <input type="text" name="cod_postal" id="cod_postal" [(ngModel)]="user.cod_postal" #cod_postal="ngModel" pattern="^\d{5}$" [disabled]="loading" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm  focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Escribe tu código postal" required>
+            </div>
+            <small *ngIf="cod_postal.invalid && cod_postal.touched" class="text-red-500">
+              Código postal requerido (5 Digitos)
+            </small>
+          </div>
+          
+
+          <div class="w-full flex justify-between flex-col items-center">
+            <button
+            type="submit"
+             [ngClass]="{
+              'principalButton bg-gray-300 hover:bg-gray-300 cursor-not-allowed':
+                !registerForm.valid
+            }"[disabled]="
+              loading ||
+              !registerForm.valid 
+            " 
+            class="pbAllow w-3/5 text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          >
+            @if(loading){
+            <div
+              class="flex items-center justify-center bg-transparent rounded-lg"
+            >
+              <div role="status">
+                <svg
+                  aria-hidden="true"
+                  class="w-8 h-8 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+                  viewBox="0 0 100 101"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
+                    fill="currentColor"
+                  />
+                  <path
+                    d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
+                    fill="currentFill"
+                  />
+                </svg>
+                <span class="sr-only">Loading...</span>
+              </div>
+            </div>
+            }@else {
+            <span>Regístrate</span>
+            }
+          </button>
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-3">
+            Ya registrado?
+            <a
+              routerLink="/login"
+              class="finalText font-medium text-primary-600 hover:underline dark:text-primary-500"
+              >Iniciar sesión</a
+            >
+          </p>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
