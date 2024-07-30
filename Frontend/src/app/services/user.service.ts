@@ -10,6 +10,18 @@ import { global } from './global';
 export class UserService {
   constructor(public _http: HttpClient) {}
 
+  storeImage(image: File): Observable<any> {
+    const formData: FormData = new FormData();
+    formData.append('image', image, image.name);
+
+    let headers = new HttpHeaders();
+    // No puse 'Content-Type' pq el navegador lo pone en FormData
+
+    return this._http.post(global.url + 'upload-image', formData, {
+      headers: headers,
+    });
+  }
+
   register(user: User): Observable<any> {
     let json = JSON.stringify(user);
     let params = json;

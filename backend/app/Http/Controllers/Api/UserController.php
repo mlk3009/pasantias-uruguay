@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Email;
 use App\Models\Estudiante;
+use App\Models\ImageUpload;
 use App\Http\Controllers\Api\PHPMailerController;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Support\Facades\URL;
@@ -164,6 +165,29 @@ class UserController extends Controller
 
 
 
+
+    public function store_image(Request $request)
+    {
+        $validated = $request->validate([
+            'image' => 'required|mimes:jpg,jpeg,png,bmp',
+        ]);
+
+        $imageName = '';
+        if ($image = $request->file('image')) {
+            $imageName = time() . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
+            $image->move('images/uploads', $imageName);
+        }
+    
+        ImageUpload::create([
+            'image' => $imageName,
+        ]);
+    
+        return response()->json([
+            'success' => true,
+            'message' => 'Imagen subida con éxito',
+            'image' => $imageName,
+        ]);
+    }
 
     public function store(Request $request)
 {

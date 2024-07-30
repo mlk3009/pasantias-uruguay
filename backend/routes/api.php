@@ -29,7 +29,9 @@ Route::post('restore', [PasswordController::class, 'restorePassword']);
 Route::post('checkCode', [PasswordController::class, 'checkCode']);
 Route::put('changePassword', [UserController::class, 'changePassword']);
 
+// IMAGE UPLOAD
 
+Route::post('upload-image', [UserController::class, 'store_image']);
 
 // EMAIL VERIFICATION
 // Ruta para verificar el correo electrónico

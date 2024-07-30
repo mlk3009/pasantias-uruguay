@@ -85,7 +85,19 @@ export class RegisterP2Component {
   }
 
 
-
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this._userService.storeImage(file).subscribe(
+        response => {
+          console.log('Imagen cargada exitosamente', response);
+        },
+        error => {
+          console.error('Error al cargar la imagen', error);
+        }
+      );
+    }
+  }
   
   register(form: any) {
 

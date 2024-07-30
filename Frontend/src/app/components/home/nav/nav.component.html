@@ -7,49 +7,152 @@ class="bg-white border-gray-200 dark:bg-gray-900 nav001">
         </a>
         <div class="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse">
 
-            <div *ngIf="register == true">
-                <div class="relative">
-                    <div>
-                        <button (click)="changeDropdown()"
-                            class="flex font-medium items-center justify-between w-full py-2 px-3 text-withe rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:w-auto dark:text-white md:dark:hover:text-blue-500 dark:focus:text-white dark:border-gray-700 dark:hover:bg-gray-700 md:dark:hover:bg-transparent">
-                            {{ username.split(' ')[0] }}
-                            <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                fill="none" viewBox="0 0 10 6">
-                                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
-                                    stroke-width="2" d="m1 1 4 4 4-4" />
-                            </svg></button>
-                    </div>
-                    <div class="absolute">
-                        <div id="dropdownNavbar" *ngIf="dropdown"
-                            class="z-10 font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600">
-                            <ul class="md:py-2 text-sm text-gray-700 dark:text-gray-400 "
-                                aria-labelledby="dropdownLargeButton">
-                                <li>
-                                    <a routerLink="/dashboard"
-                                        class="hover:cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Dashboard</a>
 
-                                    <a routerLink="/ficha"
-                                        class="hover:cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Ficha
-                                        <svg class="w-8 inline pb-2" viewBox="0 0 24 24" fill="none"
-                                            xmlns="http://www.w3.org/2000/svg">
-                                            <circle cx="12" cy="12" r="2" fill="#FF0000" />
+
+
+
+
+
+
+
+
+
+
+                <div class="relative" *ngIf="register == true">
+                    <div data-dial-init class="fixed top-2 right-20 group">
+                        <button id="hide" type="button" data-dial-toggle="speed-dial-menu-dropdown-alternative" aria-controls="speed-dial-menu-dropdown-alternative" aria-expanded="false" class="profile flex items-center justify-center ml-auto text-white bg-white rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-white focus:outline-none dark:focus:ring-white">
+                            <svg class="w-6 h-6" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
+
+                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                
+                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                
+                                <g id="SVGRepo_iconCarrier"> <title>profile_round [#0002201342]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -2159.000000)" fill="#000220"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M100.562548,2016.99998 L87.4381713,2016.99998 C86.7317804,2016.99998 86.2101535,2016.30298 86.4765813,2015.66198 C87.7127655,2012.69798 90.6169306,2010.99998 93.9998492,2010.99998 C97.3837885,2010.99998 100.287954,2012.69798 101.524138,2015.66198 C101.790566,2016.30298 101.268939,2016.99998 100.562548,2016.99998 M89.9166645,2004.99998 C89.9166645,2002.79398 91.7489936,2000.99998 93.9998492,2000.99998 C96.2517256,2000.99998 98.0830339,2002.79398 98.0830339,2004.99998 C98.0830339,2007.20598 96.2517256,2008.99998 93.9998492,2008.99998 C91.7489936,2008.99998 89.9166645,2007.20598 89.9166645,2004.99998 M103.955674,2016.63598 C103.213556,2013.27698 100.892265,2010.79798 97.837022,2009.67298 C99.4560048,2008.39598 100.400241,2006.33098 100.053171,2004.06998 C99.6509769,2001.44698 97.4235996,1999.34798 94.7348224,1999.04198 C91.0232075,1998.61898 87.8750721,2001.44898 87.8750721,2004.99998 C87.8750721,2006.88998 88.7692896,2008.57398 90.1636971,2009.67298 C87.1074334,2010.79798 84.7871636,2013.27698 84.044024,2016.63598 C83.7745338,2017.85698 84.7789973,2018.99998 86.0539717,2018.99998 L101.945727,2018.99998 C103.221722,2018.99998 104.226185,2017.85698 103.955674,2016.63598" id="profile_round-[#0002201342]"> </path> </g> </g> </g> </g>
+                                
+                            </svg>
+                            <span class="sr-only">Open actions menu</span>
+                        </button>
+                        <div id="speed-dial-menu-dropdown-alternative" class="flex flex-col justify-end hidden py-1 mt-4 space-y-2 bg-white border border-gray-100 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600">
+                            <ul class="text-sm text-gray-500 dark:text-gray-300">
+                                <li>
+                                    <a href="#" class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600">              
+                                        <svg class="w-3.5 h-3.5 me-2 " viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#6b7280" stroke="#6b7280">
+
+                                            <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                            
+                                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round" stroke="#CCCCCC" stroke-width="0.64"/>
+                                            
+                                            <g id="SVGRepo_iconCarrier"> <title>profile_round [#1342]</title> <desc>Created with Sketch.</desc> <defs> </defs> <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"> <g id="Dribbble-Light-Preview" transform="translate(-140.000000, -2159.000000)" fill="#6b7280"> <g id="icons" transform="translate(56.000000, 160.000000)"> <path d="M100.562548,2016.99998 L87.4381713,2016.99998 C86.7317804,2016.99998 86.2101535,2016.30298 86.4765813,2015.66198 C87.7127655,2012.69798 90.6169306,2010.99998 93.9998492,2010.99998 C97.3837885,2010.99998 100.287954,2012.69798 101.524138,2015.66198 C101.790566,2016.30298 101.268939,2016.99998 100.562548,2016.99998 M89.9166645,2004.99998 C89.9166645,2002.79398 91.7489936,2000.99998 93.9998492,2000.99998 C96.2517256,2000.99998 98.0830339,2002.79398 98.0830339,2004.99998 C98.0830339,2007.20598 96.2517256,2008.99998 93.9998492,2008.99998 C91.7489936,2008.99998 89.9166645,2007.20598 89.9166645,2004.99998 M103.955674,2016.63598 C103.213556,2013.27698 100.892265,2010.79798 97.837022,2009.67298 C99.4560048,2008.39598 100.400241,2006.33098 100.053171,2004.06998 C99.6509769,2001.44698 97.4235996,1999.34798 94.7348224,1999.04198 C91.0232075,1998.61898 87.8750721,2001.44898 87.8750721,2004.99998 C87.8750721,2006.88998 88.7692896,2008.57398 90.1636971,2009.67298 C87.1074334,2010.79798 84.7871636,2013.27698 84.044024,2016.63598 C83.7745338,2017.85698 84.7789973,2018.99998 86.0539717,2018.99998 L101.945727,2018.99998 C103.221722,2018.99998 104.226185,2017.85698 103.955674,2016.63598" id="profile_round-[#1342]"> </path> </g> </g> </g> </g>
+                                            
                                         </svg>
+                                        <span class="text-sm font-medium">Mi perfil</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a data-modal-target="edit" data-modal-toggle="edit"
-                                        class="hover:cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Ajustes</a>
+                                    <a href="#" class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600">
+                                        <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                            <path d="M19 4h-1a1 1 0 1 0 0 2v11a1 1 0 0 1-2 0V2a2 2 0 0 0-2-2H2a2 2 0 0 0-2 2v15a3 3 0 0 0 3 3h14a3 3 0 0 0 3-3V5a1 1 0 0 0-1-1ZM3 4a1 1 0 0 1 1-1h3a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V4Zm9 13H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 0 1 0 2Zm0-3H4a1 1 0 0 1 0-2h8a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Zm0-3h-2a1 1 0 0 1 0-2h2a1 1 0 1 1 0 2Z"/>
+                                            <path d="M6 5H5v1h1V5Z"/>
+                                        </svg>
+                                        <span class="text-sm font-medium">Opciones de Usuario</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600">              
+                                        <svg class="w-3.5 h-3.5 me-2" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                            <title>file-cv-svgrepo-com-svg</title>
+                                            <style>
+                                                .s0 { fill: #6b7280 } 
+                                            </style>
+                                            <g id="SVGRepo_bgCarrier">
+                                            </g>
+                                            <g id="SVGRepo_tracerCarrier">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path id="Layer" fill-rule="evenodd" class="s0" d="m12.5 0.1q0.4 0.1 0.7 0.2 0 0 0 0 0.2 0.1 0.4 0.2c0.4 0.3 0.7 0.6 1.1 1l4.9 4.9c0.3 0.3 0.7 0.7 0.9 1q0.3 0.5 0.4 1.1c0.1 0.4 0.1 0.9 0.1 1.4v8.9q0 1 0 1.6c-0.1 0.5-0.1 1-0.4 1.4-0.3 0.7-0.9 1.2-1.5 1.6-0.5 0.2-0.9 0.3-1.4 0.3q-0.7 0.1-1.7 0.1h-9q-1 0-1.7-0.1c-0.4 0-0.9-0.1-1.4-0.3-0.6-0.4-1.2-0.9-1.5-1.6-0.2-0.4-0.3-0.9-0.4-1.4q0-0.6 0-1.6v-13.8q0-1 0-1.7c0.1-0.4 0.2-0.9 0.4-1.4 0.3-0.6 0.9-1.2 1.5-1.5 0.5-0.2 1-0.3 1.4-0.4q0.7 0 1.7 0h4.1c0.6 0 1 0 1.4 0.1zm-8.1 3.4c0 0.4 0 0.8 0 1.5v13.8c0 0.7 0 1.1 0 1.5 0 0.3 0.1 0.4 0.1 0.5q0.2 0.3 0.5 0.5c0.1 0 0.2 0 0.5 0.1 0.4 0 0.8 0 1.5 0h9c0.7 0 1.2 0 1.5 0 0.3-0.1 0.4-0.1 0.5-0.1q0.3-0.2 0.5-0.5c0-0.1 0.1-0.2 0.1-0.5 0-0.4 0-0.8 0-1.5v-8.9q0-0.2 0-0.4h-4.7c-1.3 0-2.4-1.1-2.4-2.4v-4.7q-0.1 0-0.4 0h-4.1c-0.7 0-1.1 0-1.5 0-0.3 0-0.4 0.1-0.5 0.1q-0.3 0.2-0.5 0.5c0 0.1-0.1 0.2-0.1 0.5zm12.6 3.6l-3.1-3v3zm-5.5 4.8c0 0.7-0.5 1.2-1.2 1.2-0.5 0-0.9 0-1.2 0-0.2 0-0.3 0-0.4 0.1-0.3 0.1-0.5 0.3-0.6 0.6-0.1 0.1-0.1 0.2-0.1 0.4 0 0.3 0 0.7 0 1.3 0 0.5 0 0.9 0 1.2 0 0.2 0 0.4 0.1 0.4 0.1 0.3 0.3 0.5 0.6 0.6 0.1 0.1 0.2 0.1 0.4 0.1 0.3 0 0.7 0 1.2 0 0.7 0 1.2 0.6 1.2 1.2 0 0.7-0.5 1.2-1.2 1.2q-0.8 0-1.3 0c-0.4 0-0.8-0.1-1.2-0.3-0.9-0.3-1.6-1-1.9-1.9-0.2-0.4-0.3-0.8-0.3-1.2q0-0.5 0-1.3 0-0.9 0-1.4c0-0.4 0.1-0.8 0.3-1.2 0.3-0.9 1-1.6 1.9-1.9 0.4-0.2 0.8-0.2 1.2-0.3q0.5 0 1.3 0c0.7 0 1.2 0.5 1.2 1.2 0-0.6 0.4-1 0.9-1.2 0.7-0.1 1.3 0.3 1.5 0.9l0.6 2.5 0.6-2.5c0.2-0.6 0.8-1 1.5-0.9 0.6 0.2 1 0.8 0.8 1.5l-1.7 7.1c-0.2 0.5-0.6 0.9-1.2 0.9-0.5 0-1-0.4-1.1-0.9l-1.8-7.1q-0.1-0.2-0.1-0.3zm0.8-10.6l0.3-1.2zm0.7 0.3l0.6-1zm-9.5 19.7l1-0.5zm1.1 1l0.5-1zm15.1-1.1l-1.1-0.5zm-1 1l-0.5-1zm1.2-13.6l1.1-0.3zm-0.2-0.7l1-0.6zm-15-6.6l0.5 1zm-1 1.1l1 0.5zm3.5 15.1l-1.1 0.4zm1.3 1.3l-0.4 1.1zm-1.3-5.5l-1.1-0.4zm1.3-1.3l-0.5-1.1zm5.6-9.8l-0.8 0.9zm4.9 4.9l0.8-0.9z"/>
+                                            </g>
+                                        </svg>
+                                        <span class="text-sm font-medium">Crear CV</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600">              
+                                        <svg class="w-3.5 h-3.5 me-2" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                            <title>file-cv-svgrepo-com-svg</title>
+                                            <style>
+                                                .s0 { fill: #6b7280 } 
+                                            </style>
+                                            <g id="SVGRepo_bgCarrier">
+                                            </g>
+                                            <g id="SVGRepo_tracerCarrier">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path id="Layer" fill-rule="evenodd" class="s0" d="m12.5 0.1q0.4 0.1 0.7 0.2 0 0 0 0 0.2 0.1 0.4 0.2c0.4 0.3 0.7 0.6 1.1 1l4.9 4.9c0.3 0.3 0.7 0.7 0.9 1q0.3 0.5 0.4 1.1c0.1 0.4 0.1 0.9 0.1 1.4v8.9q0 1 0 1.6c-0.1 0.5-0.1 1-0.4 1.4-0.3 0.7-0.9 1.2-1.5 1.6-0.5 0.2-0.9 0.3-1.4 0.3q-0.7 0.1-1.7 0.1h-9q-1 0-1.7-0.1c-0.4 0-0.9-0.1-1.4-0.3-0.6-0.4-1.2-0.9-1.5-1.6-0.2-0.4-0.3-0.9-0.4-1.4q0-0.6 0-1.6v-13.8q0-1 0-1.7c0.1-0.4 0.2-0.9 0.4-1.4 0.3-0.6 0.9-1.2 1.5-1.5 0.5-0.2 1-0.3 1.4-0.4q0.7 0 1.7 0h4.1c0.6 0 1 0 1.4 0.1zm-8.1 3.4c0 0.4 0 0.8 0 1.5v13.8c0 0.7 0 1.1 0 1.5 0 0.3 0.1 0.4 0.1 0.5q0.2 0.3 0.5 0.5c0.1 0 0.2 0 0.5 0.1 0.4 0 0.8 0 1.5 0h9c0.7 0 1.2 0 1.5 0 0.3-0.1 0.4-0.1 0.5-0.1q0.3-0.2 0.5-0.5c0-0.1 0.1-0.2 0.1-0.5 0-0.4 0-0.8 0-1.5v-8.9q0-0.2 0-0.4h-4.7c-1.3 0-2.4-1.1-2.4-2.4v-4.7q-0.1 0-0.4 0h-4.1c-0.7 0-1.1 0-1.5 0-0.3 0-0.4 0.1-0.5 0.1q-0.3 0.2-0.5 0.5c0 0.1-0.1 0.2-0.1 0.5zm12.6 3.6l-3.1-3v3zm-5.5 4.8c0 0.7-0.5 1.2-1.2 1.2-0.5 0-0.9 0-1.2 0-0.2 0-0.3 0-0.4 0.1-0.3 0.1-0.5 0.3-0.6 0.6-0.1 0.1-0.1 0.2-0.1 0.4 0 0.3 0 0.7 0 1.3 0 0.5 0 0.9 0 1.2 0 0.2 0 0.4 0.1 0.4 0.1 0.3 0.3 0.5 0.6 0.6 0.1 0.1 0.2 0.1 0.4 0.1 0.3 0 0.7 0 1.2 0 0.7 0 1.2 0.6 1.2 1.2 0 0.7-0.5 1.2-1.2 1.2q-0.8 0-1.3 0c-0.4 0-0.8-0.1-1.2-0.3-0.9-0.3-1.6-1-1.9-1.9-0.2-0.4-0.3-0.8-0.3-1.2q0-0.5 0-1.3 0-0.9 0-1.4c0-0.4 0.1-0.8 0.3-1.2 0.3-0.9 1-1.6 1.9-1.9 0.4-0.2 0.8-0.2 1.2-0.3q0.5 0 1.3 0c0.7 0 1.2 0.5 1.2 1.2 0-0.6 0.4-1 0.9-1.2 0.7-0.1 1.3 0.3 1.5 0.9l0.6 2.5 0.6-2.5c0.2-0.6 0.8-1 1.5-0.9 0.6 0.2 1 0.8 0.8 1.5l-1.7 7.1c-0.2 0.5-0.6 0.9-1.2 0.9-0.5 0-1-0.4-1.1-0.9l-1.8-7.1q-0.1-0.2-0.1-0.3zm0.8-10.6l0.3-1.2zm0.7 0.3l0.6-1zm-9.5 19.7l1-0.5zm1.1 1l0.5-1zm15.1-1.1l-1.1-0.5zm-1 1l-0.5-1zm1.2-13.6l1.1-0.3zm-0.2-0.7l1-0.6zm-15-6.6l0.5 1zm-1 1.1l1 0.5zm3.5 15.1l-1.1 0.4zm1.3 1.3l-0.4 1.1zm-1.3-5.5l-1.1-0.4zm1.3-1.3l-0.5-1.1zm5.6-9.8l-0.8 0.9zm4.9 4.9l0.8-0.9z"/>
+                                            </g>
+                                        </svg>
+                                        <span class="text-sm font-medium">Modificar CV</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600">              
+                                        <svg class="w-3.5 h-3.5 me-2" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24">
+                                            <title>file-cv-svgrepo-com-svg-svg</title>
+                                            <style>
+                                                .s0 { fill: #6b7280 } 
+                                            </style>
+                                            <g id="SVGRepo_bgCarrier">
+                                            </g>
+                                            <g id="SVGRepo_tracerCarrier">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path id="Layer" fill-rule="evenodd" class="s0" d="m22.3 17.6c0 0.5-0.3 0.9-0.8 1.1q-2.6 0.8-5.2 1.2c-0.1 2.2-1.9 4-4.2 4-2.2 0-4-1.8-4.1-4q-2.6-0.4-5.2-1.2c-0.5-0.2-0.8-0.6-0.8-1.1q0-0.3 0.1-0.5l1-2q1.1-2.5 1.4-5.2 0 0 0 0c0.3-2 1-3.8 2.3-5.2 1.1-1.1 2.5-1.8 4.2-2l1.2 1.1v1.1c0.6 0 1.1-0.5 1.1-1.1v-1.1c1.7 0.2 3.2 0.9 4.2 2 1.3 1.4 2 3.2 2.3 5.2q0 0 0 0l-1.1 0.2 1.1-0.2q0.3 2.7 1.4 5.2l1 2q0.1 0.2 0.1 0.5zm-10.1 2.7q0 0-0.1 0 0 0 0 0-0.9-0.1-1.7-0.1c0.2 0.8 0.9 1.4 1.7 1.4 0.9 0 1.6-0.6 1.8-1.4q-0.8 0-1.7 0.1zm1.1-17.6h-2.3q0.6-0.1 1.2-0.1 0.6 0 1.1 0.1zm-1.2 15.3q1.4-0.1 2.7-0.2c-0.5 0.1-0.8 0.6-0.8 1.1v0.7h2.3v-0.7c0-0.6-0.5-1.1-1-1.2q2.1-0.3 4.2-0.8l-0.4-0.8q0-0.1 0-0.1c-0.8-1.8-1.3-3.8-1.6-5.8-0.3-1.7-0.8-3-1.7-3.9-0.8-0.8-1.9-1.4-3.6-1.4-1.8 0-2.9 0.6-3.7 1.4-0.9 0.9-1.4 2.3-1.7 3.9-0.3 2-0.8 4-1.6 5.8q0 0 0 0.1l-0.4 0.8q2.1 0.5 4.2 0.8c-0.5 0.1-1 0.6-1 1.2v0.7h2.3v-0.7c0-0.5-0.3-1-0.8-1.1q1.3 0.1 2.6 0.2zm3.2-0.3q-0.3 0-0.5 0.1 0.2-0.1 0.4-0.1 0 0 0.1 0zm-5.8 0.1q-0.2-0.1-0.5-0.1 0.1 0 0.1 0 0.2 0 0.4 0.1z"/>
+                                            </g>
+                                        </svg>
+                                        <span class="text-sm font-medium">Notificaciones</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600">              
+                                        <svg class="w-3.5 h-3.5 me-2" version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 76 76" width="76" height="76">
+                                            <title>notification-unread-lines-svgrepo-com-svg</title>
+                                            <style>
+                                                .s0 { fill: #6b7280 } 
+                                            </style>
+                                            <g id="SVGRepo_bgCarrier">
+                                            </g>
+                                            <g id="SVGRepo_tracerCarrier">
+                                            </g>
+                                            <g id="SVGRepo_iconCarrier">
+                                                <path id="Layer" fill-rule="evenodd" class="s0" d="m5 18.6h59.4c2.8 0 5 2.2 5 5v36.3c0 2.8-2.2 5-5 5h-59.4c-2.8 0-5-2.2-5-5v-36.3c0-2.8 2.2-5 5-5zm6.6-6.6h59.4c2.8 0 5 2.2 5 5v36.3c0 2.7-2.2 5-5 5v-36.4c0-2.7-2.2-4.9-4.9-4.9h-59.5c0-2.8 2.2-5 5-5zm-3.3 28.1v3.3h36.3v-3.3zm0 9.9v3.3h47.9v-3.3zm0-19.8v3.3h47.9v-3.3z"/>
+                                            </g>
+                                        </svg>
+                                        <span class="text-sm font-medium">Mis postulaciones</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" (click)="logout()" class="flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white">
+                                        <svg class="w-3.5 h-3.5 me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 18" fill="currentColor">
+                                            <path d="M18 4H16V9C16 10.0609 15.5786 11.0783 14.8284 11.8284C14.0783 12.5786 13.0609 13 12 13H9L6.846 14.615C7.17993 14.8628 7.58418 14.9977 8 15H11.667L15.4 17.8C15.5731 17.9298 15.7836 18 16 18C16.2652 18 16.5196 17.8946 16.7071 17.7071C16.8946 17.5196 17 17.2652 17 17V15H18C18.5304 15 19.0391 14.7893 19.4142 14.4142C19.7893 14.0391 20 13.5304 20 13V6C20 5.46957 19.7893 4.96086 19.4142 4.58579C19.0391 4.21071 18.5304 4 18 4Z" fill="currentColor"/>
+                                            <path d="M12 0H2C1.46957 0 0.960859 0.210714 0.585786 0.585786C0.210714 0.960859 0 1.46957 0 2V9C0 9.53043 0.210714 10.0391 0.585786 10.4142C0.960859 10.7893 1.46957 11 2 11H3V13C3 13.1857 3.05171 13.3678 3.14935 13.5257C3.24698 13.6837 3.38668 13.8114 3.55279 13.8944C3.71889 13.9775 3.90484 14.0126 4.08981 13.996C4.27477 13.9793 4.45143 13.9114 4.6 13.8L8.333 11H12C12.5304 11 13.0391 10.7893 13.4142 10.4142C13.7893 10.0391 14 9.53043 14 9V2C14 1.46957 13.7893 0.960859 13.4142 0.585786C13.0391 0.210714 12.5304 0 12 0Z" fill="currentColor"/>
+                                        </svg>
+                                        <span class="text-sm font-medium">Cerrar sesión</span>
+                                    </a>
                                 </li>
                             </ul>
-                            <div class="py-1">
-                                <a (click)="logout()"
-                                    class="hover:cursor-pointer block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Cerrar
-                                    sesión</a>
-                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            
+
+
+
+
+
+
+
+
+
+
 
             <div *ngIf="register == false">
                 <a routerLink="/login"
