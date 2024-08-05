@@ -35,8 +35,9 @@ export class RegisterP2Component {
   public status: string = '';
   public showError: boolean = false;
   public loading: boolean = false;
-
-
+  public year: string = '';
+  public month: string = '';
+  public day: string = '';
 
   constructor(
     private _userService: UserService,
@@ -45,7 +46,7 @@ export class RegisterP2Component {
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
-    this.user = new User(0, '', '', '', '','', '','');
+    this.user = new User(0, '', '', '', '','', '','','');
 
     const navigation = this._router.getCurrentNavigation();
     if (navigation?.extras?.state) {
@@ -58,7 +59,8 @@ export class RegisterP2Component {
         state.location || '',
         state.ci_estudiante || '',
         state.phone || '',
-        state.cod_postal || ''
+        state.cod_postal || '',
+        state.fec_nacimiento || '',
       );
     } 
   }
@@ -100,7 +102,6 @@ export class RegisterP2Component {
   }
   
   register(form: any) {
-
     this.user.password;
     this.user.name = this.capitalize(this.user.name);
     this.user.email = this.user.email.toLowerCase();
@@ -109,6 +110,7 @@ export class RegisterP2Component {
     this.user.cod_postal;
     this.user.phone;
     this.loading = true;
+    this.user.fec_nacimiento = this.year + '-' + this.month + '-' + this.day;
 
     this._userService.register(this.user).subscribe(
       (response) => {

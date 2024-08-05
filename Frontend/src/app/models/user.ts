@@ -7,6 +7,7 @@ export class User {
       public location: string,
       public ci_estudiante: string,
       public phone: string,
-      public cod_postal: string
+      public cod_postal: string,
+      public fec_nacimiento: string,
     ) {}
   }

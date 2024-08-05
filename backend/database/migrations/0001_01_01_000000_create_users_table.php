@@ -43,14 +43,14 @@ return new class extends Migration
 
     Schema::create('estudiante', function (Blueprint $table) {
     $table->string('ci_estudiante', 8);
-    //$table->string('fec_nacimiento');
+    $table->date('fec_nacimiento');
     $table->string('cod_postal', 5);
     $table->enum('location', [
         'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
         'Maldonado','Montevideo','Paysandu','Río Negro','Rivera','Rocha','Salto','San José',
         'Soriano','Tacuarembo','Treinta y Tres'
     ]);
-   // $table->foreignId('id_image')->constrained('image_uploads')->onDelete('cascade'); 
+    $table->foreignId('id_image')->constrained('image_uploads')->onDelete('cascade'); 
     $table->foreignId('id')->constrained('users')->onDelete('cascade');
     $table->primary('id');
     $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento

@@ -12,8 +12,9 @@ class Estudiante extends Model
         'ci_estudiante',
         'id',
         'location',
-        //'fec_nacimiento',
-        'cod_postal'
+        'fec_nacimiento',
+        'cod_postal',
+        'id_image'
     ];
 
     public $timestamps = false;

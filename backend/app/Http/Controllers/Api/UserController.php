@@ -168,6 +168,7 @@ class UserController extends Controller
 
     public function store_image(Request $request)
     {
+        // De momento no apliqué el validated, de momento.
         $validated = $request->validate([
             'image' => 'required|mimes:jpg,jpeg,png,bmp',
         ]);
@@ -192,6 +193,7 @@ class UserController extends Controller
     public function store(Request $request)
 {
     $jsonData = $request->json()->all();
+    // Probablemente sea temporal, la linea de abajo establece automaticamente el valor del atributo rol a estudiante
     $jsonData['rol'] = $jsonData['rol'] ?? 'estudiante';
     $validator = Validator::make($jsonData, [
         'name' => 'required',
@@ -202,8 +204,9 @@ class UserController extends Controller
         'location' => 'required_if:rol,estudiante|string|in:Artigas,Canelones,Cerro Largo,Colonia,
         Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
         'ci_estudiante' => 'required_if:rol,estudiante|string|max:8', 
-        //'fec_nacimiento' => 'required_if:rol,estudiante|string|max:10',
+        'fec_nacimiento' => 'required_if:rol,estudiante|date',
         'cod_postal' => 'required_if:rol,estudiante|string|max:5',
+        'id_image' => 'required_if:rol,estudiante|integer',
     ]);
 
     if ($validator->fails()) {
@@ -220,6 +223,7 @@ class UserController extends Controller
             'password' => bcrypt($jsonData['password']),
             'rol' => $jsonData['rol'],
             'phone' => $jsonData['phone'],
+            'id_image' => $jsonData['id_image']
         ]);
 
         // Crear estudiante si el rol es estudiante
@@ -229,7 +233,7 @@ class UserController extends Controller
                 'id' => $user->id,
                 'cod_postal' => $jsonData['cod_postal'],
                 'location' => $jsonData['location'],
-                //'fec_nacimiento' => $jsonData['fec_nacimiento']
+                'fec_nacimiento' => $jsonData['fec_nacimiento']
             ]);
         }
     
