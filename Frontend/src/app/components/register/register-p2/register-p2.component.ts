@@ -46,7 +46,7 @@ export class RegisterP2Component {
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
-    this.user = new User(0, '', '', '', '','', '','','');
+    this.user = new User(0, '', '', '', '','', '','','','');
 
     const navigation = this._router.getCurrentNavigation();
     if (navigation?.extras?.state) {
@@ -61,6 +61,7 @@ export class RegisterP2Component {
         state.phone || '',
         state.cod_postal || '',
         state.fec_nacimiento || '',
+        state.id_image
       );
     } 
   }
@@ -93,6 +94,7 @@ export class RegisterP2Component {
       this._userService.storeImage(file).subscribe(
         response => {
           console.log('Imagen cargada exitosamente', response);
+          this.user.id_image = response.id;
         },
         error => {
           console.error('Error al cargar la imagen', error);
@@ -111,7 +113,6 @@ export class RegisterP2Component {
     this.user.phone;
     this.loading = true;
     this.user.fec_nacimiento = this.year + '-' + this.month + '-' + this.day;
-
     this._userService.register(this.user).subscribe(
       (response) => {
         this.loading = false;
