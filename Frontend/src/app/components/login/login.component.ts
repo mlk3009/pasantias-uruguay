@@ -33,12 +33,10 @@ import { CookieService } from 'ngx-cookie-service';
 export class LoginComponent {
   public user: User;
   public status: string = '';
-
   public loading: boolean = false;
-
   public showError: boolean = false;
-
   public inputType: string = 'password';
+  public rememberMe: boolean = false; // Nueva propiedad
 
   constructor(
     private _userService: UserService,
@@ -50,7 +48,8 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    if (this._cookieService.get('token')) {
+    const token = this._cookieService.get('token') || localStorage.getItem('token');
+    if (token) {
       this._router.navigate(['/inicio']);
     }
   }
@@ -59,21 +58,27 @@ export class LoginComponent {
     return (this.inputType =
       this.inputType === 'password' ? 'text' : 'password');
   }
-
+  get isLoggedIn() {
+    const token = this._cookieService.get('token') || localStorage.getItem('token');
+    return !!token;
+  }
   login(form: any) {
     this.loading = true;
     this._userService.login(this.user).subscribe(
       (loginResponse) => {
         const token = loginResponse.token;
-        this._cookieService.set('token', token);
+        if (this.rememberMe) {
+          localStorage.setItem('token', token);
+        } else {
+          this._cookieService.set('token', token);
+        }
         localStorage.setItem('email', this.user.email);
-  
+
         // Acá llamé a la de obtenerUsuario para poder verificar si el email está verificado, usé como parametro el token del login
         this._userService.obtenerUsuario(token).subscribe(
           (userResponse) => {
             this.loading = false;
 
-            
             if (userResponse.data.email_verified_at !== null) {
               this._router.navigate(['/inicio']);
             } else {

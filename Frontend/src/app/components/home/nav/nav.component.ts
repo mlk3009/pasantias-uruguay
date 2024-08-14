@@ -22,7 +22,7 @@ export class NavComponent implements AfterViewInit {
   public token: string = '';
   public username: string = '';
   public dropdown = false;
-  public register: boolean = false;
+
 
   public emprise = false;
   public scroll_var = true;
@@ -37,7 +37,6 @@ export class NavComponent implements AfterViewInit {
 
   ngOnInit() {
     if (this.token) {
-      this.register = true;
 
       this._userService.obtenerUsuario(this.token).subscribe(
         response => {
@@ -50,14 +49,18 @@ export class NavComponent implements AfterViewInit {
     }
     initFlowbite();
   }
-
+  
+  get isLoggedIn() {
+    const token = this._cookieService.get('token') || localStorage.getItem('token');
+    return !!token;
+  }
   changeDropdown() {
     this.dropdown = !this.dropdown;
   }
 
   logout() {
     this._cookieService.delete('token');
-    this.register = false;
+    localStorage.removeItem('token');
   }
 
   @HostListener('window:scroll', ['$event'])

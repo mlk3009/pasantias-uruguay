@@ -36,14 +36,14 @@
                         <div>
                             <label for="input-group-1" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Su Email</label>
                             <div class="relative mb-6">
-                              <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none">
                                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 16">
                                     <path d="m10.036 8.278 9.258-7.79A1.979 1.979 0 0 0 18 0H2A1.987 1.987 0 0 0 .641.541l9.395 7.737Z"/>
                                     <path d="M11.241 9.817c-.36.275-.801.425-1.255.427-.428 0-.845-.138-1.187-.395L0 2.6V14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2.5l-8.759 7.317Z"/>
                                 </svg>
-                              </div>
-                              <input [disabled]="loading" type="email" name="email" id="email" [(ngModel)]="user.email" #email="ngModel"
-                              pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@pasantiasuy.com">
+                            </div>
+                            <input [disabled]="loading" type="email" name="email" id="email" [(ngModel)]="user.email" #email="ngModel"
+                            pattern="[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@pasantiasuy.com">
                             </div>
                             <small *ngIf="email.invalid && email.touched" class="text-red-500">
                                 El email es invalido
@@ -65,19 +65,18 @@
                                         }
 
                                 </a>
-                              <input [disabled]="loading" [type]="inputType" name="password" id="password" placeholder="••••••••"
+                            <input [disabled]="loading" [type]="inputType" name="password" id="password" placeholder="••••••••"
                                 [(ngModel)]="user.password" [ngModelOptions]="{standalone: true}" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
                             </div>
                         </div>
                         <div class="flex items-center justify-between">
                             <div class="flex items-start">
                                 <div class="flex items-center h-5">
-                                    <input [disabled]="loading" id="remember" aria-describedby="remember" type="checkbox"
-                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                                        required="">
+                                    <input [disabled]="loading" id="rememberMe" aria-describedby="remember" type="checkbox" [(ngModel)]="rememberMe" name="rememberMe"
+                                        class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800">
                                 </div>
                                 <div class="ml-3 text-sm">
-                                    <label for="remember" class="text-gray-500 dark:text-gray-300">Recordarme</label>
+                                    <label for="rememberMe" class="text-gray-500 dark:text-gray-300">Recordarme</label>
                                 </div>
                             </div>
                             <a routerLink="/restore"
