@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 import { User } from '../models/user';
 import { global } from './global';
 
@@ -8,20 +9,28 @@ import { global } from './global';
   providedIn: 'root',
 })
 export class UserService {
+  private previousImageId: string | null = null;
   constructor(public _http: HttpClient) {}
 
-  storeImage(image: File): Observable<any> {
-    const formData: FormData = new FormData();
-    formData.append('image', image, image.name);
+  storeImage(file: File): Observable<any> {
+    if (this.previousImageId) {
+      this.deleteImage(this.previousImageId).subscribe();
+    }
 
+    const formData = new FormData();
+    formData.append('image', file);
     let headers = new HttpHeaders();
-    // No puse 'Content-Type' pq el navegador lo pone en FormData
-
     return this._http.post(global.url + 'upload-image', formData, {
       headers: headers,
-    });
+    }).pipe(
+      tap((response: any) => {
+        this.previousImageId = response.id;
+      })
+    );
   }
-
+  deleteImage(imageId: string): Observable<any> {
+    return this._http.delete(global.url + `delete-image/${imageId}`);
+}
   register(user: User): Observable<any> {
     let json = JSON.stringify(user);
     let params = json;

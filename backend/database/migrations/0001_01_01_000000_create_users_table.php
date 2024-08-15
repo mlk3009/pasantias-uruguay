@@ -50,7 +50,7 @@ return new class extends Migration
         'Maldonado','Montevideo','Paysandu','Río Negro','Rivera','Rocha','Salto','San José',
         'Soriano','Tacuarembo','Treinta y Tres'
     ]);
-    $table->foreignId('id_image')->constrained('image_uploads')->onDelete('cascade'); 
+    $table->foreignId('id_image')->nullable()->constrained('image_uploads')->onDelete('cascade'); 
     $table->foreignId('id')->constrained('users')->onDelete('cascade');
     $table->primary('id');
     $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento

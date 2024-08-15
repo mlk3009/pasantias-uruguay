@@ -18,7 +18,7 @@ class="bg-white border-gray-200 dark:bg-gray-900 nav001">
 
 
 
-                <div class="relative" *ngIf="register == true">
+                <div class="relative" *ngIf="isLoggedIn">
                     <div data-dial-init class="fixed top-2 right-20 group">
                         <button id="hide" type="button" data-dial-toggle="speed-dial-menu-dropdown-alternative" aria-controls="speed-dial-menu-dropdown-alternative" aria-expanded="false" class="profile flex items-center justify-center ml-auto text-white bg-white rounded-full w-14 h-14 hover:bg-blue-800 dark:bg-blue-600 dark:hover:bg-blue-700 focus:ring-4 focus:ring-white focus:outline-none dark:focus:ring-white">
                             <svg class="w-6 h-6" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
@@ -154,7 +154,7 @@ class="bg-white border-gray-200 dark:bg-gray-900 nav001">
 
 
 
-            <div *ngIf="register == false">
+            <div *ngIf="!isLoggedIn">
                 <a routerLink="/login"
                     class=" iniciosesion text-white-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">Iniciar
                     sesión</a>

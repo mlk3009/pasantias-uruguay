@@ -164,7 +164,31 @@ class UserController extends Controller
     }
 
 
+    public function delete_image($id)
+    {
 
+        $imageUpload = ImageUpload::find($id);
+        if (!$imageUpload) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Imagen no encontrada',
+            ], 404);
+        }
+    
+        $imageName = $imageUpload->image;
+
+        $imagePath = public_path('images/uploads/' . $imageName);
+        if (file_exists($imagePath)) {
+            unlink($imagePath);
+        }
+
+        $imageUpload->delete();
+        
+        return response()->json([
+            'success' => true,
+            'message' => 'Imagen eliminada con éxito',
+        ]);
+    }
 
     public function store_image(Request $request)
     {
@@ -179,7 +203,7 @@ class UserController extends Controller
             $image->move('images/uploads', $imageName);
         }
     
-        ImageUpload::create([
+        $imageUpload = ImageUpload::create([
             'image' => $imageName,
         ]);
     
@@ -187,6 +211,7 @@ class UserController extends Controller
             'success' => true,
             'message' => 'Imagen subida con éxito',
             'image' => $imageName,
+            'id' => $imageUpload->id,
         ]);
     }
 
@@ -206,7 +231,7 @@ class UserController extends Controller
         'ci_estudiante' => 'required_if:rol,estudiante|string|max:8', 
         'fec_nacimiento' => 'required_if:rol,estudiante|date',
         'cod_postal' => 'required_if:rol,estudiante|string|max:5',
-        'id_image' => 'required_if:rol,estudiante|integer',
+        'id_image' => 'nullable|integer',
     ]);
 
     if ($validator->fails()) {
@@ -223,19 +248,27 @@ class UserController extends Controller
             'password' => bcrypt($jsonData['password']),
             'rol' => $jsonData['rol'],
             'phone' => $jsonData['phone'],
-            'id_image' => $jsonData['id_image']
         ]);
 
-        // Crear estudiante si el rol es estudiante
-        if ($jsonData['rol'] === 'estudiante') {
-            Estudiante::create([
-                'ci_estudiante' => $jsonData['ci_estudiante'],
-                'id' => $user->id,
-                'cod_postal' => $jsonData['cod_postal'],
-                'location' => $jsonData['location'],
-                'fec_nacimiento' => $jsonData['fec_nacimiento']
-            ]);
-        }
+    // Crear estudiante si el rol es estudiante, es un poco diferente al de arriba pq primero ingresa los datos en $estudianteData
+    // Luego mira si existe id_image y lo pone si existe, y luego a lo ultimo crea el estudiante
+    if ($jsonData['rol'] === 'estudiante') {
+    $estudianteData = [
+        'ci_estudiante' => $jsonData['ci_estudiante'],
+        'id' => $user->id,
+        'cod_postal' => $jsonData['cod_postal'],
+        'location' => $jsonData['location'],
+        'fec_nacimiento' => $jsonData['fec_nacimiento'],
+    ];
+
+    if (isset($jsonData['id_image'])) {
+        $estudianteData['id_image'] = $jsonData['id_image'];
+    }
+
+    Estudiante::create($estudianteData);
+}
+
+
     
             // Generar el código de verificación
             $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
