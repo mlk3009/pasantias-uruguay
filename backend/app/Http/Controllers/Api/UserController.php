@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Email;
 use App\Models\Estudiante;
+use App\Models\Etiqueta;
 use App\Models\ImageUpload;
 use App\Http\Controllers\Api\PHPMailerController;
 use Illuminate\Auth\Events\Registered;
@@ -226,8 +227,7 @@ class UserController extends Controller
         'password' => 'required',
         'phone' => 'required|string|max:9',
         'rol' => 'required|in:estudiante,administrador,empresa',
-        'location' => 'required_if:rol,estudiante|string|in:Artigas,Canelones,Cerro Largo,Colonia,
-        Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
+        'location' => 'required_if:rol,estudiante|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
         'ci_estudiante' => 'required_if:rol,estudiante|string|max:8', 
         'fec_nacimiento' => 'required_if:rol,estudiante|date',
         'cod_postal' => 'required_if:rol,estudiante|string|max:5',
@@ -261,8 +261,10 @@ class UserController extends Controller
         'fec_nacimiento' => $jsonData['fec_nacimiento'],
     ];
 
-    if (isset($jsonData['id_image'])) {
+    if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
         $estudianteData['id_image'] = $jsonData['id_image'];
+    } else {
+        $estudianteData['id_image'] = null;
     }
 
     Estudiante::create($estudianteData);
@@ -388,7 +390,89 @@ class UserController extends Controller
 
         return response()->json($data, $data['code']);
     }
+    
 
+    public function AddUsertags(Request $request){
+    
+        $jsonData = $request->json()->all();
+    
+        $validator = Validator::make($jsonData, [
+            'estudiante_id' => 'required',
+            'etiqueta_id' => 'required',
+            
+        ]);
+    
+        if($validator->fails()) {
+            $data = [
+                'message' => 'Error al agregarle la etiqueta al usuario',
+                'status' => 400,
+                'errors' => $validator->errors()
+            ];
+            return response()->json($data, 400);
+        } else {
+            $estudiante = Estudiante::find($jsonData['estudiante_id']);
+            $etiqueta = Etiqueta::find($jsonData['etiqueta_id']);
+
+            if ($estudiante && $etiqueta) {
+            if ($estudiante->etiquetas()->where('etiqueta_id', $etiqueta->id)->exists()) {
+                $data = [
+                    'message' => 'La etiqueta ya esta asignada al estudiante',
+                    'status' => 409
+                ];
+                return response()->json($data, 409);
+            }
+
+                $estudiante->etiquetas()->attach($etiqueta->id);
+                $data = [
+                    'message' => 'Etiqueta agregada correctamente',
+                    'status' => 201
+                ];
+                return response()->json($data, 201);
+            } else {
+                $data = [
+                    'message' => 'Estudiante o Etiqueta no encontrados',
+                    'status' => 404
+                ];
+                return response()->json($data, 404);
+            }
+        }
+    }
+
+    public function showUsertags($id){
+        {
+            $tags = Estudiante::find($id)->etiquetas()->get();
+            if (!$tags) {
+                $data = [
+                    'message' => 'Etiquetas no encontradas',
+                    'status' => 404
+                ];
+                return response()->json($data, 404);
+            }
+            $data = [
+                'etiquetas del estudiante' => $tags,
+                'status' => 200
+            ];
+            return response()->json($data, 200);
+        }
+    }
+
+    public function showTags(){
+        {
+            $tags = Etiqueta::all();
+            if (!$tags) {
+                $data = [
+                    'message' => 'Error al mostrar las etiquetas',
+                    'status' => 404
+                ];
+                return response()->json($data, 404);
+            }
+            $data = [
+                'Tags' => $tags,
+                'status' => 200
+            ];
+            return response()->json($data, 200);
+        }
+    }
     public function destroy()
     {
     }

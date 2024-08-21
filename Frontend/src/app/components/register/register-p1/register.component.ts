@@ -3,7 +3,7 @@ import { Router, RouterModule, NavigationExtras } from '@angular/router';
 import { User } from '../../../models/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../../services/user.service';
+import { UserService, etiqueta } from '../../../services/user.service';
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatDialog } from '@angular/material/dialog';
@@ -41,7 +41,8 @@ export class RegisterComponent {
   public inputType2: string = 'password';
   public surName: string = '';
   public location: any;
-
+  public etiquetas: etiqueta[] = [];
+  public selectedEtiquetaId: number | null = null;
 
   constructor(
     private _userService: UserService,
@@ -70,7 +71,19 @@ export class RegisterComponent {
     if (this._cookieService.get('token')) {
       this._router.navigate(['/inicio']);
     }
-    
+
+    this.getEtiquetas();
+  }
+  
+  getEtiquetas(): void {
+    this._userService.getEtiquetas().subscribe(
+      response => {
+        this.etiquetas = response;
+      },
+      error => {
+        console.error('Error al obtener las etiquetas', error);
+      }
+    );
   }
 
   showPassword() {
@@ -97,7 +110,8 @@ export class RegisterComponent {
         name: this.user.name,
         email: this.user.email,
         password: this.user.password,
-        location: this.user.location
+        location: this.user.location,
+        selectedEtiquetaId: this.selectedEtiquetaId
       }
     };
 

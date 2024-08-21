@@ -23,4 +23,9 @@ class Estudiante extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
+
+    public function etiquetas()
+    {
+        return $this->belongsToMany(Etiqueta::class, 'tiene', 'estudiante_id', 'etiqueta_id');
+    }
 }

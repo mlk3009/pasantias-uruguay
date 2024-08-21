@@ -38,6 +38,7 @@ export class RegisterP2Component {
   public year: string = '';
   public month: string = '';
   public day: string = '';
+  public selectedEtiquetaId: number | null = null;
 
   constructor(
     private _userService: UserService,
@@ -46,24 +47,20 @@ export class RegisterP2Component {
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
-    this.user = new User(0, '', '', '', '','', '','','','');
-
+    this.user = new User(0, '', '', '', '', '', '', '', '', '');
     const navigation = this._router.getCurrentNavigation();
     if (navigation?.extras?.state) {
-      const state = navigation.extras.state as User;
-      this.user = new User(
-        state.id || 0,
-        state.name || '',
-        state.email || '',
-        state.password || '',
-        state.location || '',
-        state.ci_estudiante || '',
-        state.phone || '',
-        state.cod_postal || '',
-        state.fec_nacimiento || '',
-        state.id_image
-      );
-    } 
+      const state = navigation.extras.state;
+      this.user["name"] = state["name"];
+      this.user["email"] = state["email"];
+      this.user["password"] = state["password"];
+      this.user["location"] = state["location"];
+      this.selectedEtiquetaId = state["selectedEtiquetaId"];
+
+      // Imprimir los datos en la consola del navegador
+      console.log('Navigation State:', state);
+      
+    }
   }
 
   
@@ -103,6 +100,18 @@ export class RegisterP2Component {
     }
   }
   
+
+  addUserTag(estudiante_id: number, etiqueta_id: number): void {
+    this._userService.addUserTags(estudiante_id, etiqueta_id).subscribe(
+      response => {
+        console.log('Etiqueta agregada correctamente:', response);
+      },
+      error => {
+        console.error('Error al agregar la etiqueta:', error);
+      }
+    );
+  }
+
   register(form: any) {
     this.user.password;
     this.user.name = this.capitalize(this.user.name);
@@ -119,6 +128,15 @@ export class RegisterP2Component {
         //validar email
         localStorage.setItem('email', this.user.email);
         this.dialog.open(ValidAcountComponent);
+
+        // Obtener el ID del usuario desde la respuesta
+        const estudiante_id = response.data.id;
+        const etiqueta_id = this.selectedEtiquetaId;
+        if (estudiante_id && etiqueta_id) {
+          this.addUserTag(estudiante_id, etiqueta_id);
+        } else {
+          console.error('Estudiante ID o Etiqueta ID no están disponibles');
+        }
       },
       (error) => {
         this.loading = false;

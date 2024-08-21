@@ -198,10 +198,10 @@
                   
                   </svg>
               </span>
-              <select id="countries" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <select id="countries" [(ngModel)]="selectedEtiquetaId" name= "selectedEtiquetaId" class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                 <option style="display: none;" selected>Puesto de trabajo deseado</option>
-                <option class="text-gray-900" value="IN">Informática</option>
-              </select>  
+                <option *ngFor="let etiqueta of etiquetas" [value]="etiqueta.id" class="text-gray-900">{{ etiqueta.name }}</option>
+              </select>
             </div>
           </div>
 
@@ -244,7 +244,6 @@
                 <option class="text-gray-900" value="Flores">Flores</option>
                 <option class="text-gray-900" value="Lavalleja">Lavalleja</option>
                 <option class="text-gray-900" value="Río Negro">Río Negro</option>
-                <option class="text-gray-900" value="San José de Mayo">San José de Mayo</option>
               </select>
             </div>
           </div>
