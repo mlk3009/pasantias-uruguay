@@ -9,13 +9,15 @@ import { FooterComponent} from './footer/footer.component';
 import { PublicacionesComponent} from './publicaciones/publicaciones.component';
 import { ContactComponent } from './contact/contact.component';
 import { ValidAcountComponent } from '../register/valid-acount/valid-acount.component';
+import { SliderComponent } from './slider/slider.component';
+import { CategoriesComponent } from './categories/categories.component';
 
 
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent, ValidAcountComponent],
+  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent, ValidAcountComponent, SliderComponent, CategoriesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
