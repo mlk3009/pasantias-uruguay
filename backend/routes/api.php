@@ -24,6 +24,11 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 
+//TAGS
+Route::post('/addUserTag', [UserController::class, 'AddUsertags']);
+Route::get('/showUserTag/{id}', [UserController::class, 'ShowUsertags']);
+Route::get('/showTags', [UserController::class, 'showTags']);
+
 // PASSWORD
 Route::post('restore', [PasswordController::class, 'restorePassword']);
 Route::post('checkCode', [PasswordController::class, 'checkCode']);

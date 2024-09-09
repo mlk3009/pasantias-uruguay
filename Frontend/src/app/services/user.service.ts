@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { global } from './global';
 
@@ -99,4 +99,36 @@ export class UserService {
       headers: headers,
     });
   }
+
+// Método para obtener todas las etiquetas, estará acá momentaneamente hasta que se cree un servicio para las etiquetas
+getEtiquetas(): Observable<etiqueta[]> {
+  return this._http.get<{ Tags: etiqueta[], status: number }>(global.url + 'showTags').pipe(
+    map(response => {
+      // Asegúrate de que la respuesta contiene la propiedad Tags y es un array
+      if (response && Array.isArray(response.Tags)) {
+        return response.Tags;
+      } else {
+        console.error('La respuesta no contiene un array de etiquetas:', response);
+        return [];
+      }
+    }),
+  );
+}
+
+addUserTags(estudiante_id: number, etiqueta_id: number): Observable<any> {
+  const json = {
+    estudiante_id: estudiante_id,
+    etiqueta_id: etiqueta_id
+  };
+
+  const params = JSON.stringify(json);
+  const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  return this._http.post(global.url + 'addUserTag', params, { headers: headers });
+}
+
+}
+export interface etiqueta {
+  id: number;
+  name: string;
 }
