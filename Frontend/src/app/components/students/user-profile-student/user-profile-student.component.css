@@ -20,20 +20,27 @@
     justify-content: center;
     align-items: center;
 }
+.datos{
+    min-width: 55%;
+}
+.button{
+    min-height: 15vh;
+}
 .buttons{
     min-width: 25%;
-}
-.button1{
-    background-color: #008fa8;
-    color: white;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-.button1:hover{
-    background-color: #15c3c3;
+    margin-bottom: 5vh;
 }
 .home_button{
     color: #15c3c3;
 }
 .home_button2:hover{
     color: #15c3c3;
+}
+.button1:hover{
+    color: #15c3c3;
+}
+.col2{
+    min-width: 40%;
+    display: flex;
+    margin-right: 95px;
 }

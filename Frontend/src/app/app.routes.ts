@@ -60,6 +60,34 @@ export const routes: Routes = [
         (m) => m.RegisterP2Component
       ),
   },
+  {
+    path: 'user-profile',
+    loadComponent: () =>
+      import('./components/students/students.component').then(
+        (m) => m.StudentsComponent
+      ),
+  },
+  {
+    path: 'cv',
+    loadComponent: () =>
+      import('./components/students/cv/cv.component').then(
+        (m) => m.CVComponent
+      ),
+  },
+  {
+    path: 'my-publications',
+    loadComponent: () =>
+      import('./components/enterprise/my-publications/my-publications.component').then(
+        (m) => m.MyPublicationsComponent
+      ),
+  },
+  {
+    path: 'enterprise-profile',
+    loadComponent: () =>
+      import('./components/enterprise/enterprise.component').then(
+        (m) => m.EnterpriseComponent
+      ),
+  },
   // Dejar '**' siempre al final
   {
     path: '**',

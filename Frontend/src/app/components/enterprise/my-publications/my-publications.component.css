@@ -1,0 +1,107 @@
+body{
+    background-image: url(../../../../assets/img/principalimage_edit2.jpg);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: repeat; 
+    height: 420vh;
+}
+
+
+
+.span1 {
+    color: white;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+}
+.principal_container{
+    max-width: 100%;
+}
+.cruz{
+    top: 0;
+}
+.subtitle{
+    width: 100%;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+}
+h1{
+    margin: 0 auto;
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 500;
+}
+
+.main_container{
+    margin-bottom: 5vh;
+}
+.title{
+    padding-bottom: 5vh;
+    margin-top: 5vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.title h1{
+    font-size: 2.5em;
+    font-weight: 600;
+    color: #000000;
+}
+.title h2{
+    font-size: 1.8em;
+    font-weight: 600;
+    color: #3a3a3a;
+}
+.sectionContainer{
+    margin-top: 5vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.sectionIn{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.card{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+.img{
+    min-width: 320px;
+    max-width: 320px;
+    min-height: 320px;
+    max-height: 320px;
+}
+.button-color{
+    background-color: #008fa8;
+}
+.button-color:hover{
+    background-color: #15c3c3;
+}
+
+
+.body{
+    padding-bottom: 5vh;
+    margin-top: 10vh;
+}
+.button{
+    color: rgb(49, 49, 49);
+    background-color: white;
+    border: 1px solid rgb(129, 129, 129);
+}
+.button:hover{
+    background-color: #15c3c311;
+    color: black;
+}
+.span{
+    margin: auto 2.5rem;
+}

@@ -1,14 +1,26 @@
 .title{
-    padding-bottom: 10vh;
+    padding-bottom: 5vh;
     margin-top: 5vh;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    border-bottom: 1px solid #e4e4e4;
+}
+.title2{
+    padding-bottom: 5vh;
+    margin-top: 5vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 }
 .title h1{
     font-size: 3em;
+    font-weight: 600;
+    color: #000000;
+}
+.title2 h3{
+    font-size: 2.3em;
     font-weight: 600;
     color: #000000;
 }
@@ -154,11 +166,14 @@
     position: relative;
 }
 .body-nh{
-    border-bottom: 1px solid #c8c8c8;
+    border-bottom: 1px solid #e4e4e4;
     padding-bottom: 10vh;
 }
 .body{
     margin-top: 15vh;
     padding-bottom: 10vh;
-    border-bottom: 1px solid #c8c8c8;
+    border-bottom: 1px solid #e4e4e4;
+}
+.categories{
+    border-bottom: 1px solid #e4e4e4;
 }

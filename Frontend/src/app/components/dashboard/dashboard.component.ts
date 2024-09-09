@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreatePublicationComponent } from './create-publication/create-publication.component';
+import { CreatePublicationComponent } from '../enterprise/user-profile-enterprise/create-publication/create-publication.component';
 
 @Component({
   selector: 'app-dashboard',
