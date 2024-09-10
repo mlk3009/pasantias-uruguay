@@ -33,3 +33,12 @@
 nav.down{
     background-color: #000220c1;
 }
+.profile{
+    width: 55px;
+}
+.profile:focus{
+    background-color: #90ecec;
+}
+.profile_container{
+    width: 150px;
+}
