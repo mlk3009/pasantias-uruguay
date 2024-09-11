@@ -20,6 +20,7 @@
     "@angular/platform-browser": "^17.0.0",
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
+    "animate.css": "^4.1.1",
     "flowbite": "^2.3.0",
     "ngx-cookie-service": "^17.1.0",
     "rxjs": "~7.8.0",

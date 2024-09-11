@@ -1,3 +1,6 @@
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+</head>
 <nav [ngClass]="scroll_var?'':'down'" 
 class="bg-white border-gray-200 dark:bg-gray-900 nav001">
     <div class="flex flex-wrap items-center justify-around max-w-screen-xl mx-auto p-4">
@@ -10,8 +13,8 @@ class="bg-white border-gray-200 dark:bg-gray-900 nav001">
 
                 
             
-            <section class="profile_container">
-                <div class="profile relative top-2 right-20" *ngIf="isLoggedIn">
+            <section class="profile_container" *ngIf="isLoggedIn">
+                <div class="profile relative top-2 right-20">
                     <div data-dial-init class="fixed top-2 right-20 group">
                         <button id="hide" type="button" data-dial-toggle="speed-dial-menu-dropdown-alternative" aria-controls="speed-dial-menu-dropdown-alternative" aria-expanded="false" class="profile flex items-center justify-center ml-auto text-white bg-white rounded-full w-14 h-14 focus:ring-4 focus:ring-white focus:outline-none dark:focus:ring-white">
                             <svg class="w-6 h-6" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000">
@@ -25,7 +28,7 @@ class="bg-white border-gray-200 dark:bg-gray-900 nav001">
                             </svg>
                             <span class="sr-only">Open actions menu</span>
                         </button>
-                        <div id="speed-dial-menu-dropdown-alternative" class="desplegable flex flex-col justify-end hidden py-1 mt-4 space-y-2 bg-white border border-gray-100 rounded-lg shadow-xl dark:bg-gray-700 dark:border-gray-600">
+                        <div id="speed-dial-menu-dropdown-alternative" class="animate__animated animate__faster animate__bounceInDown desplegable flex flex-col justify-end hidden py-1 mt-4 space-y-2 bg-white border border-gray-300 rounded-lg shadow-2xl dark:bg-gray-700 dark:border-gray-600">
                             <ul class="text-base text-gray-500 dark:text-gray-300">
                                 <li>
                                     <a href="#" class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600">              
