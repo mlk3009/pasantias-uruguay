@@ -12,6 +12,7 @@ return array(
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
     'App\\Models\\Email' => $baseDir . '/app/Models/Email.php',
     'App\\Models\\Estudiante' => $baseDir . '/app/Models/Estudiante.php',
+    'App\\Models\\Etiqueta' => $baseDir . '/app/Models/Etiqueta.php',
     'App\\Models\\ImageUpload' => $baseDir . '/app/Models/ImageUpload.php',
     'App\\Models\\Password' => $baseDir . '/app/Models/Password.php',
     'App\\Models\\Publication' => $baseDir . '/app/Models/Publication.php',

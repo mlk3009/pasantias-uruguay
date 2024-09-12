@@ -23,6 +23,9 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [UserController::class, 'logout']);
 });
 
+//CV
+Route::post('/cv', [UserController::class, 'storeCV']);
+Route::delete('/dropcv/{estudiante_id}', [UserController::class, 'deleteCV']);
 
 //TAGS
 Route::post('/addUserTag', [UserController::class, 'AddUsertags']);

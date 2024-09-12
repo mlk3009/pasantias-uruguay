@@ -558,6 +558,7 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Models\\Email' => __DIR__ . '/../..' . '/app/Models/Email.php',
         'App\\Models\\Estudiante' => __DIR__ . '/../..' . '/app/Models/Estudiante.php',
+        'App\\Models\\Etiqueta' => __DIR__ . '/../..' . '/app/Models/Etiqueta.php',
         'App\\Models\\ImageUpload' => __DIR__ . '/../..' . '/app/Models/ImageUpload.php',
         'App\\Models\\Password' => __DIR__ . '/../..' . '/app/Models/Password.php',
         'App\\Models\\Publication' => __DIR__ . '/../..' . '/app/Models/Publication.php',
