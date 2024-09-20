@@ -81,25 +81,25 @@ export class DatosGeneralesComponent {
   }
 
   next(){
-  //   this.servicioCv.loadForm(this.token, this.ficha).subscribe(
-  //           (response) => {
-  //             if (response.status == 'success') {
-  //               alert('Ficha cargada correctamente');
-  //               this.servicioCv.change.emit({ data: 'success' });
-  //               localStorage.setItem('hasFicha', 'true');
-  //             } else {
-  //               alert('Error al cargar la ficha, intente de nuevo');
-  //               this.servicioCv.change.emit({ data: 'error' });
-  //               localStorage.removeItem('hasFicha');
-  //             }
-  //           },
-  //           (error) => {
-  //             alert('Error al cargar la ficha, intente de nuevo');
-  //             this.servicioCv.change.emit({ data: 'error' });
-  //             console.log(<any>error);
-  //             localStorage.removeItem('hasFicha');
-  //           }
-  //         );
+    this.servicioCv.loadForm(this.token, this.cv).subscribe(
+            (response) => {
+              if (response == 'success') {
+                alert('Ficha cargada correctamente');
+                this.servicioCv.change.emit({ data: 'success' });
+                localStorage.setItem('hasFicha', 'true');
+              } else {
+                alert('Error al cargar la ficha, intente de nuevo');
+                this.servicioCv.change.emit({ data: 'error' });
+                localStorage.removeItem('hasFicha');
+              }
+            },
+            (error) => {
+              alert('Error al cargar la ficha, intente de nuevo');
+              this.servicioCv.change.emit({ data: 'error' });
+              console.log(<any>error);
+              localStorage.removeItem('hasFicha');
+            }
+          );
   }
 }
 

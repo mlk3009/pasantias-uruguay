@@ -332,8 +332,8 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         ),
         'Spatie\\Ignition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
-            1 => __DIR__ . '/..' . '/spatie/ignition/src',
+            0 => __DIR__ . '/..' . '/spatie/ignition/src',
+            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
         ),
         'Spatie\\FlareClient\\' => 
         array (
@@ -556,10 +556,15 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         'App\\Http\\Controllers\\Api\\PublicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PublicationController.php',
         'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Models\\CV' => __DIR__ . '/../..' . '/app/Models/CV.php',
+        'App\\Models\\Educacion' => __DIR__ . '/../..' . '/app/Models/Educacion.php',
         'App\\Models\\Email' => __DIR__ . '/../..' . '/app/Models/Email.php',
         'App\\Models\\Estudiante' => __DIR__ . '/../..' . '/app/Models/Estudiante.php',
         'App\\Models\\Etiqueta' => __DIR__ . '/../..' . '/app/Models/Etiqueta.php',
+        'App\\Models\\Experiencia' => __DIR__ . '/../..' . '/app/Models/Experiencia.php',
+        'App\\Models\\Habilidades' => __DIR__ . '/../..' . '/app/Models/Habilidades.php',
         'App\\Models\\ImageUpload' => __DIR__ . '/../..' . '/app/Models/ImageUpload.php',
+        'App\\Models\\Links' => __DIR__ . '/../..' . '/app/Models/Links.php',
         'App\\Models\\Password' => __DIR__ . '/../..' . '/app/Models/Password.php',
         'App\\Models\\Publication' => __DIR__ . '/../..' . '/app/Models/Publication.php',
         'App\\Models\\Requirements' => __DIR__ . '/../..' . '/app/Models/Requirements.php',

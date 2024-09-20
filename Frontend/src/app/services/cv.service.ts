@@ -16,15 +16,15 @@ export class CvService {
   constructor(public _http: HttpClient) {}
 
 
-  loadForm(token: string, ficha: any) {
-    let json = JSON.stringify(ficha);
+  loadForm(token: string, cv: any) {
+    let json = JSON.stringify(cv);
     let params = json;
 
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Authorization', 'Bearer ' + token);
     console.log('Solicitud HTTP:', { headers: headers });
-    return this._http.post(global.url + 'ficha', params, { headers: headers });
+    return this._http.post(global.url + 'cv', params, { headers: headers });
   }
 
   getFicha(token: string, id: string): Observable<any> {

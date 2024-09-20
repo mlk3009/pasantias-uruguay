@@ -3,6 +3,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CvController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\PublicationController;
@@ -24,8 +25,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 //CV
-Route::post('/cv', [UserController::class, 'storeCV']);
-Route::delete('/dropcv/{estudiante_id}', [UserController::class, 'deleteCV']);
+Route::post('/cv', [CvController::class, 'storeCV']);
+Route::delete('/dropcv/{estudiante_id}', [CvController::class, 'deleteCV']);
 
 //TAGS
 Route::post('/addUserTag', [UserController::class, 'AddUsertags']);
@@ -53,5 +54,3 @@ Route::post('/publications/store', [PublicationController::class, 'store']);
 Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
 Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
 Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
-
-
