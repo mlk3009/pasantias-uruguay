@@ -70,8 +70,8 @@ export const routes: Routes = [
   {
     path: 'cv',
     loadComponent: () =>
-      import('./components/students/cv/cv.component').then(
-        (m) => m.CVComponent
+      import('./components/cv/cv.component').then(
+        (m) => m.CvComponent
       ),
   },
   {

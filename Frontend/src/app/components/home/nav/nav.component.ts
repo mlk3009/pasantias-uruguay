@@ -66,18 +66,15 @@ export class NavComponent implements AfterViewInit {
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
     const scrollPosition = this.viewportScroller.getScrollPosition();
-    console.log(scrollPosition[1]);
     // Decide qué opción del menú debería estar activa
     if (scrollPosition[1] == 0) {
       this.scroll_var = true;
-      console.log(scrollPosition[1]);
     } else {
       this.scroll_var = false;
-      console.log(scrollPosition[1]);
     }
   }
 
-   ngAfterViewInit(): void {
+  ngAfterViewInit(): void {
     // Selecciona el botón con el atributo data-dial-toggle
     const dialToggleButton = document.querySelector('[data-dial-toggle="speed-dial-menu-dropdown-alternative"]');
 
@@ -100,4 +97,16 @@ export class NavComponent implements AfterViewInit {
       });
     }
   }
+
+
+  moveTo(section: string) {
+      const element = document.getElementById(section);
+      if (element) {
+        window.scrollTo({
+          top: element.offsetTop,
+          behavior: 'smooth'
+        });
+      }
+  }
+
 }

@@ -4,13 +4,25 @@ import { Observable } from 'rxjs';
 import { tap, map } from 'rxjs/operators';
 import { User } from '../models/user';
 import { global } from './global';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable({
   providedIn: 'root',
+
 })
 export class UserService {
   private previousImageId: string | null = null;
-  constructor(public _http: HttpClient) {}
+
+  constructor(public _http: HttpClient, private cookieService: CookieService) {}
+
+  getToken() {
+    let token = this.cookieService.get('token');
+    if (token && token != 'undefined') {
+      return token;
+    } else {
+      return null;
+    }
+  }
 
   storeImage(file: File): Observable<any> {
     if (this.previousImageId) {
