@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 //POSTULACIONES
 Route::post('/postular', [PublicationController::class, 'crearPostulacion']);
 Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [PublicationController::class, 'actualizarEstadoPostulacion']);
-
+Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtenerDatosEstudiante']);
 
 
 //CV

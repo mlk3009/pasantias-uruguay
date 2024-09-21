@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Publication;
 use App\Models\Postula;
 use App\Models\Estudiante;
+use App\Models\CV;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -14,7 +15,6 @@ class PublicationController extends Controller
 {
     public function index()
     {   
-        // Consulta a la base de datos para obtener todas las publicaciones
         $publications = Publication::all(); 
 
         if ($publications->isEmpty()) {
@@ -57,7 +57,7 @@ class PublicationController extends Controller
         ];
         return response()->json($data, 400);
     } else {
-        $publication = Publication::create($jsonData); // Inserción en la base de datos
+        $publication = Publication::create($jsonData); 
         $data = [
             'publication' => $publication,
             'status' => 201
@@ -70,7 +70,7 @@ class PublicationController extends Controller
 
 public function show($id)
 {
-    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
+    $publication = Publication::find($id); 
     if (!$publication) {
         $data = [
             'message' => 'Publicación no encontrada',
@@ -89,7 +89,7 @@ public function show($id)
 
 public function destroy($id)
 {
-    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
+    $publication = Publication::find($id); 
     if (!$publication) {
         $data = [
             'message' => 'Publicación no encontrada',
@@ -97,7 +97,7 @@ public function destroy($id)
         ];
         return response()->json($data, 404);
     }
-    $publication->delete(); // Eliminación de la publicación
+    $publication->delete();
     $data = [
         'message' => 'Publicación eliminada',
         'status' => 200
@@ -109,7 +109,7 @@ public function destroy($id)
 
 public function update(Request $request, $id)
 {
-    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
+    $publication = Publication::find($id); 
 
     if (!$publication) {
         $data = [
@@ -154,7 +154,7 @@ public function update(Request $request, $id)
 
 public function updatePartial(Request $request, $id)
 {
-    $publication = Publication::find($id); // Consulta a la base de datos para obtener una publicación
+    $publication = Publication::find($id); 
     if (!$publication) {
         $data = [
             'message' => 'Publicación no encontrada',
@@ -182,7 +182,7 @@ public function updatePartial(Request $request, $id)
         ];
         return response()->json($data, 400);
     } else {
-        $publication->update($jsonData); // Actualización en la base de datos si los datos son correctos
+        $publication->update($jsonData); 
         $data = [
             'publication' => $publication,
             'status' => 200
@@ -262,7 +262,6 @@ public function crearPostulacion(Request $request)
 
 public function actualizarEstadoPostulacion(Request $request, $publication_id, $estudiante_id)
 {
-    // Validar los datos de la solicitud
     $validator = Validator::make($request->all(), [
         'estado' => 'required|in:aprobado,rechazado,pendiente'
     ]);
@@ -276,7 +275,7 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
         return response()->json($data, 400);
     }
 
-    // Verificar si el estudiante existe
+
     $estudiante = Estudiante::find($estudiante_id);
     if (!$estudiante) {
         $data = [
@@ -286,7 +285,6 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
         return response()->json($data, 404);
     }
 
-    // Buscar la postulación en la base de datos usando la clave compuesta
     $postulacion = Postula::where('publication_id', $publication_id)
                         ->where('estudiante_id', $estudiante_id)
                         ->first();
@@ -299,7 +297,6 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
         return response()->json($data, 404);
     }
 
-    // Actualizar el estado de la postulación directamente usando la clave compuesta
     DB::table('postula')
         ->where('publication_id', $publication_id)
         ->where('estudiante_id', $estudiante_id)
@@ -311,4 +308,24 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
     ];
     return response()->json($data, 200);
 }
+
+public function obtenerDatosEstudiante($estudiante_id)
+{
+    $estudiante = Estudiante::find($estudiante_id);
+    if (!$estudiante) {
+        return response()->json([
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ], 404);
+    }
+
+    $tiene_cv = CV::where('estudiante_id', $estudiante_id)->exists();
+    
+    return response()->json([
+        'estudiante' => $estudiante,
+        'tiene_cv' => $tiene_cv,
+        'status' => 200
+    ], 200);
+}
+
 }
