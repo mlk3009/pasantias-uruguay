@@ -332,8 +332,8 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         ),
         'Spatie\\Ignition\\' => 
         array (
-            0 => __DIR__ . '/..' . '/spatie/ignition/src',
-            1 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
+            0 => __DIR__ . '/..' . '/spatie/error-solutions/legacy/ignition',
+            1 => __DIR__ . '/..' . '/spatie/ignition/src',
         ),
         'Spatie\\FlareClient\\' => 
         array (
@@ -552,6 +552,7 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
     );
 
     public static $classMap = array (
+        'App\\Http\\Controllers\\Api\\CvController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CvController.php',
         'App\\Http\\Controllers\\Api\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PasswordController.php',
         'App\\Http\\Controllers\\Api\\PublicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PublicationController.php',
         'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
@@ -563,6 +564,7 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         'App\\Models\\Etiqueta' => __DIR__ . '/../..' . '/app/Models/Etiqueta.php',
         'App\\Models\\Experiencia' => __DIR__ . '/../..' . '/app/Models/Experiencia.php',
         'App\\Models\\Habilidades' => __DIR__ . '/../..' . '/app/Models/Habilidades.php',
+        'App\\Models\\Idiomas' => __DIR__ . '/../..' . '/app/Models/Idiomas.php',
         'App\\Models\\ImageUpload' => __DIR__ . '/../..' . '/app/Models/ImageUpload.php',
         'App\\Models\\Links' => __DIR__ . '/../..' . '/app/Models/Links.php',
         'App\\Models\\Password' => __DIR__ . '/../..' . '/app/Models/Password.php',

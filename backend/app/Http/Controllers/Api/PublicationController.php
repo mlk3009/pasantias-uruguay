@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Publication;
+use App\Models\Postula;
+use App\Models\Estudiante;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class PublicationController extends Controller
 {
@@ -188,4 +191,124 @@ public function updatePartial(Request $request, $id)
     }
 }
 
+public function crearPostulacion(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'publication_id' => 'required|numeric|exists:publications,id',
+        'estudiante_id' => 'required|numeric|exists:estudiante,id',
+        'postulation_date' => 'required|date',
+        'estado' => 'in:pendiente,aprobado,rechazado'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error al crear la postulación',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+    $publicacion = Publication::find($request->publication_id);
+    if (!$publicacion) {
+        $data = [
+            'message' => 'Publicación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    $estudiante = Estudiante::find($request->estudiante_id);
+    if (!$estudiante) {
+        $data = [
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    $existingPostulacion = Postula::where('publication_id', $request->publication_id)
+                                ->where('estudiante_id', $request->estudiante_id)
+                                ->first();
+
+    if ($existingPostulacion) {
+        $data = [
+            'message' => 'El estudiante ya se ha postulado a esta publicación',
+            'status' => 400
+        ];
+        return response()->json($data, 400);
+    }
+
+    $estado = $request->input('estado', 'pendiente');
+
+    $postulacion = Postula::create([
+        'publication_id' => $request->publication_id,
+        'estudiante_id' => $request->estudiante_id,
+        'postulation_date' => $request->postulation_date,
+        'estado' => $estado
+    ]);
+
+    $data = [
+        'postulacion' => $postulacion,
+        'message' => 'Postulación creada exitosamente',
+        'status' => 201
+    ];
+    return response()->json($data, 201);
+}
+
+
+
+
+
+public function actualizarEstadoPostulacion(Request $request, $publication_id, $estudiante_id)
+{
+    // Validar los datos de la solicitud
+    $validator = Validator::make($request->all(), [
+        'estado' => 'required|in:aprobado,rechazado,pendiente'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error al actualizar el estado de la postulacion',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+    // Verificar si el estudiante existe
+    $estudiante = Estudiante::find($estudiante_id);
+    if (!$estudiante) {
+        $data = [
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    // Buscar la postulación en la base de datos usando la clave compuesta
+    $postulacion = Postula::where('publication_id', $publication_id)
+                        ->where('estudiante_id', $estudiante_id)
+                        ->first();
+
+    if (!$postulacion) {
+        $data = [
+            'message' => 'Postulación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    // Actualizar el estado de la postulación directamente usando la clave compuesta
+    DB::table('postula')
+        ->where('publication_id', $publication_id)
+        ->where('estudiante_id', $estudiante_id)
+        ->update(['estado' => $request->input('estado')]);
+
+    $data = [
+        'message' => 'Estado de la postulación actualizado correctamente',
+        'status' => 200
+    ];
+    return response()->json($data, 200);
+}
 }

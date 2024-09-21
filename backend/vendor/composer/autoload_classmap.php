@@ -6,6 +6,7 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\Api\\CvController' => $baseDir . '/app/Http/Controllers/Api/CvController.php',
     'App\\Http\\Controllers\\Api\\PasswordController' => $baseDir . '/app/Http/Controllers/Api/PasswordController.php',
     'App\\Http\\Controllers\\Api\\PublicationController' => $baseDir . '/app/Http/Controllers/Api/PublicationController.php',
     'App\\Http\\Controllers\\Api\\UserController' => $baseDir . '/app/Http/Controllers/Api/UserController.php',
@@ -17,6 +18,7 @@ return array(
     'App\\Models\\Etiqueta' => $baseDir . '/app/Models/Etiqueta.php',
     'App\\Models\\Experiencia' => $baseDir . '/app/Models/Experiencia.php',
     'App\\Models\\Habilidades' => $baseDir . '/app/Models/Habilidades.php',
+    'App\\Models\\Idiomas' => $baseDir . '/app/Models/Idiomas.php',
     'App\\Models\\ImageUpload' => $baseDir . '/app/Models/ImageUpload.php',
     'App\\Models\\Links' => $baseDir . '/app/Models/Links.php',
     'App\\Models\\Password' => $baseDir . '/app/Models/Password.php',

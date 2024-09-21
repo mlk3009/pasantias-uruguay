@@ -8,7 +8,6 @@ use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\PublicationController;
 
-//asd
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -23,6 +22,13 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);
     Route::post('logout', [UserController::class, 'logout']);
 });
+
+
+//POSTULACIONES
+Route::post('/postular', [PublicationController::class, 'crearPostulacion']);
+Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [PublicationController::class, 'actualizarEstadoPostulacion']);
+
+
 
 //CV
 Route::post('/cv', [CvController::class, 'storeCV']);
