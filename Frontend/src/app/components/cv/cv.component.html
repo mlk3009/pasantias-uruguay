@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Curriculum</title>
+  </head>
+
+  <body>
+    <div class="w-full flex flex-col items-center justify-center mt-8">
+      <h1 class="text-4xl text-blue-800 text-center">Curriculum</h1>
+      <p class="text-md text-gray-500 text-center">
+        (Los datos con * son obligatorios)
+      </p>
+      <button
+        class="border-b-2 border-blue-500 text-blue-500"
+        (click)="volver()"
+      >
+        Volver al inicio
+      </button>
+    </div>
+
+    <form class="max-w-md mx-auto p-2 mb-12" #fichaForm="ngForm">
+      <app-datos-estudiante *ngIf="formPart == 1" />
+      <app-educacion *ngIf="formPart == 2" />
+      <app-datos-habilidades-idiomas *ngIf="formPart == 3" />
+      <app-datos-experiencias *ngIf="formPart == 4" />
+      <app-datos-generales *ngIf="formPart == 5" />
+    </form>
+  </body>
+</html>

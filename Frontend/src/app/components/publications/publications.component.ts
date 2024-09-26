@@ -7,11 +7,12 @@ import { PrincipalImagePublicationsComponent } from './principal-image-publicati
 
 import { PublicationsListComponent } from './publications-list/publications-list.component';
 import { FooterComponent } from '../home/footer/footer.component';
+import { NavComponent } from '../home/nav/nav.component';
 
 @Component({
   selector: 'app-publications',
   standalone: true,
-  imports: [CommonModule, PublicationsListComponent, PrincipalImagePublicationsComponent, FooterComponent, NavPublicationsComponent],
+  imports: [CommonModule, PublicationsListComponent, PrincipalImagePublicationsComponent, FooterComponent, NavPublicationsComponent, NavComponent],
   templateUrl: './publications.component.html',
   styleUrl: './publications.component.css'
 })

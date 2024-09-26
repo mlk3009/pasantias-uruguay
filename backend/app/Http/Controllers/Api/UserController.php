@@ -11,6 +11,12 @@ use App\Models\User;
 use App\Models\Email;
 use App\Models\Estudiante;
 use App\Models\Etiqueta;
+use App\Models\Links;
+use App\Models\Experiencia;
+use App\Models\Habilidades;
+use App\Models\Idiomas;
+use App\Models\Educacion;
+use App\Models\CV;
 use App\Models\ImageUpload;
 use App\Http\Controllers\Api\PHPMailerController;
 use Illuminate\Auth\Events\Registered;
@@ -473,6 +479,7 @@ class UserController extends Controller
             return response()->json($data, 200);
         }
     }
+
     public function destroy()
     {
     }

@@ -6,13 +6,21 @@ $vendorDir = dirname(__DIR__);
 $baseDir = dirname($vendorDir);
 
 return array(
+    'App\\Http\\Controllers\\Api\\CvController' => $baseDir . '/app/Http/Controllers/Api/CvController.php',
     'App\\Http\\Controllers\\Api\\PasswordController' => $baseDir . '/app/Http/Controllers/Api/PasswordController.php',
     'App\\Http\\Controllers\\Api\\PublicationController' => $baseDir . '/app/Http/Controllers/Api/PublicationController.php',
     'App\\Http\\Controllers\\Api\\UserController' => $baseDir . '/app/Http/Controllers/Api/UserController.php',
     'App\\Http\\Controllers\\Controller' => $baseDir . '/app/Http/Controllers/Controller.php',
+    'App\\Models\\CV' => $baseDir . '/app/Models/CV.php',
+    'App\\Models\\Educacion' => $baseDir . '/app/Models/Educacion.php',
     'App\\Models\\Email' => $baseDir . '/app/Models/Email.php',
     'App\\Models\\Estudiante' => $baseDir . '/app/Models/Estudiante.php',
+    'App\\Models\\Etiqueta' => $baseDir . '/app/Models/Etiqueta.php',
+    'App\\Models\\Experiencia' => $baseDir . '/app/Models/Experiencia.php',
+    'App\\Models\\Habilidades' => $baseDir . '/app/Models/Habilidades.php',
+    'App\\Models\\Idiomas' => $baseDir . '/app/Models/Idiomas.php',
     'App\\Models\\ImageUpload' => $baseDir . '/app/Models/ImageUpload.php',
+    'App\\Models\\Links' => $baseDir . '/app/Models/Links.php',
     'App\\Models\\Password' => $baseDir . '/app/Models/Password.php',
     'App\\Models\\Publication' => $baseDir . '/app/Models/Publication.php',
     'App\\Models\\Requirements' => $baseDir . '/app/Models/Requirements.php',

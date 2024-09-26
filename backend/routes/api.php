@@ -3,11 +3,11 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\CvController;
 use App\Http\Controllers\Api\PasswordController;
 use App\Http\Controllers\Api\VerificationController;
 use App\Http\Controllers\Api\PublicationController;
 
-//asd
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
@@ -23,6 +23,16 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [UserController::class, 'logout']);
 });
 
+
+//POSTULACIONES
+Route::post('/postular', [PublicationController::class, 'crearPostulacion']);
+Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [PublicationController::class, 'actualizarEstadoPostulacion']);
+Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtenerDatosEstudiante']);
+
+
+//CV
+Route::post('/cv', [CvController::class, 'storeCV']);
+Route::delete('/dropcv/{estudiante_id}', [CvController::class, 'deleteCV']);
 
 //TAGS
 Route::post('/addUserTag', [UserController::class, 'AddUsertags']);
@@ -50,5 +60,3 @@ Route::post('/publications/store', [PublicationController::class, 'store']);
 Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
 Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
 Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
-
-

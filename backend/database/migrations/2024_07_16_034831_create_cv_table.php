@@ -13,16 +13,16 @@ class CreateCvTable extends Migration
      */
     public function up()
     {
+        // Crear la tabla cv
         Schema::create('cv', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('estudiante_id');
             $table->string('nombre_completo', 100);
             $table->date('fecha_nacimiento');
             $table->string('nacionalidad', 50);
+            $table->string('estado_civil', 50)->nullable(); 
+            $table->string('licencia', 255)->nullable();
             $table->enum('genero', ['masculino', 'femenino', 'otro']);
-            $table->string('links', 255)->nullable();
-            $table->string('formacion_academica', 500)->nullable();
-            $table->string('experiencia', 500)->nullable();
             $table->string('carnet_de_conducir', 255)->nullable();
             $table->text('idiomas')->nullable();
             $table->foreign('estudiante_id')->references('id')->on('estudiante')->onDelete('cascade'); 
