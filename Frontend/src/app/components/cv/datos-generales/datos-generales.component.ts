@@ -52,12 +52,20 @@ export class DatosGeneralesComponent {
 
   ngOnInit(){
     this.cv = {
-      estudiante: this.estudiante,
+      nombre_completo: this.estudiante.nombre_completo,
+      fecha_nacimiento: this.estudiante.fecha_nacimiento,
+      nacionalidad: this.estudiante.nacionalidad,
+      genero: this.estudiante.genero,
+      estado_civil: this.estudiante.estado_civil,
+      licencia: this.estudiante.licencia,
+      cedula: this.estudiante.cedula,
       idiomas: this.idiomas,
       habilidades: this.habilidades,
       educacion: this.educacion,
       experiencias: this.experiencias,
     };
+
+    console.log(this.estudiante.cedula)
 
     localStorage.setItem('cv', JSON.stringify(this.cv));
 
@@ -83,15 +91,9 @@ export class DatosGeneralesComponent {
   next(){
     this.servicioCv.loadForm(this.token, this.cv).subscribe(
             (response) => {
-              if (response == 'success') {
                 alert('Ficha cargada correctamente');
                 this.servicioCv.change.emit({ data: 'success' });
                 localStorage.setItem('hasFicha', 'true');
-              } else {
-                alert('Error al cargar la ficha, intente de nuevo');
-                this.servicioCv.change.emit({ data: 'error' });
-                localStorage.removeItem('hasFicha');
-              }
             },
             (error) => {
               alert('Error al cargar la ficha, intente de nuevo');

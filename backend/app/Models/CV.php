@@ -15,9 +15,9 @@ class CV extends Model
         'estudiante_id',
         'nombre_completo',
         'fecha_nacimiento',
-        'nacionalidad',
+        'estado_civil',
         'genero',
-        'carnet_de_conducir',
+        'licencia',
         'idiomas',
     ];
 

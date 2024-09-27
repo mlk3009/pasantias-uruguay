@@ -16,8 +16,7 @@ use App\Models\Habilidades;
 use App\Models\Idiomas;
 use App\Models\Educacion;
 use App\Models\CV;
-
-
+use Illuminate\Database\Eloquent\Casts\Json;
 
 class CvController extends Controller {
     public function storeCV(Request $request)
@@ -25,11 +24,10 @@ class CvController extends Controller {
         $jsonData = $request->all();
 
         $validator = Validator::make($jsonData, [
-            'estudiante_id' => 'required|integer|exists:estudiante,id',
             'nombre_completo' => 'required|string|max:100',
+            'cedula'=> 'required|int',
             'fecha_nacimiento' => 'required|date',
-            'nacionalidad' => 'required|string|max:50',
-            'genero' => 'required|in:masculino,femenino,otro',
+            'genero' => 'required|string',
             'estado_civil' => 'nullable|string|max:50',
             'licencia' => 'nullable|string|max:255',
             'carnet_de_conducir' => 'nullable|string|max:255',
@@ -62,7 +60,11 @@ class CvController extends Controller {
             ];
             return response()->json($data, 422);
         } else {
-            $existingCV = CV::where('estudiante_id', $jsonData['estudiante_id'])->first();
+
+            $id = Estudiante::where('ci_estudiante', $jsonData['cedula'])->get('id')->first()->id;
+
+            $existingCV = CV::where('estudiante_id', $id)->first();
+            
             if ($existingCV) {
                 $data = [
                     'status' => 'error',
@@ -71,17 +73,15 @@ class CvController extends Controller {
                 ];
                 return response()->json($data, 409);
             }
+            
 
             $cv = CV::create([
-                'estudiante_id' => $jsonData['estudiante_id'],
+                'estudiante_id' => $id,
                 'nombre_completo' => $jsonData['nombre_completo'],
                 'fecha_nacimiento' => $jsonData['fecha_nacimiento'],
-                'nacionalidad' => $jsonData['nacionalidad'],
                 'genero' => $jsonData['genero'],
                 'estado_civil' => $jsonData['estado_civil'],
                 'licencia' => $jsonData['licencia'],
-                'carnet_de_conducir' => $jsonData['carnet_de_conducir'],
-                'idiomas' => $jsonData['idiomas'],
             ]);
 
             if (isset($jsonData['educacion'])) {
@@ -140,6 +140,7 @@ class CvController extends Controller {
                 'cv' => $cv,
                 'code' => 201
             ];
+            
             return response()->json($data, 201);
         }
     }
