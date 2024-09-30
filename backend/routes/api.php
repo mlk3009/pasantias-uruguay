@@ -21,6 +21,7 @@ Route::post('register', [UserController::class, 'store']);
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);
     Route::post('logout', [UserController::class, 'logout']);
+    Route::get('cv-details', [CvController::class, 'cvDetails']);
 });
 
 

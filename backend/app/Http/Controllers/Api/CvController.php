@@ -182,4 +182,31 @@ class CvController extends Controller {
             return response()->json($data, 200);
         }
     }
+    public function cvDetails(): Response
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $cv = CV::where('estudiante_id', $user->id)->first();
+            $estudiante = Estudiante::where('id', $user->id)->first();
+            $idiomas = Idiomas::where('cv_id', $cv->id)->get(['idioma', 'nivel']);
+    
+            if ($cv && $estudiante) {
+                $cvData = [
+                    'nombre_completo' => $cv->nombre_completo,
+                    'ci_estudiante' => $estudiante->ci_estudiante,
+                    'fecha_nacimiento' => $cv->fecha_nacimiento,
+                    'genero' => $cv->genero,
+                    'estado_civil' => $cv->estado_civil,
+                    'licencia' => $cv->licencia,
+                    // 'carnet_de_conducir' => $cv->carnet_de_conducir,        no está en la DB lo dejo comentado
+                    'idiomas' => $idiomas
+                ];
+                return response(['data' => $cvData], 200);
+            } else {
+                return response(['data' => 'CV o estudiante no encontrado'], 404);
+            }
+        }
+    
+        return response(['data' => 'Unauthorized'], 401);
+    }
 }

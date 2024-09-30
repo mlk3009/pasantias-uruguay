@@ -22,6 +22,7 @@ return array(
     'App\\Models\\ImageUpload' => $baseDir . '/app/Models/ImageUpload.php',
     'App\\Models\\Links' => $baseDir . '/app/Models/Links.php',
     'App\\Models\\Password' => $baseDir . '/app/Models/Password.php',
+    'App\\Models\\Postula' => $baseDir . '/app/Models/Postula.php',
     'App\\Models\\Publication' => $baseDir . '/app/Models/Publication.php',
     'App\\Models\\Requirements' => $baseDir . '/app/Models/Requirements.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
