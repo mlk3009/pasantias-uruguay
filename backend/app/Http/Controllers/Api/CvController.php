@@ -316,7 +316,6 @@ $this->addSection($pdf, '', function($pdf) use ($estudiante) {
                 $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Género: ') . iconv('UTF-8', 'ISO-8859-1', $cv->genero), 0, 1);
                 $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Estado Civil: ') . iconv('UTF-8', 'ISO-8859-1', $cv->estado_civil), 0, 1);
                 $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Licencia: ') . iconv('UTF-8', 'ISO-8859-1', $cv->licencia), 0, 1);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Carnet de Conducir: ') . iconv('UTF-8', 'ISO-8859-1', $cv->carnet_de_conducir), 0, 1);
             });
 
             // Idiomas
@@ -337,7 +336,7 @@ $this->addSection($pdf, '', function($pdf) use ($estudiante) {
                     $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Inicio: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fecha_inicio), 0, 1);
                     $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Fin: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fecha_fin), 0, 1);
                     $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Actualmente: ') . ($edu->actualmente ? iconv('UTF-8', 'ISO-8859-1', 'Sí') : iconv('UTF-8', 'ISO-8859-1', 'No')), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fin Estimado: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fin_estimado), 0, 1);
+                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fin Estimado: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fin_estimado ? $edu->fin_estimado : 'Indeterminado'), 0, 1);                    
                     $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Descripción: ') . iconv('UTF-8', 'ISO-8859-1', $edu->descripcion), 0, 1);
                     $pdf->Ln(5);
                 }
