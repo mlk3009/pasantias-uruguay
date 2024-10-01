@@ -87,6 +87,8 @@ export class CvComponent implements OnInit {
     if (confirm('¿Estás seguro de que quieres volver?') == true) {
       this._router.navigate(['/inicio']);
       localStorage.removeItem('studentData');
+      localStorage.removeItem('cv');
+      localStorage.removeItem('SinExperiencias');
       localStorage.removeItem('lastName');
       localStorage.removeItem('firstName');
       localStorage.removeItem('bornDay');
@@ -98,7 +100,6 @@ export class CvComponent implements OnInit {
 
       localStorage.removeItem('idiomasData');
       localStorage.removeItem('habilidadesData');
-
 
       localStorage.removeItem('ficha');
     }

@@ -369,8 +369,8 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-message/src',
-            1 => __DIR__ . '/..' . '/psr/http-factory/src',
+            0 => __DIR__ . '/..' . '/psr/http-factory/src',
+            1 => __DIR__ . '/..' . '/psr/http-message/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -568,6 +568,7 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         'App\\Models\\ImageUpload' => __DIR__ . '/../..' . '/app/Models/ImageUpload.php',
         'App\\Models\\Links' => __DIR__ . '/../..' . '/app/Models/Links.php',
         'App\\Models\\Password' => __DIR__ . '/../..' . '/app/Models/Password.php',
+        'App\\Models\\Postula' => __DIR__ . '/../..' . '/app/Models/Postula.php',
         'App\\Models\\Publication' => __DIR__ . '/../..' . '/app/Models/Publication.php',
         'App\\Models\\Requirements' => __DIR__ . '/../..' . '/app/Models/Requirements.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
@@ -904,6 +905,7 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         'Egulias\\EmailValidator\\Warning\\QuotedString' => __DIR__ . '/..' . '/egulias/email-validator/src/Warning/QuotedString.php',
         'Egulias\\EmailValidator\\Warning\\TLD' => __DIR__ . '/..' . '/egulias/email-validator/src/Warning/TLD.php',
         'Egulias\\EmailValidator\\Warning\\Warning' => __DIR__ . '/..' . '/egulias/email-validator/src/Warning/Warning.php',
+        'FPDF' => __DIR__ . '/..' . '/setasign/fpdf/fpdf.php',
         'Faker\\Calculator\\Ean' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Calculator/Ean.php',
         'Faker\\Calculator\\Iban' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Calculator/Iban.php',
         'Faker\\Calculator\\Inn' => __DIR__ . '/..' . '/fakerphp/faker/src/Faker/Calculator/Inn.php',
