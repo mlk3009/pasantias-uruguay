@@ -35,7 +35,7 @@ Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtene
 //CV
 Route::post('/cv', [CvController::class, 'storeCV']);
 Route::delete('/dropcv/{estudiante_id}', [CvController::class, 'deleteCV']);
-
+Route::delete('cvdeletePDF/{estudianteId}', [CvController::class, 'borrarPDF']);
 
 //TAGS
 Route::post('/addUserTag', [UserController::class, 'AddUsertags']);

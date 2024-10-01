@@ -215,10 +215,26 @@ class CvController extends Controller {
     }
 
 
+    public function borrarPDF($estudianteId)
+    {
+        $estudiante = Estudiante::find($estudianteId);
+    
+        if ($estudiante) {
+            $ci_estudiante = $estudiante->ci_estudiante;
 
+            $pdfPath = 'pdfs/cv_' . $ci_estudiante . '.pdf';
 
-
-
+            if (file_exists($pdfPath)) {
+                // Borrar el archivo
+                unlink($pdfPath);
+                return response(['data' => 'PDF borrado exitosamente.'], 200);
+            } else {
+                return response(['data' => 'El archivo PDF no existe.'], 404);
+            }
+        } else {
+            return response(['data' => 'Estudiante no encontrado'], 404);
+        }
+    }
 
 
     public function generarPDF($cvId)
