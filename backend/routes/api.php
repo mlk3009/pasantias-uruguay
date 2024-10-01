@@ -22,6 +22,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('cv-details', [CvController::class, 'cvDetails']);
+    Route::get('/cvPDF/{cvId}', [CvController::class, 'generarPDF']);
 });
 
 
@@ -34,6 +35,7 @@ Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtene
 //CV
 Route::post('/cv', [CvController::class, 'storeCV']);
 Route::delete('/dropcv/{estudiante_id}', [CvController::class, 'deleteCV']);
+
 
 //TAGS
 Route::post('/addUserTag', [UserController::class, 'AddUsertags']);
