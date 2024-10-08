@@ -35,9 +35,10 @@ export class RegisterP2Component {
   public status: string = '';
   public showError: boolean = false;
   public loading: boolean = false;
-  public year: string = '';
-  public month: string = '';
-  public day: string = '';
+  public year: number = 0;
+  public month: number = 0;
+  public day: number = 0;
+  public validDate: boolean = false;
   public selectedEtiquetaId: number | null = null;
 
   constructor(
@@ -62,6 +63,36 @@ export class RegisterP2Component {
       
     }
   }
+
+
+  validateDate() {
+    const isValidDay = this.day >= 1 && this.day <= 31;
+    const isValidMonth = this.month >= 1 && this.month <= 12;
+    const isValidYear = this.year >= 1900;
+
+    if (isValidDay && isValidMonth && isValidYear) {
+      const daysInMonth = new Date(this.year, this.month, 0).getDate();
+      const isValidDayInMonth = this.day <= daysInMonth;
+
+      if (isValidDayInMonth) {
+        const today = new Date();
+        const realMonth = today.getMonth() + 1;
+        const birthDate = new Date(
+          this.year,
+          this.month - 1,
+          this.day
+        );
+
+        this.validDate = true;
+        
+      } else {
+        this.validDate = false;
+      }
+    } else {
+      this.validDate = false;
+    }
+  }
+
 
   
   capitalize(sentence: string): string {
