@@ -1,0 +1,105 @@
+{
+    "estudiante": {
+        "nombre completo": "Lucas herrera",
+        "fecha de nacimiento":"12/12/1990",
+        "departamento": "Montevideo",
+        "puesto de trabajo": "DevOps",
+        "correo": "lucas@gmail.com",
+        "telefono": 99123456,
+        "identificacion": 54884646,
+        "codigo postal": 12300,
+        "descripcion" : "Soy un desarrollador de software con 5 años de experiencia en el desarrollo de aplicaciones web y móviles. Me apasiona la tecnología y me encanta aprender nuevas tecnologías y herramientas para mejorar mi trabajo. Soy una persona proactiva, responsable y comprometida con mi trabajo. Me gusta trabajar en equipo y colaborar con mis compañeros para lograr los objetivos del proyecto. Estoy buscando una oportunidad para crecer profesionalmente y seguir aprendiendo en el mundo de la tecnología."
+    },
+
+    "cv":{
+            "cv":[{
+                "estudainte_id": "2",
+                "nombre_completo": "lucas herrera",
+                "fecha_nacimiento": "30/10/1998",
+                "nacionalidad": "Uruguaya",
+                "genero": "masculino",
+                "estado_civil": "soltero",
+                "licencia": "Cat A"
+            }],
+        
+            "idiomas":[{
+                 "idioma": "Español",
+                 "nivel": "Nativo"
+            }],
+         
+            "experiencia":[
+                {
+                    "estudiante_id": "2",
+                    "puesto": "Desarrollador",
+                    "empresa": "Google",
+                    "fecha_inicio": "2000-01-01",
+                    "fecha_fin": "2000-01-01",
+                    "descripcion": "Desarrollador de software",
+                    "referencias": "Nombre, Telefono, Email"
+                },
+        
+                {
+                    "estudiante_id": "2",
+                    "puesto": "Desarrollador",
+                    "empresa": "Facebook",
+                    "fecha_inicio": "2000-01-01",
+                    "fecha_fin": "2000-01-01",
+                    "descripcion": "Desarrollador de software",
+                    "referencias": "Nombre, Telefono, Email"
+                }
+            ],
+        
+            "educacion":[{
+                    "estudiante_id": "2",
+                    "nivel": "Terciario",
+                    "institucion": "Universidad de la Republica",
+                    "titulo": "Ingeniero en Computacion",
+                    "fecha_inicio": "2000-01-01",
+                    "fecha_fin": "2000-01-01",
+                    "actualmente": true,
+                    "fin_estimado": "2022-01-01", 
+                    "descripcion": "Estudiante de Ingeniería en Computación"
+                },
+                {
+                    "estudiante_id": "2",
+                    "nivel": "Secundario",
+                    "institucion": "Liceo 1",
+                    "titulo": "Bachillerato en Ciencias",
+                    "fecha_inicio": "2000-01-01",
+                    "fecha_fin": "2000-01-01",
+                    "actualmente": false,
+                    "fin_estimado": "2016-01-01",
+                    "descripcion": "Estudiante de Bachillerato en Ciencias"
+                }	
+            ],
+        
+            "habilidades":[{
+                    "estudiante_id": "2",
+                    "habilidad": "Java",
+                    "nivel": "Avanzado"
+                },
+                {
+                    "estudiante_id": "2",
+                    "habilidad": "Python",
+                    "nivel": "Avanzado"
+                }
+            ]
+    },
+
+    "links":[
+        {
+            "estudiante_id": "2",
+            "link": "https://www.linkedin.com/in/lucas-herrera-123456789/"
+        },
+        {
+            "estudiante_id": "2",
+            "link": "https://www.github.com/mlk3009/"
+        }
+    ],
+
+    "postulacion":[{
+        "titulo":"Publicacion 1",
+        "link a la publicacion": "...",
+        "estado": "cv revisado"
+    }]
+}

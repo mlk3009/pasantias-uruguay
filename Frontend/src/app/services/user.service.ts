@@ -13,7 +13,7 @@ import { CookieService } from 'ngx-cookie-service';
 export class UserService {
   private previousImageId: string | null = null;
 
-  constructor(public _http: HttpClient, private cookieService: CookieService) {}
+  constructor(public _http: HttpClient, private cookieService: CookieService) { }
 
   getToken() {
     let token = this.cookieService.get('token');
@@ -40,9 +40,11 @@ export class UserService {
       })
     );
   }
+
   deleteImage(imageId: string): Observable<any> {
     return this._http.delete(global.url + `delete-image/${imageId}`);
-}
+  }
+
   register(user: User): Observable<any> {
     let json = JSON.stringify(user);
     let params = json;
@@ -112,32 +114,32 @@ export class UserService {
     });
   }
 
-// Método para obtener todas las etiquetas, estará acá momentaneamente hasta que se cree un servicio para las etiquetas
-getEtiquetas(): Observable<etiqueta[]> {
-  return this._http.get<{ Tags: etiqueta[], status: number }>(global.url + 'showTags').pipe(
-    map(response => {
-      // Asegúrate de que la respuesta contiene la propiedad Tags y es un array
-      if (response && Array.isArray(response.Tags)) {
-        return response.Tags;
-      } else {
-        console.error('La respuesta no contiene un array de etiquetas:', response);
-        return [];
-      }
-    }),
-  );
-}
+  // Método para obtener todas las etiquetas, estará acá momentaneamente hasta que se cree un servicio para las etiquetas
+  getEtiquetas(): Observable<etiqueta[]> {
+    return this._http.get<{ Tags: etiqueta[], status: number }>(global.url + 'showTags').pipe(
+      map(response => {
+        // Asegúrate de que la respuesta contiene la propiedad Tags y es un array
+        if (response && Array.isArray(response.Tags)) {
+          return response.Tags;
+        } else {
+          console.error('La respuesta no contiene un array de etiquetas:', response);
+          return [];
+        }
+      }),
+    );
+  }
 
-addUserTags(estudiante_id: number, etiqueta_id: number): Observable<any> {
-  const json = {
-    estudiante_id: estudiante_id,
-    etiqueta_id: etiqueta_id
-  };
+  addUserTags(estudiante_id: number, etiqueta_id: number): Observable<any> {
+    const json = {
+      estudiante_id: estudiante_id,
+      etiqueta_id: etiqueta_id
+    };
 
-  const params = JSON.stringify(json);
-  const headers = new HttpHeaders().set('Content-Type', 'application/json');
+    const params = JSON.stringify(json);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
 
-  return this._http.post(global.url + 'addUserTag', params, { headers: headers });
-}
+    return this._http.post(global.url + 'addUserTag', params, { headers: headers });
+  }
 
 }
 export interface etiqueta {

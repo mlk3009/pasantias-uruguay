@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 
+import { NavigationExtras } from '@angular/router';
 import { routes } from '../../../app.routes';
 import { CookieService } from 'ngx-cookie-service';
 
@@ -25,6 +26,7 @@ import { ValidAcountComponent } from '../../register/valid-acount/valid-acount.c
     HttpClientModule,
     MatDialogModule,
     ValidAcountComponent,
+
   ],
   templateUrl: './register-p2.component.html',
   styleUrl: './register-p2.component.css'
@@ -41,6 +43,8 @@ export class RegisterP2Component {
   public validDate: boolean = false;
   public selectedEtiquetaId: number | null = null;
 
+  public surName: string = '';
+
   constructor(
     private _userService: UserService,
     private _router: Router,
@@ -52,18 +56,22 @@ export class RegisterP2Component {
     const navigation = this._router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       const state = navigation.extras.state;
+      this.surName = state["surname"];
       this.user["name"] = state["name"];
       this.user["email"] = state["email"];
       this.user["password"] = state["password"];
       this.user["location"] = state["location"];
       this.selectedEtiquetaId = state["selectedEtiquetaId"];
 
-      // Imprimir los datos en la consola del navegador
-      console.log('Navigation State:', state);
-      
+      this.user.ci_estudiante = state["ci"] || '';
+      this.user.cod_postal = state["cod_postal"] || '';
+      this.user.phone = state["phone"] || '';
+      this.day = state["day"] || 0;
+      this.month = state["month"] || 0;
+      this.year = state["year"] || 0;
+      this.validateDate();
     }
   }
-
 
   validateDate() {
     const isValidDay = this.day >= 1 && this.day <= 31;
@@ -84,7 +92,6 @@ export class RegisterP2Component {
         );
 
         this.validDate = true;
-        
       } else {
         this.validDate = false;
       }
@@ -93,8 +100,6 @@ export class RegisterP2Component {
     }
   }
 
-
-  
   capitalize(sentence: string): string {
     const words = sentence.split(' ');
 
@@ -114,7 +119,6 @@ export class RegisterP2Component {
       this._router.navigate(['/inicio']);
     }
   }
-
 
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
@@ -143,6 +147,29 @@ export class RegisterP2Component {
     );
   }
 
+  volver() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        surname: this.surName,
+        name: this.user.name,
+        email: this.user.email,
+        password: this.user.password,
+        confimPassword: this.user.password,
+        location: this.user.location,
+        selectedEtiquetaId: this.selectedEtiquetaId,
+
+        ci: this.user.ci_estudiante,
+        cod_postal: this.user.cod_postal,
+        phone: this.user.phone,
+        day: this.day,
+        month: this.month,
+        year: this.year
+      }
+    };
+
+    this._router.navigate(['register'], navigationExtras);
+  }
+
   register(form: any) {
     this.user.password;
     this.user.name = this.capitalize(this.user.name);
@@ -152,15 +179,17 @@ export class RegisterP2Component {
     this.user.cod_postal;
     this.user.phone;
     this.loading = true;
-    this.user.fec_nacimiento = this.year + '-' + this.month + '-' + this.day;
+    this.user.fec_nacimiento = this.year.toString() + '-' + this.month.toString() + '-' + this.day.toString();
+
+    console.log(this.user);
+
+
     this._userService.register(this.user).subscribe(
       (response) => {
         this.loading = false;
-        //validar email
         localStorage.setItem('email', this.user.email);
         this.dialog.open(ValidAcountComponent);
 
-        // Obtener el ID del usuario desde la respuesta
         const estudiante_id = response.data.id;
         const etiqueta_id = this.selectedEtiquetaId;
         if (estudiante_id && etiqueta_id) {
@@ -168,21 +197,26 @@ export class RegisterP2Component {
         } else {
           console.error('Estudiante ID o Etiqueta ID no están disponibles');
         }
+
+       return this._router.navigate(['/']);
       },
       (error) => {
+        console.log(error.error.failed_input);
+        let errorList = error.error.failed_input;
+
+        for (let err in errorList) {
+          if (err == 'email'){
+            this.status = 'El email ya se encuentra registrado';
+          }
+
+          if (err == 'ci_estudiante') {
+            this.status += ' La cédula ya se encuentra registrada';
+          }
+        }
+
+        console.error('Error al registrar el usuario', error);
         this.loading = false;
         this.showError = true;
-  
-        if (
-          error.status == 400 ||
-          error.status == 401 ||
-          error.status == 404 ||
-          error.status == 500
-        ) {
-          this.status = 'Error en el servidor';
-        } else {
-          this.status = 'Error desconocido';
-        }
       }
     );
   }

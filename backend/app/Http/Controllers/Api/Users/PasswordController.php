@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Controllers\Api;
+namespace App\Http\Controllers\Api\Users;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Api\PHPMailerController;
+use App\Http\Controllers\Api\Email\PHPMailerController;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
 use App\Models\Password;

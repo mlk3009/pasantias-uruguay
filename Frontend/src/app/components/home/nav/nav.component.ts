@@ -3,6 +3,7 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { Router, RouterOutlet, RouterModule } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { CookieService } from 'ngx-cookie-service';
+import { NavigationExtras } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
 
@@ -23,37 +24,59 @@ export class NavComponent implements AfterViewInit {
   public username: string = '';
   public dropdown = false;
 
-
   public emprise = false;
   public scroll_var = true;
+
+  public data = { name: '', surname: '', email: '', password: '', location: '', ci_estudiante: '', cod_postal: '', fec_nacimiento: '', phone: '', rol: '' };
 
   constructor(
     private viewportScroller: ViewportScroller,
     private _userService: UserService,
-    private _cookieService: CookieService
+    private _cookieService: CookieService,
+    private _router: Router,
   ) {
     this.token = this._cookieService.get('token');
   }
 
   ngOnInit() {
     if (this.token) {
-
       this._userService.obtenerUsuario(this.token).subscribe(
         response => {
           this.username = response.data.name;
+          this.data = response.data;
         },
         error => {
           console.log(<any>error);
         }
       );
     }
+
     initFlowbite();
   }
-  
+
+  open_profile() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        name: this.data.name,
+        ci_estudiante: this.data.ci_estudiante,
+        email: this.data.email,
+        location: this.data.location,
+        cod_postal: this.data.cod_postal,
+        phone: this.data.phone,
+        day: this.data.fec_nacimiento.split('-')[2],
+        month: this.data.fec_nacimiento.split('-')[1],
+        year: this.data.fec_nacimiento.split('-')[0]
+      }
+    };
+
+    this._router.navigate(['/user-profile'], navigationExtras);
+  }
+
   get isLoggedIn() {
     const token = this._cookieService.get('token') || localStorage.getItem('token');
     return !!token;
   }
+
   changeDropdown() {
     this.dropdown = !this.dropdown;
   }
@@ -100,13 +123,13 @@ export class NavComponent implements AfterViewInit {
 
 
   moveTo(section: string) {
-      const element = document.getElementById(section);
-      if (element) {
-        window.scrollTo({
-          top: element.offsetTop,
-          behavior: 'smooth'
-        });
-      }
+    const element = document.getElementById(section);
+    if (element) {
+      window.scrollTo({
+        top: element.offsetTop,
+        behavior: 'smooth'
+      });
+    }
   }
 
 }

@@ -19,20 +19,21 @@ use App\Models\CV;
 use Illuminate\Database\Eloquent\Casts\Json;
 use FPDF;
 
-class CvController extends Controller {
+class CvController extends Controller
+{
     public function storeCV(Request $request)
     {
         $jsonData = $request->all();
 
         $validator = Validator::make($jsonData, [
             'nombre_completo' => 'required|string|max:100',
-            'cedula'=> 'required|int',
+            'cedula' => 'required|int',
             'fecha_nacimiento' => 'required|date',
             'genero' => 'required|string',
             'estado_civil' => 'nullable|string|max:50',
             'licencia' => 'nullable|string|max:255',
             'carnet_de_conducir' => 'nullable|string|max:255',
-            'idiomas' => 'nullable|array', 
+            'idiomas' => 'nullable|array',
             'educacion' => 'nullable|array',
             'educacion.*.nivel' => 'required|string|max:50',
             'educacion.*.institucion' => 'required|string|max:100',
@@ -65,7 +66,7 @@ class CvController extends Controller {
             $id = Estudiante::where('ci_estudiante', $jsonData['cedula'])->get('id')->first()->id;
 
             $existingCV = CV::where('estudiante_id', $id)->first();
-            
+
             if ($existingCV) {
                 $data = [
                     'status' => 'error',
@@ -74,7 +75,7 @@ class CvController extends Controller {
                 ];
                 return response()->json($data, 409);
             }
-            
+
 
             $cv = CV::create([
                 'estudiante_id' => $id,
@@ -141,12 +142,13 @@ class CvController extends Controller {
                 'cv' => $cv,
                 'code' => 201
             ];
-            
+
             return response()->json($data, 201);
         }
     }
 
-    public function deleteCV($estudiante_id){
+    public function deleteCV($estudiante_id)
+    {
 
         $validator = Validator::make(['estudiante_id' => $estudiante_id], [
             'estudiante_id' => 'required|integer|exists:estudiante,id',
@@ -193,7 +195,7 @@ class CvController extends Controller {
             $cv = CV::where('estudiante_id', $user->id)->first();
             $estudiante = Estudiante::where('id', $user->id)->first();
             $idiomas = Idiomas::where('cv_id', $cv->id)->get(['idioma', 'nivel']);
-    
+
             if ($cv && $estudiante) {
                 $cvData = [
                     'nombre_completo' => $cv->nombre_completo,
@@ -210,7 +212,7 @@ class CvController extends Controller {
                 return response(['data' => 'CV o estudiante no encontrado'], 404);
             }
         }
-    
+
         return response(['data' => 'Unauthorized'], 401);
     }
 
@@ -218,7 +220,7 @@ class CvController extends Controller {
     public function borrarPDF($estudianteId)
     {
         $estudiante = Estudiante::find($estudianteId);
-    
+
         if ($estudiante) {
             $ci_estudiante = $estudiante->ci_estudiante;
 
@@ -239,152 +241,151 @@ class CvController extends Controller {
 
     public function generarPDF($cvId)
     {
-    if (Auth::check()) {
-        $user = Auth::user();
-        $cv = CV::where('id', $cvId)->where('estudiante_id', $user->id)->first();
-        $estudiante = Estudiante::where('id', $user->id)->first();
-        $idiomas = Idiomas::where('cv_id', $cv->id)->get();
-        $educacion = Educacion::where('cv_id', $cv->id)->get();
-        $experiencia = Experiencia::where('cv_id', $cv->id)->get();
-        $habilidades = Habilidades::where('cv_id', $cv->id)->get(); 
+        if (Auth::check()) {
+            $user = Auth::user();
+            $cv = CV::where('id', $cvId)->where('estudiante_id', $user->id)->first();
+            $estudiante = Estudiante::where('id', $user->id)->first();
+            $idiomas = Idiomas::where('cv_id', $cv->id)->get();
+            $educacion = Educacion::where('cv_id', $cv->id)->get();
+            $experiencia = Experiencia::where('cv_id', $cv->id)->get();
+            $habilidades = Habilidades::where('cv_id', $cv->id)->get();
 
-        if ($cv && $estudiante) {
-            // Verificar que el campo ci_estudiante no esté vacío
-            $ci_estudiante = $estudiante->ci_estudiante ?? 'sin_ci';
+            if ($cv && $estudiante) {
+                // Verificar que el campo ci_estudiante no esté vacío
+                $ci_estudiante = $estudiante->ci_estudiante ?? 'sin_ci';
 
-            // Ruta del archivo PDF
-            $pdfPath = 'pdfs/cv_' . $ci_estudiante . '.pdf';
+                // Ruta del archivo PDF
+                $pdfPath = 'pdfs/cv_' . $ci_estudiante . '.pdf';
 
-            // Verificar si el archivo ya existe
-            if (file_exists($pdfPath)) {
-                return response(['data' => 'El PDF ya existe.'], 409);
-            }
+                // Verificar si el archivo ya existe
+                if (file_exists($pdfPath)) {
+                    return response(['data' => 'El PDF ya existe.'], 409);
+                }
 
-            // Crear una instancia de FPDF
-            $pdf = new FPDF();
-            $pdf->AddPage();
-            $pdf->SetFont('Arial', 'B', 16);
+                // Crear una instancia de FPDF
+                $pdf = new FPDF();
+                $pdf->AddPage();
+                $pdf->SetFont('Arial', 'B', 16);
 
-            // Título principal
-            $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Curriculum Vitae'), 0, 1, 'C');
+                // Título principal
+                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Curriculum Vitae'), 0, 1, 'C');
 
 
 
-// Imagen
-$this->addSection($pdf, '', function($pdf) use ($estudiante) {
-    $id_image = $estudiante->id_image;
-    if ($id_image !== null) {
-        $imageRecord = \App\Models\ImageUpload::find($id_image);
-        if ($imageRecord) {
-            $rutaImagen = 'images/uploads/' . $imageRecord->image;
+                // Imagen
+                $this->addSection($pdf, '', function ($pdf) use ($estudiante) {
+                    $id_image = $estudiante->id_image;
+                    if ($id_image !== null) {
+                        $imageRecord = \App\Models\ImageUpload::find($id_image);
+                        if ($imageRecord) {
+                            $rutaImagen = 'images/uploads/' . $imageRecord->image;
 
-            if (file_exists($rutaImagen)) {
-                // Ajuestes en las dimensiones de la imagen
-                $pageWidth = $pdf->GetPageWidth();
-                $imageWidth = 50; // Ajusta el tamaño según sea necesario
-                $imageHeight = 50; // Ajusta el tamaño según sea necesario
-                $xPosition = ($pageWidth - $imageWidth) / 2;
-                $pdf->Image($rutaImagen, $xPosition, null, $imageWidth, $imageHeight);
-                
+                            if (file_exists($rutaImagen)) {
+                                // Ajuestes en las dimensiones de la imagen
+                                $pageWidth = $pdf->GetPageWidth();
+                                $imageWidth = 50; // Ajusta el tamaño según sea necesario
+                                $imageHeight = 50; // Ajusta el tamaño según sea necesario
+                                $xPosition = ($pageWidth - $imageWidth) / 2;
+                                $pdf->Image($rutaImagen, $xPosition, null, $imageWidth, $imageHeight);
+                            } else {
+                                // Este es por si el archivo no existe
+                                $pdf->SetTextColor(255, 0, 0);
+                                $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
+                                $pdf->SetTextColor(0, 0, 0);
+                            }
+                        } else {
+                            // Este es por si no se encuentra el registro de la imagen en la db
+                            $pdf->SetTextColor(255, 0, 0);
+                            $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
+                            $pdf->SetTextColor(0, 0, 0);
+                        }
+                    } else {
+                        // Este es por si el estudiante no tiene imagen
+                        $pdf->SetTextColor(255, 0, 0);
+                        $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
+                        $pdf->SetTextColor(0, 0, 0);
+                    }
+                });
+
+
+                // Datos personales
+                $this->addSection($pdf, 'Datos Personales', function ($pdf) use ($cv, $estudiante) {
+                    $pdf->SetFont('Arial', '', 12);
+                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Nombre Completo: ') . iconv('UTF-8', 'ISO-8859-1', $cv->nombre_completo), 0, 1);
+                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Cédula: ') . iconv('UTF-8', 'ISO-8859-1', $estudiante->ci_estudiante), 0, 1);
+                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha de Nacimiento: ') . iconv('UTF-8', 'ISO-8859-1', $cv->fecha_nacimiento), 0, 1);
+                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Género: ') . iconv('UTF-8', 'ISO-8859-1', $cv->genero), 0, 1);
+                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Estado Civil: ') . iconv('UTF-8', 'ISO-8859-1', $cv->estado_civil), 0, 1);
+                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Licencia: ') . iconv('UTF-8', 'ISO-8859-1', $cv->licencia), 0, 1);
+                });
+
+                // Idiomas
+                $this->addSection($pdf, 'Idiomas', function ($pdf) use ($idiomas) {
+                    $pdf->SetFont('Arial', '', 12);
+                    foreach ($idiomas as $idioma) {
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', $idioma->idioma) . iconv('UTF-8', 'ISO-8859-1', ' - Nivel: ') . iconv('UTF-8', 'ISO-8859-1', $idioma->nivel), 0, 1);
+                    }
+                });
+
+                // Educación
+                $this->addSection($pdf, 'Educación', function ($pdf) use ($educacion) {
+                    $pdf->SetFont('Arial', '', 12);
+                    foreach ($educacion as $edu) {
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Nivel: ') . iconv('UTF-8', 'ISO-8859-1', $edu->nivel), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Institución: ') . iconv('UTF-8', 'ISO-8859-1', $edu->institucion), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Título: ') . iconv('UTF-8', 'ISO-8859-1', $edu->titulo), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Inicio: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fecha_inicio), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Fin: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fecha_fin), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Actualmente: ') . ($edu->actualmente ? iconv('UTF-8', 'ISO-8859-1', 'Sí') : iconv('UTF-8', 'ISO-8859-1', 'No')), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fin Estimado: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fin_estimado ? $edu->fin_estimado : 'Indeterminado'), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Descripción: ') . iconv('UTF-8', 'ISO-8859-1', $edu->descripcion), 0, 1);
+                        $pdf->Ln(5);
+                    }
+                });
+
+                // Experiencia
+                $this->addSection($pdf, 'Experiencia', function ($pdf) use ($experiencia) {
+                    $pdf->SetFont('Arial', '', 12);
+                    foreach ($experiencia as $exp) {
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Puesto: ') . iconv('UTF-8', 'ISO-8859-1', $exp->puesto), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Empresa: ') . iconv('UTF-8', 'ISO-8859-1', $exp->empresa), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Inicio: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_inicio), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Fin: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_fin), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Descripción: ') . iconv('UTF-8', 'ISO-8859-1', $exp->descripcion), 0, 1);
+                        $pdf->Ln(5);
+                    }
+                });
+
+                // Habilidades
+                $this->addSection($pdf, 'Habilidades', function ($pdf) use ($habilidades) {
+                    $pdf->SetFont('Arial', '', 12);
+                    foreach ($habilidades as $habilidad) {
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Habilidad: ') . iconv('UTF-8', 'ISO-8859-1', $habilidad->habilidad), 0, 1);
+                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Nivel: ') . iconv('UTF-8', 'ISO-8859-1', $habilidad->nivel), 0, 1);
+                        $pdf->Ln(5);
+                    }
+                });
+
+                // Guardar el PDF en un archivo
+                $pdf->Output('F', $pdfPath);
+
+                return response(['data' => 'PDF generado exitosamente.'], 200);
             } else {
-                // Este es por si el archivo no existe
-                $pdf->SetTextColor(255, 0, 0);
-                $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
-                $pdf->SetTextColor(0, 0, 0);
+                return response(['data' => 'CV o estudiante no encontrado'], 404);
             }
-        } else {
-            // Este es por si no se encuentra el registro de la imagen en la db
-            $pdf->SetTextColor(255, 0, 0);
-            $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
-            $pdf->SetTextColor(0, 0, 0);
         }
-    } else {
-        // Este es por si el estudiante no tiene imagen
-        $pdf->SetTextColor(255, 0, 0);
-        $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
-        $pdf->SetTextColor(0, 0, 0);
+
+        return response(['data' => 'Unauthorized'], 401);
     }
-});
 
-
-            // Datos personales
-            $this->addSection($pdf, 'Datos Personales', function($pdf) use ($cv, $estudiante) {
-                $pdf->SetFont('Arial', '', 12);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Nombre Completo: ') . iconv('UTF-8', 'ISO-8859-1', $cv->nombre_completo), 0, 1);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Cédula: ') . iconv('UTF-8', 'ISO-8859-1', $estudiante->ci_estudiante), 0, 1);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha de Nacimiento: ') . iconv('UTF-8', 'ISO-8859-1', $cv->fecha_nacimiento), 0, 1);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Género: ') . iconv('UTF-8', 'ISO-8859-1', $cv->genero), 0, 1);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Estado Civil: ') . iconv('UTF-8', 'ISO-8859-1', $cv->estado_civil), 0, 1);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Licencia: ') . iconv('UTF-8', 'ISO-8859-1', $cv->licencia), 0, 1);
-            });
-
-            // Idiomas
-            $this->addSection($pdf, 'Idiomas', function($pdf) use ($idiomas) {
-                $pdf->SetFont('Arial', '', 12);
-                foreach ($idiomas as $idioma) {
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', $idioma->idioma) . iconv('UTF-8', 'ISO-8859-1', ' - Nivel: ') . iconv('UTF-8', 'ISO-8859-1', $idioma->nivel), 0, 1);
-                }
-            });
-
-            // Educación
-            $this->addSection($pdf, 'Educación', function($pdf) use ($educacion) {
-                $pdf->SetFont('Arial', '', 12);
-                foreach ($educacion as $edu) {
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Nivel: ') . iconv('UTF-8', 'ISO-8859-1', $edu->nivel), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Institución: ') . iconv('UTF-8', 'ISO-8859-1', $edu->institucion), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Título: ') . iconv('UTF-8', 'ISO-8859-1', $edu->titulo), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Inicio: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fecha_inicio), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Fin: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fecha_fin), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Actualmente: ') . ($edu->actualmente ? iconv('UTF-8', 'ISO-8859-1', 'Sí') : iconv('UTF-8', 'ISO-8859-1', 'No')), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fin Estimado: ') . iconv('UTF-8', 'ISO-8859-1', $edu->fin_estimado ? $edu->fin_estimado : 'Indeterminado'), 0, 1);                    
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Descripción: ') . iconv('UTF-8', 'ISO-8859-1', $edu->descripcion), 0, 1);
-                    $pdf->Ln(5);
-                }
-            });
-
-            // Experiencia
-            $this->addSection($pdf, 'Experiencia', function($pdf) use ($experiencia) {
-                $pdf->SetFont('Arial', '', 12);
-                foreach ($experiencia as $exp) {
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Puesto: ') . iconv('UTF-8', 'ISO-8859-1', $exp->puesto), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Empresa: ') . iconv('UTF-8', 'ISO-8859-1', $exp->empresa), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Inicio: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_inicio), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Fin: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_fin), 0, 1);
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Descripción: ') . iconv('UTF-8', 'ISO-8859-1', $exp->descripcion), 0, 1);
-                    $pdf->Ln(5);
-                }
-            });
-
-            // Habilidades
-            $this->addSection($pdf, 'Habilidades', function($pdf) use ($habilidades) {
-                $pdf->SetFont('Arial', '', 12);
-                foreach ($habilidades as $habilidad) {
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Habilidad: ') . iconv('UTF-8', 'ISO-8859-1', $habilidad->habilidad), 0, 1); 
-                    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Nivel: ') . iconv('UTF-8', 'ISO-8859-1', $habilidad->nivel), 0, 1); 
-                    $pdf->Ln(5);
-                }
-            });
-
-            // Guardar el PDF en un archivo
-            $pdf->Output('F', $pdfPath);
-            
-            return response(['data' => 'PDF generado exitosamente.'], 200);
-        } else {
-            return response(['data' => 'CV o estudiante no encontrado'], 404);
+    private function addSection($pdf, $title, $contentCallback, $imageHeight = 50) // Esta es para que funcione bien el salto de pagina pq antes quedaba cortado
+    {
+        $pdf->SetFont('Arial', 'B', 14);
+        if ($pdf->GetY() + $imageHeight > 260) { // Si se llega a cortar el pdf, sumarle el tamaño del titulo a esto (20) o mejor sumarselo a la variable $imageHeight
+            $pdf->AddPage();
         }
+        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', $title), 0, 1);
+        $contentCallback($pdf);
+        $pdf->Ln(10);
     }
-
-    return response(['data' => 'Unauthorized'], 401);
-}
-
-private function addSection($pdf, $title, $contentCallback, $imageHeight = 50) // Esta es para que funcione bien el salto de pagina pq antes quedaba cortado
-{
-    $pdf->SetFont('Arial', 'B', 14);
-    if ($pdf->GetY() + $imageHeight > 260) { // Si se llega a cortar el pdf, sumarle el tamaño del titulo a esto (20) o mejor sumarselo a la variable $imageHeight
-        $pdf->AddPage();
-    }
-    $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', $title), 0, 1);
-    $contentCallback($pdf);
-    $pdf->Ln(10);
-}
 }

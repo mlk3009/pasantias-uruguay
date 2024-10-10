@@ -17,5 +17,7 @@ import { NavComponent } from '../home/nav/nav.component';
   styleUrl: './publications.component.css'
 })
 export class PublicationsComponent {
-  
+  ngOninit() {
+    initFlowbite();
+  }
 }

@@ -44,13 +44,36 @@ export class RegisterComponent {
   public etiquetas: etiqueta[] = [];
   public selectedEtiquetaId: number | null = null;
 
+  public day: number = 0;
+  public month: number = 0;
+  public year: number = 0;
+
   constructor(
     private _userService: UserService,
     private _router: Router,
     private _cookieService: CookieService,
     private dialog: MatDialog
   ) {
-    this.user = new User(0, '', '', '', '','', '','','');
+    this.user = new User(0, '', '', '', '', '', '', '', '');
+    const navigation = this._router.getCurrentNavigation();
+    if (navigation?.extras?.state) {
+      const state = navigation.extras.state;
+      this.user["name"] = state["name"].split(' ')[0];
+      this.surName = state["surname"];
+      this.user["email"] = state["email"];
+      this.user["password"] = state["password"];
+      this.confirmPassword = state["password"];
+      this.user["location"] = state["location"];
+      this.selectedEtiquetaId = state["selectedEtiquetaId"];
+
+      this.user["ci_estudiante"] = state["ci"] || '';
+      this.user["cod_postal"] = state["cod_postal"] || '';
+      this.user["phone"] = state["phone"] || '';
+      this.day = state["day"];
+      this.month = state["month"];
+      this.year = state["year"];
+    }
+
   }
 
   capitalize(sentence: string): string {
@@ -74,7 +97,7 @@ export class RegisterComponent {
 
     this.getEtiquetas();
   }
-  
+
   getEtiquetas(): void {
     this._userService.getEtiquetas().subscribe(
       response => {
@@ -108,10 +131,19 @@ export class RegisterComponent {
     const navigationExtras: NavigationExtras = {
       state: {
         name: this.user.name,
+        surname: this.surName,
         email: this.user.email,
         password: this.user.password,
+        confirmPassword: this.confirmPassword,
         location: this.user.location,
-        selectedEtiquetaId: this.selectedEtiquetaId
+        selectedEtiquetaId: this.selectedEtiquetaId,
+
+        ci: this.user.ci_estudiante,
+        cod_postal: this.user.cod_postal,
+        phone: this.user.phone,
+        day: this.day,
+        month: this.month,
+        year: this.year
       }
     };
 

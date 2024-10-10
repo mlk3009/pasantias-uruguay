@@ -1,17 +1,16 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
-import { User } from '../../../models/user';
-import { UserService } from '../../../services/user.service';
+import { User } from '../../../../models/user';
+import { UserService } from '../../../../services/user.service';
 
 @Component({
-  selector: 'app-user-profile-student',
+  selector: 'home-perfil',
   standalone: true,
   imports: [],
-  templateUrl: './user-profile-student.component.html',
-  styleUrl: './user-profile-student.component.css',
+  templateUrl: './home.component.html',
   providers: [UserService],
 })
-export class UserProfileStudentComponent {
+export class HomeProfileComponent {
   loading: boolean = false;
 
   data = {

@@ -74,22 +74,7 @@ export class LoginComponent {
         }
         localStorage.setItem('email', this.user.email);
 
-        // Acá llamé a la de obtenerUsuario para poder verificar si el email está verificado, usé como parametro el token del login
-        this._userService.obtenerUsuario(token).subscribe(
-          (userResponse) => {
-            this.loading = false;
-
-            if (userResponse.data.email_verified_at !== null) {
-              this._router.navigate(['/inicio']);
-            } else {
-              this.dialog.open(ValidAcountComponent);
-            }
-          },
-          (error) => {
-            this.loading = false;
-            console.error(error);
-          }
-        );
+        return this._router.navigate(['/']);
       },
       (error) => {
         this.loading = false;

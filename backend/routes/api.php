@@ -1,14 +1,13 @@
 <?php
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\Api\UserController;
+use App\Http\Controllers\Api\Users\UserController;
 use App\Http\Controllers\Api\CvController;
-use App\Http\Controllers\Api\PasswordController;
-use App\Http\Controllers\Api\VerificationController;
+use App\Http\Controllers\Api\Users\PasswordController;
 use App\Http\Controllers\Api\PublicationController;
-
-
+use App\Http\Controllers\Api\Email\EmailController;
+use App\Http\Controllers\Api\Users\ImageController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -48,13 +47,13 @@ Route::post('checkCode', [PasswordController::class, 'checkCode']);
 Route::put('changePassword', [UserController::class, 'changePassword']);
 
 // IMAGE 
-Route::post('upload-image', [UserController::class, 'store_image']);
-Route::delete('delete-image/{id}', [UserController::class, 'delete_image']);
+Route::post('upload-image', [ImageController::class, 'store_image']);
+Route::delete('delete-image/{id}', [ImageController::class, 'delete_image']);
 
 
 // EMAIL VERIFICATION
 // Ruta para verificar el correo electrónico
-Route::post('checkEmailCode', [UserController::class, 'checkEmailCode']);
+Route::post('checkEmailCode', [EmailController::class, 'checkEmailCode']);
 
 
 Route::get('/publications', [PublicationController::class, 'index']);
