@@ -27,7 +27,7 @@ export class NavComponent implements AfterViewInit {
   public emprise = false;
   public scroll_var = true;
 
-  public data = { name: '', surname: '', email: '', password: '', location: '', ci_estudiante: '', cod_postal: '', fec_nacimiento: '', phone: '', rol: '' };
+  public data = { name: '', surname: '', email: '', password: '', location: '', ci_estudiante: '', cod_postal: '', fec_nacimiento: '', phone: '', rol: '', cv: '' };
 
   constructor(
     private viewportScroller: ViewportScroller,
@@ -65,7 +65,9 @@ export class NavComponent implements AfterViewInit {
         phone: this.data.phone,
         day: this.data.fec_nacimiento.split('-')[2],
         month: this.data.fec_nacimiento.split('-')[1],
-        year: this.data.fec_nacimiento.split('-')[0]
+        year: this.data.fec_nacimiento.split('-')[0],
+        rol: this.data.rol,
+        cv: this.data.cv
       }
     };
 

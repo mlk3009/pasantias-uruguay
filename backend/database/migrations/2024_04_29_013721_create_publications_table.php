@@ -21,9 +21,9 @@ return new class extends Migration
             $table->string('time');
             $table->string('deathline');
             $table->string('postulation_way');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); 
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
             $table->timestamps();
-            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+            $table->engine = 'InnoDB';
         });
     }
 

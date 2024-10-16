@@ -9,7 +9,7 @@ import { UserProfileStudentComponent } from './user-profile-student/user-profile
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [ CommonModule, NavComponent, UserProfileStudentComponent, FooterComponent ],
+  imports: [CommonModule, NavComponent, UserProfileStudentComponent, FooterComponent],
   templateUrl: './students.component.html',
   styleUrl: './students.component.css'
 })

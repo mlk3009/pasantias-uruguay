@@ -68,6 +68,7 @@ class UserController extends Controller
                 'fec_nacimiento' => $estudiante->fec_nacimiento,
                 'cod_postal' => $estudiante->cod_postal,
                 'id_image' => $estudiante->id_image,
+                'cv' => false
             ];
 
             if ($cv) {
@@ -184,8 +185,14 @@ class UserController extends Controller
         $id = Auth::user()->id;
 
         $validator = Validator::make($jsonData, [
-            'name' => 'required',
-            'email' => 'required|email'
+            'name' => 'nullable',
+            'email' => 'nullable|email|unique:users',
+            'phone' => 'nullable|string|max:9',
+            'location' => 'nullable|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
+            'ci_estudiante' => 'nullable|string|max:8|unique:estudiante',
+            'fec_nacimiento' => 'nullable|date',
+            'cod_postal' => 'nullable|string|max:5',
+            'id_image' => 'nullable|integer',
         ]);
 
         if ($validator->fails()) {
@@ -193,13 +200,51 @@ class UserController extends Controller
                 'status' => 'error',
                 'message' => 'Validation Error',
                 'errors' => $validator->errors(),
+                'failed_input' => $validator->failed(),
                 'code' => 422
             ];
         } else {
             $user = User::find($id);
-            $user->name = $jsonData['name'];
-            $user->email = $jsonData['email'];
+
+            if ($jsonData['name'] != $user->name) {
+                $user->name = $jsonData['name'];
+            }
+
+            if ($jsonData['email'] != $user->email) {
+                $user->email = $jsonData['email'];
+            }
+
+            if ($jsonData['phone'] != $user->phone) {
+                $user->phone = $jsonData['phone'];
+            }
+
             $user->save();
+
+
+            $student = Estudiante::find($id);
+
+            if ($jsonData['ci_estudiante'] != $student->ci_estudiante) {
+                $student->ci_estudiante = $jsonData['ci_estudiante'];
+            }
+
+            if ($jsonData['location'] != $student->location) {
+                $student->location = $jsonData['location'];
+            }
+
+            if ($jsonData['fec_nacimiento'] != $student->fec_nacimiento) {
+                $student->fec_nacimiento = $jsonData['fec_nacimiento'];
+            }
+
+            if ($jsonData['cod_postal'] != $student->cod_postal) {
+                $student->cod_postal = $jsonData['cod_postal'];
+            }
+
+            if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
+                $student->id_image = $jsonData['id_image'];
+            }
+
+            $student->save();
+
             $data = [
                 'status' => 'success',
                 'message' => 'User updated successfully',

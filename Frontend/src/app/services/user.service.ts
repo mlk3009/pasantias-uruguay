@@ -66,6 +66,16 @@ export class UserService {
     return this._http.post(global.url + 'login', params, { headers: headers });
   }
 
+  update(data: any): Observable<any> {
+    let json = JSON.stringify(data);
+    let params = json;
+
+    let headers = new HttpHeaders().set('Content-Type', 'application/raw');
+    return this._http.post(global.url + 'updateProfile', params, {
+      headers: headers,
+    });
+  }
+
   obtenerUsuario(token: string): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,

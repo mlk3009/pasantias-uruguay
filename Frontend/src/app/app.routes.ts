@@ -67,6 +67,13 @@ export const routes: Routes = [
         (m) => m.StudentsComponent
       ),
   },
+  // {
+  //   path: 'edit-profile',
+  //   loadComponent: () =>
+  //     import('./components/students/students.component').then(
+  //       (m) => m.StudentsComponent
+  //     ),
+  // },
   {
     path: 'cv',
     loadComponent: () =>
@@ -94,5 +101,5 @@ export const routes: Routes = [
     redirectTo: 'inicio',
     pathMatch: 'full',
   },
-  
+
 ];

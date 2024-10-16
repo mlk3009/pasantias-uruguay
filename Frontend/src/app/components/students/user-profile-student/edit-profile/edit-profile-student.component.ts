@@ -2,16 +2,20 @@ import { Component } from '@angular/core';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { User } from '../../../../models/user';
 import { UserService } from '../../../../services/user.service';
+import { NavigationExtras } from '@angular/router';
+
 
 @Component({
-  selector: 'home-perfil',
+  selector: 'app-user-profile-student',
   standalone: true,
   imports: [],
-  templateUrl: './home.component.html',
+  templateUrl: './edit-profile-student.component.html',
   providers: [UserService],
 })
-export class HomeProfileComponent {
-  loading: boolean = false;
+export class EditProfileStudentComponent {
+  loading: boolean = false
+  status: string = '';
+  showError: boolean = false;
 
   data = {
     name: '',
@@ -21,7 +25,7 @@ export class HomeProfileComponent {
     location: '',
     phone: '',
     rol: '',
-    fec_nacimiento: '',
+    fec_nacimiento: ''
   };
 
   constructor(
@@ -41,7 +45,33 @@ export class HomeProfileComponent {
       this.data.rol = state["rol"];
       this.data.fec_nacimiento = state["day"] + '/' + state["month"] + '/' + state["year"];
     }
-
     this.loading = true;
+  }
+
+  edit() {
+    this._userService.update(this.data).subscribe(
+      (response) => {
+        this.loading = false;
+        return this._router.navigate(['/profile']);
+      },
+      (error) => {
+        console.log(error.error.failed_input);
+        let errorList = error.error.failed_input;
+
+        for (let err in errorList) {
+          if (err == 'email') {
+            this.status = 'El email ya se encuentra registrado';
+          }
+
+          if (err == 'ci_estudiante') {
+            this.status += ' La cédula ya se encuentra registrada';
+          }
+        }
+
+        console.error('Error al registrar el usuario', error);
+        this.loading = false;
+        this.showError = true;
+      }
+    );
   }
 }

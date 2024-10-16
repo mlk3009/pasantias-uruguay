@@ -44,6 +44,28 @@ export class RegisterComponent {
   public etiquetas: etiqueta[] = [];
   public selectedEtiquetaId: number | null = null;
 
+  public locations = [
+    'Montevideo',
+    'Canelones',
+    'Maldonado',
+    'Artigas',
+    'Cerro Largo',
+    'Colonia',
+    'Durazno',
+    'Flores',
+    'Florida',
+    'Lavalleja',
+    'Paysandú',
+    'Río Negro',
+    'Rivera',
+    'Rocha',
+    'Salto',
+    'San José',
+    'Soriano',
+    'Tacuarembó',
+    'Treinta y Tres'
+  ];
+
   public day: number = 0;
   public month: number = 0;
   public year: number = 0;

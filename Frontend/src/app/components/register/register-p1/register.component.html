@@ -426,41 +426,14 @@
                 <option value="" disabled selected style="display: none">
                   Elije un Departamento
                 </option>
-                <option class="text-gray-900" value="Montevideo">
-                  Montevideo
+
+                @for (location of locations; track location) {
+                <option class="text-gray-900" value="{{ location }}">
+                  {{ location }}
                 </option>
-                <option class="text-gray-900" value="Salto">Salto</option>
-                <option class="text-gray-900" value="Paysandú">Paysandú</option>
-                <option class="text-gray-900" value="Maldonado">
-                  Maldonado
-                </option>
-                <option class="text-gray-900" value="Tacuarembó">
-                  Tacuarembó
-                </option>
-                <option class="text-gray-900" value="Canelones">
-                  Canelones
-                </option>
-                <option class="text-gray-900" value="Cerro Largo">
-                  Cerro Largo
-                </option>
-                <option class="text-gray-900" value="Rivera">Rivera</option>
-                <option class="text-gray-900" value="Soriano">Soriano</option>
-                <option class="text-gray-900" value="Colonia">Colonia</option>
-                <option class="text-gray-900" value="Durazno">Durazno</option>
-                <option class="text-gray-900" value="Rocha">Rocha</option>
-                <option class="text-gray-900" value="Florida">Florida</option>
-                <option class="text-gray-900" value="Treinta y Tres">
-                  Treinta y Tres
-                </option>
-                <option class="text-gray-900" value="Artigas">Artigas</option>
-                <option class="text-gray-900" value="San José">San José</option>
-                <option class="text-gray-900" value="Flores">Flores</option>
-                <option class="text-gray-900" value="Lavalleja">
-                  Lavalleja
-                </option>
-                <option class="text-gray-900" value="Río Negro">
-                  Río Negro
-                </option>
+                } @empty {
+                <li>There are no items.</li>
+                }
               </select>
             </div>
           </div>
