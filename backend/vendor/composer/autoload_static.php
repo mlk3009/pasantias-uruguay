@@ -4,7 +4,7 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
+class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
 {
     public static $files = array (
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
@@ -369,8 +369,8 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -553,9 +553,10 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
 
     public static $classMap = array (
         'App\\Http\\Controllers\\Api\\CvController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CvController.php',
-        'App\\Http\\Controllers\\Api\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PasswordController.php',
+        'App\\Http\\Controllers\\Api\\Email\\EmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Email/EmailController.php',
         'App\\Http\\Controllers\\Api\\PublicationController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/PublicationController.php',
-        'App\\Http\\Controllers\\Api\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/UserController.php',
+        'App\\Http\\Controllers\\Api\\Users\\PasswordController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Users/PasswordController.php',
+        'App\\Http\\Controllers\\Api\\Users\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Users/UserController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
         'App\\Models\\CV' => __DIR__ . '/../..' . '/app/Models/CV.php',
         'App\\Models\\Educacion' => __DIR__ . '/../..' . '/app/Models/Educacion.php',
@@ -6737,9 +6738,9 @@ class ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit2ca0f5ad6672a20fa7a764ac586aa25f::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit67f72c37541c05290aaecdd1b69914e6::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit67f72c37541c05290aaecdd1b69914e6::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit67f72c37541c05290aaecdd1b69914e6::$classMap;
 
         }, null, ClassLoader::class);
     }

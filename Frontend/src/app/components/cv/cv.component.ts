@@ -15,6 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DatosEstudiosComponent } from './datos-estudios/datos-estudios.component';
 import { DatosHabilidadesIdiomasComponent } from './datos-habilidaes-idiomas/datos-habilidades-idiomas.component';
 import { DatosExperienciasComponent } from './datos-experiencias/experiencias.component';
+import { NavComponent } from '../home/nav/nav.component';
 
 @Component({
   selector: 'app-cv',
@@ -28,8 +29,10 @@ import { DatosExperienciasComponent } from './datos-experiencias/experiencias.co
     DatosHabilidadesIdiomasComponent,
     DatosExperienciasComponent,
     DatosGeneralesComponent,
+    NavComponent
   ],
   templateUrl: './cv.component.html',
+  styleUrls: ['./cv.component.css'],
   providers: [UserService, CvService]
 })
 export class CvComponent implements OnInit {

@@ -14,7 +14,7 @@ import { CvService } from '../../../services/cv.service';
     FormsModule,
     CommonModule
   ],
-  templateUrl: './datos-estudios.component.html'
+  templateUrl: './datos-estudios.component.html',
 })
 export class DatosEstudiosComponent {
   public token: any;

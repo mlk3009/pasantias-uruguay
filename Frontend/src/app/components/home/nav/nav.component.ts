@@ -134,4 +134,37 @@ export class NavComponent implements AfterViewInit {
     }
   }
 
+  showMenu(menuId: string) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+      menu.classList.remove('hidden');
+    }
+  }
+  
+  hideMenu(menuId: string) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+      menu.classList.add('hidden');
+    }
+  }
+  
+  toggleMenu(menuId: string, dialToggleButton: HTMLElement) {
+    if (menuId) { // Verifica que menuId no sea null
+      const menu = document.getElementById(menuId);
+  
+      if (menu) {
+        // Alterna la visibilidad del menú
+        const isExpanded = dialToggleButton.getAttribute('aria-expanded') === 'true';
+        dialToggleButton.setAttribute('aria-expanded', (!isExpanded).toString());
+        if (isExpanded) {
+          this.hideMenu(menuId);
+        } else {
+          this.showMenu(menuId);
+        }
+      }
+    }
+  }
+
+  
+
 }

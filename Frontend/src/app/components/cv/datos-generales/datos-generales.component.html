@@ -1,195 +1,198 @@
-<p class="text-gray-500 text-xl text-center">
-  Revise todos los datos antes de guardar
-</p>
-
-<div>
-  <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-    <h2 class="text-center">
-      Datos del estudiante
-    </h2>
-      <div>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Nombre completo:
-          <span class="text-gray-500">{{ estudiante["nombre_completo"] }} ({{ estudiante["genero"] }})</span>       
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Fecha de nacimiento:
-          <span class="text-gray-500">{{ estudiante["fecha_nacimiento"] }}</span>
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Cedula:
-          <span class="text-gray-500">{{ estudiante["cedula"] }}</span>
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Celular/Telefono:
-          <span class="text-gray-500">{{ estudiante["cel"] }}</span>
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Email:
-          <span class="text-gray-500">{{ estudiante["email"] }}</span>
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Credencial Cívica:
-          <span class="text-gray-500">{{ estudiante["credencial_civica"] }}</span>
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Estado Civil:
-          <span class="text-gray-500">{{ estudiante["estado_civil"] }}</span>
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          licencia:
-          <span class="text-gray-500">{{ estudiante["licencia"] }}</span>
-        </p>
+<div class="bg-white p-8 rounded-lg px-16">
+  <h1 class="text-black text-xl text-center">
+    Revise todos los datos antes de guardar
+  </h1>
+  
+  <div>
+    <div class="p-5 border-b-2 border-gray-200 dark:border-gray-700">
+      <h2 class="text-center">
+        Datos del estudiante
+      </h2>
+        <div>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Nombre completo:
+            <span class="text-gray-500">{{ estudiante["nombre_completo"] }} ({{ estudiante["genero"] }})</span>       
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Fecha de nacimiento:
+            <span class="text-gray-500">{{ estudiante["fecha_nacimiento"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Cedula:
+            <span class="text-gray-500">{{ estudiante["cedula"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Celular/Telefono:
+            <span class="text-gray-500">{{ estudiante["cel"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Email:
+            <span class="text-gray-500">{{ estudiante["email"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Credencial Cívica:
+            <span class="text-gray-500">{{ estudiante["credencial_civica"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Estado Civil:
+            <span class="text-gray-500">{{ estudiante["estado_civil"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            licencia:
+            <span class="text-gray-500">{{ estudiante["licencia"] }}</span>
+          </p>
+        </div>
+        <button class="mt-4 text-md text-blue-600 hover:underline" (click)="editEstudiante()">
+          Editar
+        </button>
+    </div>
+    
+  
+    <div class="p-5 border-b-2 border-gray-200 dark:border-gray-700">
+      <h2 class="text-center">
+        Educación
+      </h2>
+        <div  *ngFor="let edu of educacion">
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Nivel:
+            <span class="text-gray-500">{{ edu["nivel"] }}</span>
+          </p>
+    
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Título:
+            <span class="text-gray-500">{{ edu["titulo"] }}</span>
+          </p>
+    
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Instituto:
+            <span class="text-gray-500">{{ edu["instituto"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Fecha de Inicio:
+            <span class="text-gray-500"
+              > {{ edu["fecha_inicio"] }}</span
+            >
+          </p>
+          @if(edu["actualmente"]){
+            <p class="mb-2 text-gray-800 dark:text-gray-400">
+              Fecha estimada de finalización:
+              <span class="text-gray-500">{{ edu["fin_estimado"] }}</span>
+            </p>
+          } @else {
+            <p class="mb-2 text-gray-800 dark:text-gray-400">
+              Fecha de Finalización:
+              <span class="text-gray-500">{{ edu["fecha_fin"] }}</span>
+            </p>
+          }
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Descripción:
+            <span class="text-gray-500">{{ edu["descripcion"] }}</span>
+          </p>
+        </div>
+        <button class="mt-4 text-md text-blue-600 hover:underline" (click)="editEstudios()">
+          Editar
+        </button>
+    </div>
+    
+  
+    <div class="p-5 border-b-2 border-gray-200 dark:border-gray-700">
+      <h2 class="text-center"> Idiomas
+      </h2>
+      <div
+      >
+        <div
+          *ngFor="let idioma of idiomas"
+        >
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Idioma:
+            <span class="text-gray-500">{{ idioma["idioma"] }}</span>
+          </p>
+          <p class="mb-2 text-gray-800 dark:text-gray-400">
+            Nivel:
+            <span class="text-gray-500">{{ idioma["nivel"] }}</span>
+          </p>
+        </div>
       </div>
-      <button class="text-sm text-blue-600 hover:underline" (click)="editEstudiante()">
+      <button class="mt-4 text-md text-blue-600 hover:underline" (click)="editHablidadesIdiomas()">
         Editar
       </button>
-  </div>
-  
-
-  <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700">
-    <h2 class="text-center">
-      Educación
-    </h2>
-      <div  *ngFor="let edu of educacion">
+    </div>
+    
+   
+    <div class="p-5 border-b-2 border-gray-200 dark:border-gray-700">
+      <h2 class="text-center"> Habilidades </h2>
+      <div
+        *ngFor="let habilidad of habilidades"
+      >
+        <p class="mb-2 text-gray-800 dark:text-gray-400">
+          Habilidad:
+          <span class="text-gray-500">{{
+            habilidad["habilidad"]
+          }}</span>
+        </p>
         <p class="mb-2 text-gray-800 dark:text-gray-400">
           Nivel:
-          <span class="text-gray-500">{{ edu["nivel"] }}</span>
+          <span class="text-gray-500">{{
+            habilidad["nivel"]
+          }}</span>
+        </p>
+      </div>
+      <button class="mt-4 text-md text-blue-600 hover:underline" (click)="editHablidadesIdiomas()">
+        Editar
+      </button>
+    </div>
+  
+  
+    <div class="p-5 border-b-2 border-gray-200 dark:border-gray-700">
+      <h2 id="accordion-collapse-heading-5">
+          Experiencias laborales
+      </h2>
+      <div *ngFor="let experiencia of experiencias">
+        <p class="mb-2 text-gray-800 dark:text-gray-400">
+          Puesto:
+          <span class="text-gray-500">{{ experiencia["puesto"] }}</span>
         </p>
   
         <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Título:
-          <span class="text-gray-500">{{ edu["titulo"] }}</span>
+          Empresa:
+          <span class="text-gray-500">{{ experiencia["empresa"] }}</span>
         </p>
   
         <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Instituto:
-          <span class="text-gray-500">{{ edu["instituto"] }}</span>
+          Fecha de inicio:
+          <span class="text-gray-500">{{ experiencia["fecha_inicio"] }}</span>
         </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Fecha de Inicio:
-          <span class="text-gray-500"
-            > {{ edu["fecha_inicio"] }}</span
-          >
-        </p>
-        @if(edu["actualmente"]){
-          <p class="mb-2 text-gray-800 dark:text-gray-400">
-            Fecha estimada de finalización:
-            <span class="text-gray-500">{{ edu["fin_estimado"] }}</span>
-          </p>
-        } @else {
+        @if(!experiencia["actualmente"]){
           <p class="mb-2 text-gray-800 dark:text-gray-400">
             Fecha de Finalización:
-            <span class="text-gray-500">{{ edu["fecha_fin"] }}</span>
+            <span class="text-gray-500">{{ experiencia["fecha_fin"] }}</span>
           </p>
         }
         <p class="mb-2 text-gray-800 dark:text-gray-400">
           Descripción:
-          <span class="text-gray-500">{{ edu["descripcion"] }}</span>
+          <span class="text-gray-500">{{ experiencia["descripcion"] }}</span>
+        </p>
+        <p class="mb-2 text-gray-800 dark:text-gray-400">
+          Referencia:
+          <span class="text-gray-500">{{ experiencia["referencia"] }}</span>
         </p>
       </div>
-      <button class="text-sm text-blue-600 hover:underline" (click)="editEstudios()">
+      <button class="mt-4 text-md text-blue-600 hover:underline" (click)="editExperiencias()">
         Editar
       </button>
+    </div>
   </div>
   
-
-  <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-    <h2 class="text-center"> Idiomas
-    </h2>
-    <div
+  
+  <div class="grid grid-cols-2 w-full gap-6 mt-8">
+    <button
+      (click)="next()"
+      type="button"
+      class="sm:mb-12 text-white float-right bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
     >
-      <div
-        *ngFor="let idioma of idiomas"
-      >
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Idioma:
-          <span class="text-gray-500">{{ idioma["idioma"] }}</span>
-        </p>
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Nivel:
-          <span class="text-gray-500">{{ idioma["nivel"] }}</span>
-        </p>
-      </div>
-    </div>
-    <button class="text-sm text-blue-600 hover:underline" (click)="editHablidadesIdiomas()">
-      Editar
+      Guardar
     </button>
   </div>
   
- 
-  <div class="p-5 border border-t-0 border-gray-200 dark:border-gray-700">
-    <h2 class="text-center"> Habilidades </h2>
-    <div
-      *ngFor="let habilidad of habilidades"
-    >
-      <p class="mb-2 text-gray-800 dark:text-gray-400">
-        Habilidad:
-        <span class="text-gray-500">{{
-          habilidad["habilidad"]
-        }}</span>
-      </p>
-      <p class="mb-2 text-gray-800 dark:text-gray-400">
-        Nivel:
-        <span class="text-gray-500">{{
-          habilidad["nivel"]
-        }}</span>
-      </p>
-    </div>
-    <button class="text-sm text-blue-600 hover:underline" (click)="editHablidadesIdiomas()">
-      Editar
-    </button>
-  </div>
-
-
-  <div class="p-5 border border-b-1 border-gray-200 dark:border-gray-700">
-    <h2 id="accordion-collapse-heading-5">
-        Experiencias laborales
-    </h2>
-    <div *ngFor="let experiencia of experiencias">
-      <p class="mb-2 text-gray-800 dark:text-gray-400">
-        Puesto:
-        <span class="text-gray-500">{{ experiencia["puesto"] }}</span>
-      </p>
-
-      <p class="mb-2 text-gray-800 dark:text-gray-400">
-        Empresa:
-        <span class="text-gray-500">{{ experiencia["empresa"] }}</span>
-      </p>
-
-      <p class="mb-2 text-gray-800 dark:text-gray-400">
-        Fecha de inicio:
-        <span class="text-gray-500">{{ experiencia["fecha_inicio"] }}</span>
-      </p>
-      @if(!experiencia["actualmente"]){
-        <p class="mb-2 text-gray-800 dark:text-gray-400">
-          Fecha de Finalización:
-          <span class="text-gray-500">{{ experiencia["fecha_fin"] }}</span>
-        </p>
-      }
-      <p class="mb-2 text-gray-800 dark:text-gray-400">
-        Descripción:
-        <span class="text-gray-500">{{ experiencia["descripcion"] }}</span>
-      </p>
-      <p class="mb-2 text-gray-800 dark:text-gray-400">
-        Referencia:
-        <span class="text-gray-500">{{ experiencia["referencia"] }}</span>
-      </p>
-    </div>
-    <button class="text-sm text-blue-600 hover:underline" (click)="editExperiencias()">
-      Editar
-    </button>
-  </div>
+  
 </div>
-
-
-<div class="grid grid-cols-2 w-full gap-6 mt-8">
-  <button
-    (click)="next()"
-    type="button"
-    class="sm:mb-12 text-white float-right bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-  >
-    Guardar
-  </button>
-</div>
-

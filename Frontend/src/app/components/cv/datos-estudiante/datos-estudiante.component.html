@@ -1,335 +1,338 @@
-<h2 class="text-gray-500 mb-3 sm:mb-0">Datos generales:</h2>
-<div class="grid md:grid-cols-2 md:gap-6 mt-2">
+<div class="bg-white p-8 rounded-lg px-16">
+  <h2 class="text-gray-500 mb-3 text-lg sm:mb-0">Datos generales:</h2>
+  <div class="grid md:grid-cols-2 md:gap-6 mt-2">
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        autocomplete="off"
+        type="text"
+        [(ngModel)]="firstname"
+        #name="ngModel"
+        pattern="^[^\d]*$"
+        name="floating_first_name"
+        id="floating_first_name"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        required
+      />
+      <label
+        for="floating_first_name"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Nombres *</label
+      >
+      <small *ngIf="name.invalid && name.touched" class="text-red-500"
+        >El nombre es requerido.</small
+      >
+    </div>
+    <div class="relative z-0 w-full group">
+      <input
+        autocomplete="off"
+        type="text"
+        name="floating_last_name"
+        id="floating_last_name"
+        [(ngModel)]="lastname"
+        #surname="ngModel"
+        pattern="^[^\d]*$"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        required
+      />
+      <label
+        for="floating_last_name"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Apellidos *</label
+      >
+      <small *ngIf="surname.invalid && surname.touched" class="text-red-500"
+        >El apellido es requerido.</small
+      >
+    </div>
+  </div>
+  <div class="relative z-0 w-full mb-5 group"></div>
+  <div class="mb-2">
+    <small class="text-gray-500 text-sm">Fecha de nacimiento*</small>
+  </div>
+  <div class="grid md:grid-cols-2 md:gap-6">
+    <div class="grid grid-cols-3 gap-6">
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          autocomplete="off"
+          type="number"
+          (keyup)="validateDate()"
+          (change)="validateDate()"
+          min="1"
+          max="31"
+          [(ngModel)]="bornDay"
+          #day="ngModel"
+          name="bornDay"
+          id="bornDay"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=" "
+          required
+        />
+        <label
+          for="bornDay"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Día</label
+        >
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          autocomplete="off"
+          type="number"
+          (keyup)="validateDate()"
+          (change)="validateDate()"
+          min="1"
+          max="12"
+          [(ngModel)]="bornMonth"
+          #month="ngModel"
+          name="bornMonth"
+          id="bornMonth"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=" "
+          required
+        />
+        <label
+          for="bornMonth"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Mes</label
+        >
+      </div>
+      <div class="relative z-0 w-full mb-5 group">
+        <input
+          autocomplete="off"
+          type="number"
+          (keyup)="validateDate()"
+          (change)="validateDate()"
+          min="1924"
+          [(ngModel)]="bornYear"
+          #year="ngModel"
+          name="bornYear"
+          id="bornYear"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=" "
+          required
+        />
+        <label
+          for="bornYear"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+          >Año</label
+        >
+      </div>
+    </div>
+
+    <div class="relative z-0 w-full group">
+      <p
+        class="block text-center py-2.5 px-0 w-full text-gray-500 text-xl bg-transparent appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+      >
+        Edad: {{ age }}
+      </p>
+    </div>
+  </div>
+  <small
+    *ngIf="
+      !validDate &&
+      !(
+        bornDay?.value == ' ' ||
+        bornMonth?.value == ' ' ||
+        bornYear?.value == ' '
+      )
+    "
+    class="text-red-500 mb-3"
+  >
+    Fecha inválida.
+  </small>
+
+
+  <div class="grid md:grid-cols-2 md:gap-6">
+    <div class="relative z-0 w-full  mb-3 group">
+      <label for="genero" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Género *</label>
+      <select id="genero" name="genero" #genero="ngModel" [(ngModel)]="studentData.genero" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="masculino">Masculino</option>
+        <option value="femenino">Femenino</option>
+        <option value="otro">Otro</option>
+      </select>
+    </div>
+
+    <div class="relative z-0 w-full mt-5 mb-5 group">
+      <input
+        autocomplete="off"
+        [disabled]="ci_en_tramite"
+        type="text"
+        pattern="[0-9]{8}"
+        [(ngModel)]="studentData.cedula"
+        #cedula="ngModel"
+        name="cedula"
+        id="cedula"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+      />
+      <label
+        for="floating_studientPhone"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Cédula *</label
+      >
+      <small
+        *ngIf="cedula.invalid && cedula.touched"
+        class="text-red-500"
+        >Cédula inválida.</small
+      >
+
+        <div>
+        <input type="checkbox" name="proceso" id="proceso" 
+        [(ngModel)]="ci_en_tramite"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="proceso" class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">En proceso</label>  
+      </div>
+      </div>
+  </div>
+
   <div class="relative z-0 w-full mb-5 group">
     <input
       autocomplete="off"
-      type="text"
-      [(ngModel)]="firstname"
-      #name="ngModel"
-      pattern="^[^\d]*$"
-      name="floating_first_name"
-      id="floating_first_name"
+      type="email"
+      [(ngModel)]="studentData.email"
+      #email="ngModel"
+      pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+      name="floating_email"
+      id="floating_email"
       class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
       placeholder=" "
       required
     />
     <label
-      for="floating_first_name"
-      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-      >Nombres *</label
-    >
-    <small *ngIf="name.invalid && name.touched" class="text-red-500"
-      >El nombre es requerido.</small
+      for="floating_email"
+      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+      >Email *</label
     >
   </div>
-  <div class="relative z-0 w-full group">
-    <input
-      autocomplete="off"
-      type="text"
-      name="floating_last_name"
-      id="floating_last_name"
-      [(ngModel)]="lastname"
-      #surname="ngModel"
-      pattern="^[^\d]*$"
-      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-      placeholder=" "
-      required
-    />
-    <label
-      for="floating_last_name"
-      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-      >Apellidos *</label
-    >
-    <small *ngIf="surname.invalid && surname.touched" class="text-red-500"
-      >El apellido es requerido.</small
-    >
-  </div>
-</div>
-<div class="relative z-0 w-full mb-5 group"></div>
-<div class="mb-2">
-  <small class="text-gray-500 text-sm">Fecha de nacimiento*</small>
-</div>
-<div class="grid md:grid-cols-2 md:gap-6">
-  <div class="grid grid-cols-3 gap-6">
-    <div class="relative z-0 w-full mb-5 group">
+
+
+  <div class="grid md:grid-cols-2 md:gap-6">
+    <div class="relative z-0 w-full mt-5 mb-5 group">
       <input
         autocomplete="off"
-        type="number"
-        (keyup)="validateDate()"
-        (change)="validateDate()"
-        min="1"
-        max="31"
-        [(ngModel)]="bornDay"
-        #day="ngModel"
-        name="bornDay"
-        id="bornDay"
+        type="text"
+        pattern="[0-9]{9}"
+        [(ngModel)]="studentData.cel"
+        #cel="ngModel"
+        name="floating_studientPhone"
+        id="floating_studientPhone"
         class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
         placeholder=" "
-        required
       />
       <label
-        for="bornDay"
-        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >Día</label
+        for="floating_studientPhone"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Celular de contacto *</label
+      >
+      <small
+        *ngIf="cel.invalid && cel.touched"
+        class="text-red-500"
+        >Número inválido.</small
       >
     </div>
     <div class="relative z-0 w-full mb-5 group">
-      <input
-        autocomplete="off"
-        type="number"
-        (keyup)="validateDate()"
-        (change)="validateDate()"
-        min="1"
-        max="12"
-        [(ngModel)]="bornMonth"
-        #month="ngModel"
-        name="bornMonth"
-        id="bornMonth"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
-        required
-      />
-      <label
-        for="bornMonth"
-        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >Mes</label
-      >
-    </div>
-    <div class="relative z-0 w-full mb-5 group">
-      <input
-        autocomplete="off"
-        type="number"
-        (keyup)="validateDate()"
-        (change)="validateDate()"
-        min="1924"
-        [(ngModel)]="bornYear"
-        #year="ngModel"
-        name="bornYear"
-        id="bornYear"
-        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-        placeholder=" "
-        required
-      />
-      <label
-        for="bornYear"
-        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-        >Año</label
-      >
+      <label for="estado_civil" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Estado civil</label>
+      <select id="estado_civil" name="estado_civil" #estado_civil [(ngModel)]="studentData.estado_civil" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="Soltero">Soltero</option>
+        <option value="Casado">Casado</option>
+        <option value="Divorciado">Divorciado</option>
+        <option value="Viudo">Viudo</option>
+        <option value="Separado">Separado</option>
+      </select>
     </div>
   </div>
 
-  <div class="relative z-0 w-full group">
-    <p
-      class="block text-center py-2.5 px-0 w-full text-gray-500 text-xl bg-transparent appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-    >
-      Edad: {{ age }}
-    </p>
-  </div>
-</div>
-<small
-  *ngIf="
-    !validDate &&
-    !(
-      bornDay?.value == ' ' ||
-      bornMonth?.value == ' ' ||
-      bornYear?.value == ' '
-    )
-  "
-  class="text-red-500 mb-3"
->
-  Fecha inválida.
-</small>
-
-
-<div class="grid md:grid-cols-2 md:gap-6">
-  <div class="relative z-0 w-full  mb-3 group">
-    <label for="genero" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Género *</label>
-    <select id="genero" name="genero" #genero="ngModel" [(ngModel)]="studentData.genero" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      <option value="masculino">Masculino</option>
-      <option value="femenino">Femenino</option>
-      <option value="otro">Otro</option>
-    </select>
-  </div>
-
-  <div class="relative z-0 w-full mt-5 mb-5 group">
-    <input
-      autocomplete="off"
-      [disabled]="ci_en_tramite"
-      type="text"
-      pattern="[0-9]{8}"
-      [(ngModel)]="studentData.cedula"
-      #cedula="ngModel"
-      name="cedula"
-      id="cedula"
-      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-      placeholder=" "
-    />
-    <label
-      for="floating_studientPhone"
-      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-      >Cédula *</label
-    >
-    <small
-      *ngIf="cedula.invalid && cedula.touched"
-      class="text-red-500"
-      >Cédula inválida.</small
-    >
+  <div class="grid md:grid-cols-2 md:gap-6">
+    <div class="relative z-0 w-full mt-5 mb-5 group">
+      <input
+      [disabled]="credencial_en_tramite"
+        autocomplete="off"
+        type="text"
+        pattern="[a-zA-Z]{3}\s\d{5}"
+        [(ngModel)]="studentData.credencial_civica"
+        #credencial="ngModel"
+        name="credencial"
+        id="credencial"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+      />
+      <label
+        for="credencial"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Credencial Cívica</label
+      >
+      <small
+        *ngIf="credencial.invalid"
+        class="text-red-500"
+        >Credencial inválida.</small
+      >
 
       <div>
-      <input type="checkbox" name="proceso" id="proceso" 
-      [(ngModel)]="ci_en_tramite"
-      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-      <label for="proceso" class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">En proceso</label>  
+        <input type="checkbox" name="proceso" id="proceso" 
+        [(ngModel)]="credencial_en_tramite"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="proceso" class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">En proceso</label> 
+      </div>
     </div>
+
+    <div class="relative z-0 w-full mb-5 group">
+      <label for="licencia" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Libreta de conducir</label>
+      <select id="licencia" name="licencia" [(ngModel)]="studentData.licencia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="Cat. A">Cat. A</option>
+        <option value="Cat. B">Cat. B</option>
+        <option value="Cat. C">Cat. C</option>
+        <option value="Cat. D">Cat. D</option>
+        <option value="Cat. E">Cat. E</option>
+        <option value="Cat. F">Cat. F</option>
+        <option value="Cat. G1">Cat. G1</option>
+        <option value="Cat. G2">Cat. G2</option>
+        <option value="Cat. G3">Cat. G3</option>
+        <option value="Cat. H">Cat. H</option>
+      </select>
     </div>
-</div>
 
-<div class="relative z-0 w-full mb-5 group">
-  <input
-    autocomplete="off"
-    type="email"
-    [(ngModel)]="studentData.email"
-    #email="ngModel"
-    pattern="^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
-    name="floating_email"
-    id="floating_email"
-    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-    placeholder=" "
-    required
-  />
-  <label
-    for="floating_email"
-    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-    >Email *</label
-  >
-</div>
-
-
-<div class="grid md:grid-cols-2 md:gap-6">
-  <div class="relative z-0 w-full mt-5 mb-5 group">
-    <input
-      autocomplete="off"
-      type="text"
-      pattern="[0-9]{9}"
-      [(ngModel)]="studentData.cel"
-      #cel="ngModel"
-      name="floating_studientPhone"
-      id="floating_studientPhone"
-      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-      placeholder=" "
-    />
-    <label
-      for="floating_studientPhone"
-      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-      >Celular de contacto *</label
-    >
-    <small
-      *ngIf="cel.invalid && cel.touched"
-      class="text-red-500"
-      >Número inválido.</small
-    >
-  </div>
-  <div class="relative z-0 w-full mb-5 group">
-    <label for="estado_civil" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Estado civil</label>
-    <select id="estado_civil" name="estado_civil" #estado_civil [(ngModel)]="studentData.estado_civil" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      <option value="Soltero">Soltero</option>
-      <option value="Casado">Casado</option>
-      <option value="Divorciado">Divorciado</option>
-      <option value="Viudo">Viudo</option>
-      <option value="Separado">Separado</option>
-    </select>
-  </div>
-</div>
-
-<div class="grid md:grid-cols-2 md:gap-6">
-  <div class="relative z-0 w-full mt-5 mb-5 group">
-    <input
-    [disabled]="credencial_en_tramite"
-      autocomplete="off"
-      type="text"
-      pattern="[a-zA-Z]{3}\s\d{5}"
-      [(ngModel)]="studentData.credencial_civica"
-      #credencial="ngModel"
-      name="credencial"
-      id="credencial"
-      class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-      placeholder=" "
-    />
-    <label
-      for="credencial"
-      class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
-      >Credencial Cívica</label
-    >
-    <small
-      *ngIf="credencial.invalid"
-      class="text-red-500"
-      >Credencial inválida.</small
-    >
-
-    <div>
-      <input type="checkbox" name="proceso" id="proceso" 
-      [(ngModel)]="credencial_en_tramite"
-      class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-      <label for="proceso" class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">En proceso</label> 
-    </div>
   </div>
 
-  <div class="relative z-0 w-full mb-5 group">
-    <label for="licencia" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Libreta de conducir</label>
-    <select id="licencia" name="licencia" [(ngModel)]="studentData.licencia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-      <option value="Cat. A">Cat. A</option>
-      <option value="Cat. B">Cat. B</option>
-      <option value="Cat. C">Cat. C</option>
-      <option value="Cat. D">Cat. D</option>
-      <option value="Cat. E">Cat. E</option>
-      <option value="Cat. F">Cat. F</option>
-      <option value="Cat. G1">Cat. G1</option>
-      <option value="Cat. G2">Cat. G2</option>
-      <option value="Cat. G3">Cat. G3</option>
-      <option value="Cat. H">Cat. H</option>
-    </select>
-  </div>
-
-</div>
-
-<div class="grid grid-cols-1 w-full">
-  <button
-    (click)="next()"
-    type="button"
-    [ngClass]="
-      name.invalid ||
-      surname.invalid ||
-      day.invalid ||
-      month.invalid ||
-      year.invalid ||
-      email.invalid ||
-      cel.invalid ||
-      cedula.invalid ||
-      credencial.invalid ||
-      credencial.value == ''||
-      genero.value == '' ||
-      estado_civil.value == '' ||
-      (!validDate && age > 15)
-        ? 'bg-blue-300'
-        : 'bg-blue-700 hover:bg-blue-800'
-    "
-    [disabled]="
-      name.invalid ||
-      surname.invalid ||
-      day.invalid ||
-      month.invalid ||
-      year.invalid ||
-      email.invalid ||
-      cel.invalid ||
-      cedula.invalid ||
-      credencial.invalid ||
-      credencial.value == ''||
-      genero.value == '' ||
-      estado_civil.value == '' ||
-      (!validDate && age > 15)     
+  <div class="grid grid-cols-1 w-full">
+    <button
+      (click)="next()"
+      type="button"
+      [ngClass]="
+        name.invalid ||
+        surname.invalid ||
+        day.invalid ||
+        month.invalid ||
+        year.invalid ||
+        email.invalid ||
+        cel.invalid ||
+        cedula.invalid ||
+        credencial.invalid ||
+        credencial.value == ''||
+        genero.value == '' ||
+        estado_civil.value == '' ||
+        (!validDate && age > 15)
+          ? 'bg-blue-300'
+          : 'bg-blue-700 hover:bg-blue-800'
       "
-      class="text-white float-right focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
-  >
-    Siguiente
-  </button>
+      [disabled]="
+        name.invalid ||
+        surname.invalid ||
+        day.invalid ||
+        month.invalid ||
+        year.invalid ||
+        email.invalid ||
+        cel.invalid ||
+        cedula.invalid ||
+        credencial.invalid ||
+        credencial.value == ''||
+        genero.value == '' ||
+        estado_civil.value == '' ||
+        (!validDate && age > 15)     
+        "
+        class="text-white float-right focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center"
+    >
+      Siguiente
+    </button>
+  </div>
 </div>
+

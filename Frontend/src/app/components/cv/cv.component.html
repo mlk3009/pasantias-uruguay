@@ -7,20 +7,20 @@
   </head>
 
   <body>
-    <div class="w-full flex flex-col items-center justify-center mt-8">
-      <h1 class="text-4xl text-blue-800 text-center">Curriculum</h1>
+    <div class="w-full pt-4 font-medium tracking-wide pb-4 flex flex-col items-center justify-center">
+      <h1 class="text-4xl text-white text-center">Curriculum</h1>
       <p class="text-md text-gray-500 text-center">
         (Los datos con * son obligatorios)
       </p>
       <button
-        class="border-b-2 border-blue-500 text-blue-500"
+        class="bg-blue-700 p-2 rounded-lg px-4 mt-2 hover:bg-blue-800 text-white"
         (click)="volver()"
       >
         Volver al inicio
       </button>
     </div>
 
-    <form class="max-w-md mx-auto p-2 mb-12" #fichaForm="ngForm">
+    <form class="max-w-2xl mx-auto p-2 mb-12" #fichaForm="ngForm">
       <app-datos-estudiante *ngIf="formPart == 1" />
       <app-educacion *ngIf="formPart == 2" />
       <app-datos-habilidades-idiomas *ngIf="formPart == 3" />
@@ -28,4 +28,6 @@
       <app-datos-generales *ngIf="formPart == 5" />
     </form>
   </body>
+
+  <img src="../../../assets/img/principalimage_edit2.jpg" class="img">
 </html>
