@@ -3,47 +3,58 @@
     <div *ngFor="let estudio of Estudios; let i = index; let last = last">
         <div class="grid md:grid-cols-2 md:gap-6 col-span-1">
             <!-- cambiar a select -->
-            <div class="relative z-0 w-full mb-5 group">
-                <input autocomplete="off" [(ngModel)]="estudio.nivel" #nivel="ngModel" type="text"
-                    pattern="^[^\d]*$" [name]="'nivel' + i" [id]="'nivel' + i"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " />
-                <label [for]="'nivel' + i"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Nivel *
-                </label>
-                <small *ngIf="nivel.invalid && nivel.touched" class="text-red-500">
-                    inválido.</small>
+            <div class="grid md:grid-cols-2">
+                <div class="relative z-0 w-full mb-3 group">
+                  <label [for]="'nivel' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Nivel *</label>
+                  <select autocomplete="off" [(ngModel)]="estudio.nivel" #nivel="ngModel" type="text"
+                  pattern="^[^\d]*$" [name]="'nivel' + i" [id]="'nivel' + i" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60">
+                    <option value="ciclo-basico">Ciclo basico</option>
+                    <option value="bachillerato">Bachillerato</option>
+                    <option value="utu1">UTU (C.Básico)</option>
+                    <option value="utu2">UTU (Bachillerato)</option>
+                    <option value="utu2">UTU (Bachillerato)</option>
+                    <option value="tecnico">Técnico</option>
+                    <option value="tecnologo">Tecnólogo</option>
+                    <option value="licenciatura">Licenciatura</option>
+                    <option value="maestria">Maestría</option>
+                    <option value="doctorado">Doctorado</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
             </div>
 
-            <div class="relative z-0 w-full mb-5 group">
-                <input autocomplete="off" type="text" pattern="^[^\d]*$" [name]="'titulo' + i"
-                    [id]="'titulo' + i" [(ngModel)]="estudio.titulo" #titulo="ngModel"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " />
-                <label [for]="'titulo' + i"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Título *
-
-                </label>
-                <small *ngIf="titulo.invalid && titulo.touched" class="text-red-500">inválido.</small>
+            <div class="grid md:grid-cols-2">
+                <div class="relative z-0 w-full mb-3 group">
+                  <label [for]="'titulo' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Título *</label>
+                  <select autocomplete="off" type="text" pattern="^[^\d]*$" [name]="'titulo' + i"
+                  [id]="'titulo' + i" [(ngModel)]="estudio.titulo" #titulo="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60">
+                    <option value="tecnico">Técnico</option>
+                    <option value="doctorado">Doctorado</option>
+                    <option value="Licenciado">Licenciado</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
             </div>
         </div>
 
-        
-            <div class="relative z-0 w-full mb-5 group">
-                <input autocomplete="off" type="text" [name]="'institucion' + i"
-                    [id]="'institucion' + i" [(ngModel)]="estudio.institucion" #institucion1="ngModel"
-                    class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
-                    placeholder=" " />
-                <label [for]="'institucion' + i"
-                    class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Institución *
-
-                </label>
+            <div class="grid md:grid-cols-2">
+                <div class="relative z-0 w-full mb-3 group">
+                  <label [for]="'institucion' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Institución *</label>
+                  <select autocomplete="off" type="text" [name]="'institucion' + i"
+                  [id]="'institucion' + i" [(ngModel)]="estudio.institucion" #institucion1="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60">
+                    <option value="its">ITS</option>
+                    <option value="isbo">ISBO</option>
+                    <option value="impulso">Impulso</option>
+                    <option value="50">Liceo 50</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
             </div>
 
 
         <div class="flex flex-row items-center justify-between mb-4">
             <div id="date-range-picker" date-rangepicker class="flex flex-col">
-                <p>Inicio</p>
+                <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Inicio</p>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
@@ -58,7 +69,7 @@
             </div>
 
             <div id="date-range-picker" date-rangepicker class="flex flex-col">
-                <p class="">Final</p>
+                <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Final</p>
                 <div *ngIf="estudio.actualmente" class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                         <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">

@@ -57,6 +57,12 @@ export class CvComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    const modalButton = document.getElementById('modalButton');
+    if (modalButton) {
+      modalButton.addEventListener('click', () => this.volver());
+    }
+
     initFlowbite();
 
     if(localStorage.getItem('studentData')) {
@@ -87,7 +93,6 @@ export class CvComponent implements OnInit {
   }
 
   volver() {
-    if (confirm('¿Estás seguro de que quieres volver?') == true) {
       this._router.navigate(['/inicio']);
       localStorage.removeItem('studentData');
       localStorage.removeItem('cv');
@@ -105,6 +110,20 @@ export class CvComponent implements OnInit {
       localStorage.removeItem('habilidadesData');
 
       localStorage.removeItem('ficha');
+    
+  }
+
+  modal(): void {
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.style.display = 'flex';
+    }
+  }
+  
+  modalClose(): void {
+    const modal = document.getElementById('modal');
+    if (modal) {
+      modal.style.display = 'none';
     }
   }
 }

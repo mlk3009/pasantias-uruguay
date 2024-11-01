@@ -3,6 +3,7 @@ import { CommonModule, ViewportScroller } from '@angular/common';
 import { Router, RouterOutlet, RouterModule } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { CookieService } from 'ngx-cookie-service';
+import { NavigationExtras } from '@angular/router';
 
 import { UserService } from '../../../services/user.service';
 
@@ -22,10 +23,12 @@ export class NavPublicationsComponent {
 
   public emprise = false;
   public scroll_var = true;
+  public data = { name: '', surname: '', email: '', password: '', location: '', ci_estudiante: '', cod_postal: '', fec_nacimiento: '', phone: '', rol: '', cv: '' };
 
   constructor(
     private viewportScroller: ViewportScroller,
     private _userService: UserService,
+    private _router: Router,
     private _cookieService: CookieService
   ) {
     this.token = this._cookieService.get('token');
@@ -94,6 +97,60 @@ export class NavPublicationsComponent {
           }
         }
       });
+    }
+  }
+
+  open_profile() {
+    const navigationExtras: NavigationExtras = {
+      state: {
+        name: this.data.name,
+        ci_estudiante: this.data.ci_estudiante,
+        email: this.data.email,
+        location: this.data.location,
+        cod_postal: this.data.cod_postal,
+        phone: this.data.phone,
+        day: this.data.fec_nacimiento.split('-')[2],
+        month: this.data.fec_nacimiento.split('-')[1],
+        year: this.data.fec_nacimiento.split('-')[0],
+        rol: this.data.rol,
+        cv: this.data.cv
+      }
+    };
+
+    this._router.navigate(['/user-profile'], navigationExtras);
+  }
+
+  
+
+
+  showMenu(menuId: string) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+      menu.classList.remove('hidden');
+    }
+  }
+  
+  hideMenu(menuId: string) {
+    const menu = document.getElementById(menuId);
+    if (menu) {
+      menu.classList.add('hidden');
+    }
+  }
+  
+  toggleMenu(menuId: string, dialToggleButton: HTMLElement) {
+    if (menuId) { // Verifica que menuId no sea null
+      const menu = document.getElementById(menuId);
+  
+      if (menu) {
+        // Alterna la visibilidad del menú
+        const isExpanded = dialToggleButton.getAttribute('aria-expanded') === 'true';
+        dialToggleButton.setAttribute('aria-expanded', (!isExpanded).toString());
+        if (isExpanded) {
+          this.hideMenu(menuId);
+        } else {
+          this.showMenu(menuId);
+        }
+      }
     }
   }
 
