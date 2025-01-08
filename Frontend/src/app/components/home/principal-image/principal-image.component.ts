@@ -16,6 +16,16 @@ import { initFlowbite } from 'flowbite';
 })
 
 export class PrincipalImageComponent {
+
+// Si se quiere vincultar a una tabla de la bdd
+    clientes: string = '3000+';
+    empresasAfiliadas: string = '100+';
+    llamadosLaborales: string = '13.500+';
+    recomendaciones: string = '1000+';
+    utusAfiliadas: string = '5';
+    operadoresActivos: string = '40+';
+
+
     constructor(private router: Router) {
         initFlowbite();
     }

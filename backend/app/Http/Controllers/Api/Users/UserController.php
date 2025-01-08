@@ -15,6 +15,9 @@ use App\Models\CV;
 use App\Models\ImageUpload;
 use App\Http\Controllers\Api\Email\PHPMailerController;
 use Illuminate\Process\Pipe;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+use PHPMailer\PHPMailer\SMTP;
 
 class UserController extends Controller
 {
@@ -367,6 +370,50 @@ class UserController extends Controller
             'status' => 200
         ];
         return response()->json($data, 200);
+    }
+
+
+
+    public function contactUs(Request $request)
+    {
+        $email = $request->input('email');
+        $subject = $request->input('asunto');
+        $body = $request->input('descripcion');
+    
+        $phpMailer = new PHPMailer(true);
+    
+        try {
+            /* Email SMTP Settings */
+            $phpMailer->SMTPDebug = 0; // Desactivar depuración                    //Enable verbose debug output
+            $phpMailer->isSMTP();                                            //Send using SMTP
+            $phpMailer->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
+            $phpMailer->SMTPAuth   = true;                                   //Enable SMTP authentication
+            $phpMailer->Username   = 'xexperience2023@gmail.com';                 //SMTP username
+            $phpMailer->Password   = 'abcr vhdx atol xpnf';                  //SMTP password
+            $phpMailer->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
+            $phpMailer->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+
+            //UTF-8
+            $phpMailer->CharSet = 'UTF-8';
+            $phpMailer->Encoding = 'base64';
+
+            //Recipients
+            $phpMailer->setFrom('pasantias-uy@notResponse.com', 'Pasantias uruguay');
+            $phpMailer->addAddress($email);
+
+    
+            //Content
+            $phpMailer->isHTML(true);
+            $phpMailer->Subject = $subject;
+            $phpMailer->Body    = $body;
+    
+            // Enviar el correo
+            $phpMailer->send();
+            return response()->json(['message' => 'Correo enviado correctamente'], 200);
+        } catch (Exception $e) {
+            // Manejar el error si el correo no se pudo enviar
+            return response()->json(['message' => 'No se pudo enviar el correo', 'error' => $e->getMessage()], 500);
+        }
     }
 
     public function destroy() {}
