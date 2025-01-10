@@ -70,8 +70,8 @@ export const routes: Routes = [
  {
    path: 'edit-profile',
    loadComponent: () =>
-     import('./components/students/students.component').then(
-       (m) => m.StudentsComponent
+     import('./components/students/edit-profile/edit-profile.component').then(
+       (m) => m.EditProfileComponent
      ),
  },
   {
@@ -93,6 +93,20 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/enterprise/enterprise.component').then(
         (m) => m.EnterpriseComponent
+      ),
+  },
+  {
+    path: 'user-postulations',
+    loadComponent: () =>
+      import('./components/students/postulations/postulations.component').then(
+        (m) => m.PostulationsComponent
+      ),
+  },
+  {
+    path: 'user-historial',
+    loadComponent: () =>
+      import('./components/students/historial/historial.component').then(
+        (m) => m.HistorialComponent
       ),
   },
   // Dejar '**' siempre al final
