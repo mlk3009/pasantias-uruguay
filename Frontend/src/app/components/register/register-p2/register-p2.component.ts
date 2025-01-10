@@ -188,7 +188,7 @@ export class RegisterP2Component {
       (response) => {
         this.loading = false;
         localStorage.setItem('email', this.user.email);
-        this.dialog.open(ValidAcountComponent);
+        // this.dialog.open(ValidAcountComponent);
 
         const estudiante_id = response.data.id;
         const etiqueta_id = this.selectedEtiquetaId;

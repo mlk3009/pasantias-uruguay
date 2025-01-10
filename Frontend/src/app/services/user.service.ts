@@ -151,6 +151,18 @@ export class UserService {
     return this._http.post(global.url + 'addUserTag', params, { headers: headers });
   }
 
+  contactUs(email: string, asunto: string, descripcion: string): Observable<any> {
+    const body = { email: email, asunto: asunto, descripcion: descripcion };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this._http.post(global.url + 'contactUs', body, { headers }).pipe(
+      tap((response: any) => {
+        console.log('Correo enviado correctamente', response);
+      })
+    );
+  }
+
 }
 export interface etiqueta {
   id: number;
