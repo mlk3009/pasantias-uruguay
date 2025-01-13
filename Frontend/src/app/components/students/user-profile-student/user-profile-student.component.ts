@@ -68,4 +68,19 @@ export class UserProfileStudentComponent {
 
     this._router.navigate(['/edit-profile'], navigationExtras);
   }
+
+
+
+
+  modal(){
+    const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'flex';
+  }
+
+  modalClose() {
+    const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+
 }
