@@ -10,9 +10,9 @@
               class="rounded-full w-40"
             />
             <h1 class="text-gray-900 font-semibold text-4xl mt-5">
-              <!--{{ data.name }}--> 
+              {{ data.name }}
             </h1>
-            <h2 class="text-gray-500 text-lg"><!-- {{ data.location }} --></h2>
+            <h2 class="text-gray-500 text-lg">{{ data.location }}</h2>
           </div>
           <div class="buttons border-b-2 w-4/5 flex justify-center">
             <div class="w-full md:block md:w-auto pt-4">
@@ -66,16 +66,16 @@
                   <div class=" flex flex-col">
                     <div class="flex justify-start flex-row">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
-                        Nombre completo:
+                        Nombre completo: 
                       </p>
-                      <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input type="text" [value]="data.name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                     
                     <div class="flex justify-start flex-row mt-2">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Fecha de nacimiento:
                       </p>
-                      <input type="date" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"/>
+                      <input [value]="data.fec_nacimiento" type="date" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" [value]="data.fec_nacimiento"/>
                     </div>
                     
                   </div>
@@ -84,13 +84,13 @@
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         E-mail:
                       </p>
-                      <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input type="text" [value]="data.email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                     <div class="flex justify-start flex-row mt-2">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Teléfono:
                       </p>
-                      <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input [value]="data.phone" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                   </div>
                 </div>
@@ -98,13 +98,29 @@
                   <div class="flex flex-col">
                     <div class="flex justify-start flex-row">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
-                        Nombre completo:
+                        Departamento:
                       </p>
                       <select name="" id="" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
-                        <option value="">Seleccionar</option>
-                        <option value="">Opción 1</option>
-                        <option value="">Opción 2</option>
-                        <option value="">Opción 3</option>
+                        <option [value]="data.location" selected>{{data.location}}</option>
+                        <option *ngIf="data.location !== 'Artigas'" value="Artigas">Artigas</option>
+                        <option *ngIf="data.location !== 'Canelones'" value="Canelones">Canelones</option>
+                        <option *ngIf="data.location !== 'Cerro Largo'" value="Cerro Largo">Cerro Largo</option>
+                        <option *ngIf="data.location !== 'Colonia'" value="Colonia">Colonia</option>
+                        <option *ngIf="data.location !== 'Durazno'" value="Durazno">Durazno</option>
+                        <option *ngIf="data.location !== 'Flores'" value="Flores">Flores</option>
+                        <option *ngIf="data.location !== 'Florida'" value="Florida">Florida</option>
+                        <option *ngIf="data.location !== 'Lavalleja'" value="Lavalleja">Lavalleja</option>
+                        <option *ngIf="data.location !== 'Maldonado'" value="Maldonado">Maldonado</option>
+                        <option *ngIf="data.location !== 'Montevideo'" value="Montevideo">Montevideo</option>
+                        <option *ngIf="data.location !== 'Paysandú'" value="Paysandú">Paysandú</option>
+                        <option *ngIf="data.location !== 'Río Negro'" value="Río Negro">Río Negro</option>
+                        <option *ngIf="data.location !== 'Rivera'" value="Rivera">Rivera</option>
+                        <option *ngIf="data.location !== 'Rocha'" value="Rocha">Rocha</option>
+                        <option *ngIf="data.location !== 'Salto'" value="Salto">Salto</option>
+                        <option *ngIf="data.location !== 'San José'" value="San José">San José</option>
+                        <option *ngIf="data.location !== 'Soriano'" value="Soriano">Soriano</option>
+                        <option *ngIf="data.location !== 'Tacuarembó'" value="Tacuarembó">Tacuarembó</option>
+                        <option *ngIf="data.location !== 'Treinta y Tres'" value="Treinta y Tres">Treinta y Tres</option>
                       </select>
                     </div>
                     <div class="flex justify-start flex-row mt-2">
@@ -112,10 +128,10 @@
                         Puesto de trabajo:
                       </p>
                       <select name="" id="" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
-                        <option value="">Seleccionar</option>
-                        <option value="">Opción 1</option>
-                        <option value="">Opción 2</option>
-                        <option value="">Opción 3</option>
+                        <option *ngIf="userEtiquetas.length > 0" [value]="userEtiquetas[0].id" selected>{{ userEtiquetas[0].name }}</option>
+                        <ng-container *ngFor="let etiqueta of etiquetas">
+                          <option *ngIf="etiqueta.id !== userEtiquetas[0]?.id" [value]="etiqueta.id">{{ etiqueta.name }}</option>
+                        </ng-container>
                       </select>
                     </div>
                   </div>
@@ -124,13 +140,13 @@
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Identificación:
                       </p>
-                      <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input [value]="data.ci_estudiante" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                     <div class="flex justify-start flex-row mt-2">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Código postal:
                       </p>
-                      <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input [value]="data.cod_postal" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                   </div>
                 </div>

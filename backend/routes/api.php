@@ -17,6 +17,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('login', [UserController::class, 'loginUser']);
 Route::post('register', [UserController::class, 'store']);
 Route::post('/contactUs', [UserController::class, 'contactUs']);
+Route::post('/contactMe', [UserController::class, 'contactMe']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);
