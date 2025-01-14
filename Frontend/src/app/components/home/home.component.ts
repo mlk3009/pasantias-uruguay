@@ -29,3 +29,4 @@ export class HomeComponent {
     initFlowbite();
   }
 }
+

@@ -124,21 +124,6 @@ export class UserService {
     });
   }
 
-  // Método para obtener todas las etiquetas, estará acá momentaneamente hasta que se cree un servicio para las etiquetas
-  getEtiquetas(): Observable<etiqueta[]> {
-    return this._http.get<{ Tags: etiqueta[], status: number }>(global.url + 'showTags').pipe(
-      map(response => {
-        // Asegúrate de que la respuesta contiene la propiedad Tags y es un array
-        if (response && Array.isArray(response.Tags)) {
-          return response.Tags;
-        } else {
-          console.error('La respuesta no contiene un array de etiquetas:', response);
-          return [];
-        }
-      }),
-    );
-  }
-
   addUserTags(estudiante_id: number, etiqueta_id: number): Observable<any> {
     const json = {
       estudiante_id: estudiante_id,
@@ -162,6 +147,46 @@ export class UserService {
       })
     );
   }
+
+  contactMe(email: string, asunto: string, descripcion: string, emailDestino: string): Observable<any> {
+    const body = { email: email, asunto: asunto, descripcion: descripcion, emailDestino: emailDestino };
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json'
+    });
+    return this._http.post(global.url + 'contactMe', body, { headers }).pipe(
+      tap((response: any) => {
+        console.log('Correo enviado correctamente', response);
+      })
+    );
+  }
+
+  // Método para obtener todas las etiquetas, estará acá momentaneamente hasta que se cree un servicio para las etiquetas
+  getEtiquetas(): Observable<etiqueta[]> {
+    return this._http.get<{ Tags: etiqueta[], status: number }>(global.url + 'showTags').pipe(
+      map(response => {
+        // Asegúrate de que la respuesta contiene la propiedad Tags y es un array
+        if (response && Array.isArray(response.Tags)) {
+          return response.Tags;
+        } else {
+          console.error('La respuesta no contiene un array de etiquetas:', response);
+          return [];
+        }
+      }),
+    );
+  }
+  
+  getUserEtiquetas(userId: number): Observable<any[]> {
+    return this._http.get<{ 'etiquetas del estudiante': any[], status: number }>(`${global.url}showUserTag/${userId}`).pipe(
+        map(response => {
+            if (response && Array.isArray(response['etiquetas del estudiante'])) {
+                return response['etiquetas del estudiante'];
+            } else {
+                console.error('La respuesta no contiene un array de etiquetas del estudiante:', response);
+                return [];
+            }
+        }),
+    );
+}
 
 }
 export interface etiqueta {

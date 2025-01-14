@@ -15,62 +15,59 @@ import { NavigationExtras } from '@angular/router';
 })
 export class UserProfileStudentComponent {
   loading: boolean = false;
-
-  data = {
-    name: '',
-    ci_estudiante: '',
-    email: '',
-    cod_postal: '',
-    location: '',
-    phone: '',
-    rol: '',
-    fec_nacimiento: '',
-    cv: ''
-  };
+  data: any = {};
+  userEtiquetas: any[] = [];
+  etiquetas: any[] = [];
 
   constructor(
     private _userService: UserService,
     private _router: Router,
     private route: ActivatedRoute
-  ) {
-    const navigation = this._router.getCurrentNavigation();
-    if (navigation?.extras?.state) {
-      const state = navigation.extras.state;
-      this.data.name = state["name"];
-      this.data.ci_estudiante = state["ci_estudiante"];
-      this.data.email = state["email"];
-      this.data.cod_postal = state["cod_postal"];
-      this.data.location = state["location"];
-      this.data.phone = state["phone"];
-      this.data.rol = state["rol"];
-      this.data.fec_nacimiento = state["day"] + '/' + state["month"] + '/' + state["year"];
-      this.data.cv = state["cv"];
+  ) {}
+
+  ngOnInit(): void {
+    const token = this._userService.getToken(); 
+    if (token) {
+      this._userService.obtenerUsuario(token).subscribe({
+        next: (response) => {
+          this.data = response.data;
+          console.log(this.data); 
+          this.getUserEtiquetas(this.data.id); 
+        },
+        error: (error) => {
+          console.error('Error al obtener el usuario:', error);
+        }
+      });
+    } else {
+      console.error('Token no encontrado');
     }
-    this.loading = true;
+
+    this.getEtiquetas();
   }
 
-  edit_profile() {
-    const navigationExtras: NavigationExtras = {
-      state: {
-        name: this.data.name,
-        ci_estudiante: this.data.ci_estudiante,
-        email: this.data.email,
-        location: this.data.location,
-        cod_postal: this.data.cod_postal,
-        phone: this.data.phone,
-        day: this.data.fec_nacimiento.split('-')[2],
-        month: this.data.fec_nacimiento.split('-')[1],
-        year: this.data.fec_nacimiento.split('-')[0],
-        rol: this.data.rol,
-        cv: this.data.cv
+  getUserEtiquetas(userId: number): void {
+    this._userService.getUserEtiquetas(userId).subscribe({
+      next: (userEtiquetas) => {
+        this.userEtiquetas = userEtiquetas;
+        console.log(this.userEtiquetas); // Verifica que las etiquetas del usuario se asignen correctamente
+      },
+      error: (error) => {
+        console.error('Error al obtener las etiquetas del usuario:', error);
       }
-    };
-
-    this._router.navigate(['/edit-profile'], navigationExtras);
+    });
   }
 
-
-
+  getEtiquetas(): void {
+    this._userService.getEtiquetas().subscribe({
+      next: (etiquetas) => {
+        this.etiquetas = etiquetas;
+        console.log(this.etiquetas); // Verifica que las etiquetas se asignen correctamente
+      },
+      error: (error) => {
+        console.error('Error al obtener las etiquetas:', error);
+      }
+    });
+  }
 
   modal(){
     const modal = document.getElementById('contactModal') as HTMLElement;
@@ -81,6 +78,4 @@ export class UserProfileStudentComponent {
     const modal = document.getElementById('contactModal') as HTMLElement;
     modal.style.display = 'none';
   }
-
-
 }
