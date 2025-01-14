@@ -103,6 +103,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'user-saves',
+    loadComponent: () =>
+      import('./components/students/saves/saves.component').then(
+        (m) => m.SavesComponent
+      ),
+  },
+  {
     path: 'user-historial',
     loadComponent: () =>
       import('./components/students/historial/historial.component').then(

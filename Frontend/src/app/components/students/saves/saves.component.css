@@ -1,0 +1,17 @@
+.body{
+    background-image: url("../../../../assets/img/principalimage_edit2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+}
+.buttons{
+    min-width: 25%;
+    margin-bottom: 1vh;
+}
+.home_button{
+    color: #15c3c3;
+}
+.home_button2:hover{
+    color: #15c3c3;
+}
