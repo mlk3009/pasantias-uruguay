@@ -2,7 +2,6 @@ import { EventEmitter, Injectable, Output } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { User } from '../models/user';
-import { Ficha } from '../models/ficha';
 import { global } from './global';
 import { Subject } from 'rxjs';
 

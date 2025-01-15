@@ -41,6 +41,13 @@ return new class extends Migration
             $table->engine = 'InnoDB';
         });
 
+        Schema::create('file_uploads', function (Blueprint $table) {
+            $table->id();
+            $table->string('file');
+            $table->timestamps();
+            $table->engine = 'InnoDB';
+        });
+
     Schema::create('estudiante', function (Blueprint $table) {
     $table->string('ci_estudiante', 8);
     $table->date('fec_nacimiento');

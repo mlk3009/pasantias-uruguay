@@ -49,9 +49,11 @@ Route::post('restore', [PasswordController::class, 'restorePassword']);
 Route::post('checkCode', [PasswordController::class, 'checkCode']);
 Route::put('changePassword', [UserController::class, 'changePassword']);
 
-// IMAGE 
+// IMAGE & FILES
 Route::post('upload-image', [ImageController::class, 'store_image']);
 Route::delete('delete-image/{id}', [ImageController::class, 'delete_image']);
+Route::post('upload-file', [ImageController::class, 'store_file']);
+Route::delete('delete-file/{id}', [ImageController::class, 'delete_file']);
 
 
 // EMAIL VERIFICATION

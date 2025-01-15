@@ -75,6 +75,8 @@ class UserController extends Controller
                 'fec_nacimiento' => $estudiante->fec_nacimiento,
                 'cod_postal' => $estudiante->cod_postal,
                 'id_image' => $estudiante->id_image,
+                'desc1' => $estudiante->desc1,
+                'desc2' => $estudiante->desc2,
                 'cv' => false
             ];
 
