@@ -110,6 +110,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'abaut-us',
+    loadComponent: () =>
+      import('./components/abautus/abautus.component').then(
+        (m) => m.AbautusComponent
+      ),
+  },
+  {
     path: 'user-guardados',
     loadComponent: () =>
       import('./components/students/guardados/guardados.component').then(
