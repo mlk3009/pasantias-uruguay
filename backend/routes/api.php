@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('cv-details', [CvController::class, 'cvDetails']);
     Route::get('/cvPDF/{cvId}', [CvController::class, 'generarPDF']);
-    Route::post('/updateProfile', [CvController::class, 'update']);
+    Route::post('/updateProfile', [UserController::class, 'update']);
 });
 
 

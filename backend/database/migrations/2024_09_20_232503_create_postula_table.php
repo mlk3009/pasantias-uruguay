@@ -33,6 +33,27 @@ class CreatePostulaTable extends Migration
 
             $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
+
+        Schema::create('guarda', function (Blueprint $table) {
+            $table->unsignedBigInteger('publication_id');
+            $table->unsignedBigInteger('estudiante_id');
+            $table->date('save_date');
+
+
+            $table->foreign('publication_id')
+                ->references('id')
+                ->on('publications')
+                ->onDelete('cascade');
+
+            $table->foreign('estudiante_id')
+                ->references('id')
+                ->on('estudiante')
+                ->onDelete('cascade');
+
+            $table->primary(['publication_id', 'estudiante_id']);
+
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+        });
     }
 
     /**

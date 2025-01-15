@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
 return new class extends Migration
 {
@@ -11,7 +12,33 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
+    {   
+
+
+                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo',
+                    'email' => 'estudiante@example.com',
+                    'phone' => '123456789',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '12345678',
+                    'fec_nacimiento' => '2000-01-01',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
         // Insertar datos en la tabla publications
         DB::table('publications')->insert([
             [
@@ -187,7 +214,31 @@ return new class extends Migration
                 'estado' => 'pendiente',
             ],
         ]);
-    }
+
+
+        DB::table('guarda')->insert([
+            [
+                'publication_id' => 1,
+                'estudiante_id' => 1,
+                'save_date' => '2025-01-01',
+            ],
+            [
+                'publication_id' => 2,
+                'estudiante_id' => 1,
+                'save_date' => '2025-01-02',
+            ],
+            [
+                'publication_id' => 3,
+                'estudiante_id' => 1,
+                'save_date' => '2025-01-03',
+            ],
+            [
+                'publication_id' => 4,
+                'estudiante_id' => 1,
+                'save_date' => '2025-01-04',
+            ],
+        ]);
+            }
 
     /**
      * Reverse the migrations.

@@ -110,10 +110,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'user-historial',
+    path: 'user-guardados',
     loadComponent: () =>
-      import('./components/students/historial/historial.component').then(
-        (m) => m.HistorialComponent
+      import('./components/students/guardados/guardados.component').then(
+        (m) => m.GuardadosComponent
       ),
   },
   // Dejar '**' siempre al final

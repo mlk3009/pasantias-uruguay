@@ -11,8 +11,7 @@ import { ContactComponent } from './contact/contact.component';
 import { ValidAcountComponent } from '../register/valid-acount/valid-acount.component';
 import { SliderComponent } from './slider/slider.component';
 import { CategoriesComponent } from './categories/categories.component';
-
-
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-home',
@@ -21,12 +20,15 @@ import { CategoriesComponent } from './categories/categories.component';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   public loading: boolean = false;
+  public isLoggedIn: boolean = false;
 
-  ngOninit() {
+  constructor(private userService: UserService) {}
+
+  ngOnInit(): void {
+    this.isLoggedIn = !!this.userService.getToken();
     initFlowbite();
   }
 }
-

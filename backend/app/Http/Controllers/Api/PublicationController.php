@@ -318,12 +318,28 @@ class PublicationController extends Controller
                 'status' => 404
             ], 404);
         }
-
+    
         $tiene_cv = CV::where('estudiante_id', $estudiante_id)->exists();
+    
 
+        $postulaciones = DB::table('postula')
+            ->join('publications', 'postula.publication_id', '=', 'publications.id')
+            ->where('postula.estudiante_id', $estudiante_id)
+            ->select('publications.*', 'postula.postulation_date', 'postula.estado')
+            ->get();
+    
+
+        $publicacionesGuardadas = DB::table('guarda')
+            ->join('publications', 'guarda.publication_id', '=', 'publications.id')
+            ->where('guarda.estudiante_id', $estudiante_id)
+            ->select('publications.*', 'guarda.save_date')
+            ->get();
+    
         return response()->json([
             'estudiante' => $estudiante,
             'tiene_cv' => $tiene_cv,
+            'postulaciones' => $postulaciones,
+            'publicaciones_guardadas' => $publicacionesGuardadas,
             'status' => 200
         ], 200);
     }
