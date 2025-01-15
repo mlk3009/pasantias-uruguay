@@ -6,17 +6,17 @@ import { UserService } from '../../../services/user.service';
 import { NavComponent } from '../../home/nav/nav.component';
 
 @Component({
-  selector: 'app-postulations',
+  selector: 'app-guardados',
   standalone: true,
   imports: [CommonModule, FormsModule, NavComponent], // Añade FormsModule al array de imports
-  templateUrl: './postulations.component.html',
-  styleUrl: './postulations.component.css'
+  templateUrl: './guardados.component.html',
+  styleUrl: './guardados.component.css'
 })
-export class PostulationsComponent implements OnInit {
+export class GuardadosComponent implements OnInit {
   loading: boolean = false;
   data: any = {};
   userEtiquetas: any[] = [];
-  postulaciones: any[] = [];
+  guardados: any[] = [];
 
   constructor(
     private _userService: UserService,
@@ -39,11 +39,10 @@ export class PostulationsComponent implements OnInit {
     } else {
       console.error('Token no encontrado');
     }
-    this.getStudentData();
+    this.getSavedPublications();
   }
 
-
-  getStudentData(): void {
+  getSavedPublications(): void {
     const token = this._userService.getToken();
     if (token) {
       this._userService.obtenerUsuario(token).subscribe({
@@ -51,11 +50,11 @@ export class PostulationsComponent implements OnInit {
           const estudiante_id = response.data.id;
           this._userService.getStudentData(token, estudiante_id).subscribe({
             next: (response) => {
-              this.postulaciones = response.postulaciones;
-              console.log('Postulaciones del estudiante:', this.postulaciones);
+              this.guardados = response.publicaciones_guardadas;
+              console.log('Publicaciones guardadas del estudiante:', this.guardados);
             },
             error: (error) => {
-              console.error('Error al obtener las postulaciones del estudiante:', error);
+              console.error('Error al obtener las publicaciones guardadas del estudiante:', error);
             }
           });
         },

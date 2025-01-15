@@ -24,6 +24,16 @@ export class UserService {
     }
   }
 
+  logout(): Observable<any> {
+    const token = this.getToken(); // Llamar a getToken() para obtener el token
+    return this._http.post(global.url + 'logout', {}, {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    });
+}
+
   storeImage(file: File): Observable<any> {
     if (this.previousImageId) {
       this.deleteImage(this.previousImageId).subscribe();
@@ -66,15 +76,20 @@ export class UserService {
     return this._http.post(global.url + 'login', params, { headers: headers });
   }
 
-  update(data: any): Observable<any> {
+  update(data: any, token: string): Observable<any> {
     let json = JSON.stringify(data);
     let params = json;
 
-    let headers = new HttpHeaders().set('Content-Type', 'application/raw');
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/raw',
+      Authorization: `Bearer ${token}`
+    });
+
     return this._http.post(global.url + 'updateProfile', params, {
       headers: headers,
     });
   }
+
 
   obtenerUsuario(token: string): Observable<any> {
     const headers = new HttpHeaders({
@@ -187,6 +202,15 @@ export class UserService {
         }),
     );
 }
+
+    // Obtener datos del estudiante
+    getStudentData(token: string, estudiante_id: number): Observable<any> {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+  
+      return this._http.get(`${global.url}postulante/${estudiante_id}`, { headers: headers });
+    }
 
 }
 export interface etiqueta {

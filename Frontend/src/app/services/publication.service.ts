@@ -29,4 +29,5 @@ export class PublicationService {
       headers: headers,
     });
   }
+
 }

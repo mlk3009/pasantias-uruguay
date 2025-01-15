@@ -26,6 +26,7 @@ export class NavComponent implements AfterViewInit {
 
   public emprise = false;
   public scroll_var = true;
+  
 
   public data = { name: '', surname: '', email: '', password: '', location: '', ci_estudiante: '', cod_postal: '', fec_nacimiento: '', phone: '', rol: '', cv: '' };
 
@@ -84,9 +85,20 @@ export class NavComponent implements AfterViewInit {
   }
 
   logout() {
+
+    this._userService.logout().subscribe(
+      response => {
+        console.log('Logout successful', response);
+      },
+      error => {
+        console.error('Logout error', error);
+      }
+    );
+    
     this._cookieService.delete('token');
-    localStorage.removeItem('token');
-  }
+    this._router.navigate(['/']);
+
+}
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {

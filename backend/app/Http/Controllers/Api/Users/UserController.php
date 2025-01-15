@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use Laravel\Sanctum\HasApiTokens;
 use App\Models\User;
 use App\Models\Estudiante;
 use App\Models\Etiqueta;
@@ -18,6 +19,8 @@ use Illuminate\Process\Pipe;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+
+
 
 class UserController extends Controller
 {
@@ -31,7 +34,6 @@ class UserController extends Controller
 
     public function loginUser(Request $request)
     {
-
         $jsonData = $request->json()->all();
 
         $validator = Validator::make($jsonData, [
@@ -40,18 +42,19 @@ class UserController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return Response(['message' => $validator->errors()], 401);
+            return response()->json(['message' => $validator->errors()], 401);
         }
 
         if (Auth::attempt(['email' => $jsonData['email'], 'password' => $jsonData['password']])) {
+            /** @var \App\Models\User $user **/
             $user = Auth::user();
 
             $success = $user->createToken('MyApp')->plainTextToken;
 
-            return Response(['token' => $success], 200);
+            return response()->json(['token' => $success], 200);
         }
 
-        return Response(['message' => 'email or password wrong'], 401);
+        return response()->json(['message' => 'email or password wrong'], 401);
     }
 
     public function userDetails(): Response
@@ -72,6 +75,8 @@ class UserController extends Controller
                 'fec_nacimiento' => $estudiante->fec_nacimiento,
                 'cod_postal' => $estudiante->cod_postal,
                 'id_image' => $estudiante->id_image,
+                'desc1' => $estudiante->desc1,
+                'desc2' => $estudiante->desc2,
                 'cv' => false
             ];
 
@@ -99,17 +104,19 @@ class UserController extends Controller
         return response(['data' => 'Unauthorized'], 401);
     }
 
+
     public function logout(): Response
     {
         if (Auth::check()) {
-
+            /** @var \App\Models\User $user **/
             $user = Auth::user();
-
-            $user->tokens()->delete();
-
+    
+            // Eliminar solo el token de acceso personal actual
+            $user->tokens()->where('id', $user->currentAccessToken()->id)->delete();
+    
             return Response(['data' => 'User logged out'], 200);
         }
-
+    
         return Response(['data' => 'Unauthorized'], 401);
     }
 
@@ -181,24 +188,29 @@ class UserController extends Controller
         return response()->json($data, $data['code']);
     }
 
+
+
     public function update(Request $request)
     {
         $jsonData = $request->json()->all();
         $token = $request->bearerToken();
-
+    
         $id = Auth::user()->id;
-
+    
         $validator = Validator::make($jsonData, [
             'name' => 'nullable',
-            'email' => 'nullable|email|unique:users',
+            'email' => 'nullable|email|unique:users,email,' . $id,
             'phone' => 'nullable|string|max:9',
-            'location' => 'nullable|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
-            'ci_estudiante' => 'nullable|string|max:8|unique:estudiante',
+            'location' => 'nullable|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembó,Treinta y Tres',
+            'ci_estudiante' => 'nullable|string|max:8|unique:estudiante,ci_estudiante,' . $id . ',id',
             'fec_nacimiento' => 'nullable|date',
             'cod_postal' => 'nullable|string|max:5',
             'id_image' => 'nullable|integer',
+            'desc1' => 'nullable|string',
+            'desc2' => 'nullable|string',
+            'etiqueta_id' => 'nullable|exists:etiqueta,id' // Validar que la etiqueta exista
         ]);
-
+    
         if ($validator->fails()) {
             $data = [
                 'status' => 'error',
@@ -209,46 +221,59 @@ class UserController extends Controller
             ];
         } else {
             $user = User::find($id);
-
-            if ($jsonData['name'] != $user->name) {
+    
+            if (isset($jsonData['name']) && $jsonData['name'] != $user->name) {
                 $user->name = $jsonData['name'];
             }
-
-            if ($jsonData['email'] != $user->email) {
+    
+            if (isset($jsonData['email']) && $jsonData['email'] != $user->email) {
                 $user->email = $jsonData['email'];
             }
-
-            if ($jsonData['phone'] != $user->phone) {
+    
+            if (isset($jsonData['phone']) && $jsonData['phone'] != $user->phone) {
                 $user->phone = $jsonData['phone'];
             }
-
+    
             $user->save();
-
-
+    
             $student = Estudiante::find($id);
-
-            if ($jsonData['ci_estudiante'] != $student->ci_estudiante) {
+    
+            if (isset($jsonData['ci_estudiante']) && $jsonData['ci_estudiante'] != $student->ci_estudiante) {
                 $student->ci_estudiante = $jsonData['ci_estudiante'];
             }
-
-            if ($jsonData['location'] != $student->location) {
+    
+            if (isset($jsonData['location']) && $jsonData['location'] != $student->location) {
                 $student->location = $jsonData['location'];
             }
-
-            if ($jsonData['fec_nacimiento'] != $student->fec_nacimiento) {
+    
+            if (isset($jsonData['fec_nacimiento']) && $jsonData['fec_nacimiento'] != $student->fec_nacimiento) {
                 $student->fec_nacimiento = $jsonData['fec_nacimiento'];
             }
-
-            if ($jsonData['cod_postal'] != $student->cod_postal) {
+    
+            if (isset($jsonData['cod_postal']) && $jsonData['cod_postal'] != $student->cod_postal) {
                 $student->cod_postal = $jsonData['cod_postal'];
             }
-
+    
             if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
                 $student->id_image = $jsonData['id_image'];
             }
-
+    
+            if (isset($jsonData['desc1']) && $jsonData['desc1'] != $student->desc1) {
+                $student->desc1 = $jsonData['desc1'];
+            }
+    
+            if (isset($jsonData['desc2']) && $jsonData['desc2'] != $student->desc2) {
+                $student->desc2 = $jsonData['desc2'];
+            }
+    
             $student->save();
-
+    
+            // Actualizar la primera etiqueta del usuario
+            if (isset($jsonData['etiqueta_id'])) {
+                $etiqueta_id = $jsonData['etiqueta_id'];
+                $student->etiquetas()->syncWithoutDetaching([$etiqueta_id]);
+            }
+    
             $data = [
                 'status' => 'success',
                 'message' => 'User updated successfully',
@@ -256,7 +281,7 @@ class UserController extends Controller
                 'code' => 201
             ];
         }
-
+    
         return response()->json($data, $data['code']);
     }
 

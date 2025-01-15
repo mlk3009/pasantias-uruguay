@@ -24,7 +24,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('cv-details', [CvController::class, 'cvDetails']);
     Route::get('/cvPDF/{cvId}', [CvController::class, 'generarPDF']);
-    Route::post('/updateProfile', [CvController::class, 'update']);
+    Route::post('/updateProfile', [UserController::class, 'update']);
 });
 
 
@@ -49,9 +49,11 @@ Route::post('restore', [PasswordController::class, 'restorePassword']);
 Route::post('checkCode', [PasswordController::class, 'checkCode']);
 Route::put('changePassword', [UserController::class, 'changePassword']);
 
-// IMAGE 
+// IMAGE & FILES
 Route::post('upload-image', [ImageController::class, 'store_image']);
 Route::delete('delete-image/{id}', [ImageController::class, 'delete_image']);
+Route::post('upload-file', [ImageController::class, 'store_file']);
+Route::delete('delete-file/{id}', [ImageController::class, 'delete_file']);
 
 
 // EMAIL VERIFICATION

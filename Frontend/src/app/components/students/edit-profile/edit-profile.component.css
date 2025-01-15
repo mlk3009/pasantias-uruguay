@@ -47,3 +47,7 @@
 .description{
     min-width: 350px;
 }
+.readonly-input {
+    color: #6b7280; /* Tono gris */
+    background-color: #f9fafb; /* Fondo gris claro */
+}

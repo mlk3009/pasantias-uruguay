@@ -1,9 +1,9 @@
 <app-nav />
 
-  <app-principal-image />
-  <app-nosotros />
-<app-slider />
+<app-principal-image />
+<app-nosotros *ngIf="!isLoggedIn" />
+<app-slider *ngIf="isLoggedIn" />
 <app-publicaciones />
-<app-categories />
-  <app-contact />
+<app-categories *ngIf="isLoggedIn" />
+<app-contact />
 <app-footer />
