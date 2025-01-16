@@ -102,4 +102,14 @@ export class EditProfileComponent implements OnInit {
       console.error('Token no encontrado');
     }
   }
+
+  modal(){
+    const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'flex';
+  }
+
+  modalClose() {
+    const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'none';
+  }
 }

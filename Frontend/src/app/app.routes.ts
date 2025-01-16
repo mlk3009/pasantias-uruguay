@@ -116,13 +116,6 @@ export const routes: Routes = [
         (m) => m.AbautusComponent
       ),
   },
-  {
-    path: 'user-guardados',
-    loadComponent: () =>
-      import('./components/students/guardados/guardados.component').then(
-        (m) => m.GuardadosComponent
-      ),
-  },
   // Dejar '**' siempre al final
   {
     path: '**',

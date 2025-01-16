@@ -1,7 +1,7 @@
 <div class="body flex items-center justify-center">
   <div class="content bg-gray-50 w-11/12 h-5/6 mt-10 rounded-lg">
     <div class="flex flex-row justify-center w-full">
-      <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
+      <div class="user-data max-w-3/4 flex items-center pt-10 flex-col">
         <div class="flex flex-col items-center">
           <img
             src="../../../../assets/img/user.png"
@@ -13,7 +13,7 @@
           </h1>
           <h2 class="text-gray-500 text-lg">{{ data.location }}</h2>
         </div>
-        <div class="buttons border-b-2 w-4/5 flex justify-center">
+        <div class="buttons border-b-2 w-full flex justify-center">
           <div class="w-full md:block md:w-auto pt-4">
             <ul
               class="text-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
@@ -21,24 +21,18 @@
               <li>
                 <a
                   href="/user-profile"
-                  class="home_button block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
                   aria-current="page"
                   >Inicio</a
                 >
               </li>
               <li>
-                <a
-                  href="/user-guardados"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >Guardados</a
-                >
-              </li>
-              <li>
-                <a
+                <button
                   (click)="modal()"
-                  class="hover:cursor-pointer home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >Contacto</a
-                >
+                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  aria-disabled="true"
+                  >Contacto
+                </button>
               </li>
               <li>
                 <a
@@ -64,7 +58,7 @@
               <li>
                 <a
                   href="/edit-profile"
-                  class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  class="home_button block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
                   >Editar perfil</a
                 >
               </li>
