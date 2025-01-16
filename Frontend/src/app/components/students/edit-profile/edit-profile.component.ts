@@ -70,21 +70,60 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateProfile(): void {
+    const errors = this.validateFields();
+    if (errors.length > 0) {
+        alert(errors.join('\n'));
+        return;
+    }
+
     const token = this._userService.getToken();
     if (token) {
-      this._userService.update(this.data, token).subscribe({
-        next: (response) => {
-          console.log('Perfil actualizado:', response);
-          // Redirigir o mostrar un mensaje de éxito
-        },
-        error: (error) => {
-          console.error('Error al actualizar el perfil:', error);
-        }
-      });
+        this._userService.update(this.data, token).subscribe({
+            next: (response) => {
+                console.log('Perfil actualizado:', response);
+                // Redirigir o mostrar un mensaje de éxito
+            },
+            error: (error) => {
+                console.error('Error al actualizar el perfil:', error);
+            }
+        });
     } else {
-      console.error('Token no encontrado');
+        console.error('Token no encontrado');
     }
+}
+
+validateFields(): string[] {
+    const errors: string[] = [];
+
+    if (!this.data.name) {
+      errors.push('Nombre completo es requerido.');
+  } else if (this.data.name.length > 50) {
+      errors.push('Nombre completo no puede tener más de 50 caracteres.');
   }
+
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
+    if (!this.data.email || !emailPattern.test(this.data.email)) {
+        errors.push('Email es inválido.');
+    }
+
+    if (this.data.phone && (this.data.phone.length !== 8 && this.data.phone.length !== 9)) {
+      errors.push('Teléfono debe tener 8 (telefono) o 9 (celular) caracteres.');
+  }
+
+    if (!this.data.fec_nacimiento) {
+        errors.push('Fecha de nacimiento es requerida.');
+    }
+
+    if (this.data.ci_estudiante && this.data.ci_estudiante.length != 8) {
+        errors.push('Identificación debe de tener 8 caracteres.');
+    }
+
+    if (this.data.cod_postal && this.data.cod_postal.length != 5) {
+        errors.push('Código postal debe de tener 5 caracteres.');
+    }
+
+    return errors;
+}
 
   getUserData(): void {
     const token = this._userService.getToken();

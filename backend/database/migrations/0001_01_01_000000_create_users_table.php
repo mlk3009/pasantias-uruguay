@@ -48,18 +48,21 @@ return new class extends Migration
             $table->engine = 'InnoDB';
         });
 
+
+
     Schema::create('estudiante', function (Blueprint $table) {
     $table->string('ci_estudiante', 8);
     $table->date('fec_nacimiento');
-    $table->string('desc1');
-    $table->string('desc2');
+    $table->string('desc1', 280)->default('Descripción 1');
+    $table->string('desc2', 280)->default('Descripción 2');
     $table->string('cod_postal', 5);
     $table->enum('location', [
         'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
-        'Maldonado','Montevideo','Paysandu','Río Negro','Rivera','Rocha','Salto','San José',
+        'Maldonado','Montevideo','Paysandú','Río Negro','Rivera','Rocha','Salto','San José',
         'Soriano','Tacuarembó','Treinta y Tres'
     ]);
     $table->foreignId('id_image')->nullable()->constrained('image_uploads')->onDelete('cascade'); 
+    $table->foreignId('id_file')->nullable()->constrained('file_uploads')->onDelete('cascade'); 
     $table->foreignId('id')->constrained('users')->onDelete('cascade');
     $table->primary('id');
     $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
@@ -93,5 +96,7 @@ return new class extends Migration
         Schema::dropIfExists('empresa');
         Schema::dropIfExists('administrador');
         Schema::dropIfExists('users');
+        Schema::dropIfExists('file_uploads');
+        Schema::dropIfExists('image_uploads');
     }
 };

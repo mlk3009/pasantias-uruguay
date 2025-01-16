@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\ImageUpload;
 use App\Models\FileUpload;
 
-class ImageController extends Controller
+class ImagesController extends Controller
 {
     public function delete_image($id)
     {
