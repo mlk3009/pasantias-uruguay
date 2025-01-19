@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('location');
             $table->string('type');
             $table->string('time');
+            $table->integer('vacancies');
             $table->string('deathline');
             $table->string('postulation_way');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');

@@ -19,6 +19,7 @@ class Publication extends Model
         'type',
         'time',
         'deathline',
+        'vacancies',
         'postulation_way',
         'user_id'
     ];
