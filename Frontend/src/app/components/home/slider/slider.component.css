@@ -58,6 +58,8 @@
     overflow: hidden;
     box-shadow: none;
     padding: 0 30px;
+    padding-bottom: 20vh;
+    border-bottom: 1px solid #efefef;
 }
 .body-nh i{
     top: 50%;
@@ -160,3 +162,98 @@
 .body-nh2{
     padding-bottom: 10vh;
 }
+.price-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+    transition: transform 0.2s;
+}
+
+.price:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+}
+
+.rating {
+    display: flex;
+    gap: 5px;
+}
+
+.star {
+    font-size: 1.5em;
+    color: gold;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.star:hover {
+    transform: scale(1.5); /* Aumenta el tamaño de la estrella al pasar el cursor */
+    cursor: pointer;
+}
+
+.star:hover::after {
+    content: attr(data-number);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(0, 0, 0, 0.162);
+    color: rgba(255, 255, 255, 0.8);
+    padding: 1px 2px;
+    border-radius: 50%;
+    font-size: 0.3em; /* Tamaño de fuente más pequeño */
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 0.9em; /* Tamaño del contenedor más pequeño */
+    height: 0.9em; /* Tamaño del contenedor más pequeño */
+}
+
+h5 {
+    transition: transform 0.2s;
+}
+
+h5:hover {
+    transform: scale(1.02);
+}
+
+.image-container {
+    position: relative;
+}
+
+.image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+}
+
+.image-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../../assets/img/trabajoPersonalT.jpg'); /* Ruta de la nueva imagen */
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+}
+
+.image-container:hover::after {
+    opacity: 1;
+}
+
+.category:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }

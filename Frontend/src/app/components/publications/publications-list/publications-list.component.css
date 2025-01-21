@@ -20,7 +20,7 @@
     color: #000000;
 }
 .title2 h3{
-    font-size: 2.3em;
+    font-size: 3em;
     font-weight: 600;
     color: #000000;
 }
@@ -154,15 +154,17 @@
 }
 .button-color{
     background-color: #008fa8;
+    transition: transform 0.2s;
 }
 .button-color:hover{
+    transform: scale(1.05); /* Aumenta el tamaño del botón al pasar el cursor */
     background-color: #15c3c3;
 }
 .size{
-    min-width: 20rem;
-    min-height: 20rem;
-    max-width: 20rem;
-    max-height: 20rem;
+    min-width: 19.9rem;
+    min-height: 19.9rem;
+    max-width: 19.9rem;
+    max-height: 19.9rem;
     position: relative;
 }
 .body-nh{
@@ -177,3 +179,82 @@
 .categories{
     border-bottom: 1px solid #e4e4e4;
 }
+.price-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+    transition: transform 0.2s;
+}
+
+.price:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+}
+
+.rating {
+    display: flex;
+    gap: 5px;
+}
+
+.star {
+    font-size: 1.5em;
+    color: gold;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.star-icon {
+    transition: transform 0.3s ease;
+}
+.star-icon:hover {
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+h5 {
+    transition: transform 0.2s;
+}
+
+h5:hover {
+    transform: scale(1.02);
+}
+
+.image-container {
+    position: relative;
+}
+
+.image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+}
+
+.image-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../../assets/img/trabajoPersonalT.jpg'); /* Ruta de la nueva imagen */
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+}
+
+.image-container:hover::after {
+    opacity: 1;
+}
+
+.category:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }

@@ -1,0 +1,27 @@
+.body{
+    background-image: url("../../../assets/img/principalimage_edit2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 105vh;
+}
+.content{
+    height: 85%;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    padding-bottom: 7vh;
+}
+.hover-enlarge {
+    transition: transform 0.2s ease;
+}
+  
+.hover-enlarge:hover {
+    transform: scale(1.05);
+}
+.star-icon {
+    transition: transform 0.3s ease;
+}
+.star-icon:hover {
+    transform: scale(1.5);
+    cursor: pointer;
+}

@@ -116,6 +116,13 @@ export const routes: Routes = [
         (m) => m.AbautusComponent
       ),
   },
+  {
+    path: 'publication',
+    loadComponent: () =>
+      import('./components/publication/publication.component').then(
+        (m) => m.PublicationComponent
+      ),
+  },
   // Dejar '**' siempre al final
   {
     path: '**',

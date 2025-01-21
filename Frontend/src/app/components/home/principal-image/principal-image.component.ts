@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterOutlet, RouterModule } from '@angular/router';
+import { Router, RouterOutlet, RouterModule, ActivatedRoute } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 
 @Component({
@@ -12,12 +12,11 @@ import { initFlowbite } from 'flowbite';
         RouterModule
     ],
     templateUrl: './principal-image.component.html',
-    styleUrl: './principal-image.component.css'
+    styleUrls: ['./principal-image.component.css']
 })
+export class PrincipalImageComponent implements OnInit {
 
-export class PrincipalImageComponent {
-
-// Si se quiere vincultar a una tabla de la bdd
+    // Si se quiere vincultar a una tabla de la bdd
     clientes: string = '3000+';
     empresasAfiliadas: string = '100+';
     llamadosLaborales: string = '13.500+';
@@ -25,8 +24,21 @@ export class PrincipalImageComponent {
     utusAfiliadas: string = '5';
     operadoresActivos: string = '40+';
 
-
-    constructor(private router: Router) {
+    constructor(private router: Router, private route: ActivatedRoute) {
         initFlowbite();
+    }
+
+    ngOnInit() {
+        this.route.fragment.subscribe((fragment: string | null) => {
+            if (fragment) {
+                const element = document.getElementById(fragment);
+                if (element) {
+                    window.scrollTo({
+                        top: element.offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            }
+        });
     }
 }
