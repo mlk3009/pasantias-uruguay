@@ -45,6 +45,7 @@ class PublicationController extends Controller
             'type' => 'required|string',
             'time' => 'required|string',
             'deathline' => 'required|date',
+            'vacancies' => 'required|numeric',
             'postulation_way' => 'required|string',
             'user_id' => 'required|numeric'
         ]);
@@ -129,6 +130,7 @@ class PublicationController extends Controller
             'type' => 'required|string',
             'time' => 'required|string',
             'deathline' => 'required|date',
+            'vacancies' => 'required|numeric',
             'postulation_way' => 'required|string',
             'user_id' => 'required|numeric'
         ]);
@@ -171,6 +173,7 @@ class PublicationController extends Controller
             'type' => 'sometimes|required|string',
             'time' => 'sometimes|required|string',
             'deathline' => 'sometimes|required|date',
+            'vacancies' => 'sometimes|required|numeric',
             'postulation_way' => 'sometimes|required|string',
             'user_id' => 'sometimes|required|numeric',
         ]);
@@ -321,18 +324,18 @@ class PublicationController extends Controller
     
         $tiene_cv = CV::where('estudiante_id', $estudiante_id)->exists();
     
-
         $postulaciones = DB::table('postula')
             ->join('publications', 'postula.publication_id', '=', 'publications.id')
+            ->join('users', 'publications.user_id', '=', 'users.id')
             ->where('postula.estudiante_id', $estudiante_id)
-            ->select('publications.*', 'postula.postulation_date', 'postula.estado')
+            ->select('publications.*', 'postula.postulation_date', 'postula.estado', 'users.name as empresa_name')
             ->get();
     
-
         $publicacionesGuardadas = DB::table('guarda')
             ->join('publications', 'guarda.publication_id', '=', 'publications.id')
+            ->join('users', 'publications.user_id', '=', 'users.id')
             ->where('guarda.estudiante_id', $estudiante_id)
-            ->select('publications.*', 'guarda.save_date')
+            ->select('publications.*', 'guarda.save_date', 'users.name as empresa_name')
             ->get();
     
         return response()->json([

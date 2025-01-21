@@ -14,7 +14,6 @@ return new class extends Migration
     public function up(): void
     {   
 
-
                 // Insertar un usuario estudiante
                 DB::table('users')->insert([
                     'name' => 'Estudiante Ejemplo',
@@ -39,6 +38,25 @@ return new class extends Migration
                     'location' => 'Montevideo',
                     'id' => $userId,
                 ]);
+
+                DB::table('users')->insert([
+                    'name' => 'Empresa Ejemplo',
+                    'email' => 'empresa@example.com',
+                    'phone' => '987654321',
+                    'password' => Hash::make('password'),
+                    'rol' => 'empresa',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+
+                // Obtener el ID del usuario empresa recién insertado
+                $empresaUserId = DB::getPdo()->lastInsertId();
+
+                // Insertar el registro en la tabla empresa
+                DB::table('empresa')->insert([
+                    'id' => $empresaUserId,
+                ]);
+
         // Insertar datos en la tabla publications
         DB::table('publications')->insert([
             [
@@ -51,7 +69,8 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-12-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 3, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 2,
@@ -63,7 +82,8 @@ return new class extends Migration
                 'time' => '10:00 - 14:00',
                 'deathline' => '2025-11-30',
                 'postulation_way' => 'Envío de portafolio',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 2, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 3,
@@ -75,7 +95,8 @@ return new class extends Migration
                 'time' => '8:00 - 17:00',
                 'deathline' => '2025-10-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 4,
@@ -87,7 +108,8 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-09-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 5,
@@ -99,7 +121,8 @@ return new class extends Migration
                 'time' => '10:00 - 14:00',
                 'deathline' => '2025-08-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 2, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 6,
@@ -111,7 +134,8 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-07-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 3, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 7,
@@ -123,7 +147,8 @@ return new class extends Migration
                 'time' => '14:00 - 18:00',
                 'deathline' => '2025-06-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 8,
@@ -135,7 +160,8 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-05-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 2, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 9,
@@ -147,7 +173,8 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-04-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
                 'id' => 10,
@@ -159,7 +186,8 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-03-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => 1,
+                'user_id' => $empresaUserId,
+                'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
         ]);
 

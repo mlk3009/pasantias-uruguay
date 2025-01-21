@@ -35,19 +35,16 @@ export class UserService {
 }
 
   storeImage(file: File): Observable<any> {
-    if (this.previousImageId) {
-      this.deleteImage(this.previousImageId).subscribe();
-    }
-
     const formData = new FormData();
     formData.append('image', file);
     let headers = new HttpHeaders();
+
     return this._http.post(global.url + 'upload-image', formData, {
-      headers: headers,
+        headers: headers,
     }).pipe(
-      tap((response: any) => {
-        this.previousImageId = response.id;
-      })
+        tap((response: any) => {
+            console.log('Imagen cargada exitosamente', response);
+        })
     );
   }
 

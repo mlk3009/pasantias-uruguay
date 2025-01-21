@@ -7,7 +7,7 @@ use App\Http\Controllers\Api\CvController;
 use App\Http\Controllers\Api\Users\PasswordController;
 use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\Email\EmailController;
-use App\Http\Controllers\Api\Users\ImageController;
+use App\Http\Controllers\Api\Users\ImagesController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -50,10 +50,10 @@ Route::post('checkCode', [PasswordController::class, 'checkCode']);
 Route::put('changePassword', [UserController::class, 'changePassword']);
 
 // IMAGE & FILES
-Route::post('upload-image', [ImageController::class, 'store_image']);
-Route::delete('delete-image/{id}', [ImageController::class, 'delete_image']);
-Route::post('upload-file', [ImageController::class, 'store_file']);
-Route::delete('delete-file/{id}', [ImageController::class, 'delete_file']);
+Route::post('upload-image', [ImagesController::class, 'store_image']);
+Route::delete('delete-image/{id}', [ImagesController::class, 'delete_image']);
+Route::post('upload-file', [ImagesController::class, 'store_file']);
+Route::delete('delete-file/{id}', [ImagesController::class, 'delete_file']);
 
 
 // EMAIL VERIFICATION
@@ -67,3 +67,4 @@ Route::post('/publications/store', [PublicationController::class, 'store']);
 Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
 Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
 Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
+

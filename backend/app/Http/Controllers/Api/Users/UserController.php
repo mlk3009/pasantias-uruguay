@@ -201,7 +201,7 @@ class UserController extends Controller
             'name' => 'nullable',
             'email' => 'nullable|email|unique:users,email,' . $id,
             'phone' => 'nullable|string|max:9',
-            'location' => 'nullable|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembó,Treinta y Tres',
+            'location' => 'nullable|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandú,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembó,Treinta y Tres',
             'ci_estudiante' => 'nullable|string|max:8|unique:estudiante,ci_estudiante,' . $id . ',id',
             'fec_nacimiento' => 'nullable|date',
             'cod_postal' => 'nullable|string|max:5',
