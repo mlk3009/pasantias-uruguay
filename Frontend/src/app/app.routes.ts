@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+
 export const routes: Routes = [
   {
     path: 'inicio',
@@ -94,6 +95,11 @@ export const routes: Routes = [
       import('./components/enterprise/enterprise.component').then(
         (m) => m.EnterpriseComponent
       ),
+  },
+  {
+    path: 'user-profile/:phone',
+    loadComponent: () =>
+      import('./components/students/user-profile-view/user-profile-view.component').then((m) => m.UserProfileViewComponent),
   },
   {
     path: 'user-postulations',

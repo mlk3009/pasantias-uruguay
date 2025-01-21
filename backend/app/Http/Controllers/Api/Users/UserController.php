@@ -63,7 +63,7 @@ class UserController extends Controller
             $user = Auth::user();
             $cv = CV::where('estudiante_id', $user->id)->first();
             $estudiante = Estudiante::where('id', $user->id)->first();
-
+    
             $data = [
                 'id' => $user->id,
                 'name' => $user->name,
@@ -79,10 +79,17 @@ class UserController extends Controller
                 'desc2' => $estudiante->desc2,
                 'cv' => false
             ];
-
+    
+            if ($estudiante->id_image) {
+                $image = ImageUpload::find($estudiante->id_image);
+                if ($image) {
+                    $data['image'] = $image->image;
+                }
+            }
+    
             if ($cv) {
                 $idiomas = Idiomas::where('cv_id', $cv->id)->get(['idioma', 'nivel']);
-
+    
                 $data = [
                     'name' => $user->name,
                     'email' => $user->email,
@@ -96,12 +103,54 @@ class UserController extends Controller
                     'idiomas' => $idiomas,
                     'cv' => $cv->cv,
                 ];
+    
+                if ($estudiante->id_image) {
+                    $image = ImageUpload::find($estudiante->id_image);
+                    if ($image) {
+                        $data['image'] = $image->image;
+                    }
+                }
             }
-
+    
             return response(['data' => $data], 200);
         }
-
+    
         return response(['data' => 'Unauthorized'], 401);
+    }
+    
+    public function obtenerUsuarioByPhone($phone): Response
+    {
+        $user = User::where('phone', $phone)->first();
+        if (!$user) {
+            return response(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        $estudiante = Estudiante::where('id', $user->id)->first();
+        if (!$estudiante) {
+            return response(['message' => 'Estudiante no encontrado'], 404);
+        }
+
+        $data = [
+            'name' => $user->name,
+            'email' => $user->email,
+            'phone' => $user->phone,
+            'fec_nacimiento' => $estudiante->fec_nacimiento,
+            'desc1' => $estudiante->desc1,
+            'desc2' => $estudiante->desc2,
+            'cod_postal' => $estudiante->cod_postal,
+            'location' => $estudiante->location,
+            'id_image' => $estudiante->id_image,
+            'id_file' => $estudiante->id_file,
+        ];
+
+        if ($estudiante->id_image) {
+            $image = ImageUpload::find($estudiante->id_image);
+            if ($image) {
+                $data['image'] = $image->image;
+            }
+        }
+
+        return response(['data' => $data], 200);
     }
 
 
@@ -206,8 +255,8 @@ class UserController extends Controller
             'fec_nacimiento' => 'nullable|date',
             'cod_postal' => 'nullable|string|max:5',
             'id_image' => 'nullable|integer',
-            'desc1' => 'nullable|string',
-            'desc2' => 'nullable|string',
+            'desc1' => 'nullable|string|max:280',
+            'desc2' => 'nullable|string|max:280',
             'etiqueta_id' => 'nullable|exists:etiqueta,id' // Validar que la etiqueta exista
         ]);
     

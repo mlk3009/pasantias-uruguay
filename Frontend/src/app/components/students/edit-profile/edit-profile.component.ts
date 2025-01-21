@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Importa FormsModule
@@ -13,10 +13,13 @@ import { NavComponent } from '../../home/nav/nav.component';
   styleUrl: './edit-profile.component.css'
 })
 export class EditProfileComponent implements OnInit {
-  loading: boolean = false;
   data: any = {};
   userEtiquetas: any[] = [];
   etiquetas: any[] = [];
+  userImageUrl: string = '';
+  previousImageId: string | null = null;
+
+  @ViewChild('fileInput') fileInput!: ElementRef;
 
   constructor(
     private _userService: UserService,
@@ -32,13 +35,19 @@ export class EditProfileComponent implements OnInit {
           this.data = response.data;
           console.log(this.data); 
           this.getUserEtiquetas(this.data.id); 
+          if (this.data.id_image) {
+            this.userImageUrl = `http://localhost:8000/images/uploads/${this.data.image}`;
+            this.previousImageId = this.data.id_image;
+          } else {
+            this.userImageUrl = 'http://localhost:8000/images/user.png'; 
+          }
         },
         error: (error) => {
           console.error('Error al obtener el usuario:', error);
         }
       });
     } else {
-      console.error('Token no encontrado');
+      this._router.navigate(['/login']);
     }
 
     this.getEtiquetas();
@@ -81,7 +90,7 @@ export class EditProfileComponent implements OnInit {
         this._userService.update(this.data, token).subscribe({
             next: (response) => {
                 console.log('Perfil actualizado:', response);
-                // Redirigir o mostrar un mensaje de éxito
+                alert('Perfil actualizado correctamente.');
             },
             error: (error) => {
                 console.error('Error al actualizar el perfil:', error);
@@ -90,16 +99,20 @@ export class EditProfileComponent implements OnInit {
     } else {
         console.error('Token no encontrado');
     }
-}
+  }
 
-validateFields(): string[] {
+  reloadPage(): void {
+    window.location.reload();
+  }
+
+  validateFields(): string[] {
     const errors: string[] = [];
 
     if (!this.data.name) {
       errors.push('Nombre completo es requerido.');
-  } else if (this.data.name.length > 50) {
+    } else if (this.data.name.length > 50) {
       errors.push('Nombre completo no puede tener más de 50 caracteres.');
-  }
+    }
 
     const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/;
     if (!this.data.email || !emailPattern.test(this.data.email)) {
@@ -108,7 +121,7 @@ validateFields(): string[] {
 
     if (this.data.phone && (this.data.phone.length !== 8 && this.data.phone.length !== 9)) {
       errors.push('Teléfono debe tener 8 (telefono) o 9 (celular) caracteres.');
-  }
+    }
 
     if (!this.data.fec_nacimiento) {
         errors.push('Fecha de nacimiento es requerida.');
@@ -122,8 +135,16 @@ validateFields(): string[] {
         errors.push('Código postal debe de tener 5 caracteres.');
     }
 
+    if (this.data.desc1.length > 280) {
+      errors.push('La descripción 1 no puede tener más de 280 caracteres.');
+    }
+
+    if (this.data.desc2.length > 280) {
+      errors.push('La descripción 2 no puede tener más de 280 caracteres.');
+    }
+
     return errors;
-}
+  }
 
   getUserData(): void {
     const token = this._userService.getToken();
@@ -142,6 +163,44 @@ validateFields(): string[] {
     }
   }
 
+  onImageClick(): void {
+    this.fileInput.nativeElement.click();
+  }
+  
+  onFileSelected(event: any): void {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.uploadNewImage(file);
+    }
+  }
+  
+  uploadNewImage(file: File): void {
+
+    console.log('ID del usuario:', this.data.id);
+
+    
+    // Primero sube la nueva imagen
+    this._userService.storeImage(file, this.data.id).subscribe(
+      response => {
+        console.log('Imagen cargada exitosamente', response);
+        const newImageId = response.id;
+        this.userImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
+  
+        // Borrar la imagen anterior si existe
+        if (this.previousImageId) {
+          this._userService.deleteImage(this.previousImageId).subscribe(() => {
+            console.log('Imagen anterior eliminada');
+          });
+        }
+  
+        // Actualizar el id_image anterior
+        this.previousImageId = newImageId;
+      },
+      error => {
+        console.error('Error al cargar la imagen', error);
+      }
+    );
+  }
   modal(){
     const modal = document.getElementById('contactModal') as HTMLElement;
     modal.style.display = 'flex';

@@ -34,19 +34,22 @@ export class UserService {
     });
 }
 
-  storeImage(file: File): Observable<any> {
-    const formData = new FormData();
-    formData.append('image', file);
-    let headers = new HttpHeaders();
-
-    return this._http.post(global.url + 'upload-image', formData, {
-        headers: headers,
-    }).pipe(
-        tap((response: any) => {
-            console.log('Imagen cargada exitosamente', response);
-        })
-    );
+storeImage(file: File, userId?: number): Observable<any> {
+  const formData = new FormData();
+  formData.append('image', file);
+  if (userId !== undefined) {
+    formData.append('user_id', userId.toString());
   }
+  let headers = new HttpHeaders();
+
+  return this._http.post(global.url + 'upload-image', formData, {
+    headers: headers,
+  }).pipe(
+    tap((response: any) => {
+      console.log('Imagen cargada exitosamente', response);
+    })
+  );
+}
 
   deleteImage(imageId: string): Observable<any> {
     return this._http.delete(global.url + `delete-image/${imageId}`);
@@ -94,6 +97,18 @@ export class UserService {
     });
 
     return this._http.get(global.url + 'user', { headers: headers });
+  }
+
+  obtenerUsuarioByPhone(phone: string): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+      return this._http.get(global.url + `userbyphone/${phone}`, { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
   }
 
   restore(user: User): Observable<any> {
