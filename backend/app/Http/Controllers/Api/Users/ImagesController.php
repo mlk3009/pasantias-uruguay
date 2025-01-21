@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\ImageUpload;
 use App\Models\FileUpload;
+use App\Models\User;
+use App\Models\Empresa;
+use App\Models\Estudiante;
 
 class ImagesController extends Controller
 {
@@ -37,21 +40,34 @@ class ImagesController extends Controller
 
     public function store_image(Request $request)
     {
-        // De momento no apliqué el validated, de momento.
+
         $validated = $request->validate([
             'image' => 'required|mimes:jpg,jpeg,png,bmp',
+            'user_id' => 'nullable|exists:users,id', // Validar opcionalmente el user_id
         ]);
-
+    
         $imageName = '';
         if ($image = $request->file('image')) {
             $imageName = time() . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move('images/uploads', $imageName);
         }
-
+    
         $imageUpload = ImageUpload::create([
             'image' => $imageName,
         ]);
-
+    
+        // Asociar la imagen al usuario si se proporciona user_id
+        if ($request->has('user_id')) {
+            $user = User::find($request->input('user_id'));
+            if ($user) {
+                if ($user->rol === 'estudiante') {
+                    Estudiante::where('id', $user->id)->update(['id_image' => $imageUpload->id]);
+                } elseif ($user->rol === 'empresa') {
+                  //  Empresa::where('id', $user->id)->update(['id_image' => $imageUpload->id]); PONER CUANDO CREE LA IMAGEN EN EMPRESA
+                }
+            }
+        }
+    
         return response()->json([
             'success' => true,
             'message' => 'Imagen subida con éxito',

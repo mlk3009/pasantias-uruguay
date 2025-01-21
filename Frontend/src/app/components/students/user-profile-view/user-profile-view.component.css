@@ -3,6 +3,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    min-height: 100vh;
 }
 .content{
     height: 85%;
@@ -11,7 +12,7 @@
     padding-bottom: 7vh;
 }
 .user-data{
-    max-width: 90%;
+    min-width: 70%;
 }
 .cv{
     width: 100%;
@@ -27,7 +28,7 @@
     min-height: 15vh;
 }
 .buttons{
-    min-width: 25%;
+    min-width: 30%;
     margin-bottom: 5vh;
 }
 .home_button{
@@ -43,13 +44,6 @@
     min-width: 40%;
     display: flex;
     justify-content: start;
-}
-.description{
-    min-width: 350px;
-}
-.readonly-input {
-    color: #6b7280; /* Tono gris */
-    background-color: #f9fafb; /* Fondo gris claro */
 }
 .container-modal{
     position: fixed;
@@ -70,24 +64,4 @@
 }
 .button2:hover{
     background-color: #15c3c3;
-}
-.relative {
-    position: relative;
-    display: inline-block;
-}
-
-.edit-icon {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    border-radius: 50%;
-    padding: 0.5rem;
-    cursor: pointer;
-}
-
-.edit-icon svg {
-    width: 1.5rem;
-    height: 1.5rem;
-    color: white;
 }

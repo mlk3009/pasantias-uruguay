@@ -18,6 +18,7 @@ export class UserProfileStudentComponent {
   data: any = {};
   userEtiquetas: any[] = [];
   etiquetas: any[] = [];
+  userImageUrl: string = '';
 
   constructor(
     private _userService: UserService,
@@ -33,15 +34,19 @@ export class UserProfileStudentComponent {
           this.data = response.data;
           console.log(this.data); 
           this.getUserEtiquetas(this.data.id); 
+          if (this.data.id_image) {
+            this.userImageUrl = `http://localhost:8000/images/uploads/${this.data.image}`;
+          } else {
+            this.userImageUrl = 'http://localhost:8000/images/user.png'; 
+          }
         },
         error: (error) => {
           console.error('Error al obtener el usuario:', error);
         }
       });
     } else {
-      console.error('Token no encontrado');
+      this._router.navigate(['/login']);
     }
-
     this.getEtiquetas();
   }
 

@@ -39,7 +39,7 @@ export class SavesComponent implements OnInit {
         }
       });
     } else {
-      console.error('Token no encontrado');
+      this._router.navigate(['/login']);
     }
     this.getSavedPublications();
   }

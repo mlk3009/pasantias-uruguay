@@ -4,11 +4,17 @@
       <div class="flex flex-row justify-center w-full">
         <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
           <div class="flex flex-col items-center">
-            <img
-              src="../../../../assets/img/user.png"
-              alt=""
-              class="rounded-full w-40"
-            />
+            
+            <div class="relative inline-block">
+              <img [src]="userImageUrl" class="rounded-full w-40" (click)="onImageClick()" />
+              <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" />
+              <div class="edit-icon absolute bottom-0 right-0 bg-gray-800 text-white rounded-full p-1 cursor-pointer" (click)="onImageClick()">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7h4l2-3h6l2 3h4a2 2 0 012 2v10a2 2 0 01-2 2H3a2 2 0 01-2-2V9a2 2 0 012-2z"></path>
+                  <circle cx="12" cy="13" r="4" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                </svg>
+              </div>
+            </div>
             <h1 class="text-gray-900 font-semibold text-4xl mt-5">
               {{ data.name }}
             </h1>
@@ -76,7 +82,7 @@
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Nombre completo: 
                       </p>
-                      <input type="text" [value]="data.name" [(ngModel)]="data.name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input type="text" [value]="data.name" [(ngModel)]="data.name" maxlength="50" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                     
                     <div class="flex justify-start flex-row mt-2">
@@ -92,13 +98,13 @@
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         E-mail:
                       </p>
-                      <input type="text" [value]="data.email" [(ngModel)]="data.email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input type="text" [value]="data.email" [(ngModel)]="data.email" maxlength="50" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                     <div class="flex justify-start flex-row mt-2">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Teléfono:
                       </p>
-                      <input [value]="data.phone" [(ngModel)]="data.phone" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input [value]="data.phone" [(ngModel)]="data.phone" maxlength="9" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                   </div>
                 </div>
@@ -148,12 +154,12 @@
                       <p class="readonly-input text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Identificación:
                       </p>
-                      <input [value]="data.ci_estudiante" type="text" class="readonly-input shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" readonly />                    </div>
+                      <input [value]="data.ci_estudiante" type="text" maxlength="8" class="readonly-input shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" readonly />                    </div>
                     <div class="flex justify-start flex-row mt-2">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Código postal:
                       </p>
-                      <input [value]="data.cod_postal" [(ngModel)]="data.cod_postal" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                      <input [value]="data.cod_postal" [(ngModel)]="data.cod_postal" maxlength="5" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                   </div>
                 </div>
@@ -171,23 +177,23 @@
                 </button>
               
                 <button
-                  routerLink="/cv"
-                  type="button"
-                  class="flex flex-row items-center justify-between button1 text-gray-800 bg-gray-50 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                >
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-                  </svg>
-                  Cancelar
-                </button>
+                type="button"
+                class="flex flex-row items-center justify-between button1 text-gray-800 bg-gray-50 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                (click)="reloadPage()"
+              >
+                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                </svg>
+                Cancelar
+              </button>
               </div>
             </div>
   
   
   
             <div class="texto ml-2">
-              <textarea [value]="data.desc1" [(ngModel)]="data.desc1" id="message"  name="message" ngModel rows="6" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
-              <textarea [value]="data.desc2" [(ngModel)]="data.desc2" id="message2"  name="message2" ngModel rows="6" class="mt-2 description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Segunda descripción..."></textarea>
+              <textarea [value]="data.desc1" [(ngModel)]="data.desc1" id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>              
+              <textarea [value]="data.desc2" [(ngModel)]="data.desc2" id="message2"  name="message2" ngModel rows="6" maxlength="280" class="mt-2 description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Segunda descripción..."></textarea>
             </div>
           </div>
         </div>

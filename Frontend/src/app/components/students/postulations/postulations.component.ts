@@ -37,7 +37,7 @@ export class PostulationsComponent implements OnInit {
         }
       });
     } else {
-      console.error('Token no encontrado');
+      this._router.navigate(['/login']);
     }
     this.getStudentData();
   }
