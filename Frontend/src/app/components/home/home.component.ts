@@ -12,11 +12,12 @@ import { ValidAcountComponent } from '../register/valid-acount/valid-acount.comp
 import { SliderComponent } from './slider/slider.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { UserService } from '../../services/user.service';
+import { BigSliderComponent } from './big-slider/big-slider.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent, ValidAcountComponent, SliderComponent, CategoriesComponent],
+  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent, ValidAcountComponent, SliderComponent, CategoriesComponent, BigSliderComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })

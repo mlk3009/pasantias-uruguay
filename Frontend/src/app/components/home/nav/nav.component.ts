@@ -35,6 +35,7 @@ export class NavComponent implements AfterViewInit {
     private _userService: UserService,
     private _cookieService: CookieService,
     private _router: Router,
+    private router: Router,
   ) {
     this.token = this._cookieService.get('token');
   }
@@ -51,6 +52,7 @@ export class NavComponent implements AfterViewInit {
         }
       );
     }
+    
 
     initFlowbite();
   }
@@ -135,7 +137,6 @@ export class NavComponent implements AfterViewInit {
     }
   }
 
-
   moveTo(section: string) {
     const element = document.getElementById(section);
     if (element) {
@@ -143,6 +144,8 @@ export class NavComponent implements AfterViewInit {
         top: element.offsetTop,
         behavior: 'smooth'
       });
+    } else {
+      this.router.navigate(['/ruta-del-componente'], { fragment: section });
     }
   }
 
@@ -175,6 +178,12 @@ export class NavComponent implements AfterViewInit {
         }
       }
     }
+  }
+
+  navigateToPublications() {
+    this.router.navigate(['/publications']).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
   }
 
   
