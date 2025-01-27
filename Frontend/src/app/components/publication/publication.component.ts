@@ -12,4 +12,14 @@ import { FooterComponent } from '../home/footer/footer.component';
 })
 export class PublicationComponent {
 
+  modal(){
+    const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'flex';
+  }
+
+  modalClose() {
+    const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
 }
