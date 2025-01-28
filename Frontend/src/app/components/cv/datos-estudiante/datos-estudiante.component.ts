@@ -29,7 +29,6 @@ export class DatosEstudianteComponent {
 
   public valid: boolean = false;
 
-  public ci_en_tramite: boolean = false;
 
   public credencial_en_tramite: boolean = false;
 
@@ -129,12 +128,8 @@ export class DatosEstudianteComponent {
     this.studentData.genero = this.getStudentData.genero || '';
     this.studentData.estado_civil = this.getStudentData.estado_civil || '';
     this.studentData.licencia = this.getStudentData.licencia || '';
+    this.studentData.cedula = this.getStudentData.cedula || '';
 
-    if(this.getStudentData.cedula == 404){
-      this.ci_en_tramite = true;
-    } else {
-      this.studentData.cedula = this.getStudentData.cedula || '';
-    }
 
     if(this.getStudentData.credencial_civica == 'En trámite'){
       this.credencial_en_tramite = true;
@@ -157,9 +152,6 @@ export class DatosEstudianteComponent {
     localStorage.removeItem('borMonth');
     localStorage.removeItem('borYear');
 
-    if(this.ci_en_tramite){
-      this.studentData.cedula = 404; // 404 es para las q estan en tramite
-    }
 
     if(this.credencial_en_tramite){
       this.studentData.credencial_civica = 'En trámite';

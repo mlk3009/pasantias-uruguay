@@ -56,6 +56,7 @@ return new class extends Migration
     $table->string('desc1', 280)->default('Descripción 1');
     $table->string('desc2', 280)->default('Descripción 2');
     $table->string('cod_postal', 5);
+    $table->string('genero', 24)->nullable();
     $table->enum('location', [
         'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
         'Maldonado','Montevideo','Paysandú','Río Negro','Rivera','Rocha','Salto','San José',

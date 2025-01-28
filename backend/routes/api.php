@@ -44,6 +44,8 @@ Route::delete('cvdeletePDF/{estudianteId}', [CvController::class, 'borrarPDF']);
 Route::post('/addUserTag', [UserController::class, 'AddUsertags']);
 Route::get('/showUserTag/{id}', [UserController::class, 'ShowUsertags']);
 Route::get('/showTags', [UserController::class, 'showTags']);
+Route::delete('/deleteUserTag', [UserController::class, 'deleteUserTag']);
+
 
 // PASSWORD
 Route::post('restore', [PasswordController::class, 'restorePassword']);

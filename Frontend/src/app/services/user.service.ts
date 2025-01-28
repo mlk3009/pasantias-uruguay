@@ -151,17 +151,6 @@ storeImage(file: File, userId?: number): Observable<any> {
     });
   }
 
-  addUserTags(estudiante_id: number, etiqueta_id: number): Observable<any> {
-    const json = {
-      estudiante_id: estudiante_id,
-      etiqueta_id: etiqueta_id
-    };
-
-    const params = JSON.stringify(json);
-    const headers = new HttpHeaders().set('Content-Type', 'application/json');
-
-    return this._http.post(global.url + 'addUserTag', params, { headers: headers });
-  }
 
   contactUs(email: string, asunto: string, descripcion: string): Observable<any> {
     const body = { email: email, asunto: asunto, descripcion: descripcion };
@@ -185,6 +174,30 @@ storeImage(file: File, userId?: number): Observable<any> {
         console.log('Correo enviado correctamente', response);
       })
     );
+  }
+
+  addUserTags(estudiante_id: number, etiqueta_id: number): Observable<any> {
+    const json = {
+      estudiante_id: estudiante_id,
+      etiqueta_id: etiqueta_id
+    };
+
+    const params = JSON.stringify(json);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._http.post(global.url + 'addUserTag', params, { headers: headers });
+  }
+
+  deleteUserTag(estudiante_id: number, etiqueta_id: number): Observable<any> {
+    const json = {
+      estudiante_id: estudiante_id,
+      etiqueta_id: etiqueta_id
+    };
+
+    const params = JSON.stringify(json);
+    const headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+    return this._http.request('delete', global.url + `deleteUserTag`, { headers: headers, body: params });
   }
 
   // Método para obtener todas las etiquetas, estará acá momentaneamente hasta que se cree un servicio para las etiquetas

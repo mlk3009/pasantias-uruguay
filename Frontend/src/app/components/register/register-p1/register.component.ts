@@ -76,7 +76,7 @@ export class RegisterComponent {
     private _cookieService: CookieService,
     private dialog: MatDialog
   ) {
-    this.user = new User(0, '', '', '', '', '', '', '', '');
+    this.user = new User(0, '', '', '', '', '', '', '', '','');
     const navigation = this._router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       const state = navigation.extras.state;

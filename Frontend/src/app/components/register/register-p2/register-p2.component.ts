@@ -46,6 +46,7 @@ export class RegisterP2Component {
   imageId: number | null = null; 
   public surName: string = '';
 
+
   constructor(
     private _userService: UserService,
     private _router: Router,
@@ -53,7 +54,7 @@ export class RegisterP2Component {
     private dialog: MatDialog,
     private route: ActivatedRoute
   ) {
-    this.user = new User(0, '', '', '', '', '', '', '', '', '');
+    this.user = new User(0, '', '', '', '', '', '', '', '', '','');
     const navigation = this._router.getCurrentNavigation();
     if (navigation?.extras?.state) {
       const state = navigation.extras.state;
@@ -66,13 +67,17 @@ export class RegisterP2Component {
 
       this.user.ci_estudiante = state["ci"] || '';
       this.user.cod_postal = state["cod_postal"] || '';
+      this.user.genero = state["genero"] || '';
       this.user.phone = state["phone"] || '';
       this.day = state["day"] || 0;
       this.month = state["month"] || 0;
       this.year = state["year"] || 0;
       this.validateDate();
+      
     }
   }
+
+
 
   validateDate() {
     const isValidDay = this.day >= 1 && this.day <= 31;

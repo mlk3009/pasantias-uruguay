@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { User } from '../../../models/user';
+import { CommonModule } from '@angular/common';
 import { UserService } from '../../../services/user.service';
 import { NavigationExtras } from '@angular/router';
 
@@ -8,7 +9,7 @@ import { NavigationExtras } from '@angular/router';
 @Component({
   selector: 'app-user-profile-student',
   standalone: true,
-  imports: [],
+  imports: [CommonModule, RouterModule],
   templateUrl: './user-profile-student.component.html',
   styleUrl: './user-profile-student.component.css',
   providers: [UserService],
@@ -19,6 +20,7 @@ export class UserProfileStudentComponent {
   userEtiquetas: any[] = [];
   etiquetas: any[] = [];
   userImageUrl: string = '';
+  
 
   constructor(
     private _userService: UserService,

@@ -70,6 +70,7 @@ class UserController extends Controller
                 'email' => $user->email,
                 'phone' => $user->phone,
                 'rol' => $user->rol,
+                'genero' => $estudiante->genero,
                 'location' => $estudiante->location,
                 'ci_estudiante' => $estudiante->ci_estudiante,
                 'fec_nacimiento' => $estudiante->fec_nacimiento,
@@ -99,6 +100,7 @@ class UserController extends Controller
                     'ci_estudiante' => $estudiante->ci_estudiante,
                     'fec_nacimiento' => $estudiante->fec_nacimiento,
                     'cod_postal' => $estudiante->cod_postal,
+                    'genero' => $estudiante->genero,
                     'id_image' => $estudiante->id_image,
                     'idiomas' => $idiomas,
                     'cv' => $cv->cv,
@@ -130,6 +132,9 @@ class UserController extends Controller
             return response(['message' => 'Estudiante no encontrado'], 404);
         }
 
+
+        $etiquetas = $estudiante->etiquetas()->select('etiqueta.id', 'etiqueta.name')->get();
+
         $data = [
             'name' => $user->name,
             'email' => $user->email,
@@ -139,8 +144,10 @@ class UserController extends Controller
             'desc2' => $estudiante->desc2,
             'cod_postal' => $estudiante->cod_postal,
             'location' => $estudiante->location,
+            'genero' => $estudiante->genero,
             'id_image' => $estudiante->id_image,
             'id_file' => $estudiante->id_file,
+            'etiquetas' => $etiquetas, 
         ];
 
         if ($estudiante->id_image) {
@@ -186,6 +193,7 @@ class UserController extends Controller
             'ci_estudiante' => 'required_if:rol,estudiante|string|max:8|unique:estudiante',
             'fec_nacimiento' => 'required_if:rol,estudiante|date',
             'cod_postal' => 'required_if:rol,estudiante|string|max:5',
+            'genero' => 'required_if:rol,estudiante|in:Masculino,Femenino,Otro',
             'id_image' => 'nullable|integer',
         ]);
 
@@ -214,6 +222,7 @@ class UserController extends Controller
                     'id' => $user->id,
                     'cod_postal' => $jsonData['cod_postal'],
                     'location' => $jsonData['location'],
+                    'genero' => $jsonData['genero'],
                     'fec_nacimiento' => $jsonData['fec_nacimiento'],
                 ];
 
@@ -255,9 +264,10 @@ class UserController extends Controller
             'fec_nacimiento' => 'nullable|date',
             'cod_postal' => 'nullable|string|max:5',
             'id_image' => 'nullable|integer',
+            'genero' => 'nullable|string|in:Masculino,Femenino,Otro',
             'desc1' => 'nullable|string|max:280',
             'desc2' => 'nullable|string|max:280',
-            'etiqueta_id' => 'nullable|exists:etiqueta,id' // Validar que la etiqueta exista
+            'etiqueta_id' => 'nullable|exists:etiqueta,id'
         ]);
     
         if ($validator->fails()) {
@@ -305,6 +315,10 @@ class UserController extends Controller
     
             if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
                 $student->id_image = $jsonData['id_image'];
+            }
+
+            if (isset($jsonData['genero']) && $jsonData['genero'] !== '') {
+                $student->genero = $jsonData['genero'];
             }
     
             if (isset($jsonData['desc1']) && $jsonData['desc1'] != $student->desc1) {
@@ -428,6 +442,51 @@ class UserController extends Controller
             'status' => 200
         ];
         return response()->json($data, 200);
+    }
+    
+    public function deleteUserTag(Request $request)
+    {
+        $jsonData = $request->json()->all();
+
+        $validator = Validator::make($jsonData, [
+            'estudiante_id' => 'required',
+            'etiqueta_id' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            $data = [
+                'message' => 'Error al eliminar la etiqueta del usuario',
+                'status' => 400,
+                'errors' => $validator->errors()
+            ];
+            return response()->json($data, 400);
+        } else {
+            $estudiante = Estudiante::find($jsonData['estudiante_id']);
+            $etiqueta = Etiqueta::find($jsonData['etiqueta_id']);
+
+            if ($estudiante && $etiqueta) {
+                if (!$estudiante->etiquetas()->where('etiqueta_id', $etiqueta->id)->exists()) {
+                    $data = [
+                        'message' => 'La etiqueta no está asignada al estudiante',
+                        'status' => 409
+                    ];
+                    return response()->json($data, 409);
+                }
+
+                $estudiante->etiquetas()->detach($etiqueta->id);
+                $data = [
+                    'message' => 'Etiqueta eliminada correctamente',
+                    'status' => 200
+                ];
+                return response()->json($data, 200);
+            } else {
+                $data = [
+                    'message' => 'Estudiante o Etiqueta no encontrados',
+                    'status' => 404
+                ];
+                return response()->json($data, 404);
+            }
+        }
     }
 
     public function showTags()

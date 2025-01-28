@@ -44,7 +44,7 @@ export class LoginComponent {
     private _cookieService: CookieService,
     private dialog: MatDialog
   ) {
-    this.user = new User(0, '', '', '', '','', '','','');
+    this.user = new User(0, '', '', '', '','', '','','','');
   }
 
   ngOnInit() {
