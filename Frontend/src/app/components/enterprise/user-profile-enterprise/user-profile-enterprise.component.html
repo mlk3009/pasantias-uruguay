@@ -3,7 +3,7 @@
         <div class="flex flex-row justify-center w-full">
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
                 <div class="w-full border-b-2 flex justify-center flex-col items-center">   
-                    <div class="flex flex-col items-center">
+                    <div class="w-full rounded-lg flex flex-col items-center">
                         <img src="../../../../assets/img/Fish_wearing_a_chicken_smoking_a_cigarette_cover.webp" alt="" class="rounded-full w-40">
                         <h1 class="text-gray-900 font-semibold text-4xl mt-5">Tienda morrocoyo</h1>
                     </div>
@@ -20,13 +20,15 @@
                               <a href="#" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contacto</a>
                             </li>
                             <li>
-                                <a href="#" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ver publicaiones</a>
+                                <a href="/my-publications" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ver publicaiones</a>
                             </li>
 
-                            
+                            <li>
+                                <a href="#" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ver postulantes</a>
+                            </li>
 
                             <li>
-                              <button href="#" (click)="createPublication = !createPublication" type="button" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Crear publicación</button>
+                              <button href="#" (click)="createPublication = !createPublication" type="button" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Administrar publicaciones</button>
                             </li>
                             <div *ngIf="createPublication" class="flex justify-center m-5">
                                 <app-create-publication />
@@ -42,18 +44,230 @@
                 </div>
                 
                 
-                <div class="flex flex-row pt-6">
+                <div class="flex flex-row pt-10">
                     <div>
-                        <p class="text-gray-500 text-sm p-4 text-center max-w-1/2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur quas et error nam nulla consequuntur, ex enim doloremque illo. Facilis at aperiam explicabo rem dolores est! Autem atque nihil reiciendis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur nemo culpa nobis sunt quaerat inventore ducimus maiores distinctio perspiciatis in perferendis rem qui obcaecati eius doloremque ipsum, sint quod voluptas.</p>
+                        <h2 class="text-xl font-medium text-gray-900 text-center w-full">Somos la mejor</h2>
                         <p class="text-gray-500 text-sm p-4 text-center max-w-1/2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur quas et error nam nulla consequuntur, ex enim doloremque illo. Facilis at aperiam explicabo rem dolores est! Autem atque nihil reiciendis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur nemo culpa nobis sunt quaerat inventore ducimus maiores distinctio perspiciatis in perferendis rem qui obcaecati eius doloremque ipsum, sint quod voluptas.</p>
                         <p class="text-gray-500 text-sm p-4 text-center max-w-1/2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur quas et error nam nulla consequuntur, ex enim doloremque illo. Facilis at aperiam explicabo rem dolores est! Autem atque nihil reiciendis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur nemo culpa nobis sunt quaerat inventore ducimus maiores distinctio perspiciatis in perferendis rem qui obcaecati eius doloremque ipsum, sint quod voluptas.</p>
                     </div>
                 </div>
 
 
+
+
+                <section class="body-nh2">
+                    <section class="section1">
+                        <i id="left" class="left fa-solid fa-angle-left" (click)="onArrowLeftClick($event)"></i>
+                        <section id="carousel" class="carousel">
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <div class="image-container">
+                                        <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                    </div>
+                                </a>
+                                <div class="p-5">
+                                    <a class="" href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Ingeniero de Software Senior</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Estamos buscando un Ingeniero de Software Senior con más de 5 años de experiencia en desarrollo full-stack. Únete a nuestro equipo dinámico para trabajar en proyectos de vanguardia.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Mas info
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                            
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoPersonalT.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                
+                
+                            <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                                <a href="#">
+                                    <img class="rounded-t-lg size" src="../../../../assets/img/img-nosotros.jpg" alt="" draggable="false" />
+                                </a>
+                                <div class="p-5">
+                                    <a href="#">
+                                        <h5 class="mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">Noteworthy technology acquisitions 2021</h5>
+                                    </a>
+                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order.</p>
+                                    <a href="#" class="button-color inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        Read more
+                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                                        </svg>
+                                    </a>
+                                </div>
+                            </div>
+                
+                        </section>
+                        <i id="right" class="right fa-solid fa-angle-right" (click)="onArrowRightClick($event)"></i>
+                    </section>
+                </section>
+
+
+
                 <section class="bg-gray-50 dark:bg-gray-900 w-11/12">
                     <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-                        <p class="mb-8 text-center text-gray-700 dark:text-gray-400 sm:text-xl">Consúltanos ante cualquier tipo de duda.</p>
+                        <p class="mb-8 text-center text-gray-900 font-medium dark:text-gray-400 sm:text-xl">Consúltanos ante cualquier tipo de duda.</p>
                         <form action="#" class="space-y-8">
                             <div>
                                 <label for="email" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">E-Mail</label>
@@ -73,6 +287,10 @@
                         </form>
                     </div>
                   </section>
+
+
+                  <p class="text-gray-500 text-sm"> Tienda morrocoyo los derechos de mi tio reservado adentro de mi c...</p>
+
             </div>
         </div>
     </div>
