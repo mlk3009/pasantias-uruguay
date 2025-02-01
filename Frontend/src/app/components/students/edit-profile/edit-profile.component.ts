@@ -1,14 +1,14 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms'; // Importa FormsModule
+import { FormsModule } from '@angular/forms'; 
 import { UserService } from '../../../services/user.service';
 import { NavComponent } from '../../home/nav/nav.component';
 
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavComponent], // Añade FormsModule al array de imports
+  imports: [CommonModule, FormsModule, NavComponent], 
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
@@ -66,6 +66,38 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  addUserTag(estudiante_id: number, etiqueta_id: number): void {
+    if (this.userEtiquetas.length >= 3) {
+      alert('No puedes agregar más de 3 etiquetas.');
+      return;
+    }
+    this._userService.addUserTags(estudiante_id, etiqueta_id).subscribe({
+      next: (response) => {
+        console.log('Etiqueta agregada:', response);
+        alert('Etiqueta agregada correctamente.');
+        this.getUserEtiquetas(estudiante_id); // Actualizar las etiquetas del usuario
+      },
+      error: (error) => {
+        console.error('Error al agregar la etiqueta:', error);
+        alert('Error al agregar la etiqueta. Por favor, inténtelo de nuevo más tarde.');
+      }
+    });
+  }
+
+  deleteUserTag(estudiante_id: number, etiqueta_id: number): void {
+    this._userService.deleteUserTag(estudiante_id, etiqueta_id).subscribe({
+      next: (response) => {
+        console.log('Etiqueta eliminada:', response);
+        alert('Etiqueta eliminada correctamente.');
+        this.getUserEtiquetas(estudiante_id); // Actualizar las etiquetas del usuario
+      },
+      error: (error) => {
+        console.error('Error al eliminar la etiqueta:', error);
+        alert('Error al eliminar la etiqueta. Por favor, inténtelo de nuevo más tarde.');
+      }
+    });
+  }
+
   getEtiquetas(): void {
     this._userService.getEtiquetas().subscribe({
       next: (etiquetas) => {
@@ -76,6 +108,20 @@ export class EditProfileComponent implements OnInit {
         console.error('Error al obtener las etiquetas:', error);
       }
     });
+  }
+
+  onTagSelect(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    const etiquetaId = Number(selectElement.value);
+    if (this.data.id) {
+      this.addUserTag(this.data.id, etiquetaId);
+    }
+  }
+
+  onTagDelete(etiquetaId: number): void {
+    if (this.data.id) {
+      this.deleteUserTag(this.data.id, etiquetaId);
+    }
   }
 
   updateProfile(): void {

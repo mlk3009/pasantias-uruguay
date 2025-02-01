@@ -34,14 +34,6 @@
                   >
                 </li>
                 <li>
-                  <button
-                    (click)="modal()"
-                    class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                    aria-disabled="true"
-                    >Contacto
-                  </button>
-                </li>
-                <li>
                   <a
                     href="/user-postulations"
                     class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
@@ -91,8 +83,25 @@
                       </p>
                       <input [value]="data.fec_nacimiento" [(ngModel)]="data.fec_nacimiento" type="date" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" [value]="data.fec_nacimiento"/>
                     </div>
-                    
                   </div>
+
+                  <div class="flex justify-start flex-row">
+                    <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
+                      Género:
+                    </p>
+                    <select
+                      id="genero"
+                      name="genero"
+                      [(ngModel)]="data.genero"
+                      class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                    >
+                      <option value="Masculino">Masculino</option>
+                      <option value="Femenino">Femenino</option>
+                      <option value="Otro">Otro</option>
+                    </select>
+                  </div>
+
+                  
                   <div class="flex flex-col">
                     <div class="flex justify-start flex-row mt-2">
                       <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
@@ -100,13 +109,9 @@
                       </p>
                       <input type="text" [value]="data.email" [(ngModel)]="data.email" maxlength="50" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
-                    <div class="flex justify-start flex-row mt-2">
-                      <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
-                        Teléfono:
-                      </p>
-                      <input [value]="data.phone" [(ngModel)]="data.phone" maxlength="9" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
-                    </div>
+
                   </div>
+                  
                 </div>
                 <div class="flex flex-col justify-between col2">
                   <div class="flex flex-col">
@@ -137,17 +142,6 @@
                         <option *ngIf="data.location !== 'Treinta y Tres'" value="Treinta y Tres">Treinta y Tres</option>
                       </select>
                     </div>
-                    <div class="flex justify-start flex-row mt-2">
-                      <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
-                        Puesto de trabajo:
-                      </p>
-                      <select name="" id="" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light">
-                        <option *ngIf="userEtiquetas.length > 0" [value]="userEtiquetas[0].id" selected>{{ userEtiquetas[0].name }}</option>
-                        <ng-container *ngFor="let etiqueta of etiquetas">
-                          <option *ngIf="etiqueta.id !== userEtiquetas[0]?.id" [value]="etiqueta.id">{{ etiqueta.name }}</option>
-                        </ng-container>
-                      </select>
-                    </div>
                   </div>
                   <div class="flex flex-col">
                     <div class="flex justify-start flex-row mt-2">
@@ -161,9 +155,35 @@
                       </p>
                       <input [value]="data.cod_postal" [(ngModel)]="data.cod_postal" maxlength="5" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
+
+                    <div class="flex justify-start flex-row mt-2">
+                      <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
+                        Teléfono:
+                      </p>
+                      <input [value]="data.phone" [(ngModel)]="data.phone" maxlength="9" type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
+                    </div>
                   </div>
                 </div>
               </div>
+
+              <div class="flex justify-start flex-row mt-2">
+                <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
+                  Puesto de trabajo (maximo 3):
+                </p>
+                <select name="" id="" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" (change)="onTagSelect($event)" [disabled]="userEtiquetas.length >= 3">
+                  <option *ngFor="let etiqueta of etiquetas" [value]="etiqueta.id">{{ etiqueta.name }}</option>
+                </select>
+              </div>
+              <div class="mt-4">
+                <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
+                  Etiquetas asignadas:
+                </p>
+                <div *ngFor="let etiqueta of userEtiquetas" class="flex items-center mt-2">
+                  <span class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">{{ etiqueta.name }}</span>
+                  <button class="ml-2 border border-red-500 text-red-500 rounded-lg p-1 text-xs hover:bg-red-500 hover:text-white transition-colors duration-300" (click)="onTagDelete(etiqueta.id)">Eliminar</button>
+                </div>
+              </div>
+
               <div class="pt-20 flex justify-center items-center button">
                 <button
                   type="button"

@@ -15,6 +15,7 @@ class Estudiante extends Model
         'fec_nacimiento',
         'cod_postal',
         'id_image',
+        'genero',
         'desc1',
         'desc2'
     ];
