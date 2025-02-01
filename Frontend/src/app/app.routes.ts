@@ -129,6 +129,13 @@ export const routes: Routes = [
         (m) => m.PublicationComponent
       ),
   },
+  {
+    path: 'postulantes',
+    loadComponent: () =>
+      import('./components/enterprise/postulantes/postulantes.component').then(
+        (m) => m.PostulantesComponent
+      ),
+  },
   // Dejar '**' siempre al final
   {
     path: '**',
