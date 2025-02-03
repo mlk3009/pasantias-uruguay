@@ -1,35 +1,18 @@
-body{
-    background-image: url(../../../../assets/img/principalimage_edit2.jpg);
+.body{
+    background-image: url("../../../../assets/img/principalimage_edit2.jpg");
+    background-repeat: no-repeat;
     background-size: cover;
-    background-position: center center;
-    background-repeat: repeat; 
-    height: 420vh;
+    background-position: center;
+    min-height: 105vh;
+}
+.content{
+    height: 85%;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    padding-bottom: 7vh;
 }
 
-
-
-.span1 {
-    color: white;
-    margin: 0 auto;
-    text-align: center;
-    font-size: 2rem;
-    font-weight: 500;
-}
-.principal_container{
-    max-width: 100%;
-}
-.cruz{
-    top: 0;
-}
-.subtitle{
-    width: 100%;
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-evenly;
-}
-h1{
+.h1{
     margin: 0 auto;
     text-align: center;
     font-size: 2rem;
@@ -87,12 +70,6 @@ h1{
 .button-color:hover{
     background-color: #15c3c3;
 }
-
-
-.body{
-    padding-bottom: 5vh;
-    margin-top: 10vh;
-}
 .button{
     color: rgb(49, 49, 49);
     background-color: white;
@@ -105,3 +82,140 @@ h1{
 .span{
     margin: auto 2.5rem;
 }
+
+
+
+
+
+
+
+.size{
+    min-width: 19.9rem;
+    min-height: 19.9rem;
+    max-width: 19.9rem;
+    max-height: 19.9rem;
+    position: relative;
+}
+.price-rating {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.price {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #000;
+    transition: transform 0.2s;
+}
+
+.price:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+}
+
+.rating {
+    display: flex;
+    gap: 5px;
+}
+
+.star {
+    font-size: 1.5em;
+    color: gold;
+    position: relative;
+    transition: transform 0.2s;
+}
+
+.star-icon {
+    transition: transform 0.3s ease;
+}
+.star-icon:hover {
+    transform: scale(1.5);
+    cursor: pointer;
+}
+
+h5 {
+    transition: transform 0.2s;
+}
+
+h5:hover {
+    transform: scale(1.02);
+}
+
+.image-container {
+    position: relative;
+}
+
+.image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+}
+
+.image-container::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../../../../assets/img/trabajoPersonalT.jpg'); /* Ruta de la nueva imagen */
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+}
+
+.image-container:hover::after {
+    opacity: 1;
+}
+
+.category:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }
+
+.prev-next{
+    padding-bottom: 5vh;
+    margin-top: 10vh;
+}
+
+.container-modal{
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000000c2;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}
+.button2{
+    background-color: #008fa8;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.button2:hover{
+    background-color: #15c3c3;
+}
+
+.description{
+    min-width: 350px;
+}
+#default-carousel {
+    height: 100%;
+    width: 100%;
+  }
+  .carousel-item {
+    height: 100%;
+    width: 100%;
+  }
+.img2{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.125rem;
+  }

@@ -1,0 +1,14 @@
+.body{
+    background-image: url("../../../../assets/img/principalimage_edit2.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    min-height: 100vh;
+    padding-top: 0;
+}
+.content{
+    height: 85%;
+    margin-top: 10vh;
+    margin-bottom: 10vh;
+    padding-bottom: 7vh;
+}

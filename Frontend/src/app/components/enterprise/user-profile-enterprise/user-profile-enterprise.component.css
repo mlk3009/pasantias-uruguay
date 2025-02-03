@@ -267,3 +267,24 @@ h5:hover {
     transform: scale(1.02);
     transition: transform 0.2s;
   }
+
+  .container-modal{
+    position: fixed;
+    height: 100vh;
+    width: 100vw;
+    background-color: #000000c2;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 100;
+    top: 0;
+    left: 0;
+}
+.button2{
+    background-color: #008fa8;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.button2:hover{
+    background-color: #15c3c3;
+}
