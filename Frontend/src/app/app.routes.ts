@@ -55,6 +55,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'publications-in/:category',
+    loadComponent: () =>
+      import('./components/publications-in/publications-in.component').then(
+        (m) => m.PublicationsInComponent
+      ),
+  },
+  {
     path: 'register-p2',
     loadComponent: () =>
       import('./components/register/register-p2/register-p2.component').then(

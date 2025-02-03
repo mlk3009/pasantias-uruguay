@@ -32,7 +32,7 @@ return new class extends Migration
             ['name' => 'Software Architect'],
             ['name' => 'System Administrator'],
             ['name' => 'UI/UX Designer'],
-            ['name' => 'Web Developer'],
+            ['name' => 'Licensed Driver'],
         ]);
 
         // Crear la tabla 'tiene'

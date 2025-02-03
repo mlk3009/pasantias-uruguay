@@ -1,22 +1,36 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { User } from '../models/user';
-import { global } from './global';
+import { map } from 'rxjs/operators';
+import { global } from './global'; // Importa global
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class PublicationService {
-  constructor(public _http: HttpClient) {}
+  constructor(private _http: HttpClient) {}
 
-  // Obtener publicaciones
-  getPublications(): Observable<any> {
+  getPublications(category?: string, featured?: boolean | null): Observable<any[]> {
+    let params = new HttpParams();
+    if (category) {
+      params = params.append('category', category);
+    }
+    if (featured !== null && featured !== undefined) {
+      params = params.append('featured', featured.toString());
+    }
+
     const headers = new HttpHeaders({});
-    return this._http.get(global.url + 'publications', { headers: headers });
+    return this._http.get<any[]>(global.url + 'publications', { headers: headers, params: params }).pipe(
+      map(response => Array.isArray(response) ? response : [response])
+    );
   }
 
-  // Cargar publicaciones
+  getTopCategories(limit: number): Observable<any[]> {
+    return this._http.get<any[]>(`${global.url}top-categories/${limit}`).pipe(
+      map(response => response)
+    );
+  }
+
   loadPublication(token: string, publication: any): Observable<any> {
     let params = JSON.stringify(publication);
 
@@ -25,9 +39,8 @@ export class PublicationService {
       'Content-Type': 'application/json',
     });
 
-    return this._http.post(global.url + '/publications', params, {
+    return this._http.post(global.url + 'publications', params, {
       headers: headers,
     });
   }
-
 }

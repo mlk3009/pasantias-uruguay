@@ -21,12 +21,12 @@ class Publication extends Model
         'deathline',
         'vacancies',
         'postulation_way',
+        'featured',
         'user_id'
     ];
 
-
-    public function requirements()
+    public function etiquetas()
     {
-        return $this->hasMany(Requirements::class);
+        return $this->belongsToMany(Etiqueta::class, 'contiene', 'publication_id', 'etiqueta_id');
     }
 }

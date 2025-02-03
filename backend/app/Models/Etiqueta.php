@@ -18,4 +18,9 @@ class Etiqueta extends Model
     {
         return $this->belongsToMany(Estudiante::class, 'tiene', 'etiqueta_id', 'estudiante_id');
     }
+
+    public function publications()
+    {
+        return $this->belongsToMany(Publication::class, 'contiene', 'etiqueta_id', 'publication_id');
+    }
 }

@@ -92,17 +92,19 @@ class UserController extends Controller
                 $idiomas = Idiomas::where('cv_id', $cv->id)->get(['idioma', 'nivel']);
     
                 $data = [
+                    'id' => $user->id,
                     'name' => $user->name,
                     'email' => $user->email,
                     'phone' => $user->phone,
                     'rol' => $user->rol,
+                    'genero' => $estudiante->genero,
                     'location' => $estudiante->location,
                     'ci_estudiante' => $estudiante->ci_estudiante,
                     'fec_nacimiento' => $estudiante->fec_nacimiento,
                     'cod_postal' => $estudiante->cod_postal,
-                    'genero' => $estudiante->genero,
                     'id_image' => $estudiante->id_image,
-                    'idiomas' => $idiomas,
+                    'desc1' => $estudiante->desc1,
+                    'desc2' => $estudiante->desc2,
                     'cv' => $cv->cv,
                 ];
     
@@ -429,8 +431,8 @@ class UserController extends Controller
 
     public function showUsertags($id)
     {
-        $tags = Estudiante::find($id)->etiquetas()->get();
-        if (!$tags) {
+        $tags = Estudiante::find($id)->etiquetas()->get(['id', 'name']);
+        if ($tags->isEmpty()) {
             $data = [
                 'message' => 'Etiquetas no encontradas',
                 'status' => 404
