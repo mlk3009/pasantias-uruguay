@@ -24,7 +24,7 @@ class CvController extends Controller
     public function storeCV(Request $request)
     {
         $jsonData = $request->all();
-
+    
         $validator = Validator::make($jsonData, [
             'nombre_completo' => 'required|string|max:100',
             'cedula' => 'required|int',
@@ -52,31 +52,48 @@ class CvController extends Controller
             'experiencia.*.referencias' => 'nullable|string|max:255',
             'habilidades' => 'nullable|array'
         ]);
-
+    
         if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            $formattedErrors = [];
+    
+            foreach ($errors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $formattedErrors[] = [
+                        'field' => $field,
+                        'message' => $message,
+                        'type' => 'validation'
+                    ];
+                }
+            }
+    
             $data = [
                 'status' => 'error',
                 'message' => 'Validation Error',
-                'errors' => $validator->errors(),
+                'errors' => $formattedErrors,
                 'code' => 422
             ];
             return response()->json($data, 422);
         } else {
-
-            $id = Estudiante::where('ci_estudiante', $jsonData['cedula'])->get('id')->first()->id;
-
-            $existingCV = CV::where('estudiante_id', $id)->first();
-
-            if ($existingCV) {
+            $estudiante = Estudiante::where('ci_estudiante', $jsonData['cedula'])->first();
+    
+            if (!$estudiante) {
                 $data = [
                     'status' => 'error',
-                    'message' => 'El estudiante ya tiene un CV registrado.',
-                    'code' => 409
+                    'message' => 'Estudiante no encontrado.',
+                    'code' => 404
                 ];
-                return response()->json($data, 409);
+                return response()->json($data, 404);
             }
-
-
+    
+            $id = $estudiante->id;
+    
+            // Eliminar el CV existente si existe
+            $cv = CV::where('estudiante_id', $id)->first();
+            if ($cv) {
+                $cv->delete();
+            }
+    
             $cv = CV::create([
                 'estudiante_id' => $id,
                 'nombre_completo' => $jsonData['nombre_completo'],
@@ -85,7 +102,7 @@ class CvController extends Controller
                 'estado_civil' => $jsonData['estado_civil'],
                 'licencia' => $jsonData['licencia'],
             ]);
-
+    
             if (isset($jsonData['educacion'])) {
                 foreach ($jsonData['educacion'] as $educacion) {
                     Educacion::create([
@@ -101,7 +118,7 @@ class CvController extends Controller
                     ]);
                 }
             }
-
+    
             if (isset($jsonData['experiencia'])) {
                 foreach ($jsonData['experiencia'] as $experiencia) {
                     Experiencia::create([
@@ -115,7 +132,7 @@ class CvController extends Controller
                     ]);
                 }
             }
-
+    
             if (isset($jsonData['habilidades'])) {
                 foreach ($jsonData['habilidades'] as $habilidad) {
                     Habilidades::create([
@@ -125,7 +142,7 @@ class CvController extends Controller
                     ]);
                 }
             }
-
+    
             if (isset($jsonData['idiomas'])) {
                 foreach ($jsonData['idiomas'] as $idioma) {
                     Idiomas::create([
@@ -135,14 +152,14 @@ class CvController extends Controller
                     ]);
                 }
             }
-
+    
             $data = [
                 'status' => 'success',
                 'message' => 'CV created successfully',
                 'cv' => $cv,
                 'code' => 201
             ];
-
+    
             return response()->json($data, 201);
         }
     }
