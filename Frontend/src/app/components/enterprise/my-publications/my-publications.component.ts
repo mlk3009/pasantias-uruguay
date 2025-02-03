@@ -32,4 +32,24 @@ export class MyPublicationsComponent {
     modal.style.display = 'none';
   }
 
+  imgModificar(){
+    const modal = document.getElementById('modificarModal') as HTMLElement;
+    modal.style.display = 'flex';
+  }
+
+  modalImgClose() {
+    const modal = document.getElementById('modificarModal') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  modalAnadir(){
+    const modal = document.getElementById('añadirModal') as HTMLElement;
+    modal.style.display = 'flex';
+  }
+
+  modalAnadirClose() {
+    const modal = document.getElementById('añadirModal') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
 }

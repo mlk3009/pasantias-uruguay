@@ -143,6 +143,20 @@ export const routes: Routes = [
         (m) => m.PostulantesComponent
       ),
   },
+  {
+    path: 'register-enterprise-aclaration',
+    loadComponent: () =>
+      import('./components/register-enterprise/aclaration/aclaration.component').then(
+        (m) => m.AclarationComponent
+      ),
+  },
+  {
+    path: 'register-enterprise-in-1',
+    loadComponent: () =>
+      import('./components/register-enterprise/register-in-1/register-in-1.component').then(
+        (m) => m.RegisterIn1Component
+      ),
+  },
   // Dejar '**' siempre al final
   {
     path: '**',
