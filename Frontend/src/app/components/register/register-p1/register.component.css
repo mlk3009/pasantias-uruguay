@@ -31,11 +31,12 @@ form{
 }
 .title{
   margin: 0 auto;
+  margin-top: 5vh;
 }
 
 .cruz{
   position: absolute;
-  top: 10px;
+  top: 80px;
   right: 10px;
 }
 .subtitle{

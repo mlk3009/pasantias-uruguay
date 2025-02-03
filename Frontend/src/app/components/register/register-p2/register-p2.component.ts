@@ -14,11 +14,13 @@ import { routes } from '../../../app.routes';
 import { CookieService } from 'ngx-cookie-service';
 
 import { ValidAcountComponent } from '../../register/valid-acount/valid-acount.component';
+import { NavComponent } from '../../home/nav/nav.component';
 
 @Component({
   selector: 'app-register-p2',
   standalone: true,
   imports: [
+    NavComponent,
     ReactiveFormsModule,
     FormsModule,
     CommonModule,
