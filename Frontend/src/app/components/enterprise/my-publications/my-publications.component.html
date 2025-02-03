@@ -10,7 +10,7 @@
                     <h2>Publicaciones</h2>
                 </section>
                 <div>
-                    <button class="flex flex-row p-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-100 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 text-md font-medium">
+                    <button (click)="modalAnadir()" class="flex flex-row p-4 bg-green-500 text-white rounded-lg hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-100 dark:bg-green-500 dark:hover:bg-green-600 dark:focus:ring-green-800 text-md font-medium">
                         <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
                         </svg>
@@ -1060,7 +1060,7 @@
 
 
 
-  <!-- Modal Modificar-Añadir -->
+<!-- Modal Modificar -->
 <div id="modificarModal" class="container-modal">
     <div class="relative">
       <!-- Modal content -->
@@ -1073,7 +1073,7 @@
         </button>
         
           <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-            <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+            <div class="py-2 lg:py-2 px-4 mx-auto max-w-screen-md">
                 <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Editar publicaión</h2>
 
                 <section class="bg-white dark:bg-gray-900 antialiased">
@@ -1085,11 +1085,11 @@
                         <!-- Carousel wrapper -->
             
             
-                        <div class="carousel-item duration-700 ease-in-out">
-                        <img src="../../../assets/img/trabajoProgramación.jpg" class="img2" alt="...">
+                        <div class="carousel-item duration-700 ease-in-out hover:cursor-pointer">
+                          <img src="../../../../assets/img/img-standard.jpg" class="img2" alt="...">
                         </div>
                         <!-- Slider controls -->
-                        <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                        <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-not-allowed group focus:outline-none">
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
@@ -1097,7 +1097,7 @@
                             <span class="sr-only">Previous</span>
                         </span>
                         </button>
-                        <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
+                        <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-not-allowed group focus:outline-none">
                         <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
                             <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
@@ -1110,27 +1110,27 @@
                     </div>
             
                     <div class="mt-6 sm:mt-8 lg:mt-0">
-                    <h2
-                        class="text-lg font-semibold text-gray-900 sm:text-2xl dark:text-white"
-                    >
-                        Reparador de computadoras
-                    </h2>
-                    <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
-                        <p
-                        class="text-lg font-extrabold text-gray-900 sm:text-3xl dark:text-white"
-                        >
-                        $1,249.99
-                        </p>
-            
-                        
-                    </div>
-            
-            
-                    <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
-            
-                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
-            
-                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                      <div class="flex flex-row mt-4 sm:items-center sm:gap-4 sm:flex">
+                        <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Nombre</h2>
+                        <input type="text" class="rounded-lg w-full" placeholder="Nombre de la publicación">
+                      </div>
+                      
+
+                      <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
+                        <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Remuneración</h2>
+                        <input class="rounded-lg w-full" type="number" placeholder="Remuneración del puesto">
+                      </div>
+
+                      <div class="flex flex-row mt-4 sm:items-center sm:gap-4 sm:flex">
+                        <h2>Plazas</h2>
+                        <input type="number" class="rounded-lg w-full" placeholder="Plazas disponibles">
+                      </div>
+              
+                      <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800" />
+              
+                      <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+              
+                      <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
 
                     </div>
                 </div>
@@ -1143,6 +1143,12 @@
                             <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
                         </div>
                     </div>
+
+                    <div class="flex flex-row justify-between items-center mt-6">
+                      <button class="bg-white hover:bg-gray-200 py-2 px-4 rounded text-lg font-medium">Cancelar</button>
+                      <button class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded text-lg font-medium">Editar</button>
+                    </div>
+
                     </div>
 
                 </section>
@@ -1154,3 +1160,107 @@
       </div>
     </div>
   </div>
+
+
+
+
+<!-- Modal Añadir -->
+<div id="añadirModal" class="container-modal">
+  <div class="relative">
+    <!-- Modal content -->
+    <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+      <button (click)="modalAnadirClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>      
+        <span class="sr-only">Close modal</span>
+      </button>
+      
+        <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+          <div class="py-2 lg:py-2 px-4 mx-auto max-w-screen-md">
+              <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Añadir publicaión</h2>
+
+              <section class="bg-white dark:bg-gray-900 antialiased">
+              <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+              <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
+                  <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
+                  
+                  <div id="default-carousel" class="mb-16 mx-auto relative">
+                      <!-- Carousel wrapper -->
+          
+          
+                      <div class="carousel-item duration-700 ease-in-out hover:cursor-pointer">
+                        <img src="../../../../assets/img/img-standard.jpg" class="img2" alt="...">
+                      </div>
+                      <!-- Slider controls -->
+                      <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-not-allowed group focus:outline-none">
+                      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                          <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                          </svg>
+                          <span class="sr-only">Previous</span>
+                      </span>
+                      </button>
+                      <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-not-allowed group focus:outline-none">
+                      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                          <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                          </svg>
+                          <span class="sr-only">Next</span>
+                      </span>
+                      </button>
+                  </div>
+                  
+                  </div>
+          
+                  <div class="mt-6 sm:mt-8 lg:mt-0">
+                    <div class="flex flex-row mt-4 sm:items-center sm:gap-4 sm:flex">
+                      <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Nombre</h2>
+                      <input type="text" class="rounded-lg w-full" placeholder="Nombre de la publicación">
+                    </div>
+                    
+
+                    <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
+                      <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Remuneración</h2>
+                      <input class="rounded-lg w-full" type="number" placeholder="Remuneración del puesto">
+                    </div>
+
+                    <div class="flex flex-row mt-4 sm:items-center sm:gap-4 sm:flex">
+                      <h2>Plazas</h2>
+                      <input type="number" class="rounded-lg w-full" placeholder="Plazas disponibles">
+                    </div>
+            
+                    <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800" />
+            
+                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+            
+                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+
+                  </div>
+              </div>
+
+                  <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-8">
+                      <div class="">
+                          <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                      </div>
+                      <div>
+                          <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                      </div>
+                  </div>
+
+                  <div class="flex flex-row justify-between items-center mt-6">
+                    <button class="bg-white hover:bg-gray-200 py-2 px-4 rounded text-lg font-medium">Cancelar</button>
+                    <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded text-lg font-medium">Añadir</button>
+                  </div>
+
+                  </div>
+
+              </section>
+
+              </div>
+              
+          </section>
+      
+    </div>
+  </div>
+</div>
