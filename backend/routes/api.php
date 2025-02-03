@@ -70,4 +70,4 @@ Route::post('/publications/store', [PublicationController::class, 'store']);
 Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
 Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
 Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
-
+Route::get('top-categories/{limit?}', [PublicationController::class, 'getTopCategories']);

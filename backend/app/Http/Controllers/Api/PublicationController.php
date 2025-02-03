@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Publication;
 use App\Models\Postula;
 use App\Models\Estudiante;
+use App\Models\Etiqueta;
 use App\Models\CV;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,24 +14,92 @@ use Illuminate\Support\Facades\DB;
 
 class PublicationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $publications = Publication::all();
-
-        if ($publications->isEmpty()) {
+        try {
+            // Obtener los parámetros de la solicitud
+            $category = $request->input('category');
+            $featured = $request->input('featured');
+    
+            // Iniciar la consulta de publicaciones
+            $query = Publication::query();
+    
+            // Filtrar por categoría (etiqueta) si se proporciona
+            if ($category) {
+                $query->whereHas('etiquetas', function ($q) use ($category) {
+                    $q->where('name', $category);
+                });
+            }
+    
+            // Filtrar por publicaciones destacadas si se proporciona, si es true muestra solo las destacadas, si es false, todas.
+            if ($featured === 'true') {
+                $query->where('featured', true);
+            } 
+    
+            // Ordenar por fecha de creación
+            $query->orderBy('created_at', 'desc');
+    
+            // Ejecutar la consulta y obtener las publicaciones con sus etiquetas
+            $publications = $query->with('etiquetas')->get();
+    
+            // Verificar si no se encontraron publicaciones
+            if ($publications->isEmpty()) {
+                $data = [
+                    'message' => 'No se encontraron publicaciones',
+                    'status' => 404
+                ];
+                return response()->json($data, 404);
+            }
+    
+            // Formatear la respuesta para incluir las etiquetas
+            $formattedPublications = $publications->map(function ($publication) {
+                return [
+                    'id' => $publication->id,
+                    'title' => $publication->title,
+                    'description' => $publication->description,
+                    'salary' => $publication->salary,
+                    'location' => $publication->location,
+                    'type' => $publication->type,
+                    'time' => $publication->time,
+                    'deathline' => $publication->deathline,
+                    'postulation_way' => $publication->postulation_way,
+                    'user_id' => $publication->user_id,
+                    'vacancies' => $publication->vacancies,
+                    'featured' => $publication->featured,
+                    'created_at' => $publication->created_at,
+                    'updated_at' => $publication->updated_at,
+                    'etiquetas' => $publication->etiquetas->pluck('name')
+                ];
+            });
+    
+            // Devolver las publicaciones encontradas
             $data = [
-                'message' => 'No se encontraron publicaciones',
+                'publications' => $formattedPublications,
                 'status' => 200
             ];
-            return response()->json($data, 404);
+            return response()->json($data, 200);
+        } catch (\Exception $e) {
+            // Manejar cualquier error que ocurra durante la consulta
+            $data = [
+                'message' => 'Error al obtener publicaciones',
+                'error' => $e->getMessage(),
+                'status' => 500
+            ];
+            return response()->json($data, 500);
         }
-        $data = [
-            'publications' => $publications,
-            'status' => 200
-        ];
-        return response()->json($data, 200);
     }
 
+    public function getTopCategories($limit = 3)
+{
+    $topCategories = Etiqueta::withCount(['publications' => function ($query) {
+        $query->where('featured', true);
+    }])
+    ->orderBy('publications_count', 'desc')
+    ->limit($limit)
+    ->get(['id', 'name', 'publications_count']);
+
+    return response()->json($topCategories, 200);
+}
 
 
     public function store(Request $request)

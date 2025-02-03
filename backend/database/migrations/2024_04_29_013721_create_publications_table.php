@@ -23,6 +23,7 @@ return new class extends Migration
             $table->string('deathline');
             $table->string('postulation_way');
             $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->boolean('featured')->default(false);
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
