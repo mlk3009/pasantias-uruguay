@@ -22,10 +22,10 @@ export class DatosGeneralesComponent implements OnInit {
 
   public cv: any = {
     estudiante: {},
-    idiomas: {},
-    habilidades: {},
-    educacion: {},
-    experiencias: {},
+    idiomas: [],
+    habilidades: [],
+    educacion: [],
+    experiencias: [],
   };
 
   constructor(
@@ -52,7 +52,6 @@ export class DatosGeneralesComponent implements OnInit {
     this.cv = {
       nombre_completo: this.estudiante.nombre_completo,
       fecha_nacimiento: this.estudiante.fecha_nacimiento,
-      nacionalidad: this.estudiante.nacionalidad,
       genero: this.estudiante.genero,
       estado_civil: this.estudiante.estado_civil,
       licencia: this.estudiante.licencia,

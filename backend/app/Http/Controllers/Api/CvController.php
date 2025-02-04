@@ -33,16 +33,18 @@ class CvController extends Controller
             'estado_civil' => 'nullable|string|max:50',
             'licencia' => 'nullable|string|max:255',
             'carnet_de_conducir' => 'nullable|string|max:255',
-            'idiomas' => 'nullable|array',
-            'educacion' => 'nullable|array',
-            'educacion.*.nivel' => 'required|string|max:50',
-            'educacion.*.institucion' => 'required|string|max:100',
-            'educacion.*.titulo' => 'required|string|max:100',
-            'educacion.*.fecha_inicio' => 'required|date',
-            'educacion.*.fecha_fin' => 'nullable|date',
-            'educacion.*.actualmente' => 'required|boolean',
-            'educacion.*.fin_estimado' => 'nullable|date',
-            'educacion.*.descripcion' => 'nullable|string|max:500',
+            'idiomas.idiomas' => 'nullable|array',
+            'idiomas.idiomas.*.idioma' => 'required|string|max:50',
+            'idiomas.idiomas.*.nivel' => 'required|string|max:50',
+            'educacion.estudios' => 'nullable|array',
+            'educacion.estudios.*.nivel' => 'required|string|max:50',
+            'educacion.estudios.*.institucion' => 'required|string|max:100',
+            'educacion.estudios.*.titulo' => 'required|string|max:100',
+            'educacion.estudios.*.fecha_inicio' => 'required|date',
+            'educacion.estudios.*.fecha_fin' => 'nullable|date',
+            'educacion.estudios.*.actualmente' => 'nullable|boolean',
+            'educacion.estudios.*.fin_estimado' => 'nullable|date',
+            'educacion.estudios.*.descripcion' => 'nullable|string|max:500',
             'experiencia' => 'nullable|array',
             'experiencia.*.puesto' => 'nullable|string|max:100',
             'experiencia.*.empresa' => 'nullable|string|max:100',
@@ -50,7 +52,9 @@ class CvController extends Controller
             'experiencia.*.fecha_fin' => 'nullable|date',
             'experiencia.*.descripcion' => 'nullable|string|max:500',
             'experiencia.*.referencias' => 'nullable|string|max:255',
-            'habilidades' => 'nullable|array'
+            'habilidades.habilidades' => 'nullable|array',
+            'habilidades.habilidades.*.habilidad' => 'required|string|max:50',
+            'habilidades.habilidades.*.nivel' => 'required|string|max:50'
         ]);
     
         if ($validator->fails()) {
@@ -103,8 +107,8 @@ class CvController extends Controller
                 'licencia' => $jsonData['licencia'],
             ]);
     
-            if (isset($jsonData['educacion'])) {
-                foreach ($jsonData['educacion'] as $educacion) {
+            if (isset($jsonData['educacion']['estudios'])) {
+                foreach ($jsonData['educacion']['estudios'] as $educacion) {
                     Educacion::create([
                         'cv_id' => $cv->id,
                         'nivel' => $educacion['nivel'],
@@ -133,8 +137,8 @@ class CvController extends Controller
                 }
             }
     
-            if (isset($jsonData['habilidades'])) {
-                foreach ($jsonData['habilidades'] as $habilidad) {
+            if (isset($jsonData['habilidades']['habilidades'])) {
+                foreach ($jsonData['habilidades']['habilidades'] as $habilidad) {
                     Habilidades::create([
                         'cv_id' => $cv->id,
                         'habilidad' => $habilidad['habilidad'],
@@ -143,14 +147,24 @@ class CvController extends Controller
                 }
             }
     
-            if (isset($jsonData['idiomas'])) {
-                foreach ($jsonData['idiomas'] as $idioma) {
+            if (isset($jsonData['idiomas']['idiomas'])) {
+                foreach ($jsonData['idiomas']['idiomas'] as $idioma) {
                     Idiomas::create([
                         'cv_id' => $cv->id,
                         'idioma' => $idioma['idioma'],
                         'nivel' => $idioma['nivel'],
                     ]);
                 }
+            }
+
+            try {
+                $this->generarPDF($cv->id);
+            } catch (\Exception $e) {
+                return response()->json([
+                    'status' => 'error',
+                    'message' => 'Error generating PDF: ' . $e->getMessage(),
+                    'code' => 500
+                ], 500);
             }
     
             $data = [
@@ -164,13 +178,13 @@ class CvController extends Controller
         }
     }
 
+
     public function deleteCV($estudiante_id)
     {
-
         $validator = Validator::make(['estudiante_id' => $estudiante_id], [
             'estudiante_id' => 'required|integer|exists:estudiante,id',
         ]);
-
+    
         if ($validator->fails()) {
             $data = [
                 'status' => 'error',
@@ -180,8 +194,6 @@ class CvController extends Controller
             ];
             return response()->json($data, 422);
         } else {
-
-
             $cv = CV::where('estudiante_id', $estudiante_id)->first();
             if (!$cv) {
                 $data = [
@@ -191,15 +203,40 @@ class CvController extends Controller
                 ];
                 return response()->json($data, 404);
             }
-
-
+    
             $cv->delete();
+    
+            // Llamar a la función borrarPDF
+            $borrarPDFResponse = $this->borrarPDF($estudiante_id);
+    
             $data = [
                 'status' => 'success',
                 'message' => 'CV eliminado exitosamente.',
+                'pdf_message' => json_decode($borrarPDFResponse->getContent(), true)['data'],
                 'code' => 200
             ];
             return response()->json($data, 200);
+        }
+    }
+    
+    public function borrarPDF($estudianteId)
+    {
+        $estudiante = Estudiante::find($estudianteId);
+    
+        if ($estudiante) {
+            $ci_estudiante = $estudiante->ci_estudiante;
+    
+            $pdfPath = 'pdfs/cv_' . $ci_estudiante . '.pdf';
+    
+            if (file_exists($pdfPath)) {
+                // Borrar el archivo
+                unlink($pdfPath);
+                return response(['data' => 'PDF borrado exitosamente.'], 200);
+            } else {
+                return response(['data' => 'El archivo PDF no existe.'], 404);
+            }
+        } else {
+            return response(['data' => 'Estudiante no encontrado'], 404);
         }
     }
 
@@ -233,27 +270,6 @@ class CvController extends Controller
         return response(['data' => 'Unauthorized'], 401);
     }
 
-
-    public function borrarPDF($estudianteId)
-    {
-        $estudiante = Estudiante::find($estudianteId);
-
-        if ($estudiante) {
-            $ci_estudiante = $estudiante->ci_estudiante;
-
-            $pdfPath = 'pdfs/cv_' . $ci_estudiante . '.pdf';
-
-            if (file_exists($pdfPath)) {
-                // Borrar el archivo
-                unlink($pdfPath);
-                return response(['data' => 'PDF borrado exitosamente.'], 200);
-            } else {
-                return response(['data' => 'El archivo PDF no existe.'], 404);
-            }
-        } else {
-            return response(['data' => 'Estudiante no encontrado'], 404);
-        }
-    }
 
 
     public function generarPDF($cvId)

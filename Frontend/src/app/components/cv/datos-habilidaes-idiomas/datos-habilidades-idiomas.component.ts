@@ -40,7 +40,7 @@ export class DatosHabilidadesIdiomasComponent {
   }
 
   addIdioma() {
-    this.idiomas.push({  idioma: '', nivel: '' });
+    this.idiomas.push({ idioma: '', nivel: '' });
   }
 
   removeIdioma(index: number) {
@@ -55,11 +55,12 @@ export class DatosHabilidadesIdiomasComponent {
       this.idiomas.pop();
     }
     this.idiomasReady = true;
+    this.localStorageSave();
   }
 
   idiomasAdd() {
     this.idiomasReady = false;
-    this.idiomas.push({  idioma: '', nivel: ''});
+    this.idiomas.push({ idioma: '', nivel: '' });
   }
 
   addHabilidad() {
@@ -78,6 +79,7 @@ export class DatosHabilidadesIdiomasComponent {
       this.habilidades.pop();
     }
     this.habilidadesReady = true;
+    this.localStorageSave();
   }
 
   habilidadAdd() {
@@ -85,27 +87,37 @@ export class DatosHabilidadesIdiomasComponent {
     this.habilidades.push({ habilidad: '', nivel: '' });
   }
 
-
   getLocalStorage() {
     this.getIdiomasData = localStorage.getItem('idiomasData');
     this.getIdiomasData = JSON.parse(this.getIdiomasData);
-    this.idiomas = this.getIdiomasData;
+    if (this.getIdiomasData) {
+      this.idiomas = this.getIdiomasData.idiomas || [{ idioma: '', nivel: '' }];
+      this.idiomasReady = this.getIdiomasData.idiomasReady || false;
+    }
 
     this.getHabilidadesData = localStorage.getItem('habilidadesData');
     this.getHabilidadesData = JSON.parse(this.getHabilidadesData);
-    this.habilidades = this.getHabilidadesData;
-
-    this.idiomasReady = true;
-    this.habilidadesReady = true;
+    if (this.getHabilidadesData) {
+      this.habilidades = this.getHabilidadesData.habilidades || [{ habilidad: '', nivel: '' }];
+      this.habilidadesReady = this.getHabilidadesData.habilidadesReady || false;
+    }
   }
 
   localStorageSave() {
-    localStorage.setItem('idiomasData', JSON.stringify(this.idiomas));
-    localStorage.setItem('habilidadesData', JSON.stringify(this.habilidades));
+    const idiomasData = {
+      idiomas: this.idiomas,
+      idiomasReady: this.idiomasReady
+    };
+    localStorage.setItem('idiomasData', JSON.stringify(idiomasData));
+
+    const habilidadesData = {
+      habilidades: this.habilidades,
+      habilidadesReady: this.habilidadesReady
+    };
+    localStorage.setItem('habilidadesData', JSON.stringify(habilidadesData));
   }
 
   capitalize(sentence: string): string {
-    
     if (!sentence) {
       return '';
     }
@@ -118,21 +130,14 @@ export class DatosHabilidadesIdiomasComponent {
       return firstLetter + rest;
     });
 
-    const capitalizedSentence = capitalizedWords.join(' ');
-
-    return capitalizedSentence;
+    return capitalizedWords.join(' ');
   }
 
+  ngOnInit() {
+  this.getLocalStorage();
+}
 
   back() {
-    for (let i = 0; i < this.idiomas.length; i++) {
-      this.idiomas[i].idioma = this.capitalize(this.idiomas[i].idioma);
-    }
-
-    for (let i = 0; i < this.habilidades.length; i++) {
-      this.habilidades[i].habilidad = this.capitalize(this.habilidades[i].habilidad);
-    }
-
     this.localStorageSave();
     this.CvService.change.emit({ data: 2 });
   }
@@ -148,5 +153,4 @@ export class DatosHabilidadesIdiomasComponent {
     this.localStorageSave();
     this.CvService.change.emit({ data: 4 });
   }
-
 }
