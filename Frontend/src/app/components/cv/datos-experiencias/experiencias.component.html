@@ -3,8 +3,8 @@
     <div *ngFor="let experiencia of Experiencias; let i = index; let last = last">
       <div class="grid md:grid-cols-2 md:gap-6 col-span-1">
         <div class="relative z-0 w-full mb-5 group">
-          <input autocomplete="off" [(ngModel)]="experiencia.puesto" #puesto="ngModel" type="text"
-            pattern="^[^\d]*$" [name]="'puesto' + i" [id]="'puesto' + i"
+          <input autocomplete="off" [(ngModel)]="experiencia.puesto" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" maxlength="50" #puesto="ngModel" type="text"
+            [name]="'puesto' + i" [id]="'puesto' + i"
             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" " />
           <label [for]="'puesto' + i"
@@ -14,7 +14,7 @@
         </div>
   
         <div class="relative z-0 w-full mb-5 group">
-          <input autocomplete="off" type="text" pattern="^[^\d]*$" [name]="'empresa' + i"
+          <input autocomplete="off" type="text" maxlength="50" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" [name]="'empresa' + i"
             [id]="'empresa' + i" [(ngModel)]="experiencia.empresa" #empresa="ngModel"
             class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
             placeholder=" " />
@@ -26,8 +26,8 @@
       </div>
   
       <div class="relative z-0 w-full mb-5 group">
-        <input autocomplete="off" type="text" [name]="'referencias' + i"
-          [id]="'referencias' + i" [(ngModel)]="experiencia.referencias" #referencias1="ngModel"
+        <input autocomplete="off" type="text" [name]="'referencias' + i" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" 
+          [id]="'referencias' + i" [(ngModel)]="experiencia.referencias" maxlength="50" #referencias1="ngModel"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" " />
         <label [for]="'referencias' + i"
@@ -43,7 +43,7 @@
                 <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
               </svg>
             </div>
-            <input [(ngModel)]="experiencia.fecha_inicio" #inicio="ngModel"
+            <input [(ngModel)]="experiencia.fecha_inicio" maxlength="10" #inicio="ngModel" pattern="^\d{4}/\d{2}/\d{2}$"
               id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Inicio">
             <small *ngIf="inicio.invalid && inicio.touched" class="text-red-500">Inválido.</small>
           </div>
@@ -56,7 +56,7 @@
                 <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
               </svg>
             </div>
-            <input [(ngModel)]="experiencia.fecha_fin" #fin="ngModel"
+            <input [(ngModel)]="experiencia.fecha_fin" maxlength="10" #fin="ngModel" pattern="^\d{4}/\d{2}/\d{2}$"
               id="datepicker-range-end" name="end" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Fin">
             <small *ngIf="fin.invalid && fin.touched" class="text-red-500">inválido.</small>
           </div>
@@ -69,8 +69,8 @@
       </div>
   
       <div class="relative z-0 w-full mb-5 group">
-        <textarea autocomplete="off" type="text" pattern="^[^\d]*$" [name]="'descripcion' + i"
-          [id]="'experienciaPhone' + i" [(ngModel)]="experiencia.descripcion" #descripcion="ngModel"
+        <textarea autocomplete="off" type="text" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" [name]="'descripcion' + i"
+          [id]="'experienciaPhone' + i" [(ngModel)]="experiencia.descripcion" maxlength="500" #descripcion="ngModel"
           class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
           placeholder=" "></textarea>
         <label [for]="'descripcion' + i"
@@ -90,7 +90,7 @@
       </div>
   
       <button (click)="experienciasReadyCheck()" type="button" *ngIf="Experiencias.length >= 1 && experienciasReady == false"
-        [disabled]="experiencia.empresa == '' || experiencia.puesto == '' || experiencia.referencias == '' || experiencia.fecha_inicio == '' || experiencia.descripcion == ''"
+        [disabled]="experiencia.empresa == '' || experiencia.puesto == '' || experiencia.referencias == '' || experiencia.fecha_inicio == ''"
         class="text-blue-500 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center">Listo
       </button>
     </div>

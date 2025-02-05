@@ -26,8 +26,8 @@
             <div class="grid md:grid-cols-2">
                 <div class="relative z-0 w-full mb-3 group">
                   <label [for]="'titulo' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Título *</label>
-                  <input autocomplete="off" type="text" pattern="^[a-zA-Z0-9\s]*$" [name]="'titulo' + i"
-                  [id]="'titulo' + i" [(ngModel)]="estudio.titulo" #titulo="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60"
+                  <input autocomplete="off" type="text" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" [name]="'titulo' + i"
+                  [id]="'titulo' + i" [(ngModel)]="estudio.titulo" maxlength="60" #titulo="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60"
                   placeholder="Ingrese el título" required>
                 <small *ngIf="titulo.invalid && titulo.touched" class="text-red-500">Título inválido.</small>
                 </div>
@@ -39,7 +39,7 @@
     <label [for]="'institucion' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Institución *</label>
     <input autocomplete="off" [name]="'institucion' + i"
       [id]="'institucion' + i" [(ngModel)]="estudio.institucion" #institucion1="ngModel" type="text"
-      pattern="^[a-zA-Z0-9\s]*$" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60">
+      pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" maxlength="60" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60">
     <small *ngIf="institucion1.invalid && institucion1.touched" class="text-red-500">Institución inválida.</small>
   </div>
 </div>
@@ -54,7 +54,7 @@
                             <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                         </svg>
                     </div>
-                    <input [(ngModel)]="estudio.fecha_inicio" #inicio="ngModel"
+                    <input [(ngModel)]="estudio.fecha_inicio" maxlength="10" #inicio="ngModel" pattern="^\d{4}/\d{2}/\d{2}$"
                     id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="YYYY/MM/DD">
                     <small *ngIf="inicio.invalid && inicio.touched" class="text-red-500">
                         Inválido.</small>
@@ -69,7 +69,7 @@
                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
                   </svg>
                 </div>
-                <input [(ngModel)]="estudio.fin_estimado" #estimado="ngModel"
+                <input [(ngModel)]="estudio.fin_estimado" maxlength="10" #estimado="ngModel"
                   id="datepicker-range-estimate" name="estimate" type="text" pattern="^\d{4}/\d{2}/\d{2}$"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="YYYY/MM/DD">
@@ -96,13 +96,14 @@
             </div>
 
         <div class="relative z-0 w-full mb-5 group">
-            <textarea autocomplete="off" type="text" pattern="^[^\d]*$" [name]="'descripcion' + i"
+            <textarea autocomplete="off" type="text" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" maxlength="500" [name]="'descripcion' + i"
                 [id]="'estudioPhone' + i" [(ngModel)]="estudio.descripcion" #descripcion="ngModel"
                 class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
                 placeholder=" "></textarea>
             <label [for]="'descripcion' + i"
                 class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Descripción
             </label>
+            <small *ngIf="descripcion.invalid && descripcion.touched" class="text-red-500">Inválido.</small>
         </div>
 
 

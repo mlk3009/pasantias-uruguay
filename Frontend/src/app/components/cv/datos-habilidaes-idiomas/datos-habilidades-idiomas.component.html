@@ -4,15 +4,11 @@
       <div class="grid grid-cols-2 gap-6 col-span-3">
         <div class="relative z-0 w-full mt-6 group">
           <label [for]="'idioma' + i" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Idioma</label>
-          <select [name]="'idioma' + i" [(ngModel)]="idioma.idioma" #idioma1="ngModel"
-            [id]="'idioma' + i" class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="Español">Español</option>
-            <option value="Inglés">Inglés</option>
-            <option value="Francés">Francés</option>
-            <option value="Alemán">Alemán</option>
-            <option value="Otro">Otro</option>
-          </select>
-          <small *ngIf="idioma1.invalid && idioma1.touched" class="text-red-500">inválido.</small>
+          <input [name]="'idioma' + i" [(ngModel)]="idioma.idioma" #idioma1="ngModel" maxlength="20"
+          [id]="'idioma' + i" type="text" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"
+          class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Ingrese un idioma">
+        <small *ngIf="idioma1.invalid && idioma1.touched" class="text-red-500">Inválido. Solo se permiten letras.</small>
         </div>
         <div class="relative z-0 w-full mb-5 group">
           <label [for]="'nivel' + i" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>
@@ -51,15 +47,11 @@
       <div class="grid grid-cols-2 gap-6 col-span-3">
         <div class="relative z-0 w-full mb-5 group">
           <label [for]="'habilidad' + i" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Habilidad</label>
-          <select [name]="'habilidad' + i" [(ngModel)]="habilidad.habilidad" #habilidad1="ngModel"
-            [id]="'habilidad' + i" class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-            <option value="Comunicación">Comunicación</option>
-            <option value="Trabajo en equipo">Trabajo en equipo</option>
-            <option value="Liderazgo">Liderazgo</option>
-            <option value="Creatividad">Creatividad</option>
-            <option value="Otro">Otro</option>
-          </select>
-          <small *ngIf="habilidad1.invalid && habilidad1.touched" class="text-red-500">inválido.</small>
+          <input [name]="'habilidad' + i" [(ngModel)]="habilidad.habilidad" #habilidad1="ngModel" maxlength="50"
+          [id]="'habilidad' + i" type="text" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$"
+          class="bg-gray-50 border border-gray-300 text-gray-500 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="Ingrese una habilidad">
+        <small *ngIf="habilidad1.invalid && habilidad1.touched" class="text-red-500">Inválido. Solo se permiten letras.</small>
         </div>
         <div class="relative z-0 w-full mb-5 group">
           <label [for]="'nivel' + i" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Nivel</label>

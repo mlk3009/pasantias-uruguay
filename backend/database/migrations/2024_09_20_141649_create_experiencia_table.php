@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('puesto', 100);
             $table->string('empresa', 100);
             $table->date('fecha_inicio');
-            $table->date('fecha_fin');
+            $table->date('fecha_fin')->nullable();
             $table->string('descripcion', 500)->nullable();
             $table->string('referencias', 255)->nullable();
             $table->foreign('cv_id')->references('id')->on('cv')->onDelete('cascade');

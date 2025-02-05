@@ -41,9 +41,9 @@ export class DatosGeneralesComponent implements OnInit {
     this.habilidades = JSON.parse(localStorage.getItem('habilidadesData') || '[]');
     this.educacion = JSON.parse(localStorage.getItem('estudiosData') || '[]');
     
-    if(localStorage.getItem('experienciaData') != 'No se ingresaron experiencias.') {  
+    if(localStorage.getItem('ExperienciaData') != 'No se ingresaron experiencias.') {  
       this.experiencias = JSON.parse(
-        localStorage.getItem('experienciaData') || '[]'
+        localStorage.getItem('ExperienciaData') || '[]'
       );
     } else {
       this.experiencias = [];

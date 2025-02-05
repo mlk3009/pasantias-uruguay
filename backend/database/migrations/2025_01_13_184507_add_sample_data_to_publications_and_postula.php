@@ -32,6 +32,7 @@ return new class extends Migration
                 DB::table('estudiante')->insert([
                     'ci_estudiante' => '12345678',
                     'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
                     'desc1' => 'Descripción 1',
                     'desc2' => 'Descripción 2',
                     'cod_postal' => '12345',
