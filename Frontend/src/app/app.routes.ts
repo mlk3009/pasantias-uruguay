@@ -151,6 +151,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'enterprise-abaut-us',
+    loadComponent: () =>
+      import('./components/enterprise/abautus/abautus.component').then(
+        (m) => m.AbautusComponent
+      ),
+  },
+  {
     path: 'register-enterprise-in-1',
     loadComponent: () =>
       import('./components/register-enterprise/register-in-1/register-in-1.component').then(
