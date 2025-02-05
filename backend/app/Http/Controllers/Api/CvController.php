@@ -45,13 +45,13 @@ class CvController extends Controller
             'educacion.estudios.*.actualmente' => 'nullable|boolean',
             'educacion.estudios.*.fin_estimado' => 'nullable|date',
             'educacion.estudios.*.descripcion' => 'nullable|string|max:500',
-            'experiencias.experiencias' => 'nullable|array',
-            'experiencias.experiencias.*.puesto' => 'nullable|string|max:100',
-            'experiencias.experiencias.*.empresa' => 'nullable|string|max:100',
-            'experiencias.experiencias.*.fecha_inicio' => 'nullable|date',
-            'experiencias.experiencias.*.fecha_fin' => 'nullable|date',
-            'experiencias.experiencias.*.descripcion' => 'nullable|string|max:500',
-            'experiencias.experiencias.*.referencias' => 'nullable|string|max:255',
+            'experiencias' => 'nullable|array',
+            'experiencias.*.puesto' => 'nullable|string|max:100',
+            'experiencias.*.empresa' => 'nullable|string|max:100',
+            'experiencias.*.fecha_inicio' => 'nullable|date',
+            'experiencias.*.fecha_fin' => 'nullable|date',
+            'experiencias.*.descripcion' => 'nullable|string|max:500',
+            'experiencias.*.referencias' => 'nullable|string|max:255',
             'habilidades.habilidades' => 'nullable|array',
             'habilidades.habilidades.*.habilidad' => 'required|string|max:50',
             'habilidades.habilidades.*.nivel' => 'required|string|max:50'
@@ -124,7 +124,7 @@ class CvController extends Controller
             }
     
             if (isset($jsonData['experiencias'])) {
-                foreach ($jsonData['experiencias']['experiencias'] as $experiencia) {
+                foreach ($jsonData['experiencias'] as $experiencia) {
                     Experiencia::create([
                         'cv_id' => $cv->id,
                         'puesto' => $experiencia['puesto'],

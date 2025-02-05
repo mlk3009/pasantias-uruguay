@@ -37,14 +37,12 @@ export class DatosGeneralesComponent implements OnInit {
 
   ngOnInit() {
     this.estudiante = JSON.parse(localStorage.getItem('studentData') || '{}');
-    this.idiomas = JSON.parse(localStorage.getItem('idiomasData') || '[]');
-    this.habilidades = JSON.parse(localStorage.getItem('habilidadesData') || '[]');
-    this.educacion = JSON.parse(localStorage.getItem('estudiosData') || '[]');
+    this.idiomas = JSON.parse(localStorage.getItem('idiomasData') || '{}').idiomas || [];
+    this.habilidades = JSON.parse(localStorage.getItem('habilidadesData') || '{}').habilidades || [];
+    this.educacion = JSON.parse(localStorage.getItem('estudiosData') || '{}').estudios || [];
     
-    if(localStorage.getItem('ExperienciaData') != 'No se ingresaron experiencias.') {  
-      this.experiencias = JSON.parse(
-        localStorage.getItem('ExperienciaData') || '[]'
-      );
+    if (localStorage.getItem('ExperienciaData') != 'No se ingresaron experiencias.') {  
+      this.experiencias = JSON.parse(localStorage.getItem('ExperienciaData') || '{}').experiencias || [];
     } else {
       this.experiencias = [];
     }
