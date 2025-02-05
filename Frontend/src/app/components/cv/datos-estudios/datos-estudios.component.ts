@@ -25,7 +25,6 @@ export class DatosEstudiosComponent {
 
   Estudios: Educacion[] = [{ nivel: '', institucion: '', titulo: '', fecha_inicio: '', fecha_fin: '', actualmente: false, fin_estimado: '', descripcion: '' }];
 
-
   constructor(
     private _userService: UserService,
     private servicioCv: CvService
@@ -34,7 +33,6 @@ export class DatosEstudiosComponent {
 
     if (localStorage.getItem('estudiosData')) {
       this.getLocalStorage();
-      this.estudioReadyCheck();
     }
   }
 
@@ -57,6 +55,7 @@ export class DatosEstudiosComponent {
       this.Estudios.pop();
     }
     this.estudiosReady = true;
+    this.localStorageSave();
   }
 
   estudiosAdd() {
@@ -67,11 +66,18 @@ export class DatosEstudiosComponent {
   getLocalStorage() {
     this.getEstudiosData = localStorage.getItem('estudiosData');
     this.getEstudiosData = JSON.parse(this.getEstudiosData);
-    this.Estudios = this.getEstudiosData;
+    if (this.getEstudiosData) {
+      this.Estudios = this.getEstudiosData.estudios || [{ nivel: '', institucion: '', titulo: '', fecha_inicio: '', fecha_fin: '', actualmente: false, fin_estimado: '', descripcion: '' }];
+      this.estudiosReady = this.getEstudiosData.estudiosReady || false;
+    }
   }
 
   localStorageSave() {
-    localStorage.setItem('estudiosData', JSON.stringify(this.Estudios));
+    const estudiosData = {
+      estudios: this.Estudios,
+      estudiosReady: this.estudiosReady
+    };
+    localStorage.setItem('estudiosData', JSON.stringify(estudiosData));
   }
 
   capitalize(sentence: string): string {
@@ -86,20 +92,12 @@ export class DatosEstudiosComponent {
       return firstLetter + rest;
     });
 
-    const capitalizedSentence = capitalizedWords.join(' ');
-
-    return capitalizedSentence;
+    return capitalizedWords.join(' ');
   }
 
-
   back() {
-    for (let i = 0; i < this.Estudios.length; i++) {
-      this.Estudios[i].institucion = this.capitalize(this.Estudios[i].institucion);
-      this.Estudios[i].titulo = this.capitalize(this.Estudios[i].titulo);
-    }
-
     this.localStorageSave();
-    this.servicioCv.change.emit({ data: 2 });
+    this.servicioCv.change.emit({ data: 1 });
   }
 
   next() {
@@ -111,8 +109,4 @@ export class DatosEstudiosComponent {
     this.localStorageSave();
     this.servicioCv.change.emit({ data: 3 });
   }
-
 }
-
-
-

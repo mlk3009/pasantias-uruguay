@@ -19,8 +19,7 @@ export class DatosExperienciasComponent {
 
   public experienciasReady: boolean = false;
 
-  Experiencias: Experiencia[] = [{ puesto: '', empresa: '',  fecha_inicio: '', fecha_fin: '', actualmente: false, descripcion: '', referencias: '' }];
-
+  Experiencias: Experiencia[] = [{ puesto: '', empresa: '', fecha_inicio: '', fecha_fin: '', actualmente: false, descripcion: '', referencias: '' }];
 
   constructor(
     private _userService: UserService,
@@ -30,7 +29,6 @@ export class DatosExperienciasComponent {
 
     if (localStorage.getItem('ExperienciaData')) {
       this.getLocalStorage();
-      this.experienciasReadyCheck();
     }
   }
 
@@ -38,7 +36,7 @@ export class DatosExperienciasComponent {
   }
 
   addExperiencia() {
-    this.Experiencias.push({  puesto: '', empresa: '',  fecha_inicio: '', fecha_fin: '', actualmente: false, descripcion: '', referencias: '' });
+    this.Experiencias.push({ puesto: '', empresa: '', fecha_inicio: '', fecha_fin: '', actualmente: false, descripcion: '', referencias: '' });
   }
 
   removeExperiencia(index: number) {
@@ -53,28 +51,36 @@ export class DatosExperienciasComponent {
       this.Experiencias.pop();
     }
     this.experienciasReady = true;
+    this.localStorageSave();
   }
 
   experienciaAdd() {
     this.experienciasReady = false;
-    this.Experiencias.push({  puesto: '', empresa: '',  fecha_inicio: '', fecha_fin: '', actualmente: false, descripcion: '', referencias: ''  });
+    this.Experiencias.push({ puesto: '', empresa: '', fecha_inicio: '', fecha_fin: '', actualmente: false, descripcion: '', referencias: '' });
   }
 
   getLocalStorage() {
     this.getExperienciaData = localStorage.getItem('ExperienciaData');
     this.getExperienciaData = JSON.parse(this.getExperienciaData);
-    this.Experiencias = this.getExperienciaData;
+    if (this.getExperienciaData) {
+      this.Experiencias = this.getExperienciaData.experiencias || [{ puesto: '', empresa: '', fecha_inicio: '', fecha_fin: '', actualmente: false, descripcion: '', referencias: '' }];
+      this.experienciasReady = this.getExperienciaData.experienciasReady || false;
+    }
   }
 
   localStorageSave() {
-    localStorage.setItem('ExperienciaData', JSON.stringify(this.Experiencias));
+    const experienciaData = {
+      experiencias: this.Experiencias,
+      experienciasReady: this.experienciasReady
+    };
+    localStorage.setItem('ExperienciaData', JSON.stringify(experienciaData));
   }
 
   capitalize(sentence: string): string {
     if (!sentence) {
       return '';
     }
-    
+
     const words = sentence.split(' ');
 
     const capitalizedWords = words.map(word => {
@@ -83,21 +89,12 @@ export class DatosExperienciasComponent {
       return firstLetter + rest;
     });
 
-    const capitalizedSentence = capitalizedWords.join(' ');
-
-    return capitalizedSentence;
+    return capitalizedWords.join(' ');
   }
 
-
   back() {
-    for (let i = 0; i < this.Experiencias.length; i++) {
-      this.Experiencias[i].puesto = this.capitalize(this.Experiencias[i].puesto);
-      this.Experiencias[i].empresa = this.capitalize(this.Experiencias[i].empresa);
-      this.Experiencias[i].referencias = this.capitalize(this.Experiencias[i].referencias);
-    }
-
     this.localStorageSave();
-    this.servicioCv.change.emit({ data: 4 });
+    this.servicioCv.change.emit({ data: 3 });
   }
 
   next() {
@@ -111,7 +108,7 @@ export class DatosExperienciasComponent {
     this.servicioCv.change.emit({ data: 5 });
   }
 
-  omit(){
+  omit() {
     localStorage.setItem('SinExperiencias', JSON.stringify({
       content: 'No se registraron experiencias'
     }));
