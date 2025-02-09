@@ -25,7 +25,7 @@ export class UserService {
   }
 
   logout(): Observable<any> {
-    const token = this.getToken(); // Llamar a getToken() para obtener el token
+    const token = this.getToken();
     return this._http.post(global.url + 'logout', {}, {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

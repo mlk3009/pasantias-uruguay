@@ -335,7 +335,7 @@
                     </a>
                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ publication.description }}</p>
                     <div class="price-rating mb-3">
-                        <span class="price" *ngIf="publication.salary !== null">${{ publication.salary }}</span>
+                        <p class="price" *ngIf="publication.salary !== null">${{ publication.salary }}</p>
                         <div class="rating">
                             <div class="flex items-center gap-1">
                                 <svg class="w-4 h-4 text-yellow-300 star-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">

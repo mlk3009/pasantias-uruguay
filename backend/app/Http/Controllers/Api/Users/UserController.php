@@ -14,6 +14,7 @@ use App\Models\Etiqueta;
 use App\Models\Idiomas;
 use App\Models\CV;
 use App\Models\ImageUpload;
+use App\Models\FileUpload;
 use App\Http\Controllers\Api\Email\PHPMailerController;
 use Illuminate\Process\Pipe;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -75,45 +76,21 @@ class UserController extends Controller
                 'ci_estudiante' => $estudiante->ci_estudiante,
                 'fec_nacimiento' => $estudiante->fec_nacimiento,
                 'cod_postal' => $estudiante->cod_postal,
-                'id_image' => $estudiante->id_image,
                 'desc1' => $estudiante->desc1,
                 'desc2' => $estudiante->desc2,
-                'cv' => false
+                'cv' => $cv ? $cv->pdf : null 
             ];
     
-            if ($estudiante->id_image) {
-                $image = ImageUpload::find($estudiante->id_image);
-                if ($image) {
-                    $data['image'] = $image->image;
-                }
+            // Buscar imagen del estudiante
+            $image = ImageUpload::where('estudiante_id', $estudiante->id)->first();
+            if ($image) {
+                $data['image'] = $image->image;
             }
-    
-            if ($cv) {
-                $idiomas = Idiomas::where('cv_id', $cv->id)->get(['idioma', 'nivel']);
-    
-                $data = [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'phone' => $user->phone,
-                    'rol' => $user->rol,
-                    'genero' => $estudiante->genero,
-                    'location' => $estudiante->location,
-                    'ci_estudiante' => $estudiante->ci_estudiante,
-                    'fec_nacimiento' => $estudiante->fec_nacimiento,
-                    'cod_postal' => $estudiante->cod_postal,
-                    'id_image' => $estudiante->id_image,
-                    'desc1' => $estudiante->desc1,
-                    'desc2' => $estudiante->desc2,
-                    'cv' => $cv->cv,
-                ];
-    
-                if ($estudiante->id_image) {
-                    $image = ImageUpload::find($estudiante->id_image);
-                    if ($image) {
-                        $data['image'] = $image->image;
-                    }
-                }
+
+            // Buscar archivo del estudiante
+            $file = FileUpload::where('estudiante_id', $estudiante->id)->first();
+            if ($file) {
+                $data['file'] = $file->file;
             }
     
             return response(['data' => $data], 200);
@@ -147,16 +124,19 @@ class UserController extends Controller
             'cod_postal' => $estudiante->cod_postal,
             'location' => $estudiante->location,
             'genero' => $estudiante->genero,
-            'id_image' => $estudiante->id_image,
-            'id_file' => $estudiante->id_file,
             'etiquetas' => $etiquetas, 
         ];
 
-        if ($estudiante->id_image) {
-            $image = ImageUpload::find($estudiante->id_image);
-            if ($image) {
-                $data['image'] = $image->image;
-            }
+        // Buscar imagen del estudiante
+        $image = ImageUpload::where('estudiante_id', $estudiante->id)->first();
+        if ($image) {
+            $data['image'] = $image->image;
+        }
+
+        // Buscar archivo del estudiante
+        $file = FileUpload::where('estudiante_id', $estudiante->id)->first();
+        if ($file) {
+            $data['file'] = $file->file;
         }
 
         return response(['data' => $data], 200);

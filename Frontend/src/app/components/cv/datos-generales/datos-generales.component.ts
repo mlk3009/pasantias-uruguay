@@ -81,10 +81,28 @@ export class DatosGeneralesComponent implements OnInit {
 
   next() {
     this.servicioCv.loadForm(this.token, this.cv).subscribe(
-      (response) => {
+      (response: any) => {
         alert('Ficha cargada correctamente');
         this.servicioCv.change.emit({ data: 'success' });
         localStorage.setItem('hasFicha', 'true');
+  
+        // Actualizar this.cv con los datos del response
+        this.cv = response.cv;
+  
+        // Verificar el ID del CV
+        console.log('ID del CV:', this.cv?.id);
+  
+        // Llamar a la nueva función para generar el PDF
+        this.servicioCv.generarPDF(this.cv?.id).then(
+          (pdfResponse) => {
+            console.log('Respuesta del PDF:', pdfResponse);
+            alert('PDF generado exitosamente');
+          },
+          (pdfError) => {
+            alert('Error al generar el PDF, intente de nuevo');
+            console.log(<any>pdfError);
+          }
+        );
       },
       (error) => {
         alert('Error al cargar la ficha, intente de nuevo');

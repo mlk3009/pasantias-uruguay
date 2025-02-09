@@ -29,4 +29,9 @@ class Publication extends Model
     {
         return $this->belongsToMany(Etiqueta::class, 'contiene', 'publication_id', 'etiqueta_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

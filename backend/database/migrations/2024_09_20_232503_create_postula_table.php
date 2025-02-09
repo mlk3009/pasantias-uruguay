@@ -16,7 +16,7 @@ class CreatePostulaTable extends Migration
         Schema::create('postula', function (Blueprint $table) {
             $table->unsignedBigInteger('publication_id');
             $table->unsignedBigInteger('estudiante_id');
-            $table->date('postulation_date');
+            $table->timestamps();
             $table->string('estado'); // NO LO PUSE EN ENUM PARA PROBAR ALGO, LUEGO LO PONGO
 
             $table->foreign('publication_id')
@@ -37,7 +37,7 @@ class CreatePostulaTable extends Migration
         Schema::create('guarda', function (Blueprint $table) {
             $table->unsignedBigInteger('publication_id');
             $table->unsignedBigInteger('estudiante_id');
-            $table->date('save_date');
+            $table->timestamps();
 
 
             $table->foreign('publication_id')

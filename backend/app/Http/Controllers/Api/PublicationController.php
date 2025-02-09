@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Publication;
 use App\Models\Postula;
+use App\Models\Guarda;
 use App\Models\Estudiante;
 use App\Models\Etiqueta;
 use App\Models\CV;
@@ -140,7 +141,7 @@ class PublicationController extends Controller
 
     public function show($id)
     {
-        $publication = Publication::find($id);
+        $publication = Publication::with('user')->find($id);
         if (!$publication) {
             $data = [
                 'message' => 'Publicación no encontrada',
@@ -148,13 +149,15 @@ class PublicationController extends Controller
             ];
             return response()->json($data, 404);
         }
+        $publication->company_name = $publication->user->name;
+        $publication->company_email = $publication->user->email; 
+    
         $data = [
             'publication' => $publication,
             'status' => 200
         ];
         return response()->json($data, 200);
     }
-
 
 
     public function destroy($id)
@@ -268,7 +271,6 @@ class PublicationController extends Controller
         $validator = Validator::make($request->all(), [
             'publication_id' => 'required|numeric|exists:publications,id',
             'estudiante_id' => 'required|numeric|exists:estudiante,id',
-            'postulation_date' => 'required|date',
             'estado' => 'in:pendiente,aprobado,rechazado'
         ]);
 
@@ -316,13 +318,74 @@ class PublicationController extends Controller
         $postulacion = Postula::create([
             'publication_id' => $request->publication_id,
             'estudiante_id' => $request->estudiante_id,
-            'postulation_date' => $request->postulation_date,
             'estado' => $estado
         ]);
 
         $data = [
             'postulacion' => $postulacion,
             'message' => 'Postulación creada exitosamente',
+            'status' => 201
+        ];
+        return response()->json($data, 201);
+    }
+
+    public function guardarPublicacion(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'publication_id' => 'required|numeric|exists:publications,id',
+            'estudiante_id' => 'required|numeric|exists:estudiante,id'
+        ]);
+    
+        if ($validator->fails()) {
+            $data = [
+                'message' => 'Error al guardar la publicación',
+                'status' => 400,
+                'errors' => $validator->errors()
+            ];
+            return response()->json($data, 400);
+        }
+    
+        $publicacion = Publication::find($request->publication_id);
+        if (!$publicacion) {
+            $data = [
+                'message' => 'Publicación no encontrada',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+    
+        $estudiante = Estudiante::find($request->estudiante_id);
+        if (!$estudiante) {
+            $data = [
+                'message' => 'Estudiante no encontrado',
+                'status' => 404
+            ];
+            return response()->json($data, 404);
+        }
+    
+        $existingGuarda = Guarda::where('publication_id', $request->publication_id)
+            ->where('estudiante_id', $request->estudiante_id)
+            ->first();
+    
+        if ($existingGuarda) {
+            Guarda::where('publication_id', $request->publication_id)
+                ->where('estudiante_id', $request->estudiante_id)
+                ->delete();
+            $data = [
+                'message' => 'Publicación eliminada de guardados',
+                'status' => 200
+            ];
+            return response()->json($data, 200);
+        }
+    
+        $guarda = Guarda::create([
+            'publication_id' => $request->publication_id,
+            'estudiante_id' => $request->estudiante_id
+        ]);
+    
+        $data = [
+            'guarda' => $guarda,
+            'message' => 'Publicación guardada exitosamente',
             'status' => 201
         ];
         return response()->json($data, 201);
@@ -394,17 +457,17 @@ class PublicationController extends Controller
         $tiene_cv = CV::where('estudiante_id', $estudiante_id)->exists();
     
         $postulaciones = DB::table('postula')
-            ->join('publications', 'postula.publication_id', '=', 'publications.id')
-            ->join('users', 'publications.user_id', '=', 'users.id')
-            ->where('postula.estudiante_id', $estudiante_id)
-            ->select('publications.*', 'postula.postulation_date', 'postula.estado', 'users.name as empresa_name')
-            ->get();
+        ->join('publications', 'postula.publication_id', '=', 'publications.id')
+        ->join('users', 'publications.user_id', '=', 'users.id')
+        ->where('postula.estudiante_id', $estudiante_id)
+        ->select('publications.*', 'postula.created_at as postulation_date', 'postula.estado', 'users.name as empresa_name')
+        ->get();
     
         $publicacionesGuardadas = DB::table('guarda')
             ->join('publications', 'guarda.publication_id', '=', 'publications.id')
             ->join('users', 'publications.user_id', '=', 'users.id')
             ->where('guarda.estudiante_id', $estudiante_id)
-            ->select('publications.*', 'guarda.save_date', 'users.name as empresa_name')
+            ->select('publications.*', 'guarda.created_at as save_date', 'users.name as empresa_name')
             ->get();
     
         return response()->json([

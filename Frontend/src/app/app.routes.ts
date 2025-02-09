@@ -130,7 +130,7 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'publication',
+    path: 'publication/:id',
     loadComponent: () =>
       import('./components/publication/publication.component').then(
         (m) => m.PublicationComponent

@@ -34,6 +34,9 @@ Route::post('/postular', [PublicationController::class, 'crearPostulacion']);
 Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [PublicationController::class, 'actualizarEstadoPostulacion']);
 Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtenerDatosEstudiante']);
 
+//GUARDAR
+Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPublicacion']);
+
 
 //CV
 Route::post('/cv', [CvController::class, 'storeCV']);

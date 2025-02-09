@@ -9,19 +9,20 @@ class Postula extends Model
 {
     use HasFactory;
 
-    // Definir el nombre de la tabla
+
     protected $table = 'postula';
 
-    // Desactivar timestamps si no los usas
-    public $timestamps = false;
+
+    public $timestamps = true;
 
     // Definir los campos que se pueden asignar masivamente
     protected $fillable = [
         'publication_id',
         'estudiante_id',
-        'estado',
-        'postulation_date',
+        'estado'
     ];
+
+    
 
     // Definir las relaciones con otros modelos
     public function publication()

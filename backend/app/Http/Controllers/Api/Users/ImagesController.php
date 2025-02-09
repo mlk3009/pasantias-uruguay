@@ -40,34 +40,35 @@ class ImagesController extends Controller
 
     public function store_image(Request $request)
     {
-
         $validated = $request->validate([
             'image' => 'required|mimes:jpg,jpeg,png,bmp',
             'user_id' => 'nullable|exists:users,id', // Validar opcionalmente el user_id
         ]);
-    
+
         $imageName = '';
         if ($image = $request->file('image')) {
             $imageName = time() . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move('images/uploads', $imageName);
         }
-    
-        $imageUpload = ImageUpload::create([
+
+        $imageUploadData = [
             'image' => $imageName,
-        ]);
-    
+        ];
+
         // Asociar la imagen al usuario si se proporciona user_id
         if ($request->has('user_id')) {
             $user = User::find($request->input('user_id'));
             if ($user) {
                 if ($user->rol === 'estudiante') {
-                    Estudiante::where('id', $user->id)->update(['id_image' => $imageUpload->id]);
+                    $imageUploadData['estudiante_id'] = $user->id;
                 } elseif ($user->rol === 'empresa') {
-                  //  Empresa::where('id', $user->id)->update(['id_image' => $imageUpload->id]); PONER CUANDO CREE LA IMAGEN EN EMPRESA
+                    $imageUploadData['empresa_id'] = $user->id;
                 }
             }
         }
-    
+
+        $imageUpload = ImageUpload::create($imageUploadData);
+
         return response()->json([
             'success' => true,
             'message' => 'Imagen subida con éxito',
@@ -105,8 +106,9 @@ class ImagesController extends Controller
     {
         $validated = $request->validate([
             'file' => 'required|mimes:pdf,doc,docx',
+            'user_id' => 'nullable|exists:users,id', // Validar opcionalmente el user_id
         ]);
-    
+
         $fileName = '';
         if ($file = $request->file('file')) {
             $originalName = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
@@ -119,11 +121,25 @@ class ImagesController extends Controller
             
             $file->move('files/uploads', $fileName);
         }
-    
-        $fileUpload = FileUpload::create([
+
+        $fileUploadData = [
             'file' => $fileName,
-        ]);
-    
+        ];
+
+        // Asociar el archivo al usuario si se proporciona user_id
+        if ($request->has('user_id')) {
+            $user = User::find($request->input('user_id'));
+            if ($user) {
+                if ($user->rol === 'estudiante') {
+                    $fileUploadData['estudiante_id'] = $user->id;
+                } elseif ($user->rol === 'empresa') {
+                    $fileUploadData['empresa_id'] = $user->id;
+                }
+            }
+        }
+
+        $fileUpload = FileUpload::create($fileUploadData);
+
         return response()->json([
             'success' => true,
             'message' => 'Archivo subido con éxito',

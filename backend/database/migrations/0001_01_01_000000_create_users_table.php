@@ -34,9 +34,28 @@ return new class extends Migration
             $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
         });
 
+        Schema::create('estudiante', function (Blueprint $table) {
+            $table->string('ci_estudiante', 8);
+            $table->date('fec_nacimiento');
+            $table->string('desc1', 280)->default('Descripción 1');
+            $table->string('desc2', 280)->default('Descripción 2');
+            $table->string('cod_postal', 5);
+            $table->string('genero', 24)->nullable();
+            $table->enum('location', [
+                'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
+                'Maldonado','Montevideo','Paysandú','Río Negro','Rivera','Rocha','Salto','San José',
+                'Soriano','Tacuarembó','Treinta y Tres'
+            ]);
+            $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->primary('id');
+            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+        });
+
         Schema::create('image_uploads', function (Blueprint $table) {
             $table->id();
             $table->string('image');
+            $table->foreignId('estudiante_id')->nullable()->constrained('estudiante')->onDelete('cascade');
+            $table->foreignId('empresa_id')->nullable()->constrained('empresa')->onDelete('cascade');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
@@ -44,30 +63,11 @@ return new class extends Migration
         Schema::create('file_uploads', function (Blueprint $table) {
             $table->id();
             $table->string('file');
+            $table->foreignId('estudiante_id')->nullable()->constrained('estudiante')->onDelete('cascade');
+            $table->foreignId('empresa_id')->nullable()->constrained('empresa')->onDelete('cascade');
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
-
-
-
-    Schema::create('estudiante', function (Blueprint $table) {
-    $table->string('ci_estudiante', 8);
-    $table->date('fec_nacimiento');
-    $table->string('desc1', 280)->default('Descripción 1');
-    $table->string('desc2', 280)->default('Descripción 2');
-    $table->string('cod_postal', 5);
-    $table->string('genero', 24)->nullable();
-    $table->enum('location', [
-        'Artigas','Canelones','Cerro Largo','Colonia','Durazno','Flores','Florida','Lavalleja',
-        'Maldonado','Montevideo','Paysandú','Río Negro','Rivera','Rocha','Salto','San José',
-        'Soriano','Tacuarembó','Treinta y Tres'
-    ]);
-    $table->foreignId('id_image')->nullable()->constrained('image_uploads')->onDelete('cascade'); 
-    $table->foreignId('id_file')->nullable()->constrained('file_uploads')->onDelete('cascade'); 
-    $table->foreignId('id')->constrained('users')->onDelete('cascade');
-    $table->primary('id');
-    $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
-});
 
 
         

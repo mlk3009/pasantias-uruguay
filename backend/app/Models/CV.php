@@ -18,6 +18,7 @@ class CV extends Model
         'estado_civil',
         'genero',
         'licencia',
+        'pdf',
         'idiomas',
     ];
 
