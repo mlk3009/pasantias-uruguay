@@ -18,20 +18,25 @@ return new class extends Migration
             $table->string('remember_token', 100)->nullable();
             $table->enum('rol', ['administrador', 'estudiante', 'empresa']);
             $table->timestamps();
-            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+            $table->engine = 'InnoDB';
         });
 
         Schema::create('administrador', function (Blueprint $table) {
             $table->string('ci_admin', 8);
             $table->foreignId('id')->constrained('users')->onDelete('cascade');
             $table->primary('id');
-            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+            $table->engine = 'InnoDB'; 
         });
 
         Schema::create('empresa', function (Blueprint $table) {
             $table->foreignId('id')->constrained('users')->onDelete('cascade');
+            $table->string('aboutUs', 2000)->nullable(); 
+            $table->string('sede', 100)->nullable(); 
+            $table->string('desc1', 1000)->nullable(); 
+            $table->string('desc2', 1000)->nullable(); 
+            $table->string('desc3', 1000)->nullable(); 
             $table->primary('id');
-            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+            $table->engine = 'InnoDB'; 
         });
 
         Schema::create('estudiante', function (Blueprint $table) {
@@ -48,26 +53,9 @@ return new class extends Migration
             ]);
             $table->foreignId('id')->constrained('users')->onDelete('cascade');
             $table->primary('id');
-            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+            $table->engine = 'InnoDB'; 
         });
 
-        Schema::create('image_uploads', function (Blueprint $table) {
-            $table->id();
-            $table->string('image');
-            $table->foreignId('estudiante_id')->nullable()->constrained('estudiante')->onDelete('cascade');
-            $table->foreignId('empresa_id')->nullable()->constrained('empresa')->onDelete('cascade');
-            $table->timestamps();
-            $table->engine = 'InnoDB';
-        });
-
-        Schema::create('file_uploads', function (Blueprint $table) {
-            $table->id();
-            $table->string('file');
-            $table->foreignId('estudiante_id')->nullable()->constrained('estudiante')->onDelete('cascade');
-            $table->foreignId('empresa_id')->nullable()->constrained('empresa')->onDelete('cascade');
-            $table->timestamps();
-            $table->engine = 'InnoDB';
-        });
 
 
         
@@ -75,7 +63,7 @@ return new class extends Migration
             $table->string('email')->primary();
             $table->string('token');
             $table->timestamp('created_at')->nullable();
-            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+            $table->engine = 'InnoDB'; 
         });
 
         Schema::create('sessions', function (Blueprint $table) {
@@ -85,7 +73,7 @@ return new class extends Migration
             $table->text('user_agent')->nullable();
             $table->longText('payload');
             $table->integer('last_activity')->index();
-            $table->engine = 'InnoDB'; // Especificar el motor de almacenamiento
+            $table->engine = 'InnoDB'; 
         });
     }
 
@@ -97,7 +85,5 @@ return new class extends Migration
         Schema::dropIfExists('empresa');
         Schema::dropIfExists('administrador');
         Schema::dropIfExists('users');
-        Schema::dropIfExists('file_uploads');
-        Schema::dropIfExists('image_uploads');
     }
 };

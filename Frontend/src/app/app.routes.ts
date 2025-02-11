@@ -1,4 +1,6 @@
 import { Routes } from '@angular/router';
+import { RoleGuard } from './guards/role.guard';
+
 
 
 export const routes: Routes = [
@@ -75,13 +77,13 @@ export const routes: Routes = [
         (m) => m.StudentsComponent
       ),
   },
- {
-   path: 'edit-profile',
-   loadComponent: () =>
-     import('./components/students/edit-profile/edit-profile.component').then(
-       (m) => m.EditProfileComponent
-     ),
- },
+  {
+    path: 'edit-profile',
+    loadComponent: () =>
+      import('./components/students/edit-profile/edit-profile.component').then(
+        (m) => m.EditProfileComponent
+      ),
+  },
   {
     path: 'cv',
     loadComponent: () =>
@@ -102,6 +104,7 @@ export const routes: Routes = [
       import('./components/enterprise/enterprise.component').then(
         (m) => m.EnterpriseComponent
       ),
+      //canActivate: [RoleGuard],
   },
   {
     path: 'user-profile/:phone',
@@ -156,6 +159,7 @@ export const routes: Routes = [
       import('./components/enterprise/abautus/abautus.component').then(
         (m) => m.AbautusComponent
       ),
+      //canActivate: [RoleGuard],
   },
   {
     path: 'register-enterprise-in-1',

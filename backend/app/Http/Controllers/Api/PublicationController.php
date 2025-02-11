@@ -21,28 +21,34 @@ class PublicationController extends Controller
             // Obtener los parámetros de la solicitud
             $category = $request->input('category');
             $featured = $request->input('featured');
-    
+            $empresaId = $request->input('empresa_id'); // Nuevo parámetro opcional
+
             // Iniciar la consulta de publicaciones
             $query = Publication::query();
-    
+
             // Filtrar por categoría (etiqueta) si se proporciona
             if ($category) {
                 $query->whereHas('etiquetas', function ($q) use ($category) {
                     $q->where('name', $category);
                 });
             }
-    
+
             // Filtrar por publicaciones destacadas si se proporciona, si es true muestra solo las destacadas, si es false, todas.
             if ($featured === 'true') {
                 $query->where('featured', true);
-            } 
-    
+            }
+
+            // Filtrar por empresa si se proporciona
+            if ($empresaId) {
+                $query->where('empresa_id', $empresaId);
+            }
+
             // Ordenar por fecha de creación
             $query->orderBy('created_at', 'desc');
-    
+
             // Ejecutar la consulta y obtener las publicaciones con sus etiquetas
             $publications = $query->with('etiquetas')->get();
-    
+
             // Verificar si no se encontraron publicaciones
             if ($publications->isEmpty()) {
                 $data = [
@@ -51,7 +57,7 @@ class PublicationController extends Controller
                 ];
                 return response()->json($data, 404);
             }
-    
+
             // Formatear la respuesta para incluir las etiquetas
             $formattedPublications = $publications->map(function ($publication) {
                 return [
@@ -64,7 +70,7 @@ class PublicationController extends Controller
                     'time' => $publication->time,
                     'deathline' => $publication->deathline,
                     'postulation_way' => $publication->postulation_way,
-                    'user_id' => $publication->user_id,
+                    'empresa_id' => $publication->empresa_id,
                     'vacancies' => $publication->vacancies,
                     'featured' => $publication->featured,
                     'created_at' => $publication->created_at,
@@ -72,7 +78,7 @@ class PublicationController extends Controller
                     'etiquetas' => $publication->etiquetas->pluck('name')
                 ];
             });
-    
+
             // Devolver las publicaciones encontradas
             $data = [
                 'publications' => $formattedPublications,
@@ -89,6 +95,7 @@ class PublicationController extends Controller
             return response()->json($data, 500);
         }
     }
+
 
     public function getTopCategories($limit = 3)
 {
@@ -117,7 +124,7 @@ class PublicationController extends Controller
             'deathline' => 'required|date',
             'vacancies' => 'required|numeric',
             'postulation_way' => 'required|string',
-            'user_id' => 'required|numeric'
+            'empresa_id' => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -141,7 +148,7 @@ class PublicationController extends Controller
 
     public function show($id)
     {
-        $publication = Publication::with('user')->find($id);
+        $publication = Publication::with(['empresa.user'])->find($id);
         if (!$publication) {
             $data = [
                 'message' => 'Publicación no encontrada',
@@ -149,11 +156,29 @@ class PublicationController extends Controller
             ];
             return response()->json($data, 404);
         }
-        $publication->company_name = $publication->user->name;
-        $publication->company_email = $publication->user->email; 
+    
+        $companyName = $publication->empresa->user->name;
+        $companyEmail = $publication->empresa->user->email;
     
         $data = [
-            'publication' => $publication,
+            'publication' => [
+                'id' => $publication->id,
+                'title' => $publication->title,
+                'description' => $publication->description,
+                'salary' => $publication->salary,
+                'location' => $publication->location,
+                'type' => $publication->type,
+                'time' => $publication->time,
+                'deathline' => $publication->deathline,
+                'postulation_way' => $publication->postulation_way,
+                'empresa_id' => $publication->empresa_id,
+                'vacancies' => $publication->vacancies,
+                'featured' => $publication->featured,
+                'created_at' => $publication->created_at,
+                'updated_at' => $publication->updated_at,
+                'company_name' => $companyName,
+                'company_email' => $companyEmail,
+            ],
             'status' => 200
         ];
         return response()->json($data, 200);
@@ -204,7 +229,7 @@ class PublicationController extends Controller
             'deathline' => 'required|date',
             'vacancies' => 'required|numeric',
             'postulation_way' => 'required|string',
-            'user_id' => 'required|numeric'
+            'empresa_id' => 'required|numeric'
         ]);
 
         if ($validator->fails()) {
@@ -247,7 +272,8 @@ class PublicationController extends Controller
             'deathline' => 'sometimes|required|date',
             'vacancies' => 'sometimes|required|numeric',
             'postulation_way' => 'sometimes|required|string',
-            'user_id' => 'sometimes|required|numeric',
+            'empresa_id' => 'sometimes|required|numeric',
+            'featured' => 'sometimes|required|boolean'
         ]);
         if ($validator->fails()) {
             $data = [
@@ -458,14 +484,14 @@ class PublicationController extends Controller
     
         $postulaciones = DB::table('postula')
         ->join('publications', 'postula.publication_id', '=', 'publications.id')
-        ->join('users', 'publications.user_id', '=', 'users.id')
+        ->join('users', 'publications.empresa_id', '=', 'users.id')
         ->where('postula.estudiante_id', $estudiante_id)
         ->select('publications.*', 'postula.created_at as postulation_date', 'postula.estado', 'users.name as empresa_name')
         ->get();
     
         $publicacionesGuardadas = DB::table('guarda')
             ->join('publications', 'guarda.publication_id', '=', 'publications.id')
-            ->join('users', 'publications.user_id', '=', 'users.id')
+            ->join('users', 'publications.empresa_id', '=', 'users.id')
             ->where('guarda.estudiante_id', $estudiante_id)
             ->select('publications.*', 'guarda.created_at as save_date', 'users.name as empresa_name')
             ->get();

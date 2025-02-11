@@ -20,13 +20,16 @@ export class PublicationService {
     }
   }
 
-  getPublications(category?: string, featured?: boolean | null): Observable<any[]> {
+  getPublications(category?: string, featured?: boolean | null, empresaId?: string): Observable<any[]> {
     let params = new HttpParams();
     if (category) {
       params = params.append('category', category);
     }
     if (featured !== null && featured !== undefined) {
       params = params.append('featured', featured.toString());
+    }
+    if (empresaId) {
+      params = params.append('empresa_id', empresaId);
     }
 
     const headers = new HttpHeaders({});

@@ -8,4 +8,20 @@ use Illuminate\Database\Eloquent\Model;
 class Empresa extends Model
 {
     use HasFactory;
+
+    protected $table = 'empresa';
+
+    protected $fillable = [
+        'id',
+        'about_us',
+        'desc1',
+        'desc2',
+        'desc3',
+        'sede'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'id');
+    }
 }

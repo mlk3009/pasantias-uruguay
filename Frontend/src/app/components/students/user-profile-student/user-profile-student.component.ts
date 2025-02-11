@@ -42,10 +42,7 @@ export class UserProfileStudentComponent {
           } else {
             this.userImageUrl = 'http://localhost:8000/images/user.png'; 
           }
-
-          this.cvLink = `http://localhost:8000/pdfs/cv_${this.data.pdf}.pdf`;
-          // Verificar la ruta cvLink
-          console.log('cvLink:', this.cvLink);
+          this.cvLink = `http://localhost:8000/pdfs/cv_${this.data.cv}.pdf`;
         },
         error: (error) => {
           console.error('Error al obtener el usuario:', error);

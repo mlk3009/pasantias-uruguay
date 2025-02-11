@@ -56,6 +56,11 @@ return new class extends Migration
                 // Insertar el registro en la tabla empresa
                 DB::table('empresa')->insert([
                     'id' => $empresaUserId,
+                    'sede' => 'Centro, Montevideo',
+                    'aboutUs' => "Somos una empresa de informática dedicada a ofrecer soluciones tecnológicas innovadoras.\n\nNuestro equipo de expertos trabaja incansablemente para desarrollar software de alta calidad que satisfaga las necesidades de nuestros clientes.\n\nCreemos en la colaboración y la innovación constante para mantenernos a la vanguardia de la industria tecnológica.",
+                    'desc1' => "Plataforma Colaborativa\n\nRastree el trabajo en toda la empresa a través de una plataforma abierta y colaborativa. Vincule problemas a través de Jira e ingiera datos de otras herramientas de desarrollo de software, para que sus equipos de soporte y operaciones de TI tengan información contextual más rica para responder rápidamente a solicitudes, incidentes y cambios.\n\nOfrezca excelentes experiencias de servicio rápidamente, sin la complejidad de las soluciones tradicionales de ITSM. Acelere el trabajo de desarrollo crítico, elimine el trabajo tedioso y despliegue cambios con facilidad.",
+                    'desc2' => "Somos la mejor\n\nNos destacamos por nuestra dedicación y compromiso con la excelencia. Nuestro equipo está compuesto por profesionales altamente capacitados que se esfuerzan por ofrecer soluciones de calidad.\n\nNuestra misión es proporcionar servicios que superen las expectativas de nuestros clientes, asegurando su satisfacción y éxito en cada proyecto.",
+                    'desc3' => "Creamos más herramientas e ideas que nos unen\n\nFlowbite te ayuda a conectarte con amigos y comunidades de personas que comparten tus intereses. Conectar con tus amigos y familiares, así como descubrir nuevos, es fácil con funciones como Grupos.",
                 ]);
 
         // Insertar datos en la tabla publications
@@ -69,7 +74,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-12-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 3, // Agregar valor para la columna vacancies
             ],
             [
@@ -81,7 +86,7 @@ return new class extends Migration
                 'time' => '10:00 - 14:00',
                 'deathline' => '2025-11-30',
                 'postulation_way' => 'Envío de portafolio',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 2, // Agregar valor para la columna vacancies
             ],
             [
@@ -93,7 +98,7 @@ return new class extends Migration
                 'time' => '8:00 - 17:00',
                 'deathline' => '2025-10-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
@@ -105,7 +110,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-09-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
@@ -117,7 +122,7 @@ return new class extends Migration
                 'time' => '10:00 - 14:00',
                 'deathline' => '2025-08-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 2, // Agregar valor para la columna vacancies
             ],
             [
@@ -129,7 +134,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-07-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 3, // Agregar valor para la columna vacancies
             ],
             [
@@ -141,7 +146,7 @@ return new class extends Migration
                 'time' => '14:00 - 18:00',
                 'deathline' => '2025-06-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
@@ -153,7 +158,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-05-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 2, // Agregar valor para la columna vacancies
             ],
             [
@@ -165,7 +170,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-04-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
             [
@@ -177,7 +182,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-03-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1, // Agregar valor para la columna vacancies
             ],
         ]);
@@ -192,7 +197,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-05-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 2,
                 'featured' => false,
             ],
@@ -205,7 +210,7 @@ return new class extends Migration
                 'time' => '10:00 - 14:00',
                 'deathline' => '2025-06-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -218,7 +223,7 @@ return new class extends Migration
                 'time' => '8:00 - 17:00',
                 'deathline' => '2025-07-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -231,7 +236,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-08-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -244,7 +249,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-09-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -257,7 +262,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-10-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -270,7 +275,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-11-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -283,7 +288,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2025-12-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -296,7 +301,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-01-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -309,7 +314,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-02-28',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -322,7 +327,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-03-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -335,7 +340,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-04-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -348,7 +353,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-05-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -361,7 +366,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-06-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -374,7 +379,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-07-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -387,7 +392,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-08-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -400,7 +405,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-09-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -413,7 +418,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-10-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -426,7 +431,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-11-30',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => false,
             ],
@@ -439,7 +444,7 @@ return new class extends Migration
                 'time' => '9:00 - 18:00',
                 'deathline' => '2026-12-31',
                 'postulation_way' => 'Envío de CV',
-                'user_id' => $empresaUserId,
+                'empresa_id' => $empresaUserId,
                 'vacancies' => 1,
                 'featured' => true,
             ],
@@ -486,6 +491,87 @@ for ($etiqueta_id = 2; $etiqueta_id <= 15; $etiqueta_id++) {
 
 // Finalmente, insertamos todos los datos en la base de datos de una sola vez
 DB::table('contiene')->insert($insertData);
+
+
+
+// Insertar un segundo usuario empresa
+DB::table('users')->insert([
+    'name' => 'Segunda Empresa',
+    'email' => 'segundaempresa@example.com',
+    'phone' => '987654322',
+    'password' => Hash::make('password'),
+    'rol' => 'empresa',
+    'created_at' => now(),
+    'updated_at' => now(),
+]);
+
+// Obtener el ID del segundo usuario empresa recién insertado
+$segundaEmpresaUserId = DB::getPdo()->lastInsertId();
+
+// Insertar el registro en la tabla empresa para la segunda empresa
+DB::table('empresa')->insert([
+    'id' => $segundaEmpresaUserId,
+    'sede' => 'Punta Carretas, Montevideo',
+    'aboutUs' => "Somos una empresa de marketing digital que ofrece soluciones innovadoras para mejorar la presencia en línea de nuestros clientes.\n\nNuestro equipo de expertos trabaja para desarrollar estrategias efectivas que aumenten la visibilidad y el engagement en las plataformas digitales.",
+    'desc1' => "Marketing Digital\n\nOfrecemos servicios de marketing digital que incluyen SEO, SEM, gestión de redes sociales y creación de contenido. Nuestro objetivo es ayudar a nuestros clientes a alcanzar sus metas de negocio a través de estrategias digitales efectivas.",
+    'desc2' => "Innovación y Creatividad\n\nNos destacamos por nuestra creatividad y capacidad para innovar en el campo del marketing digital. Nuestro equipo está compuesto por profesionales apasionados que buscan constantemente nuevas formas de mejorar la presencia en línea de nuestros clientes.",
+    'desc3' => "Conexión y Engagement\n\nAyudamos a nuestros clientes a conectar con su audiencia y aumentar el engagement a través de campañas de marketing digital bien diseñadas. Creemos en el poder de las redes sociales y el contenido de calidad para construir relaciones duraderas con los clientes.",
+]);
+
+// Insertar datos en la tabla publications para la segunda empresa
+DB::table('publications')->insert([
+    [
+        'title' => 'Especialista en SEO',
+        'description' => 'Especialista en SEO con experiencia en optimización de motores de búsqueda.',
+        'salary' => '40000',
+        'location' => 'Montevideo',
+        'type' => 'Full-time',
+        'time' => '9:00 - 18:00',
+        'deathline' => '2025-12-31',
+        'postulation_way' => 'Envío de CV',
+        'empresa_id' => $segundaEmpresaUserId,
+        'vacancies' => 2,
+    ],
+    [
+        'title' => 'Community Manager',
+        'description' => 'Community Manager con experiencia en gestión de redes sociales.',
+        'salary' => '30000',
+        'location' => 'Canelones',
+        'type' => 'Part-time',
+        'time' => '10:00 - 14:00',
+        'deathline' => '2025-11-30',
+        'postulation_way' => 'Envío de portafolio',
+        'empresa_id' => $segundaEmpresaUserId,
+        'vacancies' => 1,
+    ],
+    [
+        'title' => 'Content Creator',
+        'description' => 'Creador de contenido con experiencia en redacción y creación de videos.',
+        'salary' => '35000',
+        'location' => 'Salto',
+        'type' => 'Full-time',
+        'time' => '8:00 - 17:00',
+        'deathline' => '2025-10-31',
+        'postulation_way' => 'Envío de CV',
+        'empresa_id' => $segundaEmpresaUserId,
+        'vacancies' => 3,
+    ],
+]);
+
+// Obtener los IDs de las publicaciones recién insertadas
+$publications = DB::table('publications')->where('empresa_id', $segundaEmpresaUserId)->pluck('id');
+
+// Insertar relaciones en la tabla contiene para las publicaciones de la segunda empresa
+foreach ($publications as $publicationId) {
+    $etiquetas = array_rand(array_flip(range(1, 15)), 2); // Seleccionar 2 etiquetas aleatorias entre 1 y 15
+    foreach ($etiquetas as $etiquetaId) {
+        DB::table('contiene')->insert([
+            'etiqueta_id' => $etiquetaId,
+            'publication_id' => $publicationId,
+            'created_at' => now(),
+        ]);
+    }
+}
 
     
             }

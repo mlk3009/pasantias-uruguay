@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Users\PasswordController;
 use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\Email\EmailController;
 use App\Http\Controllers\Api\Users\ImagesController;
+use App\Http\Controllers\Api\Users\CompanyController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -16,17 +17,23 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 // USER 
 Route::post('login', [UserController::class, 'loginUser']);
 Route::post('register', [UserController::class, 'store']);
-Route::post('/contactUs', [UserController::class, 'contactUs']);
-Route::post('/contactMe', [UserController::class, 'contactMe']);
+Route::post('/contactUs', [EmailController::class, 'contactUs']);
+Route::post('/contactMe', [EmailController::class, 'contactMe']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('cv-details', [CvController::class, 'cvDetails']);
     Route::get('/cvPDF/{cvId}', [CvController::class, 'generarPDF']);
-    Route::post('/updateProfile', [UserController::class, 'update']);
-    Route::get('/userbyphone/{phone}', [UserController::class, 'obtenerUsuarioByPhone']);
+    Route::post('/updateProfile', [UserController::class, 'update']);    
+    Route::get('company', [CompanyController::class, 'companyDetails']);
+    Route::get('company/publications/{empresaId}', [CompanyController::class, 'obtenerPublicaciones']);
+    Route::get('company/applicants/{empresaId}', [CompanyController::class, 'obtenerPostulantes']);
 });
+
+Route::get('/userbyphone/{phone}', [UserController::class, 'obtenerUsuarioByPhone']);
+Route::get('/companybyphone/{phone}', [CompanyController::class, 'obtenerEmpresaByPhone']);
+
 
 
 //POSTULACIONES

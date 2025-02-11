@@ -359,7 +359,7 @@ class CvController extends Controller
                 $pdf->SetFont('Arial', '', 12);
                 $pdf->SetTextColor(0, 0, 0);
                 $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Nombre Completo: ') . iconv('UTF-8', 'ISO-8859-1', $cv->nombre_completo), 0, 1);
-                $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Cédula: ') . iconv('UTF-8', 'ISO-8859-1', $estudiante->ci_estudiante), 0, 1);
+                // $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Cédula: ') . iconv('UTF-8', 'ISO-8859-1', $estudiante->ci_estudiante), 0, 1);
                 $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha de Nacimiento: ') . iconv('UTF-8', 'ISO-8859-1', $cv->fecha_nacimiento), 0, 1);
                 $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Género: ') . iconv('UTF-8', 'ISO-8859-1', $cv->genero), 0, 1);
                 if ($cv->estado_civil) {
@@ -406,29 +406,31 @@ class CvController extends Controller
             $pdf->Ln(10);
 
             // Experiencia
-            $this->addSection($pdf, 'Experiencia', function ($pdf) use ($experiencia) {
-                $pdf->SetFont('Arial', '', 12);
-                $pdf->SetTextColor(0, 0, 0);
-                foreach ($experiencia as $exp) {
-                    if ($exp->puesto) {
-                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Puesto: ') . iconv('UTF-8', 'ISO-8859-1', $exp->puesto), 0, 1);
+            if ($experiencia->isNotEmpty()) {
+                $this->addSection($pdf, 'Experiencia', function ($pdf) use ($experiencia) {
+                    $pdf->SetFont('Arial', '', 12);
+                    $pdf->SetTextColor(0, 0, 0);
+                    foreach ($experiencia as $exp) {
+                        if ($exp->puesto) {
+                            $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Puesto: ') . iconv('UTF-8', 'ISO-8859-1', $exp->puesto), 0, 1);
+                        }
+                        if ($exp->empresa) {
+                            $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Empresa: ') . iconv('UTF-8', 'ISO-8859-1', $exp->empresa), 0, 1);
+                        }
+                        if ($exp->fecha_inicio) {
+                            $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Inicio: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_inicio), 0, 1);
+                        }
+                        if ($exp->fecha_fin) {
+                            $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Fin: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_fin), 0, 1);
+                        }
+                        if ($exp->descripcion) {
+                            $pdf->MultiCell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Descripción: ') . iconv('UTF-8', 'ISO-8859-1', $exp->descripcion), 0, 1);
+                        }
+                        $pdf->Ln(5);
                     }
-                    if ($exp->empresa) {
-                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Empresa: ') . iconv('UTF-8', 'ISO-8859-1', $exp->empresa), 0, 1);
-                    }
-                    if ($exp->fecha_inicio) {
-                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Inicio: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_inicio), 0, 1);
-                    }
-                    if ($exp->fecha_fin) {
-                        $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Fecha Fin: ') . iconv('UTF-8', 'ISO-8859-1', $exp->fecha_fin), 0, 1);
-                    }
-                    if ($exp->descripcion) {
-                        $pdf->MultiCell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Descripción: ') . iconv('UTF-8', 'ISO-8859-1', $exp->descripcion), 0, 1);
-                    }
-                    $pdf->Ln(5);
-                }
-            });
-            $pdf->Ln(10);
+                });
+                $pdf->Ln(10);
+            }
 
             // Habilidades
             $this->addSection($pdf, 'Habilidades', function ($pdf) use ($habilidades) {

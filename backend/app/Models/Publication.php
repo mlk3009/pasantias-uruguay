@@ -22,7 +22,7 @@ class Publication extends Model
         'vacancies',
         'postulation_way',
         'featured',
-        'user_id'
+        'empresa_id'
     ];
 
     public function etiquetas()
@@ -30,8 +30,8 @@ class Publication extends Model
         return $this->belongsToMany(Etiqueta::class, 'contiene', 'publication_id', 'etiqueta_id');
     }
 
-    public function user()
+    public function empresa()
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(Empresa::class, 'empresa_id');
     }
 }
