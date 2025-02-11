@@ -99,12 +99,26 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'my-publications/:phone',
+    loadComponent: () =>
+      import('./components/enterprise/my-publications/my-publications.component').then(
+        (m) => m.MyPublicationsComponent
+      ),
+  },
+  {
     path: 'enterprise-profile',
     loadComponent: () =>
       import('./components/enterprise/enterprise.component').then(
         (m) => m.EnterpriseComponent
       ),
       //canActivate: [RoleGuard],
+  },
+{
+    path: 'enterprise-profile/:phone',
+    loadComponent: () =>
+      import('./components/enterprise/enterprise.component').then(
+        (m) => m.EnterpriseComponent
+      ),
   },
   {
     path: 'user-profile/:phone',
@@ -155,6 +169,14 @@ export const routes: Routes = [
   },
   {
     path: 'enterprise-abaut-us',
+    loadComponent: () =>
+      import('./components/enterprise/abautus/abautus.component').then(
+        (m) => m.AbautusComponent
+      ),
+      //canActivate: [RoleGuard],
+  },
+  {
+    path: 'enterprise-abaut-us/:phone',
     loadComponent: () =>
       import('./components/enterprise/abautus/abautus.component').then(
         (m) => m.AbautusComponent

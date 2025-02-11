@@ -27,10 +27,10 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('/cvPDF/{cvId}', [CvController::class, 'generarPDF']);
     Route::post('/updateProfile', [UserController::class, 'update']);    
     Route::get('company', [CompanyController::class, 'companyDetails']);
-    Route::get('company/publications/{empresaId}', [CompanyController::class, 'obtenerPublicaciones']);
     Route::get('company/applicants/{empresaId}', [CompanyController::class, 'obtenerPostulantes']);
 });
 
+Route::get('company/publications/{phone}', [CompanyController::class, 'obtenerPublicaciones']);
 Route::get('/userbyphone/{phone}', [UserController::class, 'obtenerUsuarioByPhone']);
 Route::get('/companybyphone/{phone}', [CompanyController::class, 'obtenerEmpresaByPhone']);
 

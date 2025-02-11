@@ -1,12 +1,14 @@
 import { Component, ViewChildren, ViewChild, ElementRef, QueryList, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CreatePublicationComponent } from './create-publication/create-publication.component';
+import { ActivatedRoute } from '@angular/router';
 import { CompanyService } from '../../../services/company.service';
+import { UserService } from '../../../services/user.service';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-user-profile-enterprise',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './user-profile-enterprise.component.html',
   styleUrls: ['./user-profile-enterprise.component.css']
 })
@@ -17,6 +19,7 @@ export class UserProfileEnterpriseComponent implements OnInit {
   empresa: any = {};
   publicaciones: any[] = [];
   loading: boolean = false;
+  isPhoneAccess: boolean = false; // Variable para determinar si se accedió mediante phone
 
   desc1Title: string = '';
   desc1Paragraph1: string = '';
@@ -27,12 +30,36 @@ export class UserProfileEnterpriseComponent implements OnInit {
   desc3Title: string = '';
   desc3Paragraph: string = '';
 
-  constructor(private companyService: CompanyService) {}
+  constructor(
+    private companyService: CompanyService,
+    private userService: UserService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
     const token = this.companyService.getToken();
-    if (token) {
+    const phone = this.route.snapshot.paramMap.get('phone');
+
+    if (phone && /^\d{8,9}$/.test(phone)) {
+      // Si hay un número en la URL, usarlo como parámetro
+      this.isPhoneAccess = true; // Indicar que se accedió mediante phone
+      this.companyService.obtenerEmpresaByPhone(phone).subscribe({
+        next: (response) => {
+          this.empresa = response.data;
+          this.processDesc1(this.empresa.desc1);
+          this.processDesc2(this.empresa.desc2);
+          this.processDesc3(this.empresa.desc3);
+          this.obtenerPublicaciones(this.empresa.phone);
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error al obtener la empresa por teléfono:', error);
+          this.loading = false;
+        }
+      });
+    } else if (token) {
+      // Si no hay un número en la URL, usar el token para obtener la empresa
       this.companyService.obtenerEmpresa(token).subscribe({
         next: (response) => {
           this.empresa = response.data;
@@ -118,13 +145,21 @@ export class UserProfileEnterpriseComponent implements OnInit {
     }
   }
 
-  modal(){
-    const modal = document.getElementById('contactModal') as HTMLElement;
-    modal.style.display = 'flex';
-  }
+  sendContactEmail(contactForm: any): void {
+    const email = localStorage.getItem('email') || 'No encontrado';
+    const asunto = contactForm.value.subject;
+    const descripcion = contactForm.value.message;
+    const emailDestino = this.empresa.email;
 
-  modalClose() {
-    const modal = document.getElementById('contactModal') as HTMLElement;
-    modal.style.display = 'none';
+    this.userService.contactMe(email, asunto, descripcion, emailDestino).subscribe({
+        next: (response) => {
+            console.log('Correo enviado correctamente', response);
+            alert('Correo enviado correctamente');
+        },
+        error: (error) => {
+            console.error('Error al enviar el correo:', error);
+            alert('Error al enviar el correo');
+        }
+    });
   }
 }

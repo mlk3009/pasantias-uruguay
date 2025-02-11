@@ -68,7 +68,7 @@ class CompanyController extends Controller
             'name' => $user->name,
             'email' => $user->email,
             'phone' => $user->phone,
-            'about_us' => $empresa->about_us,
+            'aboutUs' => $empresa->aboutUs,
             'desc1' => $empresa->desc1,
             'desc2' => $empresa->desc2,
             'desc3' => $empresa->desc3
@@ -89,31 +89,48 @@ class CompanyController extends Controller
         return response(['data' => $data], 200);
     }
 
+
     public function obtenerPublicaciones(Request $request, $empresaId): Response
     {
         try {
+            // Determinar si el identificador es un teléfono o un ID de empresa
+            if (preg_match('/^\d{8,9}$/', $empresaId)) {
+                // Es un teléfono
+                $user = User::where('phone', $empresaId)->first();
+                if (!$user) {
+                    return response(['message' => 'Usuario no encontrado'], 404);
+                }
+    
+                $empresa = Empresa::where('id', $user->id)->first();
+                if (!$empresa) {
+                    return response(['message' => 'Empresa no encontrada'], 404);
+                }
+    
+                $empresaId = $empresa->id;
+            }
+    
             // Obtener los parámetros de la solicitud
             $categoria = $request->input('categoria');
             $cantidad = $request->input('cantidad'); 
-
+    
             $query = Publication::where('empresa_id', $empresaId);
-
-
+    
             if (!is_null($categoria)) {
                 $query->where('categoria', $categoria);
             }
-
-
+    
             $query->orderBy('created_at', 'desc');
-            $query->take((int) $cantidad);
-
-
+            
+            if (!is_null($cantidad)) {
+                $query->take((int) $cantidad);
+            }
+    
             $publicaciones = $query->get();
-
+    
             if ($publicaciones->isEmpty()) {
                 return response(['message' => 'No se encontraron publicaciones para esta empresa'], 404);
             }
-
+    
             return response(['data' => $publicaciones], 200);
         } catch (\Exception $e) {
             return response(['message' => 'Error al obtener publicaciones', 'error' => $e->getMessage()], 500);
