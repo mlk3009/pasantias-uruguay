@@ -50,14 +50,14 @@ Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPubli
 //ADMIN
 
 Route::middleware('auth:sanctum')->group(function () {
-    // Rutas para obtener y buscar usuarios
+
     Route::get('/admin/users', [AdminController::class, 'getAllUsers']);
     Route::get('/admin/users/search', [AdminController::class, 'searchUsers']);
-
-    // Rutas para publicaciones
     Route::patch('/admin/publications/update/{id}', [AdminController::class, 'updatePublication']);
     Route::delete('/admin/publications/delete/{id}', [AdminController::class, 'destroyPublication']);
     Route::patch('/admin/publications/soft-delete/{id}', [AdminController::class, 'softDeletePublication']);
+    Route::patch('/admin/users/deactivate/{id}', [AdminController::class, 'deactivateUser']);
+    Route::delete('/admin/users/delete/{id}', [AdminController::class, 'deleteUser']);
 });
 
 //CV

@@ -169,4 +169,40 @@ class AdminController extends Controller
 
         return response()->json(['message' => 'Publicación dada de baja lógicamente', 'status' => 200], 200);
     }
+
+
+    public function deactivateUser($id)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+    
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+    
+        // Alternar el estado de activación del usuario
+        $user->is_active = !$user->is_active;
+        $user->save();
+    
+        $message = $user->is_active ? 'Usuario activado' : 'Usuario desactivado';
+        return response()->json(['message' => $message, 'status' => 200], 200);
+    }
+    
+    public function deleteUser($id)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+    
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+    
+        $user->delete();
+    
+        return response()->json(['message' => 'Usuario eliminado', 'status' => 200], 200);
+    }
 }
