@@ -1,8 +1,8 @@
 <div class="bg-white p-8 rounded-lg px-16 z-50">
     <h3 class="text-gray-500">Idiomas:</h3>
     <div class="grid grid-cols-4 gap-2" *ngFor="let idioma of idiomas; let i = index; let last = last">
-      <div class="grid grid-cols-2 gap-6 col-span-3">
-        <div class="relative z-0 w-full mt-6 group">
+      <div class="mt-2 grid grid-cols-2 gap-6 col-span-3">
+        <div class="relative z-0 w-full mb-5 group">
           <label [for]="'idioma' + i" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Idioma</label>
           <input [name]="'idioma' + i" [(ngModel)]="idioma.idioma" #idioma1="ngModel" maxlength="20"
           [id]="'idioma' + i" type="text" pattern="^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$"

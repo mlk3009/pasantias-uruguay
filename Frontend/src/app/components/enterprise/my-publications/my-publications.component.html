@@ -243,7 +243,7 @@
         </button>
         
           <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-            <div class="py-2 lg:py-2 px-4 mx-auto max-w-screen-md">
+            <div class="py-2 lg:py-2 px-4 mx-auto max-w-screen-lg">
                 <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Editar publicaión</h2>
 
                 <section class="bg-white dark:bg-gray-900 antialiased">
@@ -298,21 +298,64 @@
               
                       <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800" />
               
-                      <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                      <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
               
-                      <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                      <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
 
                     </div>
                 </div>
 
-                    <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-8">
-                        <div class="">
-                            <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-8">
+                  <div>
+                    <div class="w-full flex flex-row justify-between">
+                      <div class="w-full flex flex-col items-start mx-2">
+                        <div class="w-full flex flex-row items-center my-2">
+                          <label class="mr-1 font-medium text-gray-800" for="">Ubicaión</label>
+                          <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id=""></select>
                         </div>
-                        <div>
-                            <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                        <div class="w-full flex flex-row items-center my-2">
+                          <label class="mr-1 font-medium text-gray-800" for="">Tiempo</label>
+                          <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id=""></select>
                         </div>
+                      </div>
+                      <div class="w-full flex flex-col">
+                        <div class="w-full flex flex-row items-center my-2">
+                          <label class="mr-1 font-medium text-gray-800" for="">Tipo</label>
+                          <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id=""></select>
+                        </div>
+                        <div class="flex flex-row items-center my-2">
+                          <label class="mr-1 font-medium text-gray-800" for="">Entrada</label>
+                          <div  class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                              </svg>
+                            </div>
+                            <input
+                              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="YYYY/MM/DD">
+                          </div>
+                        </div>
+                        <div class="flex flex-row items-center my-2">
+                          <label class="mr-1 font-medium text-gray-800" for="">Salida</label>
+                          <div  class="relative">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                              </svg>
+                            </div>
+                            <input
+                              class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="YYYY/MM/DD">
+                          </div>
+                        </div>
+                      </div>
                     </div>
+                  </div>
+                  <div>
+                      <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                  </div>
+              </div>
 
                     <div class="flex flex-row justify-between items-center mt-6">
                       <button class="bg-white hover:bg-gray-200 py-2 px-4 rounded text-lg font-medium">Cancelar</button>
@@ -347,7 +390,7 @@
       </button>
       
         <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-          <div class="py-2 lg:py-2 px-4 mx-auto max-w-screen-md">
+          <div class="py-2 lg:py-2 px-4 mx-auto max-w-screen-lg">
               <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Añadir publicaión</h2>
 
               <section class="bg-white dark:bg-gray-900 antialiased">
@@ -402,19 +445,62 @@
             
                     <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800" />
             
-                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
             
-                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                    <textarea id="message" name="message" ngModel rows="6" maxlength="280" class="w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
 
                   </div>
               </div>
 
                   <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-8">
-                      <div class="">
-                          <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                      <div>
+                        <div class="w-full flex flex-row justify-between">
+                          <div class="w-full flex flex-col items-start mx-2">
+                            <div class="w-full flex flex-row items-center my-2">
+                              <label class="mr-1 font-medium text-gray-800" for="">Ubicaión</label>
+                              <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id=""></select>
+                            </div>
+                            <div class="w-full flex flex-row items-center my-2">
+                              <label class="mr-1 font-medium text-gray-800" for="">Tiempo</label>
+                              <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id=""></select>
+                            </div>
+                          </div>
+                          <div class="w-full flex flex-col">
+                            <div class="w-full flex flex-row items-center my-2">
+                              <label class="mr-1 font-medium text-gray-800" for="">Tipo</label>
+                              <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id=""></select>
+                            </div>
+                            <div class="flex flex-row items-center my-2">
+                              <label class="mr-1 font-medium text-gray-800" for="">Entrada</label>
+                              <div  class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                  </svg>
+                                </div>
+                                <input
+                                  class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block  ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  placeholder="YYYY/MM/DD">
+                              </div>
+                            </div>
+                            <div class="flex flex-row items-center my-2">
+                              <label class="mr-1 font-medium text-gray-800" for="">Salida</label>
+                              <div  class="relative">
+                                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                                  </svg>
+                                </div>
+                                <input
+                                  class="w-full bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                                  placeholder="YYYY/MM/DD">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                       <div>
-                          <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
+                          <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>
                       </div>
                   </div>
 
