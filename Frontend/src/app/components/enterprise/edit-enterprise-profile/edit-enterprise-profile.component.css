@@ -150,10 +150,13 @@
     right: 0;
 }
 .button-color{
-    background-color: #008fa8;
+    background-color: #45737c;
 }
-.button-color:hover{
-    background-color: #15c3c3;
+.color{
+    background-color: #45737c;
+}
+.color::placeholder{
+    color: white;
 }
 .size{
     min-width: 20rem;
@@ -283,5 +286,21 @@ h5:hover {
     box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
 }
 .button2:hover{
+    background-color: #15c3c3;
+}
+
+.cursores{
+    cursor: not-allowed;
+}
+.cursores *{
+    cursor: not-allowed;
+}
+
+.button0{
+    background-color: #008fa8;
+    color: white;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+}
+.button0:hover{
     background-color: #15c3c3;
 }
