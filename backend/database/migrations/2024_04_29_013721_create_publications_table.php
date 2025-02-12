@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('vacancies');
             $table->string('deathline');
             $table->string('postulation_way');
+            $table->boolean('is_deleted')->default(false);
             $table->foreignId('empresa_id')->constrained('empresa')->onDelete('cascade');
             $table->boolean('featured')->default(false);
             $table->timestamps();

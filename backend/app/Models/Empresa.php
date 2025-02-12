@@ -24,4 +24,14 @@ class Empresa extends Model
     {
         return $this->belongsTo(User::class, 'id');
     }
+
+    public function saldos()
+    {
+        return $this->belongsToMany(Saldo::class, 'necesita', 'empresa_id', 'saldo_id');
+    }
+
+    public function necesita()
+    {
+        return $this->hasMany(Necesita::class);
+    }
 }

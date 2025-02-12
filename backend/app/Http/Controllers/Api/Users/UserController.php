@@ -37,25 +37,33 @@ class UserController extends Controller
     public function loginUser(Request $request)
     {
         $jsonData = $request->json()->all();
-
+    
         $validator = Validator::make($jsonData, [
             'email' => 'required|email',
             'password' => 'required',
         ]);
-
+    
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors()], 401);
         }
-
+    
         if (Auth::attempt(['email' => $jsonData['email'], 'password' => $jsonData['password']])) {
             /** @var \App\Models\User $user **/
             $user = Auth::user();
-
+    
+            if ($user->is_suspended) {
+                return response()->json(['message' => 'User account is suspended'], 403);
+            }
+    
+            // if (is_null($user->email_verified_at)) {
+            //     return response()->json(['message' => 'Email is not verified'], 403);
+            // }
+    
             $success = $user->createToken('MyApp')->plainTextToken;
-
+    
             return response()->json(['token' => $success], 200);
         }
-
+    
         return response()->json(['message' => 'email or password wrong'], 401);
     }
 
@@ -102,59 +110,14 @@ class UserController extends Controller
                     $data['file'] = $file->file;
                 }
             }
-    
-
-    
             return response(['data' => $data], 200);
         }
     
         return response(['data' => 'Unauthorized'], 401);
     }
+
     
-    public function obtenerUsuarioByPhone($phone): Response
-    {
-        $user = User::where('phone', $phone)->first();
-        if (!$user) {
-            return response(['message' => 'Usuario no encontrado'], 404);
-        }
 
-        $estudiante = Estudiante::where('id', $user->id)->first();
-        if (!$estudiante) {
-            return response(['message' => 'Estudiante no encontrado'], 404);
-        }
-
-
-        $etiquetas = $estudiante->etiquetas()->select('etiqueta.id', 'etiqueta.name')->get();
-        $cv = CV::where('estudiante_id', $user->id)->first();
-
-        $data = [
-            'name' => $user->name,
-            'email' => $user->email,
-            'phone' => $user->phone,
-            'fec_nacimiento' => $estudiante->fec_nacimiento,
-            'desc1' => $estudiante->desc1,
-            'desc2' => $estudiante->desc2,
-            'cod_postal' => $estudiante->cod_postal,
-            'location' => $estudiante->location,
-            'genero' => $estudiante->genero,
-            'etiquetas' => $etiquetas, 
-            'cv' => $cv ? $cv->pdf : null 
-        ];
-
-        // Buscar imagen del estudiante
-        $image = ImageUpload::where('estudiante_id', $estudiante->id)->first();
-        if ($image) {
-            $data['image'] = $image->image;
-        }
-
-        // Buscar archivo del estudiante
-        $file = FileUpload::where('estudiante_id', $estudiante->id)->first();
-        if ($file) {
-            $data['file'] = $file->file;
-        }
-
-        return response(['data' => $data], 200);
-    }
 
 
     public function logout(): Response
@@ -183,7 +146,7 @@ class UserController extends Controller
             'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'phone' => 'required|string|max:9',
+            'phone' => 'required|string|max:9|unique:users,phone',
             'rol' => 'required|in:estudiante,administrador,empresa',
             'location' => 'required_if:rol,estudiante|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandu,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembo,Treinta y Tres',
             'ci_estudiante' => 'required_if:rol,estudiante|string|max:8|unique:estudiante',
@@ -193,7 +156,7 @@ class UserController extends Controller
             'sede' => 'required_if:rol,empresa|string|max:100',
             'id_image' => 'nullable|integer',
         ]);
-
+    
         if ($validator->fails()) {
             $data = [
                 'status' => 'error',
@@ -210,41 +173,41 @@ class UserController extends Controller
                 'rol' => $jsonData['rol'],
                 'phone' => $jsonData['phone'],
             ]);
-
+    
             // Crear estudiante si el rol es estudiante
-        if ($jsonData['rol'] === 'estudiante') {
-            $estudianteData = [
-                'ci_estudiante' => $jsonData['ci_estudiante'],
-                'id' => $user->id,
-                'cod_postal' => $jsonData['cod_postal'],
-                'location' => $jsonData['location'],
-                'genero' => $jsonData['genero'],
-                'fec_nacimiento' => $jsonData['fec_nacimiento'],
-            ];
-
-            // Crear el registro del estudiante primero
-            $estudiante = Estudiante::create($estudianteData);
-
-            // Luego actualizar el campo estudiante_id en la tabla image_uploads
-            if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
-                $image = ImageUpload::find($jsonData['id_image']);
-                if ($image) {
-                    $image->estudiante_id = $user->id;
-                    $image->save();
+            if ($jsonData['rol'] === 'estudiante') {
+                $estudianteData = [
+                    'ci_estudiante' => $jsonData['ci_estudiante'],
+                    'id' => $user->id,
+                    'cod_postal' => $jsonData['cod_postal'],
+                    'location' => $jsonData['location'],
+                    'genero' => $jsonData['genero'],
+                    'fec_nacimiento' => $jsonData['fec_nacimiento'],
+                ];
+    
+                // Crear el registro del estudiante primero
+                $estudiante = Estudiante::create($estudianteData);
+    
+                // Luego actualizar el campo estudiante_id en la tabla image_uploads
+                if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
+                    $image = ImageUpload::find($jsonData['id_image']);
+                    if ($image) {
+                        $image->estudiante_id = $user->id;
+                        $image->save();
+                    }
                 }
             }
-        }
-
+    
             // Crear empresa si el rol es empresa
             if ($jsonData['rol'] === 'empresa') {
                 $empresaData = [
                     'id' => $user->id,
                     'sede' => $jsonData['sede']
                 ];
-
+    
                 // Crear el registro de la empresa
                 $empresa = Empresa::create($empresaData);
-
+    
                 // Luego actualizar el campo empresa_id en la tabla image_uploads
                 if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
                     $image = ImageUpload::find($jsonData['id_image']);
@@ -253,8 +216,8 @@ class UserController extends Controller
                         $image->save();
                     }
                 }
-        }
-
+            }
+    
             $data = [
                 'status' => 'success',
                 'message' => 'User created successfully',
@@ -262,7 +225,7 @@ class UserController extends Controller
                 'code' => 201
             ];
         }
-
+    
         return response()->json($data, $data['code']);
     }
 
@@ -278,7 +241,7 @@ class UserController extends Controller
         $validator = Validator::make($jsonData, [
             'name' => 'nullable',
             'email' => 'nullable|email|unique:users,email,' . $id,
-            'phone' => 'nullable|string|max:9',
+            'phone' => 'nullable|string|max:9|unique:users,phone,' . $id,
             'location' => 'nullable|string|in:Artigas,Canelones,Cerro Largo,Colonia,Durazno,Flores,Florida,Lavalleja,Maldonado,Montevideo,Paysandú,Río Negro,Rivera,Rocha,Salto,San José,Soriano,Tacuarembó,Treinta y Tres',
             'ci_estudiante' => 'nullable|string|max:8|unique:estudiante,ci_estudiante,' . $id . ',id',
             'fec_nacimiento' => 'nullable|date',
@@ -339,7 +302,7 @@ class UserController extends Controller
             if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
                 $student->id_image = $jsonData['id_image'];
             }
-
+    
             if (isset($jsonData['genero']) && $jsonData['genero'] !== '') {
                 $student->genero = $jsonData['genero'];
             }
@@ -353,33 +316,33 @@ class UserController extends Controller
             }
     
             $student->save();
-
+    
             $empresa = Empresa::find($id);
-
+    
             if (isset($jsonData['about_us']) && $jsonData['about_us'] != $empresa->about_us) {
                 $empresa->about_us = $jsonData['about_us'];
             }
-
+    
             if (isset($jsonData['desc1']) && $jsonData['desc1'] != $empresa->desc1) {
                 $empresa->desc1 = $jsonData['desc1'];
             }
-
+    
             if (isset($jsonData['desc2']) && $jsonData['desc2'] != $empresa->desc2) {
                 $empresa->desc2 = $jsonData['desc2'];
             }
-
+    
             if (isset($jsonData['desc3']) && $jsonData['desc3'] != $empresa->desc3) {
                 $empresa->desc3 = $jsonData['desc3'];
             }
-
+    
             if (isset($jsonData['sede']) && $jsonData['sede'] != $empresa->sede) {
                 $empresa->sede = $jsonData['sede'];
             }
-
+    
             if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
                 $empresa->id_image = $jsonData['id_image'];
             }
-
+    
             $empresa->save();
     
             // Actualizar la primera etiqueta del usuario
@@ -430,138 +393,6 @@ class UserController extends Controller
         return response()->json($data, $data['code']);
     }
 
-
-    public function AddUsertags(Request $request)
-    {
-
-        $jsonData = $request->json()->all();
-
-        $validator = Validator::make($jsonData, [
-            'estudiante_id' => 'required',
-            'etiqueta_id' => 'required',
-
-        ]);
-
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error al agregarle la etiqueta al usuario',
-                'status' => 400,
-                'errors' => $validator->errors()
-            ];
-            return response()->json($data, 400);
-        } else {
-            $estudiante = Estudiante::find($jsonData['estudiante_id']);
-            $etiqueta = Etiqueta::find($jsonData['etiqueta_id']);
-
-            if ($estudiante && $etiqueta) {
-                if ($estudiante->etiquetas()->where('etiqueta_id', $etiqueta->id)->exists()) {
-                    $data = [
-                        'message' => 'La etiqueta ya esta asignada al estudiante',
-                        'status' => 409
-                    ];
-                    return response()->json($data, 409);
-                }
-
-                $estudiante->etiquetas()->attach($etiqueta->id);
-                $data = [
-                    'message' => 'Etiqueta agregada correctamente',
-                    'status' => 201
-                ];
-                return response()->json($data, 201);
-            } else {
-                $data = [
-                    'message' => 'Estudiante o Etiqueta no encontrados',
-                    'status' => 404
-                ];
-                return response()->json($data, 404);
-            }
-        }
-    }
-
-    public function showUsertags($id)
-    {
-        $estudiante = Estudiante::find($id);
-    
-        if (!$estudiante) {
-            return response()->json(0, 200);
-        }
-    
-        $tags = $estudiante->etiquetas()->get(['id', 'name']);
-        if ($tags->isEmpty()) {
-            $data = [
-                'message' => 'Etiquetas no encontradas',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-        $data = [
-            'etiquetas del estudiante' => $tags,
-            'status' => 200
-        ];
-        return response()->json($data, 200);
-    }
-    
-    public function deleteUserTag(Request $request)
-    {
-        $jsonData = $request->json()->all();
-
-        $validator = Validator::make($jsonData, [
-            'estudiante_id' => 'required',
-            'etiqueta_id' => 'required',
-        ]);
-
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error al eliminar la etiqueta del usuario',
-                'status' => 400,
-                'errors' => $validator->errors()
-            ];
-            return response()->json($data, 400);
-        } else {
-            $estudiante = Estudiante::find($jsonData['estudiante_id']);
-            $etiqueta = Etiqueta::find($jsonData['etiqueta_id']);
-
-            if ($estudiante && $etiqueta) {
-                if (!$estudiante->etiquetas()->where('etiqueta_id', $etiqueta->id)->exists()) {
-                    $data = [
-                        'message' => 'La etiqueta no está asignada al estudiante',
-                        'status' => 409
-                    ];
-                    return response()->json($data, 409);
-                }
-
-                $estudiante->etiquetas()->detach($etiqueta->id);
-                $data = [
-                    'message' => 'Etiqueta eliminada correctamente',
-                    'status' => 200
-                ];
-                return response()->json($data, 200);
-            } else {
-                $data = [
-                    'message' => 'Estudiante o Etiqueta no encontrados',
-                    'status' => 404
-                ];
-                return response()->json($data, 404);
-            }
-        }
-    }
-
-    public function showTags()
-    {
-        $tags = Etiqueta::all();
-        if (!$tags) {
-            $data = [
-                'message' => 'Error al mostrar las etiquetas',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-        $data = [
-            'Tags' => $tags,
-            'status' => 200
-        ];
-        return response()->json($data, 200);
-    }
 
 
     public function destroy() {}

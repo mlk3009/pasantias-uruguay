@@ -39,7 +39,7 @@ export class LoginComponent {
   public loading: boolean = false;
   public showError: boolean = false;
   public inputType: string = 'password';
-  public rememberMe: boolean = false; // Nueva propiedad
+  public rememberMe: boolean = false; 
 
   constructor(
     private _userService: UserService,
@@ -76,7 +76,7 @@ export class LoginComponent {
           this._cookieService.set('token', token);
         }
         localStorage.setItem('email', this.user.email);
-
+  
         return this._router.navigate(['/']);
       },
       (error) => {
@@ -85,18 +85,20 @@ export class LoginComponent {
           error.status == 400 ||
           error.status == 401 ||
           error.status == 404 ||
-          error.status == 500
+          error.status == 500 ||
+          error.status == 403
         ) {
-          if (error.error.message === 'Email not verified') {
-            this.showError = true;
-            this.status = 'Esta cuenta necesita verificarse primero';
-          } else {
-            this.showError = true;
-            this.status = 'Usuario o contraseña incorrectos';
+          if (error.status == 403 && error.error.message === 'User account is suspended') {
+            alert('Esta cuenta está suspendida');
+          } 
+          // else if (error.error.message === 'Email not verified') {
+          //   alert('Esta cuenta necesita verificarse primero');
+          // } 
+          else {
+            alert('Usuario o contraseña incorrectos');
           }
         } else if (error.status == 0) {
-          this.showError = true;
-          this.status = 'Error de conexión';
+          alert('Error de conexión');
         }
       }
     );

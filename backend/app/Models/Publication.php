@@ -22,8 +22,11 @@ class Publication extends Model
         'vacancies',
         'postulation_way',
         'featured',
+        'is_deleted',
         'empresa_id'
     ];
+    
+    public $timestamps = true;
 
     public function etiquetas()
     {

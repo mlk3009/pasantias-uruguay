@@ -82,4 +82,30 @@ export class PublicationService {
       map(response => response)
     );
   }
+
+  createPublication(publication: any): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this._http.post<any>(`${global.url}publications/store`, publication, { headers: headers }).pipe(
+      map(response => response)
+    );
+  }
+
+  updatePartial(id: string, publication: any): Observable<any> {
+    const token = this.getToken();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
+    return this._http.patch<any>(`${global.url}publications/updatePartial/${id}`, publication, { headers: headers }).pipe(
+      map(response => response)
+    );
+  }
+
+
 }

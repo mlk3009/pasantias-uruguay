@@ -13,9 +13,10 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('phone', 9);
+            $table->string('phone', 9)->unique();
             $table->string('password');
             $table->string('remember_token', 100)->nullable();
+            $table->boolean('is_suspended')->default(false);
             $table->enum('rol', ['administrador', 'estudiante', 'empresa']);
             $table->timestamps();
             $table->engine = 'InnoDB';
@@ -74,6 +75,16 @@ return new class extends Migration
             $table->longText('payload');
             $table->integer('last_activity')->index();
             $table->engine = 'InnoDB'; 
+        });
+
+        Schema::create('mensajes', function (Blueprint $table) {
+            $table->id();
+            $table->string('asunto');
+            $table->text('mensaje');
+            $table->string('mail');
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -58,9 +58,23 @@ storeImage(file: File, userId?: number): Observable<any> {
   register(user: User): Observable<any> {
     let json = JSON.stringify(user);
     let params = json;
-
-    let headers = new HttpHeaders().set('Content-Type', 'application/raw');
+  
+    let headers = new HttpHeaders().set('Content-Type', 'application/json');
     return this._http.post(global.url + 'register', params, {
+      headers: headers,
+    });
+  }
+  
+  update(data: any, token: string): Observable<any> {
+    let json = JSON.stringify(data);
+    let params = json;
+  
+    let headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    });
+  
+    return this._http.post(global.url + 'updateProfile', params, {
       headers: headers,
     });
   }
@@ -76,19 +90,6 @@ storeImage(file: File, userId?: number): Observable<any> {
     return this._http.post(global.url + 'login', params, { headers: headers });
   }
 
-  update(data: any, token: string): Observable<any> {
-    let json = JSON.stringify(data);
-    let params = json;
-
-    let headers = new HttpHeaders({
-      'Content-Type': 'application/raw',
-      Authorization: `Bearer ${token}`
-    });
-
-    return this._http.post(global.url + 'updateProfile', params, {
-      headers: headers,
-    });
-  }
 
 
   obtenerUsuario(token: string): Observable<any> {

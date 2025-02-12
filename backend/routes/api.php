@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\PublicationController;
 use App\Http\Controllers\Api\Email\EmailController;
 use App\Http\Controllers\Api\Users\ImagesController;
 use App\Http\Controllers\Api\Users\CompanyController;
+use App\Http\Controllers\Api\Users\StudentsController;
+use App\Http\Controllers\Api\Users\AdminController;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
@@ -19,6 +21,7 @@ Route::post('login', [UserController::class, 'loginUser']);
 Route::post('register', [UserController::class, 'store']);
 Route::post('/contactUs', [EmailController::class, 'contactUs']);
 Route::post('/contactMe', [EmailController::class, 'contactMe']);
+
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);
@@ -31,7 +34,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
 });
 
 Route::get('company/publications/{phone}', [CompanyController::class, 'obtenerPublicaciones']);
-Route::get('/userbyphone/{phone}', [UserController::class, 'obtenerUsuarioByPhone']);
+Route::get('/userbyphone/{phone}', [StudentsController::class, 'obtenerUsuarioByPhone']);
 Route::get('/companybyphone/{phone}', [CompanyController::class, 'obtenerEmpresaByPhone']);
 
 
@@ -44,6 +47,18 @@ Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtene
 //GUARDAR
 Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPublicacion']);
 
+//ADMIN
+
+Route::middleware('auth:sanctum')->group(function () {
+    // Rutas para obtener y buscar usuarios
+    Route::get('/admin/users', [AdminController::class, 'getAllUsers']);
+    Route::get('/admin/users/search', [AdminController::class, 'searchUsers']);
+
+    // Rutas para publicaciones
+    Route::patch('/admin/publications/update/{id}', [AdminController::class, 'updatePublication']);
+    Route::delete('/admin/publications/delete/{id}', [AdminController::class, 'destroyPublication']);
+    Route::patch('/admin/publications/soft-delete/{id}', [AdminController::class, 'softDeletePublication']);
+});
 
 //CV
 Route::post('/cv', [CvController::class, 'storeCV']);
@@ -51,10 +66,10 @@ Route::delete('/dropcv/{estudiante_id}', [CvController::class, 'deleteCV']);
 Route::delete('cvdeletePDF/{estudianteId}', [CvController::class, 'borrarPDF']);
 
 //TAGS
-Route::post('/addUserTag', [UserController::class, 'AddUsertags']);
-Route::get('/showUserTag/{id}', [UserController::class, 'ShowUsertags']);
-Route::get('/showTags', [UserController::class, 'showTags']);
-Route::delete('/deleteUserTag', [UserController::class, 'deleteUserTag']);
+Route::post('/addUserTag', [StudentsController::class, 'AddUsertags']);
+Route::get('/showUserTag/{id}', [StudentsController::class, 'ShowUsertags']);
+Route::get('/showTags', [StudentsController::class, 'showTags']);
+Route::delete('/deleteUserTag', [StudentsController::class, 'deleteUserTag']);
 
 
 // PASSWORD
@@ -73,11 +88,15 @@ Route::delete('delete-file/{id}', [ImagesController::class, 'delete_file']);
 // Ruta para verificar el correo electrónico
 Route::post('checkEmailCode', [EmailController::class, 'checkEmailCode']);
 
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/publications/store', [PublicationController::class, 'store']);
+    Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
+    Route::put('publications/soft-delete/{id}', [PublicationController::class, 'softDelete']);
+    Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
+    Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
+    Route::put('publications/reactivate', [PublicationController::class, 'reactivatePublication']);
+});
 
 Route::get('/publications', [PublicationController::class, 'index']);
 Route::get('/publications/show/{id}', [PublicationController::class, 'show']);
-Route::post('/publications/store', [PublicationController::class, 'store']);
-Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
-Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
-Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
 Route::get('top-categories/{limit?}', [PublicationController::class, 'getTopCategories']);
