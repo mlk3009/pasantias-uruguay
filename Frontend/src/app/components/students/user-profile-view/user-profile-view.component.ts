@@ -58,7 +58,7 @@ export class UserProfileViewComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener el usuario:', error);
-        alert('Error: No se encontró al estudiante.');
+        this.showAlert3();
         this.loading = false;
       }
     });
@@ -74,12 +74,12 @@ export class UserProfileViewComponent implements OnInit {
     this._userService.contactMe(email, asunto, descripcion, emailDestino).subscribe({
         next: (response) => {
             console.log('Correo enviado correctamente', response);
-            alert('Correo enviado correctamente');
+            this.showAlert1();
             this.modalClose();
         },
         error: (error) => {
             console.error('Error al enviar el correo:', error);
-            alert('Error al enviar el correo');
+            this.showAlert2();
         }
     });
 }
@@ -92,6 +92,81 @@ export class UserProfileViewComponent implements OnInit {
 
   modalClose() {
     const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert1(): void {
+    const modal = document.getElementById('alert-container') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container2 no encontrado');
+    }
+  }
+
+  alert1Close() {
+    const modal = document.getElementById('alert-container') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert2(): void {
+    const modal = document.getElementById('alert-container2') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container2 no encontrado');
+    }
+  }
+
+  alert2Close() {
+    const modal = document.getElementById('alert-container2') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert3(): void {
+    const modal = document.getElementById('alert-container3') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container3 no encontrado');
+    }
+  }
+
+  alert3Close() {
+    const modal = document.getElementById('alert-container3') as HTMLElement;
     modal.style.display = 'none';
   }
   

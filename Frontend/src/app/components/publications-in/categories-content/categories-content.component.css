@@ -46,3 +46,20 @@ img{
 .button-color:hover{
     background-color: #15c3c3;
 }
+
+  .prev-next{
+    padding-bottom: 5vh;
+    margin-top: 10vh;
+}
+.span{
+    margin: auto 2.5rem;
+}
+.button{
+    color: rgb(49, 49, 49);
+    background-color: white;
+    border: 1px solid rgb(129, 129, 129);
+}
+.button:hover{
+    background-color: #15c3c311;
+    color: black;
+}

@@ -164,6 +164,48 @@ export const routes: Routes = [
         (m) => m.RegisterIn1Component
       ),
   },
+  {
+    path: 'admin-profile',
+    loadComponent: () =>
+      import('./components/admin/user-admin-profile/user-admin-profile.component').then(
+        (m) => m.UserAdminProfileComponent
+      ),
+  },
+  {
+    path: 'admin-users',
+    loadComponent: () =>
+      import('./components/admin/administrar-usuarios/administrar-usuarios.component').then(
+        (m) => m.AdministrarUsuariosComponent
+      ),
+  },
+  {
+    path: 'admin-categories',
+    loadComponent: () =>
+      import('./components/admin/administrar-categorias/administrar-categorias.component').then(
+        (m) => m.AdministrarCategoriasComponent
+      ),
+  },
+  {
+    path: 'admin-solicitudes',
+    loadComponent: () =>
+      import('./components/admin/administrar-solicitudes/administrar-solicitudes.component').then(
+        (m) => m.AdministrarSolicitudesComponent
+      ),
+  },
+  {
+    path: 'admin-publications',
+    loadComponent: () =>
+      import('./components/admin/administrar-publicaciones/administrar-publicaciones.component').then(
+        (m) => m.AdministrarPublicacionesComponent
+      ),
+  },
+  {
+    path: 'edit-enterprise-profile',
+    loadComponent: () =>
+      import('./components/enterprise/edit-enterprise-profile/edit-enterprise-profile.component').then(
+        (m) => m.EditEnterpriseProfileComponent
+      ),
+  },
   // Dejar '**' siempre al final
   {
     path: '**',

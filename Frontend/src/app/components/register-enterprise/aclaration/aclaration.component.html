@@ -9,14 +9,14 @@
 
     <div class="pt-36 w-full h-4/5 flex flex-col items-center justify-between">
         <div class="flex flex-col items-center justify-between">
-            <h1 class="text-white text-3xl font-medium text-center">Solicíta el registro de tu empresa</h1>
+            <h1 class="text-white text-3xl font-medium text-center animate__animated animate__backInDown animate__faster">Solicíta el registro de tu empresa</h1>
             <p class="text-white text-lg text-center max-w-4xl py-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque incidunt voluptatem dignissimos non harum excepturi mollitia ex, adipisci ducimus ratione eos ea, sed aperiam quaerat sunt fugit perferendis necessitatibus dolorum. Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam quam placeat ea quibusdam quaerat, explicabo non, reprehenderit ad architecto tempore, et corporis vero nostrum? Adipisci excepturi hic ad magnam quisquam.</p>
         </div>
         <img src="../../../../assets/img/register.png" alt="" class="h-lg mx-auto">
        <div class="flex flex-col items-center">
-        <a href="/register-enterprise-in-1" class="button1 py-4 px-4 rounded-lg hover:cursor-pointer text-lg font-medium">Completar formulario</a>
+        <a href="/register-enterprise-in-1" class="button1 py-4 px-4 rounded-lg hover:cursor-pointer text-lg font-medium animate__animated animate__fadeInUp animate__faster">Completar formulario</a>
         <p class="text-md font-light text-gray-500 dark:text-gray-400 mt-3">
-          <a
+          <a (click)="modal()"
             
             class="finalText font-medium text-primary-600 hover:underline dark:text-primary-500 hover:cursor-pointer"
             >Contáctanos</a
@@ -35,3 +35,45 @@
         <div class="" style="height: 150px; overflow: hidden;" ><svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;"><path d="M-13.88,58.56 C150.00,149.60 333.18,-17.22 518.28,91.03 L512.07,168.79 L-7.67,177.65 Z" style="stroke: none; fill: rgb(255, 255, 255);"></path></svg></div>
     </div>
 </section>
+
+
+
+<!-- Modal -->
+<div id="contactModal" class="container-modal">
+  <div class="relative">
+    <!-- Modal content -->
+    <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+      <button (click)="modalClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+        <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+        </svg>      
+        <span class="sr-only">Close modal</span>
+      </button>
+      
+        <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+          <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+              <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Contacto</h2>
+              <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">Contacta a la persona para coordinar reuniones, solicitar información, o cualquier necesidad.</p>
+              <form class="space-y-8">
+                  <div>
+                      <label for="email" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-Mail</label>
+                      <input type="email" id="email"  name="email" ngModel class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@pasantiasuy.com" required>
+                  </div>
+                  <div>
+                      <label for="subject" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asunto</label>
+                      <input type="text" id="subject"  name="subject" ngModel class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Asunto sobre tu consulta" required>
+                  </div>
+                  <div class="sm:col-span-2">
+                      <label for="message" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mensaje</label>
+                      <textarea id="message"  name="message" ngModel rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..."></textarea>
+                  </div>
+                  <button type="submit" class="button2 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                      Enviar mensaje
+                  </button>
+              </form>
+          </div>
+      </section>
+      
+    </div>
+  </div>
+</div>
