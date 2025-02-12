@@ -57,7 +57,7 @@
                                 <img class="w-full rounded-lg" src="../../../../assets/img/img-nosotros4.jpg" alt="office content 1">
                                 <img class="mt-4 w-full lg:mt-10 rounded-lg" src="../../../../assets/img/img-nosotros2.jpg" alt="office content 2">
                             </div>
-                            <a href="" class="button1 py-2.5 px-4 rounded-lg hover:cursor-pointer text-lg font-medium w-full md:w-44 text-center">Ver publicaciones</a>
+                            <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="button1 py-2.5 px-4 rounded-lg hover:cursor-pointer text-lg font-medium w-full md:w-44 text-center">Ver publicaciones</a>
                         </div>
                     </section>
                 </section>
