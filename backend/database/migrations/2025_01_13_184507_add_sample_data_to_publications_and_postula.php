@@ -574,6 +574,27 @@ foreach ($publications as $publicationId) {
 }
 
     
+
+
+
+        DB::table('users')->insert([
+            'name' => 'Admin Ejemplo',
+            'email' => 'admin@example.com',
+            'phone' => '099088077',
+            'password' => Hash::make('password'),
+            'rol' => 'administrador',
+            'created_at' => now(),
+            'updated_at' => now(),
+        ]);
+
+
+        $adminUserId = DB::getPdo()->lastInsertId();
+
+
+        DB::table('administrador')->insert([
+            'ci_admin' => '55173448',
+            'id' => $adminUserId,
+        ]);
             }
 
     /**

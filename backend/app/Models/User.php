@@ -24,6 +24,7 @@ class User extends Authenticatable implements MustVerifyEmail
         'password',
         'rol',
         'phone',
+        'is_suspended',
     ];
 
     /**
@@ -57,6 +58,11 @@ class User extends Authenticatable implements MustVerifyEmail
                 Email::where('email', $user->email)->delete();
             }
         });
+    }
+
+    public function mensajes()
+    {
+        return $this->hasMany(Mensaje::class);
     }
 
 }

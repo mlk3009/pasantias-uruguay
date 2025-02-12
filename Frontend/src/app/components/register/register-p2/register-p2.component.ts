@@ -275,6 +275,10 @@ register(form: any) {
                   if (err == 'ci_estudiante') {
                       this.status += ' La cédula ya se encuentra registrada';
                   }
+
+                  if (err == 'phone') {
+                    this.status += ' El número de teléfono ya está en uso';
+                }
               }
 
               console.error('Error al registrar el usuario', error);

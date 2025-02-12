@@ -98,7 +98,7 @@ export class NavComponent implements AfterViewInit {
     );
     
     this._cookieService.delete('token');
-    this._router.navigate(['/']);
+    this._router.navigate(['/inicio']);
 
 }
 

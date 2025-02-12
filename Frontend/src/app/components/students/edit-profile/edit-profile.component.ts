@@ -18,6 +18,7 @@ export class EditProfileComponent implements OnInit {
   etiquetas: any[] = [];
   userImageUrl: string = '';
   previousImageId: string | null = null;
+  status: string = '';
 
   @ViewChild('fileInput') fileInput!: ElementRef;
 
@@ -140,12 +141,23 @@ export class EditProfileComponent implements OnInit {
             },
             error: (error) => {
                 console.error('Error al actualizar el perfil:', error);
+                let errorList = error.error.failed_input;
+
+                for (let err in errorList) {
+                    if (err == 'email') {
+                        this.status = 'El email ya se encuentra registrado';
+                    }
+
+                    if (err == 'phone') {
+                        this.status += ' El número de teléfono ya está en uso';
+                    }
+                }
             }
         });
     } else {
         console.error('Token no encontrado');
     }
-  }
+}
 
   reloadPage(): void {
     window.location.reload();
