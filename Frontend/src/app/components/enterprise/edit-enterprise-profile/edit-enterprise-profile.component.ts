@@ -1,10 +1,11 @@
 import { Component, ViewChildren, ViewChild, ElementRef, QueryList } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { NavComponent } from '../../home/nav/nav.component';
 
 @Component({
   selector: 'app-edit-enterprise-profile',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, NavComponent],
   templateUrl: './edit-enterprise-profile.component.html',
   styleUrl: './edit-enterprise-profile.component.css'
 })

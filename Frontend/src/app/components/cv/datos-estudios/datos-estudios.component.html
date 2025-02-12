@@ -45,8 +45,9 @@
 </div>
 
 
-        <div class="flex flex-row items-center justify-between mb-4">
-            <div id="date-range-picker" date-rangepicker class="flex flex-col">
+        <div class="flex flex-row justify-between mb-4">
+            <div class="flex flex-col">
+              <div id="date-range-picker" date-rangepicker class="flex flex-col">
                 <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Inicio</p>
                 <div class="relative">
                     <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
@@ -56,27 +57,18 @@
                     </div>
                     <input [(ngModel)]="estudio.fecha_inicio" maxlength="10" #inicio="ngModel" pattern="^\d{4}/\d{2}/\d{2}$"
                     id="datepicker-range-start" name="start" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="YYYY/MM/DD">
-                    <small *ngIf="inicio.invalid && inicio.touched" class="text-red-500">
-                        Inválido.</small>
                 </div>
+            </div>
+            <small *ngIf="inicio.invalid && inicio.touched" class="text-red-500">
+              Inválido.</small>
             </div>
 
             <div id="date-range-picker" date-rangepicker class="flex flex-col">
-              <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Final</p>
-              <div *ngIf="estudio.actualmente" class="relative">
-                <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
-                  <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                    <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
-                  </svg>
-                </div>
-                <input [(ngModel)]="estudio.fin_estimado" maxlength="10" #estimado="ngModel"
-                  id="datepicker-range-estimate" name="estimate" type="text" pattern="^\d{4}/\d{2}/\d{2}$"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="YYYY/MM/DD">
-                <small *ngIf="estimado.invalid && estimado.touched" class="text-red-500">Inválido.</small>
-              </div>
+              <div *ngIf="!estudio.actualmente" class="flex flex-col">
+                <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Final</p>
+              
             
-              <div *ngIf="!estudio.actualmente" class="relative">
+              <div  class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                   <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
@@ -86,13 +78,22 @@
                   id="datepicker-range-end" name="end" type="text" pattern="^\d{4}/\d{2}/\d{2}$"
                   class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="YYYY/MM/DD">
-                <small *ngIf="fin.invalid && fin.touched" class="text-red-500">Inválido.</small>
+                
+              </div>
+              <small *ngIf="fin.invalid && fin.touched" class="text-red-500">Inválido.</small>
               </div>
             </div>
+
+
+
+
+            
             <div class="flex flex-row items-center pt-10">
               <input class="rounded mr-1" type="checkbox" [name]="'actualmente' + i" [id]="'actualmente' + i" [(ngModel)]="estudio.actualmente">
               <label [for]="'actualmente' + i" class="text-gray-500">Cursando</label>
             </div>
+
+            
             </div>
 
         <div class="relative z-0 w-full mb-5 group">

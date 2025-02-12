@@ -205,6 +205,10 @@ h5:hover {
 .description{
     min-width: 350px;
 }
+
+.description2{
+    min-width: 380px;
+}
 #default-carousel {
     height: 100%;
     width: 100%;
@@ -220,3 +224,10 @@ h5:hover {
     border-radius: 0.125rem;
     border: dashed 2px rgb(61, 61, 61);
   }
+
+  .home_button{
+    color: #15c3c3;
+}
+.home_button2:hover{
+    color: #15c3c3;
+}

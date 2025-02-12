@@ -117,3 +117,10 @@
   .alerta{
     z-index: 100;
   }
+
+  .photo {
+    width: 20px; /* Puedes ajustar el tamaño según tus necesidades */
+    height: 20px; /* Puedes ajustar el tamaño según tus necesidades */
+    object-fit: cover; /* Esto asegura que la imagen se ajuste al cuadrado sin distorsionarse */
+    border-radius: 50%; /* Esto hará que la imagen sea circular */
+}
