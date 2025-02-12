@@ -68,18 +68,18 @@ export class EditProfileComponent implements OnInit {
 
   addUserTag(estudiante_id: number, etiqueta_id: number): void {
     if (this.userEtiquetas.length >= 3) {
-      alert('No puedes agregar más de 3 etiquetas.');
+      this.showAlert5();
       return;
     }
     this._userService.addUserTags(estudiante_id, etiqueta_id).subscribe({
       next: (response) => {
         console.log('Etiqueta agregada:', response);
-        alert('Etiqueta agregada correctamente.');
+        this.showAlert2();
         this.getUserEtiquetas(estudiante_id); // Actualizar las etiquetas del usuario
       },
       error: (error) => {
         console.error('Error al agregar la etiqueta:', error);
-        alert('Error al agregar la etiqueta. Por favor, inténtelo de nuevo más tarde.');
+        this.showAlert4();
       }
     });
   }
@@ -88,12 +88,12 @@ export class EditProfileComponent implements OnInit {
     this._userService.deleteUserTag(estudiante_id, etiqueta_id).subscribe({
       next: (response) => {
         console.log('Etiqueta eliminada:', response);
-        alert('Etiqueta eliminada correctamente.');
+        this.showAlert3();
         this.getUserEtiquetas(estudiante_id); // Actualizar las etiquetas del usuario
       },
       error: (error) => {
         console.error('Error al eliminar la etiqueta:', error);
-        alert('Error al eliminar la etiqueta. Por favor, inténtelo de nuevo más tarde.');
+        this.showAlert4();
       }
     });
   }
@@ -136,7 +136,7 @@ export class EditProfileComponent implements OnInit {
         this._userService.update(this.data, token).subscribe({
             next: (response) => {
                 console.log('Perfil actualizado:', response);
-                alert('Perfil actualizado correctamente.');
+                this.showAlert1();
             },
             error: (error) => {
                 console.error('Error al actualizar el perfil:', error);
@@ -256,4 +256,132 @@ export class EditProfileComponent implements OnInit {
     const modal = document.getElementById('contactModal') as HTMLElement;
     modal.style.display = 'none';
   }
+
+  showAlert1(): void {
+    const modal = document.getElementById('alert-container') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container2 no encontrado');
+    }
+  }
+
+  alert1Close() {
+    const modal = document.getElementById('alert-container') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+
+  showAlert2(): void {
+    const modal = document.getElementById('alert-container2') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container2 no encontrado');
+    }
+  }
+
+  alert1Close2() {
+    const modal = document.getElementById('alert-container2') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert3(): void {
+    const modal = document.getElementById('alert-container3') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container3 no encontrado');
+    }
+  }
+
+  alert1Close3() {
+    const modal = document.getElementById('alert-container3') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert4(): void {
+    const modal = document.getElementById('alert-container4') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container4 no encontrado');
+    }
+  }
+
+  alert1Close4() {
+    const modal = document.getElementById('alert-container4') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert5(): void {
+    const modal = document.getElementById('alert-container5') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container5 no encontrado');
+    }
+  }
+
+  alert1Close5() {
+    const modal = document.getElementById('alert-container5') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+
 }
