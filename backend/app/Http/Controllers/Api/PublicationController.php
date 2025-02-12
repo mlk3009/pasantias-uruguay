@@ -9,6 +9,8 @@ use App\Models\Guarda;
 use App\Models\Estudiante;
 use App\Models\Etiqueta;
 use App\Models\CV;
+use App\Models\Saldo;
+use App\Models\Necesita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
@@ -110,40 +112,89 @@ class PublicationController extends Controller
 }
 
 
-    public function store(Request $request)
-    {
-        $jsonData = $request->json()->all();
 
-        $validator = Validator::make($jsonData, [
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'salary' => 'required|numeric',
-            'location' => 'required|string',
-            'type' => 'required|string',
-            'time' => 'required|string',
-            'deathline' => 'required|date',
-            'vacancies' => 'required|numeric',
-            'postulation_way' => 'required|string',
-            'empresa_id' => 'required|numeric'
-        ]);
+public function store(Request $request)
+{
+    $jsonData = $request->json()->all();
 
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error al crear la publicación',
-                'status' => 400,
-                'errors' => $validator->errors()
-            ];
-            return response()->json($data, 400);
-        } else {
-            $publication = Publication::create($jsonData);
-            $data = [
-                'publication' => $publication,
-                'status' => 201
-            ];
-            return response()->json($data, 201);
+    $validator = Validator::make($jsonData, [
+        'title' => 'required|string',
+        'description' => 'required|string',
+        'salary' => 'required|numeric',
+        'location' => 'required|string',
+        'type' => 'required|string',
+        'time' => 'required|string',
+        'vacancies' => 'required|numeric',
+        'postulation_way' => 'required|string',
+        'empresa_id' => 'required|numeric',
+        'saldo_id' => 'required|numeric|exists:saldo,id', 
+        'id_image' => 'sometimes|array', 
+        'id_image.*' => 'numeric|exists:image_uploads,id'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error al crear la publicación',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+    // Obtener el saldo disponible para la empresa
+    $empresaId = $jsonData['empresa_id'];
+    $saldoId = $jsonData['saldo_id'];
+    $necesita = Necesita::where('empresa_id', $empresaId)
+                        ->where('saldo_id', $saldoId)
+                        ->first();
+
+    if (!$necesita || $necesita->quantity <= 0) {
+        $data = [
+            'message' => 'Saldo insuficiente para crear la publicación',
+            'status' => 400
+        ];
+        return response()->json($data, 400);
+    }
+
+    // Obtener el tipo de saldo
+    $saldo = Saldo::find($saldoId);
+
+    // Ajustar los atributos featured y deathline en base al saldo
+    if ($saldo->type == 'Normal') {
+        $jsonData['featured'] = false;
+    } elseif ($saldo->type == 'Destacado') {
+        $jsonData['featured'] = true;
+    }
+
+    $jsonData['deathline'] = now()->addDays($saldo->days)->toDateString();
+
+    // Crear la publicación
+    $publication = Publication::create($jsonData);
+
+    // Reducir el saldo disponible
+    $necesita->quantity -= 1;
+
+    if ($necesita->quantity <= 0) {
+        $necesita->delete();
+    } else {
+        $necesita->save();
+    }
+
+    // Asociar imágenes a la publicación si se proporcionan
+    if (isset($jsonData['id_image'])) {
+        foreach ($jsonData['id_image'] as $imageId) {
+            DB::table('image_uploads')
+                ->where('id', $imageId)
+                ->update(['publication_id' => $publication->id]);
         }
     }
 
+    $data = [
+        'publication' => $publication,
+        'status' => 201
+    ];
+    return response()->json($data, 201);
+}
 
 
     public function show($id)
@@ -203,51 +254,165 @@ class PublicationController extends Controller
         return response()->json($data, 200);
     }
 
-
-
-    public function update(Request $request, $id)
+    public function softDelete($id)
     {
-        $publication = Publication::find($id);
+    $publication = Publication::find($id);
+    if (!$publication) {
+        $data = [
+            'message' => 'Publicación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
 
-        if (!$publication) {
-            $data = [
-                'message' => 'Publicación no encontrada',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
+    $publication->is_deleted = true;
+    $publication->save();
 
-        $jsonData = $request->json()->all();
+    $data = [
+        'message' => 'Publicación dada de baja lógicamente',
+        'status' => 200
+    ];
+    return response()->json($data, 200);
+}
 
-        $validator = Validator::make($jsonData, [
-            'title' => 'required|string',
-            'description' => 'required|string',
-            'salary' => 'required|numeric',
-            'location' => 'required|string',
-            'type' => 'required|string',
-            'time' => 'required|string',
-            'deathline' => 'required|date',
-            'vacancies' => 'required|numeric',
-            'postulation_way' => 'required|string',
-            'empresa_id' => 'required|numeric'
-        ]);
+public function reactivatePublication(Request $request)
+{
+    $jsonData = $request->json()->all();
 
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error al actualizar la publicación',
-                'status' => 400,
-                'errors' => $validator->errors()
-            ];
-            return response()->json($data, 400);
-        } else {
-            $publication->update($jsonData);
-            $data = [
-                'publication' => $publication,
-                'status' => 200
-            ];
-            return response()->json($data, 200);
+    $validator = Validator::make($jsonData, [
+        'publication_id' => 'required|numeric|exists:publications,id',
+        'empresa_id' => 'required|numeric|exists:empresa,id',
+        'saldo_id' => 'required|numeric|exists:saldo,id'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error al reactivar la publicación',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+    // Obtener la publicación
+    $publication = Publication::find($jsonData['publication_id']);
+    if (!$publication) {
+        $data = [
+            'message' => 'Publicación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    // Obtener el saldo disponible para la empresa
+    $empresaId = $jsonData['empresa_id'];
+    $saldoId = $jsonData['saldo_id'];
+    $necesita = Necesita::where('empresa_id', $empresaId)
+                        ->where('saldo_id', $saldoId)
+                        ->first();
+
+    if (!$necesita || $necesita->quantity <= 0) {
+        $data = [
+            'message' => 'Saldo insuficiente para reactivar la publicación',
+            'status' => 400
+        ];
+        return response()->json($data, 400);
+    }
+
+    // Obtener el tipo de saldo
+    $saldo = Saldo::find($saldoId);
+
+    // Ajustar los atributos featured y deathline en base al saldo
+    if ($saldo->type == 'Normal') {
+        $publication->featured = false;
+    } elseif ($saldo->type == 'Destacado') {
+        $publication->featured = true;
+    }
+
+    $publication->deathline = now()->addDays($saldo->days)->toDateString();
+    $publication->is_deleted = false; // Reactivar la publicación
+    $publication->save();
+
+    // Reducir el saldo disponible
+    $necesita->quantity -= 1;
+
+    if ($necesita->quantity <= 0) {
+        $necesita->delete();
+    } else {
+        $necesita->save();
+    }
+
+    $data = [
+        'publication' => $publication,
+        'status' => 200
+    ];
+    return response()->json($data, 200);
+}
+
+
+
+public function update(Request $request, $id)
+{
+    $publication = Publication::find($id);
+
+    if (!$publication) {
+        $data = [
+            'message' => 'Publicación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    $jsonData = $request->json()->all();
+
+    $validator = Validator::make($jsonData, [
+        'title' => 'required|string',
+        'description' => 'required|string',
+        'salary' => 'required|numeric',
+        'location' => 'required|string',
+        'type' => 'required|string',
+        'time' => 'required|string',
+        'deathline' => 'required|date',
+        'vacancies' => 'required|numeric',
+        'postulation_way' => 'required|string',
+        'empresa_id' => 'required|numeric',
+        'id_image' => 'sometimes|array', 
+        'id_image.*' => 'numeric|exists:image_uploads,id' 
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error al actualizar la publicación',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+    // Actualizar la publicación
+    $publication->update($jsonData);
+
+    // Asociar imágenes a la publicación si se proporcionan
+    if (isset($jsonData['id_image'])) {
+        // Primero, desasociar las imágenes actuales
+        DB::table('image_uploads')
+            ->where('publication_id', $publication->id)
+            ->update(['publication_id' => null]);
+
+        // Luego, asociar las nuevas imágenes
+        foreach ($jsonData['id_image'] as $imageId) {
+            DB::table('image_uploads')
+                ->where('id', $imageId)
+                ->update(['publication_id' => $publication->id]);
         }
     }
+
+    $data = [
+        'publication' => $publication,
+        'status' => 200
+    ];
+    return response()->json($data, 200);
+}
 
 
 

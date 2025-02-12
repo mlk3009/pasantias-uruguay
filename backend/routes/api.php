@@ -73,11 +73,15 @@ Route::delete('delete-file/{id}', [ImagesController::class, 'delete_file']);
 // Ruta para verificar el correo electrónico
 Route::post('checkEmailCode', [EmailController::class, 'checkEmailCode']);
 
+Route::group(['middleware' => 'auth:sanctum'], function () {
+    Route::post('/publications/store', [PublicationController::class, 'store']);
+    Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
+    Route::put('publications/soft-delete/{id}', [PublicationController::class, 'softDelete']);
+    Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
+    Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
+    Route::put('publications/reactivate', [PublicationController::class, 'reactivatePublication']);
+});
 
 Route::get('/publications', [PublicationController::class, 'index']);
 Route::get('/publications/show/{id}', [PublicationController::class, 'show']);
-Route::post('/publications/store', [PublicationController::class, 'store']);
-Route::put('/publications/update/{id}', [PublicationController::class, 'update']);
-Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
-Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
 Route::get('top-categories/{limit?}', [PublicationController::class, 'getTopCategories']);
