@@ -1,13 +1,54 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CompanyService } from '../../../services/company.service';
 import { NavComponent } from '../../home/nav/nav.component';
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-postulantes',
-  standalone: true,
-  imports: [NavComponent],
   templateUrl: './postulantes.component.html',
-  styleUrl: './postulantes.component.css'
+  styleUrls: ['./postulantes.component.css'],
+  imports: [NavComponent, CommonModule],
+  standalone: true
 })
-export class PostulantesComponent {
+export class PostulantesComponent implements OnInit {
 
+  empresa: any;
+  postulantes: any[] = [];
+  loading: boolean = false;
+
+  constructor(private companyService: CompanyService) {}
+
+  ngOnInit(): void {
+    this.loading = true;
+    const token = this.companyService.getToken();
+    if (token) {
+      this.companyService.obtenerEmpresa(token).subscribe({
+        next: (response) => {
+          this.empresa = response.data;
+          this.obtenerPostulantes(this.empresa.id);
+          this.loading = false;
+        },
+        error: (error) => {
+          console.error('Error al obtener la empresa:', error);
+          this.loading = false;
+        }
+      });
+    } else {
+      console.error('Token no encontrado');
+      this.loading = false;
+    }
+  }
+
+  obtenerPostulantes(empresaId: string): void {
+    this.companyService.obtenerPostulantes(empresaId).subscribe({
+      next: (response) => {
+        this.postulantes = response.data;
+        console.log(this.postulantes);
+      },
+      error: (error) => {
+        console.error('Error al obtener los postulantes:', error);
+      }
+    });
+  }
 }

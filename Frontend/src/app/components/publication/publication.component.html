@@ -39,23 +39,20 @@
                 </div>
         
                 <div class="mt-6 sm:mt-8 lg:mt-0">
-                  <h1
-                    class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white"
-                  >
-                    Apple iMac 24" All-In-One Computer, Apple M1, 8GB RAM, 256GB SSD,
-                    Mac OS, Pink
+                  <h1 class="text-xl font-semibold text-gray-900 sm:text-2xl dark:text-white">
+                    {{ publication?.title }}
                   </h1>
                   <h2
-                    class="hover-enlarge hover:underline hover:cursor-pointer text-xl font-medium text-gray-500 sm:text-2xl dark:text-white w-11"
-                    >
-                    Geocom
-                    </h2>
+                  class="hover-enlarge hover:underline hover:cursor-pointer text-xl font-medium text-gray-500 sm:text-2xl dark:text-white w-11 whitespace-nowrap"
+                >
+                  {{ publication?.company_name }}
+                </h2>
                   <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
                     <p
-                      class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white"
-                    >
-                      $1,249.99
-                    </p>
+                    class="text-2xl font-extrabold text-gray-900 sm:text-3xl dark:text-white"
+                  >
+                    {{ publication?.salary ? '$' + publication?.salary : '' }}
+                  </p>
         
                     <div class="flex items-center gap-2 mt-2 sm:mt-0">
                       <div class="flex items-center gap-1">
@@ -135,27 +132,27 @@
         
                   <div class="mt-6 sm:gap-4 sm:items-center sm:flex sm:mt-8">
                     <a
-                    href="#"
                     title=""
                     class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                     role="button"
-                    >
+                    (click)="guardarPublicacion()"
+                  >
                     <svg
-                    class="w-8 h-8 -ms-2 me-2"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="24"
-                    height="24"
-                    fill="none"
-                    viewBox="0 0 64 64"
+                      class="w-8 h-8 -ms-2 me-2"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="24"
+                      height="24"
+                      fill="none"
+                      viewBox="0 0 64 64"
                     >
-                    <path
+                      <path
                         fill="currentColor"
                         d="M45,13H19a1,1,0,0,0-1,1V50a1,1,0,0,0,.6.92,1,1,0,0,0,1.08-.19L32,39.36,44.32,50.73A1,1,0,0,0,45,51a1.1,1.1,0,0,0,.4-.08A1,1,0,0,0,46,50V14A1,1,0,0,0,45,13ZM44,47.72,32.68,37.27a1,1,0,0,0-1.36,0L20,47.72V15H44Z"
-                    />
+                      />
                     </svg>
                     Guardar
-                    </a>
+                  </a>
         
                     <a
                         (click)="modal()"
@@ -175,44 +172,23 @@
                     </a>
 
                     <a
-                        href="#"
-                        title=""
-                        class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
-                        role="button"
-                        style="height: 53px;"
-                    >
-                        <svg class="-ms-2 me-2 w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                            <path fill-rule="evenodd" d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-3 8a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Zm2 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Z" clip-rule="evenodd"/>
-                          </svg>
-                          
-                        Postularse
-                    </a>
+                  title=""
+                  class="flex items-center justify-center py-2.5 px-5 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                  role="button"
+                  style="height: 53px;"
+                  (click)="createPostulacion()"
+                >
+                  <svg class="-ms-2 me-2 w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                    <path fill-rule="evenodd" d="M8 3a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1h2a2 2 0 0 1 2 2v15a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h2Zm6 1h-4v2H9a1 1 0 0 0 0 2h6a1 1 0 1 0 0-2h-1V4Zm-3 8a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Zm2 5a1 1 0 0 1 1-1h3a1 1 0 1 1 0 2h-3a1 1 0 0 1-1-1Zm-2-1a1 1 0 1 0 0 2h.01a1 1 0 1 0 0-2H9Z" clip-rule="evenodd"/>
+                  </svg>
+                  Postularse
+                </a>
                   </div>
         
                   <hr class="my-6 md:my-8 border-gray-200 dark:border-gray-800" />
         
                   <p class="mb-6 text-gray-500 dark:text-gray-400">
-                    Studio quality three mic array for crystal clear calls and voice
-                    recordings. Six-speaker sound system for a remarkably robust and
-                    high-quality audio experience. Up to 256GB of ultrafast SSD storage.
-                  </p>
-        
-                  <p class="text-gray-500 dark:text-gray-400">
-                    Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
-                    Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
-                    Magic Keyboard or Magic Keyboard with Touch ID. Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
-                    Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
-                    Magic Keyboard or Magic Keyboard with Touch ID.
-                  </p>
-                </div>
-              </div>
-
-              <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-8">
-                <div class="pl-8">
-                  <p class="text-gray-500 dark:text-gray-400 pt-6">
-                    Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
-                    Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
-                    Magic Keyboard or Magic Keyboard with Touch ID. 
+                    {{ publication?.description }}
                   </p>
 
                   <h5
@@ -222,33 +198,24 @@
                     <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M4.5 17H4a1 1 0 0 1-1-1 3 3 0 0 1 3-3h1m0-3.05A2.5 2.5 0 1 1 9 5.5M19.5 17h.5a1 1 0 0 0 1-1 3 3 0 0 0-3-3h-1m0-3.05a2.5 2.5 0 1 0-2-4.45m.5 13.5h-7a1 1 0 0 1-1-1 3 3 0 0 1 3-3h3a3 3 0 0 1 3 3 1 1 0 0 1-1 1Zm-1-9.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"/>
                   </svg>
                   
-                    Plazas disponibles<span class="font-semibold">&nbsp;14</span>
+                    Plazas disponibles<span class="font-semibold">&nbsp;{{ publication?.vacancies }}</span>
                     
                   </h5>
 
-                  <h5
-                    class="text-xl font-medium text-gray-800 sm:text-xl dark:text-white pt-6 flex flex-row"
-                  >
-                  <svg class="w-8 h-8 text-gray-800 dark:text-white mr-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                    <path fill-rule="evenodd" d="M12 6a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Zm-1.5 8a4 4 0 0 0-4 4 2 2 0 0 0 2 2h7a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-3Zm6.82-3.096a5.51 5.51 0 0 0-2.797-6.293 3.5 3.5 0 1 1 2.796 6.292ZM19.5 18h.5a2 2 0 0 0 2-2 4 4 0 0 0-4-4h-1.1a5.503 5.503 0 0 1-.471.762A5.998 5.998 0 0 1 19.5 18ZM4 7.5a3.5 3.5 0 0 1 5.477-2.889 5.5 5.5 0 0 0-2.796 6.293A3.501 3.501 0 0 1 4 7.5ZM7.1 12H6a4 4 0 0 0-4 4 2 2 0 0 0 2 2h.5a5.998 5.998 0 0 1 3.071-5.238A5.505 5.505 0 0 1 7.1 12Z" clip-rule="evenodd"/>
-                  </svg>
-                  
-                  
-                    Plazas ocupadas<span class="font-semibold">&nbsp;2</span>
-
-                  </h5>
                 </div>
+
                 <div>
-                  <p class="text-gray-500 dark:text-gray-400 pt-6">
-                    Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
-                    Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
-                    Magic Keyboard or Magic Keyboard with Touch ID. Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
-                    Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
-                    Magic Keyboard or Magic Keyboard with Touch ID. Two Thunderbolt USB 4 ports and up to two USB 3 ports. Ultrafast
-                    Wi-Fi 6 and Bluetooth 5.0 wireless. Color matched Magic Mouse with
-                    Magic Keyboard or Magic Keyboard with Touch ID.
+                  <p *ngIf="publication?.location" class="text-gray-700 dark:text-gray-400 pt-6">
+                    <strong class="text-black dark:text-white">Ubicación:</strong> {{ publication?.location }}
+                  </p>
+                  <p *ngIf="publication?.time" class="text-gray-700 dark:text-gray-400 pt-6">
+                    <strong class="text-black dark:text-white">Horario:</strong> {{ publication?.type }} {{ publication?.time }}
+                  </p>
+                  <p *ngIf="publication?.deathline" class="text-gray-700 dark:text-gray-400 pt-6">
+                    <strong class="text-black dark:text-white">Finalización:</strong> {{ publication?.deathline }}
                   </p>
                 </div>
+
               </div>
             </div>
 
@@ -270,28 +237,26 @@
         <span class="sr-only">Close modal</span>
       </button>
       
-        <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-          <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-              <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Contacto</h2>
-              <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">Contacta a la persona para coordinar reuniones, solicitar información, o cualquier necesidad.</p>
-              <form class="space-y-8">
-                  <div>
-                      <label for="email" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-Mail</label>
-                      <input type="email" id="email"  name="email" ngModel class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@pasantiasuy.com" required>
-                  </div>
-                  <div>
-                      <label for="subject" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asunto</label>
-                      <input type="text" id="subject"  name="subject" ngModel class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Asunto sobre tu consulta" required>
-                  </div>
-                  <div class="sm:col-span-2">
-                      <label for="message" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mensaje</label>
-                      <textarea id="message"  name="message" ngModel rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..."></textarea>
-                  </div>
-                  <button type="submit" class="button2 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                      Enviar mensaje
-                  </button>
-              </form>
-          </div>
+      <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Contacto</h2>
+          <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">Contacta a la persona para coordinar reuniones, solicitar información, o cualquier necesidad.</p>
+          <form class="space-y-8" (ngSubmit)="contactMe()">
+            <div>
+              <label for="subject" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asunto</label>
+              <input type="text" id="subject" name="subject" [(ngModel)]="asunto" class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Asunto sobre tu consulta" required maxlength="100">
+            </div>
+            <div class="sm:col-span-2">
+              <label for="message" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mensaje</label>
+              <textarea id="message" name="message" [(ngModel)]="descripcion" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..." required maxlength="500"></textarea>
+            </div>
+            <button type="submit" class="button2 py-3 px-5 text-sm font-medium text-center text-black rounded-lg sm:w-fit focus:ring-4 focus:outline-none focus:ring-primary-300 dark:focus:ring-primary-800"
+              [ngClass]="{'bg-primary-700 hover:bg-primary-800 dark:bg-primary-600 dark:hover:bg-primary-700': asunto && descripcion, 'bg-gray-400 cursor-not-allowed': !asunto || !descripcion}"
+              [disabled]="!asunto || !descripcion">
+              Enviar mensaje
+            </button>
+          </form>
+        </div>
       </section>
       
     </div>

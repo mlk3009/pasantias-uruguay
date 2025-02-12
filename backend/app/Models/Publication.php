@@ -22,11 +22,16 @@ class Publication extends Model
         'vacancies',
         'postulation_way',
         'featured',
-        'user_id'
+        'empresa_id'
     ];
 
     public function etiquetas()
     {
         return $this->belongsToMany(Etiqueta::class, 'contiene', 'publication_id', 'etiqueta_id');
+    }
+
+    public function empresa()
+    {
+        return $this->belongsTo(Empresa::class, 'empresa_id');
     }
 }

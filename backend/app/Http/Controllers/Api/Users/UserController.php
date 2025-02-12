@@ -10,10 +10,12 @@ use Illuminate\Support\Facades\Auth;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\User;
 use App\Models\Estudiante;
+use App\Models\Empresa;
 use App\Models\Etiqueta;
 use App\Models\Idiomas;
 use App\Models\CV;
 use App\Models\ImageUpload;
+use App\Models\FileUpload;
 use App\Http\Controllers\Api\Email\PHPMailerController;
 use Illuminate\Process\Pipe;
 use PHPMailer\PHPMailer\PHPMailer;
@@ -70,51 +72,38 @@ class UserController extends Controller
                 'email' => $user->email,
                 'phone' => $user->phone,
                 'rol' => $user->rol,
-                'genero' => $estudiante->genero,
-                'location' => $estudiante->location,
-                'ci_estudiante' => $estudiante->ci_estudiante,
-                'fec_nacimiento' => $estudiante->fec_nacimiento,
-                'cod_postal' => $estudiante->cod_postal,
-                'id_image' => $estudiante->id_image,
-                'desc1' => $estudiante->desc1,
-                'desc2' => $estudiante->desc2,
-                'cv' => false
             ];
     
-            if ($estudiante->id_image) {
-                $image = ImageUpload::find($estudiante->id_image);
+            if ($estudiante) {
+                $data['genero'] = $estudiante->genero ?? null;
+                $data['location'] = $estudiante->location ?? null;
+                $data['ci_estudiante'] = $estudiante->ci_estudiante ?? null;
+                $data['fec_nacimiento'] = $estudiante->fec_nacimiento ?? null;
+                $data['cod_postal'] = $estudiante->cod_postal ?? null;
+                $data['desc1'] = $estudiante->desc1 ?? null;
+                $data['desc2'] = $estudiante->desc2 ?? null;
+
+                if ($cv) {
+                    $data['cv'] = $cv->pdf;
+                } else {
+                    $data['cv'] = null;
+                }
+        
+                // Buscar imagen del estudiante
+                $image = ImageUpload::where('estudiante_id', $estudiante->id)->first();
                 if ($image) {
                     $data['image'] = $image->image;
+                    $data['id_image'] = $image->id;
+                }
+        
+                // Buscar archivo del estudiante
+                $file = FileUpload::where('estudiante_id', $estudiante->id)->first();
+                if ($file) {
+                    $data['file'] = $file->file;
                 }
             }
     
-            if ($cv) {
-                $idiomas = Idiomas::where('cv_id', $cv->id)->get(['idioma', 'nivel']);
-    
-                $data = [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'email' => $user->email,
-                    'phone' => $user->phone,
-                    'rol' => $user->rol,
-                    'genero' => $estudiante->genero,
-                    'location' => $estudiante->location,
-                    'ci_estudiante' => $estudiante->ci_estudiante,
-                    'fec_nacimiento' => $estudiante->fec_nacimiento,
-                    'cod_postal' => $estudiante->cod_postal,
-                    'id_image' => $estudiante->id_image,
-                    'desc1' => $estudiante->desc1,
-                    'desc2' => $estudiante->desc2,
-                    'cv' => $cv->cv,
-                ];
-    
-                if ($estudiante->id_image) {
-                    $image = ImageUpload::find($estudiante->id_image);
-                    if ($image) {
-                        $data['image'] = $image->image;
-                    }
-                }
-            }
+
     
             return response(['data' => $data], 200);
         }
@@ -136,6 +125,7 @@ class UserController extends Controller
 
 
         $etiquetas = $estudiante->etiquetas()->select('etiqueta.id', 'etiqueta.name')->get();
+        $cv = CV::where('estudiante_id', $user->id)->first();
 
         $data = [
             'name' => $user->name,
@@ -147,16 +137,20 @@ class UserController extends Controller
             'cod_postal' => $estudiante->cod_postal,
             'location' => $estudiante->location,
             'genero' => $estudiante->genero,
-            'id_image' => $estudiante->id_image,
-            'id_file' => $estudiante->id_file,
             'etiquetas' => $etiquetas, 
+            'cv' => $cv ? $cv->pdf : null 
         ];
 
-        if ($estudiante->id_image) {
-            $image = ImageUpload::find($estudiante->id_image);
-            if ($image) {
-                $data['image'] = $image->image;
-            }
+        // Buscar imagen del estudiante
+        $image = ImageUpload::where('estudiante_id', $estudiante->id)->first();
+        if ($image) {
+            $data['image'] = $image->image;
+        }
+
+        // Buscar archivo del estudiante
+        $file = FileUpload::where('estudiante_id', $estudiante->id)->first();
+        if ($file) {
+            $data['file'] = $file->file;
         }
 
         return response(['data' => $data], 200);
@@ -196,6 +190,7 @@ class UserController extends Controller
             'fec_nacimiento' => 'required_if:rol,estudiante|date',
             'cod_postal' => 'required_if:rol,estudiante|string|max:5',
             'genero' => 'required_if:rol,estudiante|in:Masculino,Femenino,Otro',
+            'sede' => 'required_if:rol,empresa|string|max:100',
             'id_image' => 'nullable|integer',
         ]);
 
@@ -216,26 +211,49 @@ class UserController extends Controller
                 'phone' => $jsonData['phone'],
             ]);
 
-            // Crear estudiante si el rol es estudiante, es un poco diferente al de arriba pq primero ingresa los datos en $estudianteData
-            // Luego mira si existe id_image y lo pone si existe, y luego a lo ultimo crea el estudiante
-            if ($jsonData['rol'] === 'estudiante') {
-                $estudianteData = [
-                    'ci_estudiante' => $jsonData['ci_estudiante'],
+            // Crear estudiante si el rol es estudiante
+        if ($jsonData['rol'] === 'estudiante') {
+            $estudianteData = [
+                'ci_estudiante' => $jsonData['ci_estudiante'],
+                'id' => $user->id,
+                'cod_postal' => $jsonData['cod_postal'],
+                'location' => $jsonData['location'],
+                'genero' => $jsonData['genero'],
+                'fec_nacimiento' => $jsonData['fec_nacimiento'],
+            ];
+
+            // Crear el registro del estudiante primero
+            $estudiante = Estudiante::create($estudianteData);
+
+            // Luego actualizar el campo estudiante_id en la tabla image_uploads
+            if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
+                $image = ImageUpload::find($jsonData['id_image']);
+                if ($image) {
+                    $image->estudiante_id = $user->id;
+                    $image->save();
+                }
+            }
+        }
+
+            // Crear empresa si el rol es empresa
+            if ($jsonData['rol'] === 'empresa') {
+                $empresaData = [
                     'id' => $user->id,
-                    'cod_postal' => $jsonData['cod_postal'],
-                    'location' => $jsonData['location'],
-                    'genero' => $jsonData['genero'],
-                    'fec_nacimiento' => $jsonData['fec_nacimiento'],
+                    'sede' => $jsonData['sede']
                 ];
 
-                if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
-                    $estudianteData['id_image'] = $jsonData['id_image'];
-                } else {
-                    $estudianteData['id_image'] = null;
-                }
+                // Crear el registro de la empresa
+                $empresa = Empresa::create($empresaData);
 
-                Estudiante::create($estudianteData);
-            }
+                // Luego actualizar el campo empresa_id en la tabla image_uploads
+                if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
+                    $image = ImageUpload::find($jsonData['id_image']);
+                    if ($image) {
+                        $image->empresa_id = $user->id;
+                        $image->save();
+                    }
+                }
+        }
 
             $data = [
                 'status' => 'success',
@@ -267,9 +285,12 @@ class UserController extends Controller
             'cod_postal' => 'nullable|string|max:5',
             'id_image' => 'nullable|integer',
             'genero' => 'nullable|string|in:Masculino,Femenino,Otro',
-            'desc1' => 'nullable|string|max:280',
-            'desc2' => 'nullable|string|max:280',
-            'etiqueta_id' => 'nullable|exists:etiqueta,id'
+            'desc1' => 'nullable|string|max:1000',
+            'desc2' => 'nullable|string|max:1000',
+            'etiqueta_id' => 'nullable|exists:etiqueta,id',
+            'about_us' => 'nullable|string|max:2000',
+            'desc3' => 'nullable|string|max:1000',
+            'sede' => 'nullable|string|max:100',
         ]);
     
         if ($validator->fails()) {
@@ -332,6 +353,34 @@ class UserController extends Controller
             }
     
             $student->save();
+
+            $empresa = Empresa::find($id);
+
+            if (isset($jsonData['about_us']) && $jsonData['about_us'] != $empresa->about_us) {
+                $empresa->about_us = $jsonData['about_us'];
+            }
+
+            if (isset($jsonData['desc1']) && $jsonData['desc1'] != $empresa->desc1) {
+                $empresa->desc1 = $jsonData['desc1'];
+            }
+
+            if (isset($jsonData['desc2']) && $jsonData['desc2'] != $empresa->desc2) {
+                $empresa->desc2 = $jsonData['desc2'];
+            }
+
+            if (isset($jsonData['desc3']) && $jsonData['desc3'] != $empresa->desc3) {
+                $empresa->desc3 = $jsonData['desc3'];
+            }
+
+            if (isset($jsonData['sede']) && $jsonData['sede'] != $empresa->sede) {
+                $empresa->sede = $jsonData['sede'];
+            }
+
+            if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
+                $empresa->id_image = $jsonData['id_image'];
+            }
+
+            $empresa->save();
     
             // Actualizar la primera etiqueta del usuario
             if (isset($jsonData['etiqueta_id'])) {
@@ -431,7 +480,13 @@ class UserController extends Controller
 
     public function showUsertags($id)
     {
-        $tags = Estudiante::find($id)->etiquetas()->get(['id', 'name']);
+        $estudiante = Estudiante::find($id);
+    
+        if (!$estudiante) {
+            return response()->json(0, 200);
+        }
+    
+        $tags = $estudiante->etiquetas()->get(['id', 'name']);
         if ($tags->isEmpty()) {
             $data = [
                 'message' => 'Etiquetas no encontradas',
@@ -507,92 +562,6 @@ class UserController extends Controller
         ];
         return response()->json($data, 200);
     }
-
-
-
-    public function contactUs(Request $request)
-    {
-        $email = $request->input('email');
-        $subject = $request->input('asunto');
-        $body = $request->input('descripcion');
-    
-        $phpMailer = new PHPMailer(true);
-    
-        try {
-            /* Email SMTP Settings */
-            $phpMailer->SMTPDebug = 0; // Desactivar depuración                    //Enable verbose debug output
-            $phpMailer->isSMTP();                                            //Send using SMTP
-            $phpMailer->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-            $phpMailer->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $phpMailer->Username   = 'xexperience2023@gmail.com';                 //SMTP username
-            $phpMailer->Password   = 'abcr vhdx atol xpnf';                  //SMTP password
-            $phpMailer->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-            $phpMailer->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-            //UTF-8
-            $phpMailer->CharSet = 'UTF-8';
-            $phpMailer->Encoding = 'base64';
-
-            //Recipients
-            $phpMailer->setFrom('pasantias-uy@notResponse.com', 'Pasantias uruguay');
-            $phpMailer->addAddress('xexperience2023@gmail.com');
-
-    
-            //Content
-            $phpMailer->isHTML(true);
-            $phpMailer->Subject = $subject;
-            $phpMailer->Body = "Remitente: " . $email . ".<br><br>" . $body;    
-            // Enviar el correo
-            $phpMailer->send();
-            return response()->json(['message' => 'Correo enviado correctamente'], 200);
-        } catch (Exception $e) {
-            // Manejar el error si el correo no se pudo enviar
-            return response()->json(['message' => 'No se pudo enviar el correo', 'error' => $e->getMessage()], 500);
-        }
-    }
-
-    public function contactMe(Request $request)
-    {
-        $email = $request->input('email');
-        $subject = $request->input('asunto');
-        $body = $request->input('descripcion');
-        $emailDestino = $request->input('emailDestino');
-    
-        $phpMailer = new PHPMailer(true);
-    
-        try {
-            /* Email SMTP Settings */
-            $phpMailer->SMTPDebug = 0; // Desactivar depuración                    //Enable verbose debug output
-            $phpMailer->isSMTP();                                            //Send using SMTP
-            $phpMailer->Host       = 'smtp.gmail.com';                       //Set the SMTP server to send through
-            $phpMailer->SMTPAuth   = true;                                   //Enable SMTP authentication
-            $phpMailer->Username   = 'xexperience2023@gmail.com';                 //SMTP username
-            $phpMailer->Password   = 'abcr vhdx atol xpnf';                  //SMTP password
-            $phpMailer->SMTPSecure = 'ssl';                                  //Enable implicit TLS encryption
-            $phpMailer->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
-
-            //UTF-8
-            $phpMailer->CharSet = 'UTF-8';
-            $phpMailer->Encoding = 'base64';
-
-            //Recipients
-            $phpMailer->setFrom('pasantias-uy@notResponse.com', 'Pasantias uruguay');
-            $phpMailer->addAddress($emailDestino);
-
-    
-            //Content
-            $phpMailer->isHTML(true);
-            $phpMailer->Subject = $subject;
-            $phpMailer->Body = "Remitente: " . $email . ".<br><br>" . $body;    
-            // Enviar el correo
-            $phpMailer->send();
-            return response()->json(['message' => 'Correo enviado correctamente'], 200);
-        } catch (Exception $e) {
-            // Manejar el error si el correo no se pudo enviar
-            return response()->json(['message' => 'No se pudo enviar el correo', 'error' => $e->getMessage()], 500);
-        }
-    }
-
 
 
     public function destroy() {}

@@ -19,6 +19,7 @@ import { PublicationService } from '../../services/publication.service';
 })
 export class PublicationsInComponent implements OnInit {
   publications: any[] = [];
+  category: string | undefined = undefined;
 
   constructor(
     private publicationService: PublicationService,
@@ -27,10 +28,11 @@ export class PublicationsInComponent implements OnInit {
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
-      const category = params.get('category') || undefined;
-      this.getPublications(category);
+      this.category = params.get('category') || undefined;
+    this.getPublications(this.category);
     });
   }
+
 
   getPublications(category?: string, featured: boolean = false): void {
     this.publicationService.getPublications(category, featured).subscribe(

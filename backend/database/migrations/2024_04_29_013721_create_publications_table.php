@@ -22,7 +22,7 @@ return new class extends Migration
             $table->integer('vacancies');
             $table->string('deathline');
             $table->string('postulation_way');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
+            $table->foreignId('empresa_id')->constrained('empresa')->onDelete('cascade');
             $table->boolean('featured')->default(false);
             $table->timestamps();
             $table->engine = 'InnoDB';

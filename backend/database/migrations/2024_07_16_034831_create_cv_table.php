@@ -19,7 +19,8 @@ class CreateCvTable extends Migration
             $table->unsignedBigInteger('estudiante_id');
             $table->string('nombre_completo', 100);
             $table->date('fecha_nacimiento');
-            $table->string('estado_civil', 50)->nullable(); 
+            $table->string('estado_civil', 50)->nullable();
+            $table->string('pdf', 6)->nullable();  
             $table->string('licencia', 255)->nullable();
             $table->enum('genero', ['masculino', 'femenino', 'otro']);
             $table->foreign('estudiante_id')->references('id')->on('estudiante')->onDelete('cascade'); 

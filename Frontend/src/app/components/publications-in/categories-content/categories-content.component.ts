@@ -10,6 +10,7 @@ import { CommonModule } from '@angular/common';
 })
 export class CategoriesContentComponent implements OnChanges {
   @Input() publications: any[] = [];
+  @Input() category: string | undefined;
   displayedPublications: any[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 18;

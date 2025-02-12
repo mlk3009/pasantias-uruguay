@@ -6,35 +6,30 @@
                 <div class="w-full border-b-2 flex justify-center flex-col items-center">   
                     <div class="w-full rounded-lg flex flex-col items-center">
                         <img src="../../../../assets/img/Fish_wearing_a_chicken_smoking_a_cigarette_cover.webp" alt="" class="rounded-full w-40">
-                        <h1 class="text-gray-900 font-semibold text-4xl mt-5">Tienda morrocoyo</h1>
+                        <h1 class="text-gray-900 font-semibold text-4xl mt-5">{{empresa.name}}</h1>
                     </div>
                     <div class="buttons">
                         <div class="w-full md:block md:w-auto pt-4">
                           <ul class="text-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                             <li>
-                              <a href="/enterprise-profile" class="home_button block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Home</a>
-                            </li>
-                            <li>
-                              <a href="/enterprise-abaut-us" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sobre nosotros</a>
-                            </li>
-                            <li>
-                              <a (click)="modal()" class="hover:cursor-pointer home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Contacto</a>
-                            </li>
-                            <li>
-                                <a href="/my-publications" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ver publicaiones</a>
-                            </li>
+                              <a [href]="isPhoneAccess ? '/enterprise-profile/' + empresa.phone : '/enterprise-profile'" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
+                          </li>
+                          <li>
+                              <a [href]="isPhoneAccess ? '/enterprise-abaut-us/' + empresa.phone : '/enterprise-abaut-us'" class="home_button block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent" aria-current="page">Sobre nosotros</a>
+                          </li>
+                          <li>
+                              <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">
+                                  {{ isPhoneAccess ? 'Ver Publicaciones' : 'Administrar publicaciones' }}
+                              </a>
+                          </li>
 
-                            <li>
-                                <a href="/my-publications" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Administrar publicaiones</a>
-                            </li>
+                          <li *ngIf="!isPhoneAccess">
+                              <a href="/postulantes" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ver postulantes</a>
+                          </li>
 
-                            <li>
-                                <a href="/postulantes" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Ver postulantes</a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Editar perfil</a>
-                            </li>
+                          <li *ngIf="!isPhoneAccess">
+                              <a href="#" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Editar perfil</a>
+                          </li>
 
                           </ul>
                         </div>
@@ -44,9 +39,9 @@
                 
                 <div class="flex flex-row pt-10">
                     <div>
-                        <h2 class="text-2xl font-semibold text-gray-900 text-center w-full">Sobre nosotros</h2>
-                        <p class="text-gray-500 text-md p-4 text-center max-w-1/2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur quas et error nam nulla consequuntur, ex enim doloremque illo. Facilis at aperiam explicabo rem dolores est! Autem atque nihil reiciendis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur nemo culpa nobis sunt quaerat inventore ducimus maiores distinctio perspiciatis in perferendis rem qui obcaecati eius doloremque ipsum, sint quod voluptas.</p>
-                        <p class="text-gray-500 text-md p-4 text-center max-w-1/2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur quas et error nam nulla consequuntur, ex enim doloremque illo. Facilis at aperiam explicabo rem dolores est! Autem atque nihil reiciendis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur nemo culpa nobis sunt quaerat inventore ducimus maiores distinctio perspiciatis in perferendis rem qui obcaecati eius doloremque ipsum, sint quod voluptas.</p>
+                      <h2 class="text-2xl font-semibold text-gray-900 text-center w-full">{{ aboutUsTitle }}</h2>
+                      <p class="text-gray-500 text-md p-4 text-center max-w-1/2">{{ aboutUsParagraph1 }}</p>
+                      <p class="text-gray-500 text-md p-4 text-center max-w-1/2">{{ aboutUsParagraph2 }}</p>
                     </div>
                 </div>
 
@@ -55,16 +50,14 @@
                     <section class=" dark:bg-gray-900">
                         <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
                             <div class="font-normal text-gray-500 sm:text-md dark:text-gray-400">
-                                <h2 class="mb-4 text-2xl tracking-tight font-medium text-gray-900 dark:text-white">Si quieres trabajo, nosotros te ofrecemos la mejor salida laboral</h2>
-                                <p class="mb-4 text-gray-500 dark:text-white">We are strategists, designers and developers. Innovators and problem solvers. Small enough to be simple and quick, but big enough to deliver the scope you want at the pace you need. Small enough to be simple and quick, but big enough to deliver the scope you want at the pace you need.</p>
-                                <p class="text-gray-500 dark:text-white">We are strategists, designers and developers. Innovators and problem solvers. Small enough to be simple and quick.</p>
-                            </div>
+                                <h2 class="mb-4 text-2xl tracking-tight font-medium text-gray-900 dark:text-white"> {{ desc3Title }} </h2>
+                                <p class="mb-4 text-gray-500 dark:text-white"></p>  {{ desc3Paragraph}}    </div>
                             <!--a-->
                             <div class="grid grid-cols-2 gap-4 mt-8 mb-4 md:mb-0">
                                 <img class="w-full rounded-lg" src="../../../../assets/img/img-nosotros4.jpg" alt="office content 1">
                                 <img class="mt-4 w-full lg:mt-10 rounded-lg" src="../../../../assets/img/img-nosotros2.jpg" alt="office content 2">
                             </div>
-                            <a href="" class="button1 py-2.5 px-4 rounded-lg hover:cursor-pointer text-lg font-medium w-full md:w-44 text-center">Ver publicaciones</a>
+                            <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="button1 py-2.5 px-4 rounded-lg hover:cursor-pointer text-lg font-medium w-full md:w-44 text-center">Ver publicaciones</a>
                         </div>
                     </section>
                 </section>
@@ -101,42 +94,24 @@
                   </div>
 
 
-
-                  <div class="flex flex-row mb-28 pt-10">
-                    <div>
-                        <h2 class="text-2xl font-semibold text-gray-900 text-center w-full">Somos nosotros</h2>
-                        <p class="text-gray-500 text-md p-4 text-center max-w-1/2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur quas et error nam nulla consequuntur, ex enim doloremque illo. Facilis at aperiam explicabo rem dolores est! Autem atque nihil reiciendis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur nemo culpa nobis sunt quaerat inventore ducimus maiores distinctio perspiciatis in perferendis rem qui obcaecati eius doloremque ipsum, sint quod voluptas.</p>
-                        <p class="text-gray-500 text-md p-4 text-center max-w-1/2">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Consectetur quas et error nam nulla consequuntur, ex enim doloremque illo. Facilis at aperiam explicabo rem dolores est! Autem atque nihil reiciendis. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur nemo culpa nobis sunt quaerat inventore ducimus maiores distinctio perspiciatis in perferendis rem qui obcaecati eius doloremque ipsum, sint quod voluptas.</p>
-                    </div>
-                </div>
-
-
-
-                <section class="bg-gray-50 dark:bg-gray-900 w-11/12">
+                  <section class="bg-gray-50 dark:bg-gray-900 w-11/12">
                     <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-                        <p class="mb-8 text-center text-gray-900 font-medium dark:text-gray-400 sm:text-2xl">Consúltanos ante cualquier tipo de duda.</p>
-                        <form action="#" class="space-y-8">
-                            <div>
-                                <label for="email" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">E-Mail</label>
-                                <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@pasantiasuy.com" required>
-                            </div>
+                        <p class="mb-8 text-center text-gray-900 font-semibold dark:text-gray-400 sm:text-xl">Consúltanos ante cualquier tipo de duda.</p>
+                        <form class="space-y-8" (ngSubmit)="sendContactEmail(contactForm)" #contactForm="ngForm">
                             <div>
                                 <label for="subject" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Asunto</label>
-                                <input type="text" id="subject" class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Cómo podemos ayudarte" required>
+                                <input type="text" id="subject" name="subject" ngModel class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Cómo podemos ayudarte" required>
                             </div>
                             <div class="sm:col-span-2">
                                 <label for="message" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-400">Mensaje</label>
-                                <textarea id="message" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..."></textarea>
+                                <textarea id="message" name="message" ngModel rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..." required></textarea>
                             </div>
-                            <button type="submit" class="button1 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            <button type="submit" class="button1 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" [disabled]="!contactForm.valid">
                                 Enviar mensaje
                             </button>
                         </form>
                     </div>
-                  </section>
-
-
-                  <p class="text-gray-500 text-sm"> Tienda morrocoyo los derechos de mi tio reservado adentro de mi c...</p>
+                </section>
 
             </div>
         </div>
@@ -144,45 +119,3 @@
 </div>
 
 
-
-
-
-<!-- Modal -->
-<div id="contactModal" class="container-modal">
-    <div class="relative">
-      <!-- Modal content -->
-      <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-        <button (click)="modalClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
-          <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-            <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-          </svg>      
-          <span class="sr-only">Close modal</span>
-        </button>
-        
-          <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-            <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-                <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Contacto</h2>
-                <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">Contacta a la persona para coordinar reuniones, solicitar información, o cualquier necesidad.</p>
-                <form class="space-y-8">
-                    <div>
-                        <label for="email" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-Mail</label>
-                        <input type="email" id="email"  name="email" ngModel class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@pasantiasuy.com" required>
-                    </div>
-                    <div>
-                        <label for="subject" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asunto</label>
-                        <input type="text" id="subject"  name="subject" ngModel class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Asunto sobre tu consulta" required>
-                    </div>
-                    <div class="sm:col-span-2">
-                        <label for="message" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mensaje</label>
-                        <textarea id="message"  name="message" ngModel rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..."></textarea>
-                    </div>
-                    <button type="submit" class="button2 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                        Enviar mensaje
-                    </button>
-                </form>
-            </div>
-        </section>
-        
-      </div>
-    </div>
-  </div>

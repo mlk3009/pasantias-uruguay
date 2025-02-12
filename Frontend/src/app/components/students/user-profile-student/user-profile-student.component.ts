@@ -20,6 +20,7 @@ export class UserProfileStudentComponent {
   userEtiquetas: any[] = [];
   etiquetas: any[] = [];
   userImageUrl: string = '';
+  cvLink: string = '';
   
 
   constructor(
@@ -41,6 +42,7 @@ export class UserProfileStudentComponent {
           } else {
             this.userImageUrl = 'http://localhost:8000/images/user.png'; 
           }
+          this.cvLink = `http://localhost:8000/pdfs/cv_${this.data.cv}.pdf`;
         },
         error: (error) => {
           console.error('Error al obtener el usuario:', error);

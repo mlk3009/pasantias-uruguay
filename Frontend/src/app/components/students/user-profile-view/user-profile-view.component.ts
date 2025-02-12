@@ -15,11 +15,12 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./user-profile-view.component.css']
 })
 export class UserProfileViewComponent implements OnInit {
-  phone: string | null = null;
+  phone: any = {};
   data: any = {};
   userImageUrl: string = '';
   loading: boolean = false;
   userEtiquetas: any[] = [];
+  cvLink: string = '';
 
   constructor(
     private _route: ActivatedRoute,
@@ -28,8 +29,6 @@ export class UserProfileViewComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    const token = this._userService.getToken(); 
-    if (token) {
     this.loading = true;
     const phone = this._route.snapshot.paramMap.get('phone');
     if (phone) {
@@ -39,9 +38,6 @@ export class UserProfileViewComponent implements OnInit {
       console.error('Número de teléfono no proporcionado');
       this.loading = false;
     }
-  } else {
-    this._router.navigate(['/login']);
-  }
   }
 
 
@@ -51,9 +47,12 @@ export class UserProfileViewComponent implements OnInit {
       next: (response) => {
         this.data = response.data; 
         this.userEtiquetas = response.data.etiquetas;
-        this.userImageUrl = this.data.id_image
-          ? `http://localhost:8000/images/uploads/${this.data.image}`
-          : 'http://localhost:8000/images/user.png';
+        if (this.data.image) {
+          this.userImageUrl = `http://localhost:8000/images/uploads/${this.data.image}`;
+        } else {
+          this.userImageUrl = 'http://localhost:8000/images/user.png';
+        }
+        this.cvLink = `http://localhost:8000/pdfs/cv_${this.data.cv}.pdf`;
         this.loading = false;
       },
       error: (error) => {
