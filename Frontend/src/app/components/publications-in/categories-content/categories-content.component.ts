@@ -17,7 +17,7 @@ export class CategoriesContentComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['publications']) {
-      this.currentPage = 1; // Resetear a la primera página cuando cambien las publicaciones
+      this.currentPage = 1; 
       this.updateDisplayedPublications();
     }
   }
