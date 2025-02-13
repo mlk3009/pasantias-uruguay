@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { global } from './global'; 
 import { CookieService } from 'ngx-cookie-service';
 
@@ -19,11 +20,14 @@ export class AdminService {
     }
   }
 
-  getAllUsers(): Observable<any> {
+  getAllUsers(page: number = 1, itemsPerPage: number = 10): Observable<{ data: any[], current_page: number, total_pages: number, total_users: number }> {
+    let params = new HttpParams().set('page', page.toString()).set('itemsPerPage', itemsPerPage.toString());
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
-    return this._http.get(global.url + 'admin/users', { headers: headers });
+    return this._http.get<{ data: any[], current_page: number, total_pages: number, total_users: number }>(global.url + 'admin/users', { headers: headers, params: params }).pipe(
+      map(response => response)
+    );
   }
-
+  
   searchUsers(params: any): Observable<any> {
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
     let httpParams = new HttpParams();

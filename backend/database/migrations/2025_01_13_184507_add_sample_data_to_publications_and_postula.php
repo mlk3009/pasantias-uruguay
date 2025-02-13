@@ -595,6 +595,197 @@ foreach ($publications as $publicationId) {
             'ci_admin' => '55173448',
             'id' => $adminUserId,
         ]);
+
+
+
+
+                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo2',
+                    'email' => 'estudiante2@example.com',
+                    'phone' => '123156789',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '16345678',
+                    'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
+
+
+
+                                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo3',
+                    'email' => 'estudiante3@example.com',
+                    'phone' => '123455589',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '33345678',
+                    'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
+
+                                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo4',
+                    'email' => 'estudiante4@example.com',
+                    'phone' => '123499989',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '77775678',
+                    'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
+
+                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo5',
+                    'email' => 'estudiante5@example.com',
+                    'phone' => '112126789',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '12111178',
+                    'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
+
+
+                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo6',
+                    'email' => 'estudiante6@example.com',
+                    'phone' => '123121282',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '12344978',
+                    'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
+
+
+
+
+                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo7',
+                    'email' => 'estudiante7@example.com',
+                    'phone' => '123456421',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '15865678',
+                    'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
+
+                // Insertar un usuario estudiante
+                DB::table('users')->insert([
+                    'name' => 'Estudiante Ejemplo8',
+                    'email' => 'estudiante8@example.com',
+                    'phone' => '665456789',
+                    'password' => Hash::make('password'),
+                    'rol' => 'estudiante',
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+        
+                // Obtener el ID del usuario recién insertado
+                $userId = DB::getPdo()->lastInsertId();
+        
+                // Insertar el estudiante asociado al usuario
+                DB::table('estudiante')->insert([
+                    'ci_estudiante' => '52145678',
+                    'fec_nacimiento' => '2000-01-01',
+                    'genero' => 'Masculino',
+                    'desc1' => 'Descripción 1',
+                    'desc2' => 'Descripción 2',
+                    'cod_postal' => '12345',
+                    'location' => 'Montevideo',
+                    'id' => $userId,
+                ]);
             }
 
     /**

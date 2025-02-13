@@ -15,10 +15,20 @@ class AdminController extends Controller
 {
 
 
-    public function getAllUsers()
+    public function getAllUsers(Request $request)
     {
-        $users = User::whereIn('rol', ['empresa', 'estudiante', 'administrador'])->get();
-        return response()->json($users, 200);
+        $perPage = $request->input('itemsPerPage', 10);
+        $page = $request->input('page', 1);
+    
+        $users = User::whereIn('rol', ['empresa', 'estudiante', 'administrador'])
+                    ->paginate($perPage, ['*'], 'page', $page);
+    
+        return response()->json([
+            'data' => $users->items(),
+            'current_page' => $users->currentPage(),
+            'total_pages' => $users->lastPage(),
+            'total_users' => $users->total()
+        ], 200);
     }
 
     // Buscar usuarios según diferentes parámetros opcionales
@@ -182,11 +192,10 @@ class AdminController extends Controller
             return response()->json(['message' => 'Usuario no encontrado'], 404);
         }
     
-        // Alternar el estado de activación del usuario
-        $user->is_active = !$user->is_active;
+        $user->is_suspended = !$user->is_suspended;
         $user->save();
     
-        $message = $user->is_active ? 'Usuario activado' : 'Usuario desactivado';
+        $message = $user->is_suspended ? 'Usuario suspendido' : 'Usuario activado';
         return response()->json(['message' => $message, 'status' => 200], 200);
     }
     

@@ -1,12 +1,12 @@
 <app-nav/>
-<div class="body flex items-center justify-center min-h-screen">
+<div id="top" class="body flex items-center justify-center min-h-screen">
     <div class="content bg-gray-50 w-11/12 h-5/6 mt-10 rounded-lg">
         <div class="flex flex-row justify-center w-full">
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
                 <div class="w-full border-b-2 flex justify-center flex-col items-center">   
                     <div class="w-full rounded-lg flex flex-col items-center">
-                        <img src="../../../../assets/img/Fish_wearing_a_chicken_smoking_a_cigarette_cover.webp" alt="" class="rounded-full w-40">
-                        <h1 class="text-gray-900 font-semibold text-4xl mt-5">Tienda morrocoyo</h1>
+                      <img [src]="userimage" alt="" class="rounded-full w-40">
+                      <h1 class="text-gray-900 font-semibold text-4xl mt-5">{{data.name}}</h1>
                     </div>
                     <div class="buttons">
                         <div class="w-full md:block md:w-auto pt-4">
@@ -43,231 +43,83 @@
                       <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
                         <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
                           <div class="space-y-6">
-                            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
-                              <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                                <a href="#" class="shrink-0 md:order-1">
-                                  <svg class="w-20 h-20 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
-                                  </svg>
-                                </a>
-                  
-                                
-                                <div class="flex items-center justify-between md:order-3 md:justify-end">
-                                  
-                                  <div class="text-end md:order-4 md:w-32 flex flex-row items-center">
-                                    <p class="text-base font-medium text-gray-900 dark:text-white">Administrador</p>
-                                    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-600 dark:text-blue-400 mx-1 rounded" checked />
-                                  </div>
-                                </div>
-                  
-                                <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                                  <div>
-                                    <div class="flex flex-row">
-                                      <a href="#" class="text-base font-medium text-gray-900 hover:underline dark:text-white">Emanuel Quiroga</a>
-                                      <p class="mx-2 text-gray-600">Montevideo</p>
-                                    </div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">tumadrelagorda#gmail.com</p>
-                                  </div>
-                  
-                                  <div class="flex items-center gap-4">
-                                    
-                                    <button (click)="modalBan()" type="button" class="button-remove2 rounded p-2 inline-flex text-md font-medium text-amber-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-amber-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                      </svg>                                                                
-                                      Suspender
-                                    </button>
-                                    <button (click)="modalDelete()" type="button" class="button-remove rounded p-2 inline-flex text-md font-medium text-red-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-red-600 hover:text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
-                                      </svg>                          
-                                      Eliminar
-                                    </button>
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
-                              <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                                <a href="#" class="shrink-0 md:order-1">
-                                  <svg class="w-20 h-20 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
-                                  </svg>
-                                </a>
-                  
-                                
-                                <div class="flex items-center justify-between md:order-3 md:justify-end">
-                                  
-                                  <div class="text-end md:order-4 md:w-32 flex flex-row items-center">
-                                    <p class="text-base font-medium text-gray-900 dark:text-white">Administrador</p>
-                                    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-600 dark:text-blue-400 mx-1 rounded" checked />
-                                  </div>
-                                </div>
-                  
-                                <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                                  <div>
-                                    <div class="flex flex-row">
-                                      <a href="#" class="text-base font-medium text-gray-900 hover:underline dark:text-white">Emanuel Quiroga</a>
-                                      <p class="mx-2 text-gray-600">Montevideo</p>
-                                    </div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">tumadrelagorda#gmail.com</p>
-                                  </div>
-                  
-                                  <div class="flex items-center gap-4">
-                                    
-                                    <button (click)="modalBan()" type="button" class="button-remove2 rounded p-2 inline-flex text-md font-medium text-amber-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-amber-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                      </svg>                                                                
-                                      Suspender
-                                    </button>
-                                    <button (click)="modalDelete()" type="button" class="button-remove rounded p-2 inline-flex text-md font-medium text-red-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-red-600 hover:text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
-                                      </svg>                          
-                                      Eliminar
-                                    </button>
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
-                              <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                                <a href="#" class="shrink-0 md:order-1">
-                                  <svg class="w-20 h-20 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
-                                  </svg>
-                                </a>
-                  
-                                
-                                <div class="flex items-center justify-between md:order-3 md:justify-end">
-                                  
-                                  <div class="text-end md:order-4 md:w-32 flex flex-row items-center">
-                                    <p class="text-base font-medium text-gray-900 dark:text-white">Administrador</p>
-                                    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-600 dark:text-blue-400 mx-1 rounded" checked />
-                                  </div>
-                                </div>
-                  
-                                <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                                  <div>
-                                    <div class="flex flex-row">
-                                      <a href="#" class="text-base font-medium text-gray-900 hover:underline dark:text-white">Emanuel Quiroga</a>
-                                      <p class="mx-2 text-gray-600">Montevideo</p>
-                                    </div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">tumadrelagorda#gmail.com</p>
-                                  </div>
-                  
-                                  <div class="flex items-center gap-4">
-                                    
-                                    <button (click)="modalBan()" type="button" class="button-remove2 rounded p-2 inline-flex text-md font-medium text-amber-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-amber-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                      </svg>                                                                
-                                      Suspender
-                                    </button>
-                                    <button (click)="modalDelete()" type="button" class="button-remove rounded p-2 inline-flex text-md font-medium text-red-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-red-600 hover:text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
-                                      </svg>                          
-                                      Eliminar
-                                    </button>
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6">
-                              <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
-                                <a href="#" class="shrink-0 md:order-1">
-                                  <svg class="w-20 h-20 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                    <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
-                                  </svg>
-                                </a>
-                  
-                                
-                                <div class="flex items-center justify-between md:order-3 md:justify-end">
-                                  
-                                  <div class="text-end md:order-4 md:w-32 flex flex-row items-center">
-                                    <p class="text-base font-medium text-gray-900 dark:text-white">Administrador</p>
-                                    <input type="checkbox" class="form-checkbox h-5 w-5 text-green-600 dark:text-blue-400 mx-1 rounded" checked />
-                                  </div>
-                                </div>
-                  
-                                <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
-                                  <div>
-                                    <div class="flex flex-row">
-                                      <a href="#" class="text-base font-medium text-gray-900 hover:underline dark:text-white">Emanuel Quiroga</a>
-                                      <p class="mx-2 text-gray-600">Montevideo</p>
-                                    </div>
-                                    <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">tumadrelagorda#gmail.com</p>
-                                  </div>
-                  
-                                  <div class="flex items-center gap-4">
-                                    
-                                    <button (click)="modalBan()" type="button" class="button-remove2 rounded p-2 inline-flex text-md font-medium text-amber-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-amber-600 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="m6 6 12 12m3-6a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-                                      </svg>                                                                
-                                      Suspender
-                                    </button>
-                                    <button (click)="modalDelete()" type="button" class="button-remove rounded p-2 inline-flex text-md font-medium text-red-600 hover:text-white dark:text-red-500">
-                                      <svg class="w-6 h-6 text-red-600 hover:text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
-                                        <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
-                                      </svg>                          
-                                      Eliminar
-                                    </button>
-
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            
-                            
 
 
+
+                    <!-- user card inicio -->
+                    <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6" *ngFor="let user of displayedUsers">
+                      <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
+                        <a href="#" class="shrink-0 md:order-1">
+                          <svg class="w-20 h-20 text-gray-400 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path fill-rule="evenodd" d="M12 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4h-4Z" clip-rule="evenodd"/>
+                          </svg>
+                        </a>
+                        
+                        <div class="flex items-center justify-between md:order-3 md:justify-end">
+                          <div class="text-end md:order-4 md:w-32 flex flex-row items-center">
+                            <p class="text-base font-medium"
+                            [ngClass]="{
+                              'text-green-800': user.rol === 'estudiante',
+                              'text-blue-800': user.rol === 'empresa',
+                              'text-red-800': user.rol === 'administrador'
+                            }">
+                            {{ user.rol }}
+                          </p>
                           </div>
                         </div>
-                  
+                        
+                        <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
+                          <div>
+                            <div class="flex flex-row">
+                              <a href="#" class="text-base font-medium text-gray-900 hover:underline dark:text-white">{{ user.name }}</a>
+                              <p class="mx-2 text-gray-600">{{ user.location }}</p>
+                            </div>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">{{ user.email }}</p>
+                          </div>
+                          
+                          <div class="flex items-center gap-4">
+                            <button (click)="modalBan(user.id)" type="button" class="button-remove2 rounded p-2 inline-flex text-md font-medium" 
+                            [ngClass]="user.is_suspended ? 'text-green-600 hover:text-white' : 'text-amber-600 hover:text-white'">
+                            <svg class="w-6 h-6" [ngClass]="user.is_suspended ? 'text-green-600 dark:text-white' : 'text-amber-600 dark:text-white'" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                              <path [attr.stroke]="user.is_suspended ? 'currentColor' : 'currentColor'" stroke-linecap="round" stroke-width="2" 
+                                [attr.d]="user.is_suspended ? 'M5 13l4 4L19 7' : 'M6 18 17.94 6M18 18 6.06 6'" />
+                            </svg>                                                                
+                            {{ user.is_suspended ? 'Activar' : 'Suspender' }}
+                          </button>
+                            <button (click)="modalDelete(user.id)" type="button" class="button-remove rounded p-2 inline-flex text-md font-medium text-red-600 hover:text-white dark:text-red-500">
+                              <svg class="w-6 h-6 text-red-600 hover:text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                                <path fill-rule="evenodd" d="M8.586 2.586A2 2 0 0 1 10 2h4a2 2 0 0 1 2 2v2h3a1 1 0 1 1 0 2v12a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V8a1 1 0 0 1 0-2h3V4a2 2 0 0 1 .586-1.414ZM10 6h4V4h-4v2Zm1 4a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Zm4 0a1 1 0 1 0-2 0v8a1 1 0 1 0 2 0v-8Z" clip-rule="evenodd"/>
+                              </svg>                          
+                              Eliminar
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
-                  </section>
-                  
-                </section>
+                    <!-- user card fin -->
 
-
-
-                <div class="prev-next mt-16 mb-16 flex flex-col items-center">
-      
-                  <div class="inline-flex mt-2 xs:mt-0">
                     <!-- Buttons -->
-                    <button class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-                        </svg>
-                        Prev
-                    </button>
-                    <div class="span">
-                      <span class=" text-sm text-gray-700 dark:text-gray-400">
-                      Showing <span class="font-semibold text-gray-900 dark:text-white"> 1 </span> to <span class="font-semibold text-gray-900 dark:text-white">10</span> of <span class="font-semibold text-gray-900 dark:text-white">100</span> Entries
-                      </span>
+                    <div class="prev-next mt-16 mb-16 flex flex-col items-center">
+                      <div class="inline-flex mt-2 xs:mt-0">
+                        <button (click)="previousPage()" [disabled]="currentPage === 1" class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                          <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                          </svg>
+                          Prev
+                        </button>
+                        <div class="span">
+                          <span class="text-sm text-gray-700 dark:text-gray-400">
+                            Mostrando <span class="font-semibold text-gray-900 dark:text-white">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>-<span class="font-semibold text-gray-900 dark:text-white">{{ getEndIndex() }}</span> de <span class="font-semibold text-gray-900 dark:text-white">{{ totalUsers }}</span> usuarios
+                          </span>
+                        </div>
+                        <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                          Next
+                          <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                          </svg>
+                        </button>
+                      </div>
                     </div>
-                    
-                    <button class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                        Next
-                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-
-
-              
-                  <p class="text-gray-500 text-sm"> Tienda morrocoyo los derechos de mi tio reservado adentro de mi c...</p>
 
             </div>
         </div>
@@ -288,22 +140,20 @@
         <span class="sr-only">Close modal</span>
       </button>
       
-        <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-          <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-              <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Eliminar usuario</h2>
-              <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">¿Está seguro que desea eliminar este usuario?</p>
-              <div class="flex flex-row justify-evenly">
-                  <button class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium"> Si, eliminar</button>
-                  <button (click)="modalDeleteClose()" class="bg-white hover:bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium">No, cancelar</button>
-              </div>
+      <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Eliminar usuario</h2>
+          <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">¿Está seguro que desea eliminar este usuario?</p>
+          <div class="flex flex-row justify-evenly">
+            <button (click)="deleteUser(selectedUserId)" class="bg-red-700 hover:bg-red-600 text-white px-4 py-2 rounded-lg font-medium"> Si, eliminar</button>
+            <button (click)="modalDeleteClose()" class="bg-white hover:bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium">No, cancelar</button>
           </div>
-          
+        </div>
       </section>
       
     </div>
   </div>
 </div>
-
 
 <!-- Modal Ban -->
 <div id="banModal" class="container-modal">
@@ -317,16 +167,15 @@
         <span class="sr-only">Close modal</span>
       </button>
       
-        <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-          <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-              <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Suspender usuario</h2>
-              <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">¿Está seguro que desea suspender este usuario?</p>
-              <div class="flex flex-row justify-evenly">
-                  <button class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-lg font-medium"> Si, eliminar</button>
-                  <button (click)="modalBanClose()" class="bg-white hover:bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium">No, cancelar</button>
-              </div>
+      <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">{{ selectedUser?.is_suspended ? 'Activar usuario' : 'Suspender usuario' }}</h2>
+          <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">¿Está seguro que desea {{ selectedUser?.is_suspended ? 'activar' : 'suspender' }} este usuario?</p>
+          <div class="flex flex-row justify-evenly">
+            <button (click)="deactivateUser(selectedUserId)" class="bg-amber-600 hover:bg-amber-500 text-white px-4 py-2 rounded-lg font-medium"> Si, {{ selectedUser?.is_suspended ? 'activar' : 'suspender' }}</button>
+            <button (click)="modalBanClose()" class="bg-white hover:bg-gray-100 text-gray-900 px-4 py-2 rounded-lg font-medium">No, cancelar</button>
           </div>
-          
+        </div>
       </section>
       
     </div>
