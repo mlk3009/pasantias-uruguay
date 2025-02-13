@@ -119,7 +119,9 @@ public function store(Request $request)
 
     $validator = Validator::make($jsonData, [
         'title' => 'required|string',
-        'description' => 'required|string',
+        'description' => 'sometimes|string',
+        'description2' => 'sometimes|string',
+        'description3' => 'sometimes|string',
         'salary' => 'required|numeric',
         'location' => 'required|string',
         'type' => 'required|string',
@@ -216,6 +218,8 @@ public function store(Request $request)
                 'id' => $publication->id,
                 'title' => $publication->title,
                 'description' => $publication->description,
+                'description2' => $publication->description2,
+                'description3' => $publication->description3,
                 'salary' => $publication->salary,
                 'location' => $publication->location,
                 'type' => $publication->type,
@@ -367,7 +371,9 @@ public function update(Request $request, $id)
 
     $validator = Validator::make($jsonData, [
         'title' => 'required|string',
-        'description' => 'required|string',
+        'description' => 'sometimes|string',
+        'description2' => 'sometimes|string',
+        'description3' => 'sometimes|string',
         'salary' => 'required|numeric',
         'location' => 'required|string',
         'type' => 'required|string',
@@ -431,6 +437,8 @@ public function updatePartial(Request $request, $id)
     $validator = Validator::make($jsonData, [
         'title' => 'sometimes|required|string',
         'description' => 'sometimes|required|string',
+        'description2' => 'sometimes|required|string',
+        'description3' => 'sometimes|required|string',
         'salary' => 'sometimes|required|numeric',
         'location' => 'sometimes|required|string',
         'type' => 'sometimes|required|string',

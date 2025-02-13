@@ -12,6 +12,8 @@ use App\Models\ImageUpload;
 use App\Models\FileUpload;
 use App\Models\Publication;
 use App\Models\Postula;
+use App\Models\Necesita;
+use App\Models\Saldo;
 
 class CompanyController extends Controller
 {
@@ -153,4 +155,59 @@ class CompanyController extends Controller
 
         return response(['data' => $postulantes], 200);
     }
+
+    public function obtenerSaldo($empresaId): Response
+    {
+        $saldos = Necesita::with('saldo')
+            ->where('empresa_id', $empresaId)
+            ->get()
+            ->map(function ($necesita) {
+                return [
+                    'type' => $necesita->saldo->type,
+                    'days' => $necesita->saldo->days,
+                    'pack' => $necesita->saldo->pack,
+                    'precio' => $necesita->saldo->precio,
+                    'quantity' => $necesita->quantity,
+                ];
+            });
+    
+        if ($saldos->isEmpty()) {
+            return response(['message' => 'No se encontraron saldos para esta empresa'], 404);
+        }
+    
+        return response(['data' => $saldos], 200);
+    }
+
+    public function aumentarSaldo(Request $request, $empresaId): Response
+{
+    $saldoId = $request->input('saldo_id');
+    $cantidad = $request->input('cantidad');
+
+    $saldo = Saldo::find($saldoId);
+
+    if (!$saldo) {
+        return response(['message' => 'Saldo no encontrado'], 404);
+    }
+
+    $necesita = Necesita::where('empresa_id', $empresaId)
+        ->where('saldo_id', $saldoId)
+        ->first();
+
+    if ($necesita) {
+        // Actualizar el quantity existente
+        $necesita->quantity += $saldo->pack * $cantidad;
+        $necesita->save();
+    } else {
+        // Crear un nuevo registro en necesita
+        Necesita::create([
+            'empresa_id' => $empresaId,
+            'saldo_id' => $saldoId,
+            'quantity' => $saldo->pack * $cantidad,
+        ]);
+    }
+
+    return response(['message' => 'Saldo aumentado exitosamente'], 200);
+}
+
+
 }

@@ -88,6 +88,9 @@ return new class extends Migration
             $table->timestamps();
             $table->engine = 'InnoDB';
         });
+
+
+
     }
 
     public function down(): void
