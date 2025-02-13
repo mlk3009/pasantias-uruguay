@@ -237,6 +237,7 @@ class UserController extends Controller
         $token = $request->bearerToken();
     
         $id = Auth::user()->id;
+        $rol = Auth::user()->rol;
     
         $validator = Validator::make($jsonData, [
             'name' => 'nullable',
@@ -251,7 +252,7 @@ class UserController extends Controller
             'desc1' => 'nullable|string|max:1000',
             'desc2' => 'nullable|string|max:1000',
             'etiqueta_id' => 'nullable|exists:etiqueta,id',
-            'about_us' => 'nullable|string|max:2000',
+            'aboutUs' => 'nullable|string|max:2000',
             'desc3' => 'nullable|string|max:1000',
             'sede' => 'nullable|string|max:100',
         ]);
@@ -281,69 +282,71 @@ class UserController extends Controller
     
             $user->save();
     
-            $student = Estudiante::find($id);
+            if ($rol === 'estudiante') {
+                $student = Estudiante::find($id);
     
-            if (isset($jsonData['ci_estudiante']) && $jsonData['ci_estudiante'] != $student->ci_estudiante) {
-                $student->ci_estudiante = $jsonData['ci_estudiante'];
+                if (isset($jsonData['ci_estudiante']) && $jsonData['ci_estudiante'] != $student->ci_estudiante) {
+                    $student->ci_estudiante = $jsonData['ci_estudiante'];
+                }
+    
+                if (isset($jsonData['location']) && $jsonData['location'] != $student->location) {
+                    $student->location = $jsonData['location'];
+                }
+    
+                if (isset($jsonData['fec_nacimiento']) && $jsonData['fec_nacimiento'] != $student->fec_nacimiento) {
+                    $student->fec_nacimiento = $jsonData['fec_nacimiento'];
+                }
+    
+                if (isset($jsonData['cod_postal']) && $jsonData['cod_postal'] != $student->cod_postal) {
+                    $student->cod_postal = $jsonData['cod_postal'];
+                }
+    
+                if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
+                    $student->id_image = $jsonData['id_image'];
+                }
+    
+                if (isset($jsonData['genero']) && $jsonData['genero'] !== '') {
+                    $student->genero = $jsonData['genero'];
+                }
+    
+                if (isset($jsonData['desc1']) && $jsonData['desc1'] != $student->desc1) {
+                    $student->desc1 = $jsonData['desc1'];
+                }
+    
+                if (isset($jsonData['desc2']) && $jsonData['desc2'] != $student->desc2) {
+                    $student->desc2 = $jsonData['desc2'];
+                }
+    
+                $student->save();
+            } elseif ($rol === 'empresa') {
+                $empresa = Empresa::find($id);
+    
+                if (isset($jsonData['aboutUs']) && $jsonData['aboutUs'] != $empresa->aboutUs) {
+                    $empresa->aboutUs = $jsonData['aboutUs'];
+                }
+    
+                if (isset($jsonData['desc1']) && $jsonData['desc1'] != $empresa->desc1) {
+                    $empresa->desc1 = $jsonData['desc1'];
+                }
+    
+                if (isset($jsonData['desc2']) && $jsonData['desc2'] != $empresa->desc2) {
+                    $empresa->desc2 = $jsonData['desc2'];
+                }
+    
+                if (isset($jsonData['desc3']) && $jsonData['desc3'] != $empresa->desc3) {
+                    $empresa->desc3 = $jsonData['desc3'];
+                }
+    
+                if (isset($jsonData['sede']) && $jsonData['sede'] != $empresa->sede) {
+                    $empresa->sede = $jsonData['sede'];
+                }
+    
+                if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
+                    $empresa->id_image = $jsonData['id_image'];
+                }
+    
+                $empresa->save();
             }
-    
-            if (isset($jsonData['location']) && $jsonData['location'] != $student->location) {
-                $student->location = $jsonData['location'];
-            }
-    
-            if (isset($jsonData['fec_nacimiento']) && $jsonData['fec_nacimiento'] != $student->fec_nacimiento) {
-                $student->fec_nacimiento = $jsonData['fec_nacimiento'];
-            }
-    
-            if (isset($jsonData['cod_postal']) && $jsonData['cod_postal'] != $student->cod_postal) {
-                $student->cod_postal = $jsonData['cod_postal'];
-            }
-    
-            if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
-                $student->id_image = $jsonData['id_image'];
-            }
-    
-            if (isset($jsonData['genero']) && $jsonData['genero'] !== '') {
-                $student->genero = $jsonData['genero'];
-            }
-    
-            if (isset($jsonData['desc1']) && $jsonData['desc1'] != $student->desc1) {
-                $student->desc1 = $jsonData['desc1'];
-            }
-    
-            if (isset($jsonData['desc2']) && $jsonData['desc2'] != $student->desc2) {
-                $student->desc2 = $jsonData['desc2'];
-            }
-    
-            $student->save();
-    
-            $empresa = Empresa::find($id);
-    
-            if (isset($jsonData['about_us']) && $jsonData['about_us'] != $empresa->about_us) {
-                $empresa->about_us = $jsonData['about_us'];
-            }
-    
-            if (isset($jsonData['desc1']) && $jsonData['desc1'] != $empresa->desc1) {
-                $empresa->desc1 = $jsonData['desc1'];
-            }
-    
-            if (isset($jsonData['desc2']) && $jsonData['desc2'] != $empresa->desc2) {
-                $empresa->desc2 = $jsonData['desc2'];
-            }
-    
-            if (isset($jsonData['desc3']) && $jsonData['desc3'] != $empresa->desc3) {
-                $empresa->desc3 = $jsonData['desc3'];
-            }
-    
-            if (isset($jsonData['sede']) && $jsonData['sede'] != $empresa->sede) {
-                $empresa->sede = $jsonData['sede'];
-            }
-    
-            if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
-                $empresa->id_image = $jsonData['id_image'];
-            }
-    
-            $empresa->save();
     
             // Actualizar la primera etiqueta del usuario
             if (isset($jsonData['etiqueta_id'])) {

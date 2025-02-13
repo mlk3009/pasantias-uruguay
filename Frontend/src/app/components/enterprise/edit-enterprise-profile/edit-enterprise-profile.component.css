@@ -84,6 +84,42 @@
 .card{
     scroll-snap-align: start;
 }
+.section-empresa {
+    width: 100%; 
+    height: auto; 
+    margin: 0 auto; 
+  }
+  
+  .carousel-item {
+    display: none;
+  }
+  
+  .carousel-item.active {
+    display: block;
+  }
+  
+  #default-carousel {
+    width: 75%; 
+    height: 16rem;
+    margin: 0 auto; 
+  }
+  
+  #default-carousel img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  #muro-image {
+    width: 100%; 
+    height: 26rem; 
+    margin: 0 auto;
+  }
+  
+  #muro-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+  }
 
 
 

@@ -20,7 +20,7 @@ class Estudiante extends Model
         'desc2'
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
 
     public function user()
     {

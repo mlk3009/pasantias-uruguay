@@ -9,7 +9,7 @@ class ImageUpload extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image', 'estudiante_id', 'empresa_id'];
+    protected $fillable = ['image', 'estudiante_id', 'empresa_id', 'desc'];
 
     public function estudiante()
     {
