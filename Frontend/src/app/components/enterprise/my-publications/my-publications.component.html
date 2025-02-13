@@ -275,7 +275,10 @@
                             <span class="sr-only">Next</span>
                         </span>
                         </button>
+
+                        
                     </div>
+                    
                     
                     </div>
             
@@ -305,7 +308,12 @@
                     </div>
                 </div>
 
-                <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-8">
+                <div class="mt-2 w-2/5 flex flex-row justify-between items-center">
+                  <button class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded text-md font-base">Añadir imágen</button>
+                  <button class="bg-red-700 hover:bg-red-600 text-white py-2 px-4 rounded text-md font-base">Eliminar imágen</button>
+                </div>
+
+                <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-4">
                   <div>
                     <div class="w-full flex flex-row justify-between">
                       <div class="w-full flex flex-col items-start mx-2">
@@ -357,9 +365,18 @@
                   </div>
               </div>
 
-                    <div class="flex flex-row justify-between items-center mt-6">
-                      <button class="bg-white hover:bg-gray-200 py-2 px-4 rounded text-lg font-medium">Cancelar</button>
-                      <button class="bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded text-lg font-medium">Editar</button>
+                    <div class="flex flex-row justify-evenly items-center mt-6">
+                      <button class="flex flex-colbg-white hover:bg-gray-200 py-2 px-4 rounded text-lg font-medium">Cancelar
+                        <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                        </svg>
+                      </button>
+                      <button class="flex flex-row bg-amber-500 hover:bg-amber-600 text-white py-2 px-4 rounded text-lg font-medium">Editar
+                        <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Z"/>
+                          <path fill-rule="evenodd" d="M11 7V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm4.707 5.707a1 1 0 0 0-1.414-1.414L11 14.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
+                        </svg>                          
+                      </button>
                     </div>
 
                     </div>
@@ -381,7 +398,7 @@
 <div id="añadirModal" class="container-modal">
   <div class="relative">
     <!-- Modal content -->
-    <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+    <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-2">
       <button (click)="modalAnadirClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
@@ -395,6 +412,7 @@
 
               <section class="bg-white dark:bg-gray-900 antialiased">
               <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
+                
               <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16">
                   <div class="shrink-0 max-w-md lg:max-w-lg mx-auto">
                   
@@ -451,8 +469,12 @@
 
                   </div>
               </div>
+              <div class="mt-2 w-2/5 flex flex-row justify-between items-center">
+                <button class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded text-md font-base">Añadir imágen</button>
+                <button class="bg-red-700 hover:bg-red-600 text-white py-2 px-4 rounded text-md font-base">Eliminar imágen</button>
+              </div>
 
-                  <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-8">
+                  <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-4">
                       <div>
                         <div class="w-full flex flex-row justify-between">
                           <div class="w-full flex flex-col items-start mx-2">
@@ -504,10 +526,23 @@
                       </div>
                   </div>
 
-                  <div class="flex flex-row justify-between items-center mt-6">
-                    <button class="bg-white hover:bg-gray-200 py-2 px-4 rounded text-lg font-medium">Cancelar</button>
-                    <button class="bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded text-lg font-medium">Añadir</button>
+                  <div class="flex flex-row justify-evenly items-center mt-6">
+                    
+                    <div class="w-full flex flex-row justify-evenly items-center">
+                        <button class="flex flex-row bg-white hover:bg-gray-200 py-3 px-6 rounded text-lg font-medium">Cancelar
+                          <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
+                          </svg>                          
+                        </button>
+                        <button class="flex flex-row bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded text-lg font-medium">Añadir publicaión
+                          <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Z"/>
+                            <path fill-rule="evenodd" d="M11 7V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm4.707 5.707a1 1 0 0 0-1.414-1.414L11 14.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
+                          </svg>                          
+                        </button>
+                    </div>
                   </div>
+                  
 
                   </div>
 
