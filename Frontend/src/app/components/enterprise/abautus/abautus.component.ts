@@ -6,8 +6,6 @@ import { CompanyService } from '../../../services/company.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 
-
-
 @Component({
   selector: 'app-abautus',
   standalone: true,
@@ -18,7 +16,6 @@ import { UserService } from '../../../services/user.service';
 export class AbautusComponent implements OnInit {
   @ViewChild('carousel', { static: false }) carousel: ElementRef | undefined;
   @ViewChildren('card') cards: QueryList<ElementRef> | undefined;
-  createPublication: boolean = false; // Hacer que esto dependa de la url, sacar el valor default.
   empresa: any = {};
   loading: boolean = false;
   isPhoneAccess: boolean = false; // Variable para determinar si se accedió mediante phone
@@ -27,6 +24,9 @@ export class AbautusComponent implements OnInit {
   aboutUsParagraph2: string = '';
   desc3Title: string = '';
   desc3Paragraph: string = '';
+  userImageUrl: string = '';
+  empresaImageUrl: string = '';
+  muroImageUrl: string = '';
 
   constructor(
     private companyService: CompanyService,
@@ -47,6 +47,7 @@ export class AbautusComponent implements OnInit {
           this.empresa = response.data;
           this.processAboutUs(this.empresa.aboutUs);
           this.processDesc3(this.empresa.desc3);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -61,6 +62,7 @@ export class AbautusComponent implements OnInit {
           this.empresa = response.data;
           this.processAboutUs(this.empresa.aboutUs);
           this.processDesc3(this.empresa.desc3);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -88,6 +90,30 @@ export class AbautusComponent implements OnInit {
       const parts = desc3.split('\n').filter(part => part.trim() !== '');
       this.desc3Title = parts[0] || '';
       this.desc3Paragraph = parts[1] || '';
+    }
+  }
+
+  cargarImagenesEmpresa(images: any[]): void {
+    const profileImage = images.find((img: any) => img.desc === 'profile');
+    const empresaImage = images.find((img: any) => img.desc === 'empresaimg');
+    const muroImage = images.find((img: any) => img.desc === 'muro');
+
+    if (profileImage) {
+      this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+    } else {
+      this.userImageUrl = 'http://localhost:8000/images/user.png';
+    }
+
+    if (empresaImage) {
+      this.empresaImageUrl = `http://localhost:8000/images/uploads/${empresaImage.image}`;
+    } else {
+      this.empresaImageUrl = 'http://localhost:8000/images/empresa.png';
+    }
+
+    if (muroImage) {
+      this.muroImageUrl = `http://localhost:8000/images/uploads/${muroImage.image}`;
+    } else {
+      this.muroImageUrl = 'http://localhost:8000/images/default-muro.png';
     }
   }
 

@@ -14,6 +14,11 @@ use App\Models\Publication;
 use App\Models\Postula;
 use App\Models\Necesita;
 use App\Models\Saldo;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Estudiante;
+use Illuminate\Support\Facades\DB;
+
+
 
 class CompanyController extends Controller
 {
@@ -36,17 +41,16 @@ class CompanyController extends Controller
                 'sede' => $empresa->sede,
             ];
 
-            // Buscar imagen de la empresa
-            $image = ImageUpload::where('empresa_id', $empresa->id)->first();
-            if ($image) {
-                $data['image'] = $image->image;
-                $data['id_image'] = $image->id;
-            }
+            // Buscar todas las imágenes de la empresa
+            $images = ImageUpload::where('empresa_id', $empresa->id)->get();
+            $data['images'] = [];
 
-            // Buscar archivo de la empresa
-            $file = FileUpload::where('empresa_id', $empresa->id)->first();
-            if ($file) {
-                $data['file'] = $file->file;
+            foreach ($images as $image) {
+                $data['images'][] = [
+                    'id' => $image->id,
+                    'image' => $image->image,
+                    'desc' => $image->desc,
+                ];
             }
 
             return response(['data' => $data], 200);
@@ -77,17 +81,17 @@ class CompanyController extends Controller
             'desc3' => $empresa->desc3
         ];
 
-        // Buscar imagen de la empresa
-        $image = ImageUpload::where('empresa_id', $empresa->id)->first();
-        if ($image) {
-            $data['image'] = $image->image;
-        }
+            // Buscar todas las imágenes de la empresa
+            $images = ImageUpload::where('empresa_id', $empresa->id)->get();
+            $data['images'] = [];
 
-        // Buscar archivo de la empresa
-        $file = FileUpload::where('empresa_id', $empresa->id)->first();
-        if ($file) {
-            $data['file'] = $file->file;
-        }
+            foreach ($images as $image) {
+                $data['images'][] = [
+                    'id' => $image->id,
+                    'image' => $image->image,
+                    'desc' => $image->desc,
+                ];
+            }
 
         return response(['data' => $data], 200);
     }
@@ -209,5 +213,54 @@ class CompanyController extends Controller
     return response(['message' => 'Saldo aumentado exitosamente'], 200);
 }
 
+
+public function actualizarEstadoPostulacion(Request $request, $publication_id, $estudiante_id)
+{
+    $validator = Validator::make($request->all(), [
+        'estado' => 'required|in:aprobado,rechazado,pendiente'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error al actualizar el estado de la postulacion',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+
+    $estudiante = Estudiante::find($estudiante_id);
+    if (!$estudiante) {
+        $data = [
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    $postulacion = Postula::where('publication_id', $publication_id)
+        ->where('estudiante_id', $estudiante_id)
+        ->first();
+
+    if (!$postulacion) {
+        $data = [
+            'message' => 'Postulación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    DB::table('postula')
+        ->where('publication_id', $publication_id)
+        ->where('estudiante_id', $estudiante_id)
+        ->update(['estado' => $request->input('estado')]);
+
+    $data = [
+        'message' => 'Estado de la postulación actualizado correctamente',
+        'status' => 200
+    ];
+    return response()->json($data, 200);
+}
 
 }

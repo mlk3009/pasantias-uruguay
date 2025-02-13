@@ -653,58 +653,6 @@ public function updatePartial(Request $request, $id)
     }
 
 
-
-
-
-    public function actualizarEstadoPostulacion(Request $request, $publication_id, $estudiante_id)
-    {
-        $validator = Validator::make($request->all(), [
-            'estado' => 'required|in:aprobado,rechazado,pendiente'
-        ]);
-
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error al actualizar el estado de la postulacion',
-                'status' => 400,
-                'errors' => $validator->errors()
-            ];
-            return response()->json($data, 400);
-        }
-
-
-        $estudiante = Estudiante::find($estudiante_id);
-        if (!$estudiante) {
-            $data = [
-                'message' => 'Estudiante no encontrado',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-
-        $postulacion = Postula::where('publication_id', $publication_id)
-            ->where('estudiante_id', $estudiante_id)
-            ->first();
-
-        if (!$postulacion) {
-            $data = [
-                'message' => 'Postulación no encontrada',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-
-        DB::table('postula')
-            ->where('publication_id', $publication_id)
-            ->where('estudiante_id', $estudiante_id)
-            ->update(['estado' => $request->input('estado')]);
-
-        $data = [
-            'message' => 'Estado de la postulación actualizado correctamente',
-            'status' => 200
-        ];
-        return response()->json($data, 200);
-    }
-
     public function obtenerDatosEstudiante($estudiante_id)
     {
         $estudiante = Estudiante::find($estudiante_id);
@@ -739,4 +687,5 @@ public function updatePartial(Request $request, $id)
             'status' => 200
         ], 200);
     }
+    
 }

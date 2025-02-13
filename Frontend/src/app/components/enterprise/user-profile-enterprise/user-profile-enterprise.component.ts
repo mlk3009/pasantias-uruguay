@@ -20,6 +20,8 @@ export class UserProfileEnterpriseComponent implements OnInit {
   publicaciones: any[] = [];
   loading: boolean = false;
   isPhoneAccess: boolean = false; // Variable para determinar si se accedió mediante phone
+  userImageUrl: string = '';
+  empresaImageUrl: string = '';
 
   desc1Title: string = '';
   desc1Paragraph1: string = '';
@@ -51,7 +53,9 @@ export class UserProfileEnterpriseComponent implements OnInit {
           this.processDesc2(this.empresa.desc2);
           this.processDesc3(this.empresa.desc3);
           this.obtenerPublicaciones(this.empresa.phone);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
+          
         },
         error: (error) => {
           console.error('Error al obtener la empresa por teléfono:', error);
@@ -67,6 +71,7 @@ export class UserProfileEnterpriseComponent implements OnInit {
           this.processDesc2(this.empresa.desc2);
           this.processDesc3(this.empresa.desc3);
           this.obtenerPublicaciones(this.empresa.id);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -77,6 +82,23 @@ export class UserProfileEnterpriseComponent implements OnInit {
     } else {
       console.error('Token no encontrado');
       this.loading = false;
+    }
+  }
+
+  cargarImagenesEmpresa(images: any[]): void {
+    const profileImage = images.find((img: any) => img.desc === 'profile');
+    const empresaImage = images.find((img: any) => img.desc === 'empresaimg');
+
+    if (profileImage) {
+      this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+    } else {
+      this.userImageUrl = 'http://localhost:8000/images/user.png';
+    }
+
+    if (empresaImage) {
+      this.empresaImageUrl = `http://localhost:8000/images/uploads/${empresaImage.image}`;
+    } else {
+      this.empresaImageUrl = 'http://localhost:8000/images/empresa.png';
     }
   }
 

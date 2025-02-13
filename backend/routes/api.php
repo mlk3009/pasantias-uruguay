@@ -41,7 +41,7 @@ Route::get('/companybyphone/{phone}', [CompanyController::class, 'obtenerEmpresa
 
 //POSTULACIONES
 Route::post('/postular', [PublicationController::class, 'crearPostulacion']);
-Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [PublicationController::class, 'actualizarEstadoPostulacion']);
+Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [CompanyController::class, 'actualizarEstadoPostulacion']);
 Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtenerDatosEstudiante']);
 
 //GUARDAR

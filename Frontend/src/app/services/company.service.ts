@@ -19,7 +19,6 @@ export class CompanyService {
     }
   }
 
-
   obtenerEmpresa(token: string): Observable<any> {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
@@ -60,6 +59,19 @@ export class CompanyService {
         Authorization: `Bearer ${token}`,
       });
       return this._http.get(global.url + `company/applicants/${empresaId}`, { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+
+  actualizarEstadoPostulacion(publicationId: string, estudianteId: string, estado: string): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+      const body = { estado: estado };
+      return this._http.put(global.url + `actualizar-postulacion/${publicationId}/${estudianteId}`, body, { headers: headers });
     } else {
       throw new Error('Token no encontrado');
     }
