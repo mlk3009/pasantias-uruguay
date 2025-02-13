@@ -14,6 +14,8 @@ class Publication extends Model
     protected $fillable = [
         'title',
         'description',
+        'description2',
+        'description3',
         'salary',
         'location',
         'type',

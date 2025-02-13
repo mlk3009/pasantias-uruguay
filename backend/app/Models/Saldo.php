@@ -14,6 +14,8 @@ class Saldo extends Model
     protected $fillable = [
         'type',
         'days',
+        'pack',
+        'precio',
     ];
 
     public function empresas()
