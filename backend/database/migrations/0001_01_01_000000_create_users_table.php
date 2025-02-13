@@ -37,6 +37,7 @@ return new class extends Migration
             $table->string('desc2', 1000)->nullable(); 
             $table->string('desc3', 1000)->nullable(); 
             $table->primary('id');
+            $table->timestamps();
             $table->engine = 'InnoDB'; 
         });
 
@@ -52,6 +53,7 @@ return new class extends Migration
                 'Maldonado','Montevideo','Paysandú','Río Negro','Rivera','Rocha','Salto','San José',
                 'Soriano','Tacuarembó','Treinta y Tres'
             ]);
+            $table->timestamps();
             $table->foreignId('id')->constrained('users')->onDelete('cascade');
             $table->primary('id');
             $table->engine = 'InnoDB'; 

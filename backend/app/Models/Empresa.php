@@ -20,6 +20,8 @@ class Empresa extends Model
         'sede'
     ];
 
+    public $timestamps = true;
+
     public function user()
     {
         return $this->belongsTo(User::class, 'id');

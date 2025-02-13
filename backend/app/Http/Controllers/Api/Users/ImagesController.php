@@ -43,18 +43,20 @@ class ImagesController extends Controller
         $validated = $request->validate([
             'image' => 'required|mimes:jpg,jpeg,png,bmp',
             'user_id' => 'nullable|exists:users,id', // Validar opcionalmente el user_id
+            'desc' => 'nullable|string|max:255', // Validar opcionalmente el desc
         ]);
-
+    
         $imageName = '';
         if ($image = $request->file('image')) {
             $imageName = time() . '-' . uniqid() . '.' . $image->getClientOriginalExtension();
             $image->move('images/uploads', $imageName);
         }
-
+    
         $imageUploadData = [
             'image' => $imageName,
+            'desc' => $request->input('desc', ''), // Asignar desc si se proporciona, de lo contrario, una cadena vacía
         ];
-
+    
         // Asociar la imagen al usuario si se proporciona user_id
         if ($request->has('user_id')) {
             $user = User::find($request->input('user_id'));
@@ -66,9 +68,9 @@ class ImagesController extends Controller
                 }
             }
         }
-
+    
         $imageUpload = ImageUpload::create($imageUploadData);
-
+    
         return response()->json([
             'success' => true,
             'message' => 'Imagen subida con éxito',

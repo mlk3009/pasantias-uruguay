@@ -34,11 +34,14 @@ export class UserService {
     });
 }
 
-storeImage(file: File, userId?: number): Observable<any> {
+storeImage(file: File, userId?: number, desc?: string): Observable<any> {
   const formData = new FormData();
   formData.append('image', file);
   if (userId !== undefined) {
     formData.append('user_id', userId.toString());
+  }
+  if (desc !== undefined) {
+    formData.append('desc', desc);
   }
   let headers = new HttpHeaders();
 

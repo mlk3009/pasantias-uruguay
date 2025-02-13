@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('image_uploads', function (Blueprint $table) {
             $table->id();
             $table->string('image');
+            $table->string('desc');
             $table->foreignId('estudiante_id')->nullable()->constrained('estudiante')->onDelete('cascade');
             $table->foreignId('publication_id')->nullable()->constrained('publications')->onDelete('cascade');
             $table->foreignId('empresa_id')->nullable()->constrained('empresa')->onDelete('cascade');

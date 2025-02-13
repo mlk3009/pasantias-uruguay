@@ -30,7 +30,8 @@ class CompanyController extends Controller
                 'aboutUs' => $empresa->aboutUs,
                 'desc1' => $empresa->desc1,
                 'desc2' => $empresa->desc2,
-                'desc3' => $empresa->desc3
+                'desc3' => $empresa->desc3,
+                'sede' => $empresa->sede,
             ];
 
             // Buscar imagen de la empresa
