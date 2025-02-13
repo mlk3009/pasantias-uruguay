@@ -1,10 +1,6 @@
 .title{
     padding-bottom: 10vh;
     margin-top: 5vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
 
 }
 .title h1{
@@ -127,8 +123,7 @@
     font-weight: 400;
     color: #656565;
     padding-top: 10vh;
-    margin-bottom: 2vh;
-    display: flex;  
+    margin-bottom: 2vh;  
 }
 .section-title h1{
     color: #000000;
@@ -138,7 +133,6 @@
 }
 .section-title2 h1{
     color: #000000;
-    margin-right: 1em;
     font-weight: 600;
     letter-spacing: 2px;
 }
