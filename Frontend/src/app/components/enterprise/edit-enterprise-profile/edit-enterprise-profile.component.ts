@@ -226,7 +226,7 @@ export class EditEnterpriseProfileComponent implements OnInit {
 
   uploadNewImage(file: File, desc: string): void {
     console.log('ID de la empresa:', this.empresa.id);
-
+  
     // Primero sube la nueva imagen
     this.userService.storeImage(file, this.empresa.id, desc).subscribe(
       response => {
@@ -234,38 +234,38 @@ export class EditEnterpriseProfileComponent implements OnInit {
         const newImageId = response.id;
         if (desc === 'profile') {
           this.userImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
-
+  
           // Borrar la imagen anterior si existe
           if (this.previousImageId) {
             this.userService.deleteImage(this.previousImageId).subscribe(() => {
               console.log('Imagen anterior eliminada');
             });
           }
-
+  
           // Actualizar el id_image anterior
           this.previousImageId = newImageId;
         } else if (desc === 'empresaimg') {
           this.empresaImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
-
+  
           // Borrar la imagen anterior si existe
           if (this.previousEmpresaImageId) {
             this.userService.deleteImage(this.previousEmpresaImageId).subscribe(() => {
               console.log('Imagen anterior eliminada');
             });
           }
-
+  
           // Actualizar el id_empresa_image anterior
           this.previousEmpresaImageId = newImageId;
         } else if (desc === 'muro') {
           this.muroImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
-
+  
           // Borrar la imagen anterior si existe
           if (this.previousMuroImageId) {
             this.userService.deleteImage(this.previousMuroImageId).subscribe(() => {
               console.log('Imagen anterior eliminada');
             });
           }
-
+  
           // Actualizar el id_muro_image anterior
           this.previousMuroImageId = newImageId;
         }
