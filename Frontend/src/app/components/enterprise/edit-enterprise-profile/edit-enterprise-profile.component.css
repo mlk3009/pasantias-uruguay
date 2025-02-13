@@ -380,3 +380,13 @@ h5:hover {
     position: relative;
     z-index: 2;
   }
+
+  .campo{
+    width: 60vw;
+  }
+  .h{
+    height: 18vh;
+  }
+  .borders{
+    border-bottom: 1px solid #efefef;
+  }

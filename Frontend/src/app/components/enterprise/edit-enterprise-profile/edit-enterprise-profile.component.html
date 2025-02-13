@@ -37,7 +37,7 @@
                 <h2 class="mt-12 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">Información de la empresa</h2>
                 <form (ngSubmit)="updateProfile()">
 
-                <section class="mt-10 flex flex-row justify-center w-full">
+                <section class="borders pb-10 mt-10 flex flex-row justify-center w-full">
                     <div class="flex flex-col justify-start">
                       <div *ngIf="errorMessage" class="text-red-500 mb-4">
                         {{ errorMessage }}
@@ -64,30 +64,32 @@
                 </section>
 
 
-                <h2 class="mt-32 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">Editar perfil</h2>
+                <section class="w-full borders">
+                    <h2 class="mt-32 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">Editar perfil</h2>
                 
-                <section class="bg-gray-50 dark:bg-gray-900">
-                    <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 lg:px-6">
-                    <div class="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
-                        <input type="text" [(ngModel)]="desc1Title" name="desc1Title"  class="mb-2 text-center w-full text-xl p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Título principal">
-                        <textarea [(ngModel)]="desc1Paragraph1" name="desc1Paragraph1" class="text-start w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Descripción principal"></textarea>
-                        <textarea [(ngModel)]="desc1Paragraph2" name="desc1Paragraph2" class="mb-2 text-start w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Aclaraciones"></textarea>
-                        <div class="flex justify-center">
-                        <a class="cursor-not-allowed mx-auto inline-flex items-center font-medium text button1 rounded-lg py-2 px-4 dark:text-primary-500 dark:hover:text-primary-700">
-                            Ver publicaciones
-                            <svg class="ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
-                            </svg>
-                        </a>
+                    <section class="bg-gray-50 dark:bg-gray-900">
+                        <div class="py-8 px-4 mx-auto min-w-screen-2xl lg:py-16 lg:px-6 flex items-center justify-center">
+                        <div class="flex flex-col items-center min-w-screen-2xl text-gray-500 sm:text-lg dark:text-gray-400">
+                            <input type="text" [(ngModel)]="desc1Title" name="desc1Title"  class="campo mb-2 text-center w-full text-xl p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Título principal">
+                            <textarea [(ngModel)]="desc1Paragraph1" name="desc1Paragraph1" class="campo h my-2 text-start w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Descripción principal"></textarea>
+                            <textarea [(ngModel)]="desc1Paragraph2" name="desc1Paragraph2" class="campo h mb-2 text-start w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Aclaraciones"></textarea>
+                            <div class="flex justify-center">
+                            <a class="cursor-not-allowed mx-auto mt-4 inline-flex items-center font-medium text button1 rounded-lg py-2 px-4 dark:text-primary-500 dark:hover:text-primary-700">
+                                Ver publicaciones
+                                <svg class="ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                                </svg>
+                            </a>
+                            </div>
                         </div>
-                    </div>
-                    </div>
+                        </div>
+                    </section>
                 </section>
 
 
 
 
-                <section class="body-nh2 cursores">
+                <section class="body-nh2 cursores borders">
                     <section class="section1">
                         <i id="left" class="left fa-solid fa-angle-left" (click)="onArrowLeftClick($event)"></i>
                         <section id="carousel" class="carousel">
@@ -193,7 +195,7 @@
                 </section>
 
 
-                <div class="flex flex-row justify-center w-full pt-20 pb-2">
+                <div class="flex flex-row justify-center w-full pt-20 pb-16 my-20 borders">
                     <div class="flex flex-col w-full items-center">
                         <input [(ngModel)]="desc2Title" name="desc2Title" type="text" class="max-w-sm mb-2 text-center w-full text-xl p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Título secundario">
                         <div class="flex flex-col items-center justify-center w-full max-w-screen">
@@ -204,10 +206,10 @@
                 </div>
 
 
-                <section class="bg-grey-50 dark:bg-gray-900 section-empresa">
+                <section class="borders my-40 bg-grey-50 dark:bg-gray-900 section-empresa">
                     <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
                     <div class="flex flex-col justify-center">
-                        <img class="cursor-pointer w-full dark:hidden" [src]="empresaImageUrl" (click)="onEmpresaImageClick()" alt="Imagen de la empresa">
+                        <img class="cursor-pointer w-full dark:hidden rounded-lg" [src]="empresaImageUrl" (click)="onEmpresaImageClick()" alt="Imagen de la empresa">
                         <input type="file" #fileInputEmpresa style="display: none;" (change)="onEmpresaFileSelected($event)" />
                         
                         <div class="flex flex-row justify-evenly items-center">
@@ -232,63 +234,46 @@
 
 
 
-                <section class="cursor-not-allowed bg-gray-50 dark:bg-gray-900 w-11/12">
-                    <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md cursor-not-allowed">
-                        <p class="mb-8 text-center text-gray-900 font-semibold dark:text-gray-400 sm:text-xl">Consúltanos ante cualquier tipo de duda.</p>
-                            <div class="cursor-not-allowed">
-                                <label for="email" class="cursor-not-allowed block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">E-Mail</label>
-                                <input readonly type="email" id="email" class="cursor-not-allowed shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@pasantiasuy.com" required>
+
+                <section class="my-40 pb-16 borders">
+                    <h2 class="mt-20 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">Editar "Sobre nosotros"</h2>
+
+                    <div class="flex flex-row justify-center w-full pt-20 pb-2">
+                        <div class="flex flex-col w-full items-center">
+                            <input [(ngModel)]="aboutUsTitle" name="aboutUsTitle" type="text" class="max-w-sm mb-2 text-center w-full text-xl p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Sobre nosotros">
+                            <div class="flex flex-col items-center justify-center w-full max-w-screen">
+                                <textarea [(ngModel)]="aboutUsParagraph1" name="aboutUsParagraph1" class="my-2 text-gray-900 h-28 text-start w-4/6 text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Presentación de la empresa"></textarea>
+                                <textarea [(ngModel)]="aboutUsParagraph2" name="aboutUsParagraph2" class="text-gray-900 h-28 text-start w-4/6 text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Aclaraciones sobre la empresa"></textarea>
                             </div>
-                            <div class="cursor-not-allowed">
-                                <label for="subject" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Asunto</label>
-                                <input readonly ="text" id="subject" class="cursor-not-allowed block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Cómo podemos ayudarte" required>
-                            </div>
-                            <div class="sm:col-span-2 cursor-not-allowed">
-                                <label for="message" class="block mb-2 text-sm font-medium text-gray-700 dark:text-gray-400">Mensaje</label>
-                                <textarea readonly id="message" rows="6" class="cursor-not-allowed block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..."></textarea>
-                            </div>
-                            <br>
-                            <button type="submit" class="cursor-not-allowed button1 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                                Enviar mensaje
-                            </button>
+                        </div>
                     </div>
                 </section>
 
 
 
-                <h2 class="mt-32 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">Editar "Sobre nosotros"</h2>
-
-                <div class="flex flex-row justify-center w-full pt-20 pb-2">
-                    <div class="flex flex-col w-full items-center">
-                        <input [(ngModel)]="aboutUsTitle" name="aboutUsTitle" type="text" class="max-w-sm mb-2 text-center w-full text-xl p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Sobre nosotros">
-                        <div class="flex flex-col items-center justify-center w-full max-w-screen">
-                            <textarea [(ngModel)]="aboutUsParagraph1" name="aboutUsParagraph1" class="my-2 text-gray-900 h-28 text-start w-4/6 text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Presentación de la empresa"></textarea>
-                            <textarea [(ngModel)]="aboutUsParagraph2" name="aboutUsParagraph2" class="text-gray-900 h-28 text-start w-4/6 text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Aclaraciones sobre la empresa"></textarea>
+                <section class="mt-36">
+                    <h3 class="mt-44 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">Editar imágenes del slider (Sobre nosotros)</h3>
+                    <div class="w-full mb-4 flex flex-row justify-evenly items-center">
+                        <button type="button" class="bg-green-700 hover:bg-green-600 mt-20 py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="onMuroImageClick()">
+                        Reemplazar imagen
+                        </button>
+                        <input type="file" #fileInputMuro style="display: none;" (change)="onMuroFileSelected($event)" />
+                    </div>
+                    
+                    <!-- Imagen de muro -->
+                    <div id="muro-image" class="mx-auto relative w-3/4 h-64">
+                        <div class="img">
+                        <img (click)="onMuroImageClick()" [src]="muroImageUrl" alt="Imagen del muro" class="w-full h-full object-cover rounded-lg">
                         </div>
                     </div>
-                </div>
+                    
 
-
-
-                <h3 class="mt-10 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">Editar imágenes del slider (Sobre nosotros)</h3>
-                <div class="w-1/2 flex flex-row justify-evenly items-center">
-                    <button type="button" class="bg-green-700 hover:bg-green-600 mt-20 py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800" (click)="onMuroImageClick()">
-                    Reemplazar imagen
-                    </button>
-                    <input type="file" #fileInputMuro style="display: none;" (change)="onMuroFileSelected($event)" />
-                </div>
-                
-                <!-- Imagen de muro -->
-                <div id="muro-image" class="mx-auto relative w-3/4 h-64">
-                    <div class="img">
-                    <img (click)="onMuroImageClick()" [src]="muroImageUrl" alt="Imagen del muro" class="w-full h-full object-cover">
+                    <div class="w-full flex justify-center items-center">
+                        <button type="submit" class="button0 mt-20 py-3 px-4 text-lg font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                            Editar perfil
+                        </button>
                     </div>
-                </div>
-                
-
-                <button type="submit" class="button0 mt-20 py-3 px-4 text-lg font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-                    Editar perfil
-                </button>
+                </section>
 
             
             </form>
