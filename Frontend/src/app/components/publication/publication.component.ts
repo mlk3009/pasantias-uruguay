@@ -56,12 +56,12 @@ export class PublicationComponent implements OnInit {
   createPostulacion(): void {
     const token = this.userService.getToken();
     if (!token) {
-      alert('Necesita iniciar sesión para postularse.');
+      this.showAlert1();
       return;
     }
 
     if (!this.data) {
-      alert('No se pudo obtener la información del usuario. Intente nuevamente.');
+      this.showAlert1();
       return;
     }
 
@@ -73,12 +73,12 @@ export class PublicationComponent implements OnInit {
 
     this.publicationService.createPostulacion(postulacion).subscribe(
       (response) => {
-        alert('Postulación creada exitosamente');
+        this.showAlert2();
       },
       (error) => {
         console.error('Error al crear la postulación', error);
         if (error.status === 400 && error.error.message === 'El estudiante ya se ha postulado a esta publicación') {
-          alert('Ya se ha postulado a esta publicación.');
+          this.showAlert3();
         }
       }
     );
@@ -87,12 +87,12 @@ export class PublicationComponent implements OnInit {
   guardarPublicacion(): void {
     const token = this.userService.getToken();
     if (!token) {
-      alert('Necesita iniciar sesión para guardar la publicación.');
+      this.showAlert4();
       return;
     }
 
     if (!this.data) {
-      alert('No se pudo obtener la información del usuario. Intente nuevamente.');
+      this.showAlert5();
       return;
     }
 
@@ -104,7 +104,7 @@ export class PublicationComponent implements OnInit {
     this.publicationService.guardarPublicacion(guarda).subscribe(
       (response) => {
         if (response.status === 200) {
-          alert('Publicación eliminada de guardados');
+          this.showAlert6();
         } else {
           alert('Publicación guardada exitosamente');
         }
@@ -134,7 +134,7 @@ export class PublicationComponent implements OnInit {
 
     this.userService.contactMe(email, asunto, descripcion, emailDestino).subscribe(
       (response) => {
-        alert('Correo enviado correctamente');
+        this.showAlert8();
         this.modalClose();
       },
       (error) => {
@@ -151,6 +151,206 @@ export class PublicationComponent implements OnInit {
 
   modalClose() {
     const modal = document.getElementById('contactModal') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert1(): void {
+    const modal = document.getElementById('alert-container') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container no encontrado');
+    }
+  }
+
+  alert1Close() {
+    const modal = document.getElementById('alert-container') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert2(): void {
+    const modal = document.getElementById('alert-container2') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container2 no encontrado');
+    }
+  }
+
+  alert2Close() {
+    const modal = document.getElementById('alert-container2') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert3(): void {
+    const modal = document.getElementById('alert-container3') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container3 no encontrado');
+    }
+  }
+
+  alert3Close() {
+    const modal = document.getElementById('alert-container3') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert4(): void {
+    const modal = document.getElementById('alert-container4') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container4 no encontrado');
+    }
+  }
+
+  alert4Close() {
+    const modal = document.getElementById('alert-container4') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert5(): void {
+    const modal = document.getElementById('alert-container5') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container5 no encontrado');
+    }
+  }
+
+  alert5Close() {
+    const modal = document.getElementById('alert-container5') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert6(): void {
+    const modal = document.getElementById('alert-container6') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container6 no encontrado');
+    }
+  }
+
+  alert6Close() {
+    const modal = document.getElementById('alert-container6') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert7(): void {
+    const modal = document.getElementById('alert-container7') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container7 no encontrado');
+    }
+  }
+
+  alert7Close() {
+    const modal = document.getElementById('alert-container7') as HTMLElement;
+    modal.style.display = 'none';
+  }
+
+  showAlert8(): void {
+    const modal = document.getElementById('alert-container8') as HTMLElement;
+    if (modal) {
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+  
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+  
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500); // Duration of fade-out animation
+      }, 2000);
+    } else {
+      console.error('Elemento con ID alert-container8 no encontrado');
+    }
+  }
+
+  alert8Close() {
+    const modal = document.getElementById('alert-container8') as HTMLElement;
     modal.style.display = 'none';
   }
 }
