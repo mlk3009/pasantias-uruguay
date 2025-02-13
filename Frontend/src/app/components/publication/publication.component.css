@@ -66,3 +66,135 @@
 .button2:hover{
   background-color: #15c3c3;
 }
+
+
+.alert-container{
+  position: fixed;
+  width: 25vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 39%;
+}
+.alert-container2{
+  position: fixed;
+  width: 15vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 42%;
+}
+
+.alert-container3{
+  position: fixed;
+  width: 19.5vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 40.5%;
+}
+
+.alert-container4{
+  position: fixed;
+  width: 25vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 38%;
+}
+.alert-container5{
+  position: fixed;
+  width: 31vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 35%;
+}
+.alert-container6{
+  position: fixed;
+  width: 25vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 38%;
+}
+.alert-container7{
+  position: fixed;
+  width: 25vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 38%;
+}
+.alert-container8{
+  position: fixed;
+  width: 25vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 38%;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+.cross{
+  margin-left: -8px;
+}
+
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-5%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.slide-down {
+  animation: slideDown 0.3s forwards;
+}
+.alerta{
+  z-index: 100;
+}
