@@ -9,7 +9,7 @@ class ImageUpload extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['image', 'estudiante_id', 'empresa_id', 'desc'];
+    protected $fillable = ['image', 'estudiante_id', 'empresa_id', 'publication_id', 'desc'];
 
     public function estudiante()
     {
@@ -19,5 +19,10 @@ class ImageUpload extends Model
     public function empresa()
     {
         return $this->belongsTo(Empresa::class, 'empresa_id');
+    }
+
+    public function publication()
+    {
+        return $this->belongsTo(Publication::class, 'publication_id');
     }
 }

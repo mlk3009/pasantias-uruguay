@@ -17,6 +17,7 @@ use App\Models\Saldo;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Estudiante;
 use Illuminate\Support\Facades\DB;
+use App\Models\Mensaje;
 
 
 
@@ -144,21 +145,25 @@ class CompanyController extends Controller
         }
     }
 
+
     public function obtenerPostulantes($empresaId): Response
     {
         $publicaciones = Publication::where('empresa_id', $empresaId)->pluck('id');
         $postulantes = Postula::whereIn('publication_id', $publicaciones)
             ->join('estudiante', 'postula.estudiante_id', '=', 'estudiante.id')
             ->join('users', 'estudiante.id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'postula.publication_id', 'postula.estado', 'postula.created_at')
+            ->join('publications', 'postula.publication_id', '=', 'publications.id')
+            ->leftJoin('cv', 'estudiante.id', '=', 'cv.estudiante_id') // Join con la tabla cv
+            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'postula.publication_id', 'postula.estado', 'postula.created_at', 'publications.title as publication_title', 'cv.pdf as cv_pdf') // Seleccionar el atributo pdf de la tabla cv
             ->get();
-
+    
         if ($postulantes->isEmpty()) {
             return response(['message' => 'No se encontraron postulantes para las publicaciones de esta empresa'], 404);
         }
-
+    
         return response(['data' => $postulantes], 200);
     }
+
 
     public function obtenerSaldo($empresaId): Response
     {
@@ -263,4 +268,24 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
     return response()->json($data, 200);
 }
 
+
+    public function createMensaje(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Error de validación', 'errors' => $validator->errors()], 400);
+        }
+
+        $mensaje = Mensaje::create([
+            'asunto' => 'Solicitud de registro',
+            'mensaje' => 'Solicitud para registrar empresa en la web',
+            'solicitud' => true,
+            'user_id' => $request->input('user_id'),
+        ]);
+
+        return response()->json(['message' => 'Mensaje creado exitosamente', 'data' => $mensaje, 'status' => 201], 201);
+    }
 }

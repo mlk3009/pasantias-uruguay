@@ -21,7 +21,7 @@ Route::post('login', [UserController::class, 'loginUser']);
 Route::post('register', [UserController::class, 'store']);
 Route::post('/contactUs', [EmailController::class, 'contactUs']);
 Route::post('/contactMe', [EmailController::class, 'contactMe']);
-
+Route::post('/mensajes', [CompanyController::class, 'createMensaje']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);

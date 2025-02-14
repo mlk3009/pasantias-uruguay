@@ -10,6 +10,7 @@ use App\Models\Estudiante;
 use App\Models\Etiqueta;
 use App\Models\CV;
 use App\Models\Saldo;
+use App\Models\ImageUpload;
 use App\Models\Necesita;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,33 +25,33 @@ class PublicationController extends Controller
             $category = $request->input('category');
             $featured = $request->input('featured');
             $empresaId = $request->input('empresa_id'); // Nuevo parámetro opcional
-
+    
             // Iniciar la consulta de publicaciones
             $query = Publication::query();
-
+    
             // Filtrar por categoría (etiqueta) si se proporciona
             if ($category) {
                 $query->whereHas('etiquetas', function ($q) use ($category) {
                     $q->where('name', $category);
                 });
             }
-
+    
             // Filtrar por publicaciones destacadas si se proporciona, si es true muestra solo las destacadas, si es false, todas.
             if ($featured === 'true') {
                 $query->where('featured', true);
             }
-
+    
             // Filtrar por empresa si se proporciona
             if ($empresaId) {
                 $query->where('empresa_id', $empresaId);
             }
-
+    
             // Ordenar por fecha de creación
             $query->orderBy('featured', 'desc');
-
-            // Ejecutar la consulta y obtener las publicaciones con sus etiquetas
-            $publications = $query->with('etiquetas')->get();
-
+    
+            // Ejecutar la consulta y obtener las publicaciones con sus etiquetas e imágenes
+            $publications = $query->with(['etiquetas', 'images'])->get();
+    
             // Verificar si no se encontraron publicaciones
             if ($publications->isEmpty()) {
                 $data = [
@@ -59,8 +60,8 @@ class PublicationController extends Controller
                 ];
                 return response()->json($data, 404);
             }
-
-            // Formatear la respuesta para incluir las etiquetas
+    
+            // Formatear la respuesta para incluir las etiquetas y las imágenes
             $formattedPublications = $publications->map(function ($publication) {
                 return [
                     'id' => $publication->id,
@@ -77,10 +78,11 @@ class PublicationController extends Controller
                     'featured' => $publication->featured,
                     'created_at' => $publication->created_at,
                     'updated_at' => $publication->updated_at,
-                    'etiquetas' => $publication->etiquetas->pluck('name')
+                    'etiquetas' => $publication->etiquetas->pluck('name'),
+                    'image' => $publication->images->pluck('image')->first() // Obtener la primera imagen asociada
                 ];
             });
-
+    
             // Devolver las publicaciones encontradas
             $data = [
                 'publications' => $formattedPublications,
@@ -669,14 +671,14 @@ public function updatePartial(Request $request, $id)
         ->join('publications', 'postula.publication_id', '=', 'publications.id')
         ->join('users', 'publications.empresa_id', '=', 'users.id')
         ->where('postula.estudiante_id', $estudiante_id)
-        ->select('publications.*', 'postula.created_at as postulation_date', 'postula.estado', 'users.name as empresa_name')
+        ->select('publications.*', 'postula.created_at as postulation_date', 'postula.estado', 'users.name as empresa_name', 'users.phone as empresa_phone')
         ->get();
     
         $publicacionesGuardadas = DB::table('guarda')
             ->join('publications', 'guarda.publication_id', '=', 'publications.id')
             ->join('users', 'publications.empresa_id', '=', 'users.id')
             ->where('guarda.estudiante_id', $estudiante_id)
-            ->select('publications.*', 'guarda.created_at as save_date', 'users.name as empresa_name')
+            ->select('publications.*', 'guarda.created_at as save_date', 'users.name as empresa_name', 'users.phone as empresa_phone')
             ->get();
     
         return response()->json([

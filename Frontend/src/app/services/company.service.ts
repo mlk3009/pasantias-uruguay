@@ -76,4 +76,18 @@ export class CompanyService {
       throw new Error('Token no encontrado');
     }
   }
+
+  createMensaje(userId: number, desc: string): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      });
+      const body = { user_id: userId, mensaje: desc };
+      return this._http.post(global.url + 'mensajes', body, { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
 }

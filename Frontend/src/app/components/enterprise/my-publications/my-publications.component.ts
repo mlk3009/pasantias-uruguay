@@ -22,7 +22,8 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
   displayedPublications: any[] = [];
   currentPage: number = 1;
   itemsPerPage: number = 18;
-  isPhoneAccess: boolean = false; // Variable para determinar si se accedió mediante phone
+  isPhoneAccess: boolean = false;
+  userImageUrl: string = '';
 
   constructor(
     private companyService: CompanyService,
@@ -50,6 +51,7 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
         next: (response) => {
           this.empresa = response.data;
           this.obtenerPublicaciones(this.empresa.phone);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -63,6 +65,7 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
         next: (response) => {
           this.empresa = response.data;
           this.obtenerPublicaciones(this.empresa.id);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -73,6 +76,16 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
     } else {
       console.error('Token no encontrado');
       this.loading = false;
+    }
+  }
+
+
+  cargarImagenesEmpresa(images: any[]): void {
+    const profileImage = images.find((img: any) => img.desc === 'profile');
+    if (profileImage) {
+      this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+    } else {
+      this.userImageUrl = 'http://localhost:8000/images/user.png';
     }
   }
 

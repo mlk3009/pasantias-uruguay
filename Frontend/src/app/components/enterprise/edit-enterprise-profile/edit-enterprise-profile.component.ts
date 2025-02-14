@@ -46,7 +46,7 @@ export class EditEnterpriseProfileComponent implements OnInit {
     private companyService: CompanyService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router // Inyectar Router
+    private router: Router 
   ) {}
 
   ngOnInit(): void {
@@ -62,24 +62,7 @@ export class EditEnterpriseProfileComponent implements OnInit {
           this.processDesc2(this.empresa.desc2);
           this.processDesc3(this.empresa.desc3);
           this.processAboutUs(this.empresa.aboutUs);
-          if (this.empresa.id_image) {
-            this.userImageUrl = `http://localhost:8000/images/uploads/${this.empresa.image}`;
-            this.previousImageId = this.empresa.id_image;
-          } else {
-            this.userImageUrl = 'http://localhost:8000/images/user.png';
-          }
-          if (this.empresa.id_empresa_image) {
-            this.empresaImageUrl = `http://localhost:8000/images/uploads/${this.empresa.empresa_image}`;
-            this.previousEmpresaImageId = this.empresa.id_empresa_image;
-          } else {
-            this.empresaImageUrl = 'http://localhost:8000/images/empresa.png';
-          }
-          if (this.empresa.id_muro_image) {
-            this.muroImageUrl = `http://localhost:8000/images/uploads/${this.empresa.muro_image}`;
-            this.previousMuroImageId = this.empresa.id_muro_image;
-          } else {
-            this.muroImageUrl = 'http://localhost:8000/images/default-muro.png';
-          }
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -92,6 +75,31 @@ export class EditEnterpriseProfileComponent implements OnInit {
       console.error('Token no encontrado');
       this.errorMessage = 'Token no encontrado';
       this.loading = false;
+    }
+  }
+
+
+  cargarImagenesEmpresa(images: any[]): void {
+    const profileImage = images.find((img: any) => img.desc === 'profile');
+    const empresaImage = images.find((img: any) => img.desc === 'empresaimg');
+    const muroImage = images.find((img: any) => img.desc === 'muro');
+
+    if (profileImage) {
+      this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+    } else {
+      this.userImageUrl = 'http://localhost:8000/images/user.png';
+    }
+
+    if (empresaImage) {
+      this.empresaImageUrl = `http://localhost:8000/images/uploads/${empresaImage.image}`;
+    } else {
+      this.empresaImageUrl = 'http://localhost:8000/images/empresa.png';
+    }
+
+    if (muroImage) {
+      this.muroImageUrl = `http://localhost:8000/images/uploads/${muroImage.image}`;
+    } else {
+      this.muroImageUrl = 'http://localhost:8000/images/default-muro.png';
     }
   }
 

@@ -39,4 +39,9 @@ class Publication extends Model
     {
         return $this->belongsTo(Empresa::class, 'empresa_id');
     }
+
+    public function images()
+    {
+        return $this->hasMany(ImageUpload::class, 'publication_id');
+    }
 }

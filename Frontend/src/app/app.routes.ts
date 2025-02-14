@@ -204,13 +204,13 @@ export const routes: Routes = [
         (m) => m.AdministrarUsuariosComponent
       ),
   },
-  {
-    path: 'admin-categories',
-    loadComponent: () =>
-      import('./components/admin/administrar-categorias/administrar-categorias.component').then(
-        (m) => m.AdministrarCategoriasComponent
-      ),
-  },
+//  {
+ //   path: 'admin-categories',
+ //   loadComponent: () =>
+ //     import('./components/admin/administrar-categorias/administrar-categorias.component').then(
+  //      (m) => m.AdministrarCategoriasComponent
+ //     ),
+ // },
   {
     path: 'admin-solicitudes',
     loadComponent: () =>

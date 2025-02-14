@@ -87,7 +87,6 @@ export class NavComponent implements AfterViewInit {
   }
 
   logout() {
-
     this._userService.logout().subscribe(
       response => {
         console.log('Logout successful', response);
@@ -96,11 +95,12 @@ export class NavComponent implements AfterViewInit {
         console.error('Logout error', error);
       }
     );
-    
+  
     this._cookieService.delete('token');
-    this._router.navigate(['/inicio']);
-
-}
+    this._router.navigate(['/inicio']).then(() => {
+      window.location.reload();
+    });
+  }
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {

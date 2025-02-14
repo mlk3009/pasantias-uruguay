@@ -17,7 +17,8 @@ export class PostulantesComponent implements OnInit {
   postulantes: any[] = [];
   loading: boolean = false;
   estado: string = '';
-
+  userImageUrl: string = '';
+  cvLink: string = 'http://localhost:8000/pdfs/cv_';
   constructor(private companyService: CompanyService) {}
 
   ngOnInit(): void {
@@ -28,6 +29,7 @@ export class PostulantesComponent implements OnInit {
         next: (response) => {
           this.empresa = response.data;
           this.obtenerPostulantes(this.empresa.id);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -40,6 +42,17 @@ export class PostulantesComponent implements OnInit {
       this.loading = false;
     }
   }
+
+
+  cargarImagenesEmpresa(images: any[]): void {
+    const profileImage = images.find((img: any) => img.desc === 'profile');
+    if (profileImage) {
+      this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+    } else {
+      this.userImageUrl = 'http://localhost:8000/images/user.png';
+    }
+  }
+
 
   obtenerPostulantes(empresaId: string): void {
     this.companyService.obtenerPostulantes(empresaId).subscribe({

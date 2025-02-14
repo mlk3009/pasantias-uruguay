@@ -51,8 +51,8 @@
         <form
           class="space-y-4 md:space-y-6"
           #registerForm="ngForm"
-          (ngSubmit)="register(registerForm)"
-        >
+          (ngSubmit)="register(registerForm);"
+          >
           @if(showError){
           <small class="text-red-500">
             {{ status }}
@@ -100,7 +100,47 @@
 
           <div>
             <label
-              for="location"
+              for="phone"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+              >Teléfono de la empresa</label
+            >
+            <div class="flex">
+              <span
+                class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"
+              >
+                <svg
+                  class="w-4 h-4 text-gray-500 dark:text-gray-400"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="currentColor"
+                  viewBox="0 0 20 20"
+                >
+                  <path
+                    d="M2.003 5.884l2.83-2.83a1 1 0 0 1 1.414 0l2.83 2.83a1 1 0 0 1 0 1.414l-2.83 2.83a1 1 0 0 1-1.414 0l-2.83-2.83a1 1 0 0 1 0-1.414Zm12.02 6.293a1 1 0 0 1 1.414 0l2.83 2.83a1 1 0 0 1 0 1.414l-2.83 2.83a1 1 0 0 1-1.414 0l-2.83-2.83a1 1 0 0 1 0-1.414l2.83-2.83ZM5.884 2.003a1 1 0 0 1 1.414 0l2.83 2.83a1 1 0 0 1 0 1.414l-2.83 2.83a1 1 0 0 1-1.414 0l-2.83-2.83a1 1 0 0 1 0-1.414l2.83-2.83Zm6.293 12.02a1 1 0 0 1 1.414 0l2.83 2.83a1 1 0 0 1 0 1.414l-2.83 2.83a1 1 0 0 1-1.414 0l-2.83-2.83a1 1 0 0 1 0-1.414l2.83-2.83Z"
+                  />
+                </svg>
+              </span>
+              <input
+                type="text"
+                name="phone"
+                id="phone"
+                [(ngModel)]="user.phone"
+                #phone="ngModel"
+                pattern="[0-9]{9}"
+                [disabled]="loading"
+                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-900 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Teléfono de la empresa"
+                required
+              />
+            </div>
+            <small *ngIf="phone.invalid && phone.touched" class="text-red-500">
+              Ingrese un número de teléfono válido de 9 dígitos.
+            </small>
+          </div>
+
+          <div>
+            <label
+              for="sede"
               class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >Localidad de la empresa</label
             >
@@ -130,16 +170,16 @@
                 </svg>
               </span>
               <select
-                id="location"
-                name="location"
-                [(ngModel)]="user.location"
+                id="sede"
+                name="sede"
+                [(ngModel)]="user.sede"
                 class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required
               >
                 <option value="" disabled selected style="display: none">
                   Elije un Departamento
                 </option>
-
+          
                 @for (location of locations; track location) {
                 <option class="text-gray-900" value="{{ location }}">
                   {{ location }}
@@ -316,89 +356,11 @@
             <small class="text-red-500">Las contraseñas no coinciden.</small>
             }
           </div>
-
-          <div>
-            <label
-              for="name"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >Etiquetas que describan su orientación laboral
-              <span class="text-gray-600">(Opcional)</span></label
-            >
-            <div class="flex">
-              <span
-                class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-50 border rounded-e-0 border-gray-300 border-e-0 rounded-s-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600"
-              >
-                <svg
-                  width="1rem"
-                  height="1rem"
-                  viewBox="0 -0.5 17 17"
-                  version="1.1"
-                  xmlns="http://www.w3.org/2000/svg"
-                  xmlns:xlink="http://www.w3.org/1999/xlink"
-                  class="si-glyph si-glyph-tool-box"
-                  fill="#000000"
-                >
-                  <g id="SVGRepo_bgCarrier" stroke-width="0" />
-
-                  <g
-                    id="SVGRepo_tracerCarrier"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                  />
-
-                  <g id="SVGRepo_iconCarrier">
-                    <title>1017</title>
-                    <defs></defs>
-                    <g
-                      stroke="none"
-                      stroke-width="1"
-                      fill="none"
-                      fill-rule="evenodd"
-                    >
-                      <g
-                        transform="translate(1.000000, 1.000000)"
-                        fill="#6e6e6e"
-                      >
-                        <path
-                          d="M11.988,8.031 L11.988,7 L4.031,7 L4.031,8.031 L1.938,8.031 L1.938,7 L0.0139770486,7 L0.0139770486,13 L16,13 L16,7 L14.031,7 L14.031,8.031 L11.988,8.031 Z"
-                          class="si-glyph-fill"
-                        ></path>
-                        <path
-                          d="M4,4.9855957 L4,5.96789551 L12,5.96789551 L12,4.9855957 L14,4.9855957 L14,5.96789551 L15.9873047,5.96789551 L15.9873045,3 L0,3 L2.21252548e-07,5.96789551 L1.97381592,5.96789551 L1.97381606,4.9855957 L4,4.9855957 Z"
-                          class="si-glyph-fill"
-                        ></path>
-                        <path
-                          d="M6.0029298,1.943 L5.01,1.943 L5.01,0.031 L10.969,0.031 L10.969,1.94299991 L10.0092771,1.94299994 L10.009277,0.986999997 L6.0029297,0.98699997 L6.0029298,1.943 Z"
-                          class="si-glyph-fill"
-                        ></path>
-                      </g>
-                    </g>
-                  </g>
-                </svg>
-              </span>
-              <select
-                id="countries"
-                [(ngModel)]="selectedEtiquetaId"
-                name="selectedEtiquetaId"
-                class="rounded-none rounded-e-lg bg-gray-50 border text-gray-500 focus:ring-blue-500 focus:border-blue-500 block flex-1 min-w-0 w-full text-sm border-gray-300 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              >
-                <option style="display: none" selected>
-                  Puesto de trabajo deseado
-                </option>
-                <option
-                  *ngFor="let etiqueta of etiquetas"
-                  [value]="etiqueta.id"
-                  class="text-gray-900"
-                >
-                  {{ etiqueta.name }}
-                </option>
-              </select>
-            </div>
-          </div>
+  
 
           <div class="sm:col-span-2">
             <label for="message" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mensaje de explicación</label>
-            <textarea id="message" #message="ngModel" name="message" ngModel rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario aclarativo..."></textarea>
+            <textarea id="message" #message="ngModel" name="message" [(ngModel)]="desc" rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario aclarativo..."></textarea>
           </div>
 
           
@@ -443,7 +405,7 @@
                 </div>
               </div>
               }@else {
-              <span>Siguiente</span>
+              <span>Registrarse</span>
               }
             </button>
             <p class="text-sm font-light text-gray-500 dark:text-gray-400 mt-3">
