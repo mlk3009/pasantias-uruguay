@@ -46,7 +46,7 @@ class PublicationController extends Controller
             }
 
             // Ordenar por fecha de creación
-            $query->orderBy('created_at', 'desc');
+            $query->orderBy('featured', 'desc');
 
             // Ejecutar la consulta y obtener las publicaciones con sus etiquetas
             $publications = $query->with('etiquetas')->get();
