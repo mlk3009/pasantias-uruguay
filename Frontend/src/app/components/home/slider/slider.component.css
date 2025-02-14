@@ -1,7 +1,6 @@
 .title{
     padding-bottom: 10vh;
     margin-top: 5vh;
-
 }
 .title h1{
     font-size: 3em;
@@ -17,9 +16,7 @@
     margin: 0 auto;
     margin-top: 5vh;
     width: 96%;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: calc(100% / 3) - 12px;
+    display: flex;
     gap: 25px;
     overflow-x: auto;
     scroll-snap-type: x mandatory;
@@ -39,17 +36,16 @@
 }
 .card{
     scroll-snap-align: start;
+    flex: 0 0 calc(100% / 3 - 12px);
 }
-
-
 
 .section1{
     margin: 0 auto;
     margin-top: 5vh;
+    max-width: 1580px;
     width: 100%;
-    display: grid;
-    grid-auto-flow: column;
-    grid-auto-columns: calc(100% / 3) - 12px;
+    display: flex;
+    align-items: center;
     gap: 25px;
     overflow: hidden;
     box-shadow: none;
@@ -57,55 +53,32 @@
     padding-bottom: 20vh;
     border-bottom: 1px solid #efefef;
 }
-.body-nh i{
-    top: 50%;
-    height: 50px;
-    width: 50px;
-    cursor: pointer;
-    font-size: 1.25rem;
-    position: relative;
-    text-align: center;
-    line-height: 50px;
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.23);
-    transform: translateY(-50%);
-    transition: transform 0.1s linear;
-    z-index: 20;
-}
-.body-nh i:active{
-    transform: translateY(-50%) scale(1.1);
-}
-.body-nh i:first-child {
-    left: 0;
-}
-.body-nh i:last-child {
-    right: 0;
+.body-nh2 {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .body-nh2 i{
-    top: 50%;
-    height: 50px;
-    width: 50px;
+    height: 60px; /* Set height */
+    width: 60px; /* Set width */
     cursor: pointer;
-    font-size: 1.25rem;
-    position: relative;
+    font-size: 1.5rem; /* Set font size */
     text-align: center;
-    line-height: 50px;
-    background: #fff;
-    border-radius: 50%;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.23);
-    transform: translateY(-50%);
-    transition: transform 0.1s linear;
+    line-height: 60px; /* Match the height */
+    background: transparent; /* Remove background color */
+    color: #000; /* Set icon color */
+    border-radius: 50%; /* Make it a circle */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Add shadow */
+    transition: transform 0.1s linear, background 0.3s;
     z-index: 20;
 }
+.body-nh2 i:hover{
+    background: rgba(0, 0, 0, 0.1); /* Add slight background color on hover */
+    cursor: pointer; /* Change cursor to pointer */
+}
 .body-nh2 i:active{
-    transform: translateY(-50%) scale(1.1);
-}
-.body-nh2 i:first-child {
-    left: 0;
-}
-.body-nh2 i:last-child {
-    right: 0;
+    transform: scale(1.1);
 }
 .section-title{
     margin: 0 auto;
@@ -174,41 +147,7 @@
     cursor: pointer;
 }
 
-.rating {
-    display: flex;
-    gap: 5px;
-}
 
-.star {
-    font-size: 1.5em;
-    color: gold;
-    position: relative;
-    transition: transform 0.2s;
-}
-
-.star:hover {
-    transform: scale(1.5); /* Aumenta el tamaño de la estrella al pasar el cursor */
-    cursor: pointer;
-}
-
-.star:hover::after {
-    content: attr(data-number);
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(0, 0, 0, 0.162);
-    color: rgba(255, 255, 255, 0.8);
-    padding: 1px 2px;
-    border-radius: 50%;
-    font-size: 0.3em; /* Tamaño de fuente más pequeño */
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 0.9em; /* Tamaño del contenedor más pequeño */
-    height: 0.9em; /* Tamaño del contenedor más pequeño */
-}
 
 h5 {
     transition: transform 0.2s;
@@ -250,4 +189,55 @@ h5:hover {
 .category:hover {
     transform: scale(1.02);
     transition: transform 0.2s;
-  }
+}
+
+@media (max-width: 600px) {
+    .section1{
+        width: 100%;
+        margin: none;
+        padding: none;
+    }
+    .body-nh2{
+        width: 100%;
+        margin: 0;
+        padding: none;
+    }
+    .size{
+        min-width: 13rem;
+        min-height: 10rem;
+        max-width: 13rem;
+        max-height: 10rem;
+        position: relative;
+    }
+
+    .body-nh2 i{
+        height: 60px; /* Set height */
+        width: 60px; /* Set width */
+        cursor: pointer;
+        font-size: 1.5rem; /* Set font size */
+        text-align: center;
+        line-height: 60px; /* Match the height */
+        background: transparent; /* Remove background color */
+        color: #000; /* Set icon color */
+        border-radius: 50%; /* Make it a circle */
+        box-shadow: none; /* Add shadow */
+        transition: transform 0.1s linear, background 0.3s;
+        z-index: 20;
+    }
+    .body-nh2 i:hover{
+        background: transparent; /* Add slight background color on hover */
+        cursor: pointer; /* Change cursor to pointer */
+    }
+    .card{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .zona-texto{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+}
