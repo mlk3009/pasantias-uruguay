@@ -79,17 +79,6 @@ return new class extends Migration
             $table->engine = 'InnoDB'; 
         });
 
-        Schema::create('mensajes', function (Blueprint $table) {
-            $table->id();
-            $table->string('asunto');
-            $table->text('mensaje');
-            $table->string('mail');
-            $table->foreignId('user_id')->constrained('users')->onDelete('cascade');
-            $table->timestamps();
-            $table->engine = 'InnoDB';
-        });
-
-
 
     }
 

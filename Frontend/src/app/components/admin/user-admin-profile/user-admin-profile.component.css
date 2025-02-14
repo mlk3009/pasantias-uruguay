@@ -37,7 +37,10 @@
 .home_button2:hover{
     color: #15c3c3;
 }
-
+.admin-name {
+    pointer-events: none;
+    cursor: default;
+}
 
 
 

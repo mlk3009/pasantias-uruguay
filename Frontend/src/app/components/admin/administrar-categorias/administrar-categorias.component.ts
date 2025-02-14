@@ -1,5 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { NavComponent } from '../../home/nav/nav.component';
+import { UserService } from '../../../services/user.service';
+import { AdminService } from '../../../services/admin.service';
 
 @Component({
   selector: 'app-administrar-categorias',
@@ -9,6 +12,30 @@ import { NavComponent } from '../../home/nav/nav.component';
   styleUrl: './administrar-categorias.component.css'
 })
 export class AdministrarCategoriasComponent {
+  
+  user: any = {};
+  userimage: string = 'http://localhost:8000/images/user.png';
+
+
+constructor(private _userService: UserService, private _adminService: AdminService) {}
+  
+    ngOnInit(): void {
+      this.obtenerUsuario();
+    }
+  
+    obtenerUsuario(): void {
+      const token = this._userService.getToken();
+      if (token) {
+        this._userService.obtenerUsuario(token).subscribe({
+          next: (response) => {
+            this.user = response.data;
+          },
+          error: (error) => {
+            console.error('Error fetching user:', error);
+          }
+        });
+      }
+    }
 
   modalDelete(){
     const modal = document.getElementById('deleteModal') as HTMLElement;

@@ -50,7 +50,6 @@ Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPubli
 //ADMIN
 
 Route::middleware('auth:sanctum')->group(function () {
-
     Route::get('/admin/users', [AdminController::class, 'getAllUsers']);
     Route::get('/admin/users/search', [AdminController::class, 'searchUsers']);
     Route::patch('/admin/publications/update/{id}', [AdminController::class, 'updatePublication']);
@@ -58,6 +57,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/admin/publications/soft-delete/{id}', [AdminController::class, 'softDeletePublication']);
     Route::patch('/admin/users/deactivate/{id}', [AdminController::class, 'deactivateUser']);
     Route::delete('/admin/users/delete/{id}', [AdminController::class, 'deleteUser']);
+    Route::get('admin/mensajes', [AdminController::class, 'getAllMensajes']);
+    Route::get('admin/mensajes/search', [AdminController::class, 'searchMensajes']);
+    Route::delete('admin/mensajes/{id}', [AdminController::class, 'deleteMensaje']);
+    Route::post('/admin/approve-user/{id}', [AdminController::class, 'approveUser']);
+    Route::post('/admin/reject-user/{id}', [AdminController::class, 'rejectUser']);
 });
 
 //CV

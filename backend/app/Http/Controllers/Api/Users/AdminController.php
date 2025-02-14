@@ -8,8 +8,10 @@ use App\Models\User;
 use App\Models\Publication;
 use App\Models\Necesita;
 use App\Models\Saldo;
+use App\Models\Mensaje;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Api\Email\EmailController;
 
 class AdminController extends Controller
 {
@@ -198,7 +200,8 @@ class AdminController extends Controller
         $message = $user->is_suspended ? 'Usuario suspendido' : 'Usuario activado';
         return response()->json(['message' => $message, 'status' => 200], 200);
     }
-    
+
+
     public function deleteUser($id)
     {
         if (Auth::user()->rol !== 'administrador') {
@@ -214,4 +217,143 @@ class AdminController extends Controller
     
         return response()->json(['message' => 'Usuario eliminado', 'status' => 200], 200);
     }
+
+
+    public function getAllMensajes(Request $request)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+    
+        $perPage = $request->input('itemsPerPage', 10);
+        $page = $request->input('page', 1);
+    
+        $query = Mensaje::with('user');
+    
+        if ($request->has('solicitud') && $request->solicitud == 'true') {
+            $query->where('solicitud', true);
+        } else {
+            $query->where('solicitud', false);
+        }
+    
+        $mensajes = $query->paginate($perPage, ['*'], 'page', $page);
+    
+        return response()->json([
+            'data' => $mensajes->items(),
+            'current_page' => $mensajes->currentPage(),
+            'total_pages' => $mensajes->lastPage(),
+            'total_mensajes' => $mensajes->total()
+        ], 200);
+    }
+
+
+    public function searchMensajes(Request $request)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $query = Mensaje::query();
+
+        if ($request->has('asunto')) {
+            $query->where('asunto', 'like', '%' . $request->asunto . '%');
+        }
+
+        if ($request->has('mail')) {
+            $query->where('mail', 'like', '%' . $request->mail . '%');
+        }
+
+        if ($request->has('user_id')) {
+            $query->where('user_id', $request->user_id);
+        }
+
+        $mensajes = $query->with('user')->get();
+        return response()->json($mensajes, 200);
+    }
+
+
+    public function deleteMensaje($id)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $mensaje = Mensaje::find($id);
+        if (!$mensaje) {
+            return response()->json(['message' => 'Mensaje no encontrado'], 404);
+        }
+
+        $mensaje->delete();
+        return response()->json(['message' => 'Mensaje eliminado', 'status' => 200], 200);
+    }
+
+
+
+    public function approveUser($id)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        if ($user->is_suspended) {
+            $user->is_suspended = false;
+            $user->save();
+
+            // Borrar todos los mensajes de solicitud del usuario
+            Mensaje::where('user_id', $id)->where('solicitud', true)->delete();
+
+            // Enviar correo electrónico
+            $emailController = new EmailController();
+            $request = new Request([
+                'email' => Auth::user()->email,
+                'asunto' => 'Solicitud de registro aprobada XExperiencie',
+                'descripcion' => '¡Felicidades! Su empresa ha sido aprobada para formar parte de PasantíasUY. Ahora puede publicar oportunidades y conectar con talentos. ¡Bienvenidos!',
+                'emailDestino' => $user->email
+            ]);
+            $emailController->contactMe($request);
+
+            return response()->json(['message' => 'Usuario activado, mensajes de solicitud eliminados y correo enviado', 'status' => 200], 200);
+        }
+
+        return response()->json(['message' => 'El usuario ya está activo', 'status' => 200], 200);
+    }
+
+
+
+    public function rejectUser(Request $request, $id)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $user = User::find($id);
+        if (!$user) {
+            return response()->json(['message' => 'Usuario no encontrado'], 404);
+        }
+
+        // Borrar todos los mensajes de solicitud del usuario
+        Mensaje::where('user_id', $id)->where('solicitud', true)->delete();
+
+        // Enviar correo electrónico
+        $emailController = new EmailController();
+        $emailRequest = new Request([
+            'email' => Auth::user()->email,
+            'asunto' => 'Solicitud de registro rechazada XExperiencie',
+            'descripcion' => $request->input('descripcion'),
+            'emailDestino' => $user->email
+        ]);
+        $emailController->contactMe($emailRequest);
+
+        $user->delete();
+
+        return response()->json(['message' => 'Usuario rechazado, mensajes de solicitud eliminados y correo enviado', 'status' => 200], 200);
+    }
+
+
+
 }
