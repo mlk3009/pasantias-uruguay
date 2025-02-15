@@ -52,7 +52,33 @@ return new class extends Migration
             ['type' => 'Destacada', 'days' => 30, 'pack' => 20, 'precio' => 50400],
             ['type' => 'Destacada', 'days' => 30, 'pack' => 30, 'precio' => 69300],
         ]);
+
+
+        DB::table('necesita')->insert([
+            [
+                'empresa_id' => 2,
+                'saldo_id' => DB::table('saldo')->where([
+                    ['type', '=', 'Normal'],
+                    ['days', '=', 15],
+                    ['pack', '=', 1],
+                    ['precio', '=', 1000]
+                ])->value('id'),
+                'quantity' => 1
+            ],
+            [
+                'empresa_id' => 2,
+                'saldo_id' => DB::table('saldo')->where([
+                    ['type', '=', 'Destacada'],
+                    ['days', '=', 30],
+                    ['pack', '=', 10],
+                    ['precio', '=', 29400]
+                ])->value('id'),
+                'quantity' => 10
+            ]
+        ]);
     }
+
+    
 
     /**
      * Reverse the migrations.

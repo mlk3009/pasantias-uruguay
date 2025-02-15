@@ -6,11 +6,12 @@ import { UserService } from '../../../services/user.service'; // Importar el ser
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-my-publications',
   standalone: true,
-  imports: [NavComponent, CommonModule, HttpClientModule],
+  imports: [NavComponent, CommonModule, HttpClientModule, FormsModule],
   templateUrl: './my-publications.component.html',
   styleUrls: ['./my-publications.component.css']
 })
@@ -24,6 +25,25 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
   itemsPerPage: number = 18;
   isPhoneAccess: boolean = false;
   userImageUrl: string = '';
+  saldos: any[] = []; // Nueva variable para almacenar los saldos
+
+  newPublication: any = {
+    title: '',
+    description: '',
+    description2: '',
+    description3: '',
+    salary: null,
+    location: '',
+    type: '',
+    time: '',
+    vacancies: null,
+    empresa_id: null,
+    saldo_id: null,
+    id_image: []
+  };
+
+  startDate: string = '';
+  endDate: string = '';
 
   constructor(
     private companyService: CompanyService,
@@ -50,8 +70,10 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
       this.companyService.obtenerEmpresaByPhone(phone).subscribe({
         next: (response) => {
           this.empresa = response.data;
+          this.newPublication.empresa_id = this.empresa.id; // Asignar empresa_id a la nueva publicación
           this.obtenerPublicaciones(this.empresa.phone);
           this.cargarImagenesEmpresa(this.empresa.images);
+          this.obtenerSaldo(this.empresa.id); // Obtener los saldos
           this.loading = false;
         },
         error: (error) => {
@@ -64,8 +86,10 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
       this.companyService.obtenerEmpresa(token).subscribe({
         next: (response) => {
           this.empresa = response.data;
+          this.newPublication.empresa_id = this.empresa.id; // Asignar empresa_id a la nueva publicación
           this.obtenerPublicaciones(this.empresa.id);
           this.cargarImagenesEmpresa(this.empresa.images);
+          this.obtenerSaldo(this.empresa.id); // Obtener los saldos
           this.loading = false;
         },
         error: (error) => {
@@ -78,7 +102,6 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
       this.loading = false;
     }
   }
-
 
   cargarImagenesEmpresa(images: any[]): void {
     const profileImage = images.find((img: any) => img.desc === 'profile');
@@ -101,6 +124,24 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
     });
   }
 
+  obtenerSaldo(empresaId: string): void {
+    this.companyService.obtenerSaldo(empresaId).subscribe({
+      next: (response) => {
+        this.saldos = response.data;
+      },
+      error: (error) => {
+        console.error('Error al obtener los saldos:', error);
+      }
+    });
+  }
+
+  loadPublicationData(publication: any): void {
+    this.newPublication = { ...publication };
+    const [startDate, endDate] = publication.time.split(' - ');
+    this.startDate = startDate;
+    this.endDate = endDate;
+  }
+
   modalDelete() {
     const modal = document.getElementById('deleteModal') as HTMLElement;
     modal.style.display = 'flex';
@@ -111,7 +152,8 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
     modal.style.display = 'none';
   }
 
-  modalModificar() {
+  modalModificar(publication: any) {
+    this.loadPublicationData(publication);
     const modal = document.getElementById('modificarModal') as HTMLElement;
     modal.style.display = 'flex';
   }
@@ -165,25 +207,13 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
 
   // Nueva función para crear una publicación
   createPublication(): void {
-    const newPublication = {
-      title: 'New Publication',
-      description: 'Description of the new publication',
-      salary: 50000,
-      location: 'Montevideo',
-      type: 'Full-time',
-      time: '9-5',
-      vacancies: 3,
-      postulation_way: 'Online',
-      empresa_id: this.empresa.id,
-      saldo_id: 1,
-      id_image: [1, 2, 3]
-    };
-
-    this.publicationService.createPublication(newPublication).subscribe(
+    this.newPublication.time = `${this.startDate} - ${this.endDate}`;
+    this.publicationService.createPublication(this.newPublication).subscribe(
       response => {
         console.log('Publication created successfully:', response);
         // Actualizar la lista de publicaciones después de crear una nueva
         this.obtenerPublicaciones(this.empresa.id);
+        this.modalAnadirClose(); // Cerrar el modal después de crear la publicación
       },
       error => {
         console.error('Error creating publication:', error);
@@ -191,12 +221,12 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
     );
   }
 
-
   updatePartial(id: string, updatedPublication: any): void {
     this.publicationService.updatePartial(id, updatedPublication).subscribe(
       response => {
         console.log('Publication updated successfully:', response);
         this.obtenerPublicaciones(this.empresa.id);
+        this.modalModificarClose();
       },
       error => {
         console.error('Error updating publication:', error);

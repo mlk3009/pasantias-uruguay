@@ -90,4 +90,42 @@ export class CompanyService {
       throw new Error('Token no encontrado');
     }
   }
+
+  createPublication(publicationData: any): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      });
+      return this._http.post(global.url + 'publications/store', publicationData, { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+
+  obtenerSaldo(empresaId: string): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+      return this._http.get(global.url + `company/saldo/${empresaId}`, { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+
+  updatePartial(id: string, updatedPublication: any): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      });
+      return this._http.patch(global.url + `publications/updatePartial/${id}`, updatedPublication, { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
 }

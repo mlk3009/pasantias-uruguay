@@ -47,8 +47,8 @@ Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtene
 //GUARDAR
 Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPublicacion']);
 
-//ADMIN
 
+//ADMIN
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/admin/users', [AdminController::class, 'getAllUsers']);
     Route::get('/admin/users/search', [AdminController::class, 'searchUsers']);
@@ -99,6 +99,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
     Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
     Route::put('publications/reactivate', [PublicationController::class, 'reactivatePublication']);
+    Route::get('/company/saldo/{empresaId}', [CompanyController::class, 'obtenerSaldo']);
 });
 
 Route::get('/publications', [PublicationController::class, 'index']);

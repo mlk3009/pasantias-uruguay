@@ -177,6 +177,7 @@ class CompanyController extends Controller
                     'pack' => $necesita->saldo->pack,
                     'precio' => $necesita->saldo->precio,
                     'quantity' => $necesita->quantity,
+                    'saldo_id' => $necesita->saldo->id,
                 ];
             });
     

@@ -72,7 +72,6 @@ class PublicationController extends Controller
                     'type' => $publication->type,
                     'time' => $publication->time,
                     'deathline' => $publication->deathline,
-                    'postulation_way' => $publication->postulation_way,
                     'empresa_id' => $publication->empresa_id,
                     'vacancies' => $publication->vacancies,
                     'featured' => $publication->featured,
@@ -121,15 +120,14 @@ public function store(Request $request)
 
     $validator = Validator::make($jsonData, [
         'title' => 'required|string',
-        'description' => 'sometimes|string',
-        'description2' => 'sometimes|string',
-        'description3' => 'sometimes|string',
+        'description' => 'nullable|string',
+        'description2' => 'nullable|string',
+        'description3' => 'nullable|string',
         'salary' => 'required|numeric',
         'location' => 'required|string',
         'type' => 'required|string',
         'time' => 'required|string',
         'vacancies' => 'required|numeric',
-        'postulation_way' => 'required|string',
         'empresa_id' => 'required|numeric',
         'saldo_id' => 'required|numeric|exists:saldo,id', 
         'id_image' => 'sometimes|array', 
@@ -145,17 +143,21 @@ public function store(Request $request)
         return response()->json($data, 400);
     }
 
+
     // Obtener el saldo disponible para la empresa
-    $empresaId = $jsonData['empresa_id'];
-    $saldoId = $jsonData['saldo_id'];
+    $empresaId = (int) $jsonData['empresa_id'];
+    $saldoId = (int) $jsonData['saldo_id'];
     $necesita = Necesita::where('empresa_id', $empresaId)
                         ->where('saldo_id', $saldoId)
                         ->first();
-
+    
     if (!$necesita || $necesita->quantity <= 0) {
         $data = [
             'message' => 'Saldo insuficiente para crear la publicación',
-            'status' => 400
+            'status' => 400,
+            'empresa_id' => $empresaId,
+            'saldo_id' => $saldoId,
+            'necesita' => $necesita
         ];
         return response()->json($data, 400);
     }
@@ -227,7 +229,6 @@ public function store(Request $request)
                 'type' => $publication->type,
                 'time' => $publication->time,
                 'deathline' => $publication->deathline,
-                'postulation_way' => $publication->postulation_way,
                 'empresa_id' => $publication->empresa_id,
                 'vacancies' => $publication->vacancies,
                 'featured' => $publication->featured,
@@ -357,73 +358,6 @@ public function reactivatePublication(Request $request)
 
 
 
-public function update(Request $request, $id)
-{
-    $publication = Publication::find($id);
-
-    if (!$publication) {
-        $data = [
-            'message' => 'Publicación no encontrada',
-            'status' => 404
-        ];
-        return response()->json($data, 404);
-    }
-
-    $jsonData = $request->json()->all();
-
-    $validator = Validator::make($jsonData, [
-        'title' => 'required|string',
-        'description' => 'sometimes|string',
-        'description2' => 'sometimes|string',
-        'description3' => 'sometimes|string',
-        'salary' => 'required|numeric',
-        'location' => 'required|string',
-        'type' => 'required|string',
-        'time' => 'required|string',
-        'deathline' => 'required|date',
-        'vacancies' => 'required|numeric',
-        'postulation_way' => 'required|string',
-        'empresa_id' => 'required|numeric',
-        'id_image' => 'sometimes|array', 
-        'id_image.*' => 'numeric|exists:image_uploads,id' 
-    ]);
-
-    if ($validator->fails()) {
-        $data = [
-            'message' => 'Error al actualizar la publicación',
-            'status' => 400,
-            'errors' => $validator->errors()
-        ];
-        return response()->json($data, 400);
-    }
-
-    // Actualizar la publicación
-    $publication->update($jsonData);
-
-    // Asociar imágenes a la publicación si se proporcionan
-    if (isset($jsonData['id_image'])) {
-        // Primero, desasociar las imágenes actuales
-        DB::table('image_uploads')
-            ->where('publication_id', $publication->id)
-            ->update(['publication_id' => null]);
-
-        // Luego, asociar las nuevas imágenes
-        foreach ($jsonData['id_image'] as $imageId) {
-            DB::table('image_uploads')
-                ->where('id', $imageId)
-                ->update(['publication_id' => $publication->id]);
-        }
-    }
-
-    $data = [
-        'publication' => $publication,
-        'status' => 200
-    ];
-    return response()->json($data, 200);
-}
-
-
-
 public function updatePartial(Request $request, $id)
 {
     $publication = Publication::find($id);
@@ -438,16 +372,15 @@ public function updatePartial(Request $request, $id)
     $jsonData = $request->json()->all();
     $validator = Validator::make($jsonData, [
         'title' => 'sometimes|required|string',
-        'description' => 'sometimes|required|string',
-        'description2' => 'sometimes|required|string',
-        'description3' => 'sometimes|required|string',
-        'salary' => 'sometimes|required|numeric',
+        'description' => 'nullable|string',
+        'description2' => 'nullable|string',
+        'description3' => 'nullable|string',
+        'salary' => 'nullable|numeric',
         'location' => 'sometimes|required|string',
         'type' => 'sometimes|required|string',
         'time' => 'sometimes|required|string',
         'deathline' => 'sometimes|required|date',
         'vacancies' => 'sometimes|required|numeric',
-        'postulation_way' => 'sometimes|required|string',
         'empresa_id' => 'sometimes|required|numeric',
         'saldo_id' => 'sometimes|required|numeric|exists:saldo,id',
         'id_image' => 'sometimes|array',
@@ -462,44 +395,6 @@ public function updatePartial(Request $request, $id)
             'errors' => $validator->errors()
         ];
         return response()->json($data, 400);
-    }
-
-    // Obtener el saldo disponible para la empresa si se proporciona saldo_id
-    if (isset($jsonData['saldo_id'])) {
-        $empresaId = $jsonData['empresa_id'];
-        $saldoId = $jsonData['saldo_id'];
-        $necesita = Necesita::where('empresa_id', $empresaId)
-                            ->where('saldo_id', $saldoId)
-                            ->first();
-
-        if (!$necesita || $necesita->quantity <= 0) {
-            $data = [
-                'message' => 'Saldo insuficiente para actualizar la publicación',
-                'status' => 400
-            ];
-            return response()->json($data, 400);
-        }
-
-        // Obtener el tipo de saldo
-        $saldo = Saldo::find($saldoId);
-
-        // Ajustar los atributos featured y deathline en base al saldo
-        if ($saldo->type == 'Normal') {
-            $jsonData['featured'] = false;
-        } elseif ($saldo->type == 'Destacado') {
-            $jsonData['featured'] = true;
-        }
-
-        $jsonData['deathline'] = now()->addDays($saldo->days)->toDateString();
-
-        // Reducir el saldo disponible
-        $necesita->quantity -= 1;
-
-        if ($necesita->quantity <= 0) {
-            $necesita->delete();
-        } else {
-            $necesita->save();
-        }
     }
 
     // Actualizar la publicación

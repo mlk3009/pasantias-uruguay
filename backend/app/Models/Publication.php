@@ -22,7 +22,6 @@ class Publication extends Model
         'time',
         'deathline',
         'vacancies',
-        'postulation_way',
         'featured',
         'is_deleted',
         'empresa_id'
