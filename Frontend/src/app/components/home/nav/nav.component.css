@@ -174,3 +174,41 @@ nav.down{
 .button:hover{
     background-color: #15c3c3;
 }
+
+
+/* Minimalist select style */
+.select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #0000002d;
+    padding: 5px 0;
+    font-size: 16px;
+    color: #333;
+    cursor: pointer;
+    outline: none;
+}
+
+.select:focus {
+    outline: none; /* Elimina el borde azul */
+    border-bottom: 1px solid #000;
+}
+
+.select option {
+    background-color: white;
+    color: #333;
+    padding: 10px; /* Añade padding para un mejor aspecto */
+    font-size: 16px;
+    border-radius: 0; /* Elimina el border-radius */
+}
+
+/* Estilos adicionales para los options cuando están seleccionados */
+.select option:checked {
+    background-color: #f0f0f0; /* Color de fondo cuando está seleccionado */
+    color: #000; /* Color del texto cuando está seleccionado */
+}
+.select option:hover{
+    cursor: pointer;
+}
