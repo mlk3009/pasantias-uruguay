@@ -196,7 +196,7 @@ storeImage(file: File, userId?: number, desc?: string): Observable<any> {
     return this._http.request('delete', global.url + `deleteUserTag`, { headers: headers, body: params });
   }
 
-  // Método para obtener todas las etiquetas, estará acá momentaneamente hasta que se cree un servicio para las etiquetas
+
   getEtiquetas(): Observable<etiqueta[]> {
     return this._http.get<{ Tags: etiqueta[], status: number }>(global.url + 'showTags').pipe(
       map(response => {
@@ -224,7 +224,7 @@ storeImage(file: File, userId?: number, desc?: string): Observable<any> {
     );
 }
 
-    // Obtener datos del estudiante
+
     getStudentData(token: string, estudiante_id: number): Observable<any> {
       const headers = new HttpHeaders({
         Authorization: `Bearer ${token}`,

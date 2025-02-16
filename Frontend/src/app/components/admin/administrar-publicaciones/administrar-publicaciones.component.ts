@@ -1,32 +1,149 @@
 import { Component, OnInit } from '@angular/core';
 import { NavComponent } from '../../home/nav/nav.component';
-
+import { HttpParams, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { PublicationService } from '../../../services/publication.service';
+import { UserService } from '../../../services/user.service';
+import { AdminService } from '../../../services/admin.service';
+import { ActivatedRoute } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-administrar-publicaciones',
   standalone: true,
-  imports: [NavComponent],
+  imports: [NavComponent, CommonModule],
   templateUrl: './administrar-publicaciones.component.html',
   styleUrl: './administrar-publicaciones.component.css'
 })
-export class AdministrarPublicacionesComponent {
-  modalDelete(){
+export class AdministrarPublicacionesComponent implements OnInit {
+  publications: any[] = [];
+  displayedPublications: any[] = [];
+  currentPage: number = 1;
+  itemsPerPage: number = 16;
+  data: any = {};
+  userimage: string = 'http://localhost:8000/images/user.png';
+  selectedPublicationId: number | null = null;
+
+  constructor(
+    private _publicationService: PublicationService,
+    private _userService: UserService,
+    private _adminService: AdminService,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    this.route.paramMap.subscribe(params => {
+      const category = params.get('category') || undefined;
+      this.getPublications(category);
+    });
+
+    const token = this._userService.getToken();
+    if (token) {
+      this._userService.obtenerUsuario(token).subscribe({
+        next: (response) => {
+          this.data = response.data;
+          this.updateDisplayedPublications();
+        },
+        error: (error) => {
+          console.error(error);
+          this.updateDisplayedPublications();
+        }
+      });
+    } else {
+      this.updateDisplayedPublications();
+    }
+  }
+
+  updateDisplayedPublications(): void {
+    const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+    const endIndex = startIndex + this.itemsPerPage;
+    this.displayedPublications = this.publications.slice(startIndex, endIndex);
+  }
+
+  nextPage(): void {
+    if ((this.currentPage * this.itemsPerPage) < this.publications.length) {
+      this.currentPage++;
+      this.updateDisplayedPublications();
+      document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' }); // Desplazarse al elemento con id "top"
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedPublications();
+      document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' }); // Desplazarse al elemento con id "top"
+    }
+  }
+
+  modalDelete(publicationId: number): void {
+    this.selectedPublicationId = publicationId;
     const modal = document.getElementById('deleteModal') as HTMLElement;
     modal.style.display = 'flex';
   }
 
-  modalDeleteClose() {
+  modalDeleteClose(): void {
+    this.selectedPublicationId = null;
     const modal = document.getElementById('deleteModal') as HTMLElement;
     modal.style.display = 'none';
   }
 
-  modalBan(){
+  modalBan(publicationId: number): void {
+    this.selectedPublicationId = publicationId;
     const modal = document.getElementById('banModal') as HTMLElement;
     modal.style.display = 'flex';
   }
 
-  modalBanClose() {
+  modalBanClose(): void {
+    this.selectedPublicationId = null;
     const modal = document.getElementById('banModal') as HTMLElement;
     modal.style.display = 'none';
+  }
+
+  getPublications(category?: string, featured: boolean = false): void {
+    this._publicationService.getPublications(category, featured).subscribe(
+      (response) => {
+        if (response && response.length > 0 && response[0].publications) {
+          this.publications = response[0].publications;
+        } else {
+          this.publications = [];
+        }
+        this.updateDisplayedPublications(); // Actualizar las publicaciones mostradas
+      },
+      (error) => {
+        console.error(error);
+      }
+    );
+  }
+
+  destroyPublication(id: number | null): void {
+    if (id !== null) {
+      this._adminService.destroyPublication(id).subscribe(
+        (response) => {
+          console.log('Publication destroyed:', response);
+          this.getPublications(); // Refresh the publications list
+          this.modalDeleteClose(); // Close the modal
+        },
+        (error) => {
+          console.error('Error destroying publication:', error);
+        }
+      );
+    }
+  }
+
+  softDeletePublication(id: number | null): void {
+    if (id !== null) {
+      this._adminService.softDeletePublication(id).subscribe(
+        (response) => {
+          console.log('Publication soft deleted:', response);
+          this.getPublications(); 
+          this.modalBanClose(); 
+        },
+        (error) => {
+          console.error('Error soft deleting publication:', error);
+        }
+      );
+    }
   }
 }

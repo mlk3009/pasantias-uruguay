@@ -14,9 +14,10 @@ class Mensaje extends Model
     protected $fillable = [
         'asunto',
         'mensaje',
-        'mail',
         'user_id',
+        'solicitud',
     ];
+    public $timestamps = true;
 
     public function user()
     {

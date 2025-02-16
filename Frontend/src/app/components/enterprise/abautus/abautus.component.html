@@ -5,7 +5,7 @@
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
                 <div class="w-full border-b-2 flex justify-center flex-col items-center">   
                     <div class="w-full rounded-lg flex flex-col items-center">
-                        <img src="../../../../assets/img/Fish_wearing_a_chicken_smoking_a_cigarette_cover.webp" alt="" class="rounded-full w-40">
+                        <img [src]="userImageUrl" alt="" class="rounded-full w-40">
                         <h1 class="text-gray-900 font-semibold text-4xl mt-5">{{empresa.name}}</h1>
                     </div>
                     <div class="buttons">
@@ -46,54 +46,34 @@
                 </div>
 
                 
-                <section class="section bg-gray-50">
-                    <section class=" dark:bg-gray-900">
-                        <div class="gap-16 items-center py-8 px-4 mx-auto max-w-screen-xl lg:grid lg:grid-cols-2 lg:py-16 lg:px-6">
-                            <div class="font-normal text-gray-500 sm:text-md dark:text-gray-400">
-                                <h2 class="mb-4 text-2xl tracking-tight font-medium text-gray-900 dark:text-white"> {{ desc3Title }} </h2>
-                                <p class="mb-4 text-gray-500 dark:text-white"></p>  {{ desc3Paragraph}}    </div>
-                            <!--a-->
-                            <div class="grid grid-cols-2 gap-4 mt-8 mb-4 md:mb-0">
-                                <img class="w-full rounded-lg" src="../../../../assets/img/img-nosotros4.jpg" alt="office content 1">
-                                <img class="mt-4 w-full lg:mt-10 rounded-lg" src="../../../../assets/img/img-nosotros2.jpg" alt="office content 2">
-                            </div>
-                            <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="button1 py-2.5 px-4 rounded-lg hover:cursor-pointer text-lg font-medium w-full md:w-44 text-center">Ver publicaciones</a>
+                <section class="bg-grey-50 dark:bg-gray-900">
+                    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+                        <img class="w-full dark:hidden" [src]="empresaImageUrl" alt="dashboard image">
+                        <img class="w-full hidden dark:block" [src]="empresaImageUrl" alt="dashboard image">
+                        <div class="mt-4 md:mt-0">
+                            <h2 class="mb-4 text-xl tracking-tight font-semibold text-gray-900 dark:text-white"> {{ desc3Title }}</h2>
+                            <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400"> {{ desc3Paragraph }} </p>
+                            <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="inline-flex items-center font-medium text button1 rounded-lg py-2 px-4 dark:text-primary-500 dark:hover:text-primary-700">
+                                Ver publicaciones
+                                <svg class="ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
+                            </a>
                         </div>
-                    </section>
+                    </div>
                 </section>
 
 
 
-                <div id="default-carousel" class=" mx-auto relative">
-                    <!-- Carousel wrapper -->
-                
-                
-                    <div class="carousel-item duration-700 ease-in-out">
-                      <div class="img">
-                        
-                      </div>
+                <section class="mt-36">
+                    <!-- Imagen de muro -->
+                    <div id="muro-image" class="mx-auto relative w-3/4 h-64">
+                        <div class="img">
+                        <img [src]="muroImageUrl" alt="Imagen del muro" class="w-full h-full object-cover rounded-lg">
+                        </div>
                     </div>
-                    <!-- Slider controls -->
-                    <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
-                      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                        </svg>
-                        <span class="sr-only">Previous</span>
-                      </span>
-                    </button>
-                    <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none">
-                      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                        <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                        </svg>
-                        <span class="sr-only">Next</span>
-                      </span>
-                    </button>
-                  </div>
+                </section>
 
 
-                  <section class="bg-gray-50 dark:bg-gray-900 w-11/12">
+                <section class="bg-gray-50 dark:bg-gray-900 w-11/12">
                     <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
                         <p class="mb-8 text-center text-gray-900 font-semibold dark:text-gray-400 sm:text-2xl">Consúltanos ante cualquier tipo de duda.</p>
                         <form class="space-y-8" (ngSubmit)="sendContactEmail(contactForm)" #contactForm="ngForm">

@@ -13,12 +13,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./contact.component.css']
 })
 export class ContactComponent implements OnInit {
+  isLoggedIn: boolean = false;
+  userEmail: string = '';
+
   constructor(private userService: UserService, private route: ActivatedRoute) {}
 
-  contactUs(email: string, asunto: string, descripcion: string): void {
-    this.userService.contactUs(email, asunto, descripcion).subscribe(
+
+  contactUs(asunto: string, descripcion: string): void {
+    this.userService.contactUs(this.userEmail, asunto, descripcion).subscribe(
       response => {
         console.log('Correo enviado correctamente', response);
+        window.location.reload();
       },
       error => {
         console.error('Error al enviar el correo', error);
@@ -27,6 +32,19 @@ export class ContactComponent implements OnInit {
   }
 
   ngOnInit() {
+    const token = this.userService.getToken();
+    if (token) {
+      this.userService.obtenerUsuario(token).subscribe({
+        next: (response) => {
+          this.isLoggedIn = true;
+          this.userEmail = response.data.email;
+        },
+        error: (error) => {
+          console.error('Error al obtener el usuario:', error);
+        }
+      });
+    }
+
     this.route.fragment.subscribe((fragment: string | null) => {
       if (fragment) {
         const element = document.getElementById(fragment);

@@ -317,43 +317,38 @@ class CvController extends Controller
                 $pdf->SetTextColor(0, 0, 0);
                 $pdf->Cell(0, 10, iconv('UTF-8', 'ISO-8859-1', 'Curriculum Vitae'), 0, 1, 'C');
                 $pdf->Ln(10);
-    
-                // Imagen
-                $this->addSection($pdf, '', function ($pdf) use ($estudiante) {
-                    $id_image = $estudiante->id_image;
-                    if ($id_image !== null) {
-                        $imageRecord = \App\Models\ImageUpload::find($id_image);
-                        if ($imageRecord) {
-                            $rutaImagen = 'images/uploads/' . $imageRecord->image;
-    
-                            if (file_exists($rutaImagen)) {
-                                // Ajustes en las dimensiones de la imagen
-                                $pageWidth = $pdf->GetPageWidth();
-                                $imageWidth = 50; // Ajusta el tamaño según sea necesario
-                                $imageHeight = 50; // Ajusta el tamaño según sea necesario
-                                $xPosition = ($pageWidth - $imageWidth) / 2;
-                                $pdf->Image($rutaImagen, $xPosition, null, $imageWidth, $imageHeight);
-                            } else {
-                                // Este es por si el archivo no existe
-                                $pdf->SetTextColor(255, 0, 0);
-                                $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
-                                $pdf->SetTextColor(0, 0, 0);
-                            }
-                        } else {
-                            // Este es por si no se encuentra el registro de la imagen en la db
-                            $pdf->SetTextColor(255, 0, 0);
-                            $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
-                            $pdf->SetTextColor(0, 0, 0);
-                        }
+
+
+
+            // Imagen
+            $this->addSection($pdf, '', function ($pdf) use ($estudiante) {
+                $imageRecord = \App\Models\ImageUpload::where('estudiante_id', $estudiante->id)->first();
+                if ($imageRecord) {
+                    $rutaImagen = 'images/uploads/' . $imageRecord->image;
+            
+                    if (file_exists($rutaImagen)) {
+                        // Ajustes en las dimensiones de la imagen
+                        $pageWidth = $pdf->GetPageWidth();
+                        $imageWidth = 50; // Ajusta el tamaño según sea necesario
+                        $imageHeight = 50; // Ajusta el tamaño según sea necesario
+                        $xPosition = ($pageWidth - $imageWidth) / 2;
+                        $pdf->Image($rutaImagen, $xPosition, null, $imageWidth, $imageHeight);
                     } else {
-                        // Este es por si el estudiante no tiene imagen
+                        // Este es por si el archivo no existe
                         $pdf->SetTextColor(255, 0, 0);
                         $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
                         $pdf->SetTextColor(0, 0, 0);
                     }
-                });
-                $pdf->Ln(10);
-    
+                } else {
+                    // Este es por si no se encuentra el registro de la imagen en la db
+                    $pdf->SetTextColor(255, 0, 0);
+                    $pdf->Cell(0, 10, 'NO IMAGEN', 0, 1, 'C');
+                    $pdf->SetTextColor(0, 0, 0);
+                }
+            });
+            $pdf->Ln(10);
+
+
                 // Datos personales
             $this->addSection($pdf, 'Datos Personales', function ($pdf) use ($cv, $estudiante) {
                 $pdf->SetFont('Arial', '', 12);

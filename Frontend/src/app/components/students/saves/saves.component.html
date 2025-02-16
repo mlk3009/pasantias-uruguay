@@ -94,20 +94,19 @@
                                             <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
                                         </div>
                                     </td>
-                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ guardado.title }}</th>
-                                    <td class="px-4 py-3">{{ guardado.type }}</td>
-                                   
-                                   
+                                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <a [href]="'/publication/' + guardado.id">{{ guardado.title }}</a>
+                                    </th>                                    <td class="px-4 py-3">{{ guardado.type }}</td>
                                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div class="flex items-center">
-                                            <div class="inline-block w-4 h-4 mr-2 bg-amber-400 rounded-full"></div>
                                             {{ guardado.vacancies }}
                                         </div>
                                     </td>
 
 
-                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ guardado.empresa_name }}</td>
-
+                                    <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                        <a [href]="'/enterprise-profile/' + guardado.empresa_phone">{{ guardado.empresa_name }}</a>
+                                    </td>
 
                                     <td class="px-4 py-2 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <div class="flex items-center">

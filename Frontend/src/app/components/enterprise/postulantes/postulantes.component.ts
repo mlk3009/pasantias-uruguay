@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CompanyService } from '../../../services/company.service';
 import { NavComponent } from '../../home/nav/nav.component';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-postulantes',
   templateUrl: './postulantes.component.html',
   styleUrls: ['./postulantes.component.css'],
-  imports: [NavComponent, CommonModule],
+  imports: [NavComponent, CommonModule, FormsModule],
   standalone: true
 })
 export class PostulantesComponent implements OnInit {
@@ -16,7 +16,9 @@ export class PostulantesComponent implements OnInit {
   empresa: any;
   postulantes: any[] = [];
   loading: boolean = false;
-
+  estado: string = '';
+  userImageUrl: string = '';
+  cvLink: string = 'http://localhost:8000/pdfs/cv_';
   constructor(private companyService: CompanyService) {}
 
   ngOnInit(): void {
@@ -27,6 +29,7 @@ export class PostulantesComponent implements OnInit {
         next: (response) => {
           this.empresa = response.data;
           this.obtenerPostulantes(this.empresa.id);
+          this.cargarImagenesEmpresa(this.empresa.images);
           this.loading = false;
         },
         error: (error) => {
@@ -40,6 +43,17 @@ export class PostulantesComponent implements OnInit {
     }
   }
 
+
+  cargarImagenesEmpresa(images: any[]): void {
+    const profileImage = images.find((img: any) => img.desc === 'profile');
+    if (profileImage) {
+      this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+    } else {
+      this.userImageUrl = 'http://localhost:8000/images/user.png';
+    }
+  }
+
+
   obtenerPostulantes(empresaId: string): void {
     this.companyService.obtenerPostulantes(empresaId).subscribe({
       next: (response) => {
@@ -48,6 +62,18 @@ export class PostulantesComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error al obtener los postulantes:', error);
+      }
+    });
+  }
+
+  actualizarEstadoPostulacion(publicationId: string, estudianteId: string, estado: string): void {
+    this.companyService.actualizarEstadoPostulacion(publicationId, estudianteId, estado).subscribe({
+      next: (response) => {
+        console.log('Estado de la postulación actualizado correctamente', response);
+        this.obtenerPostulantes(this.empresa.id); 
+      },
+      error: (error) => {
+        console.error('Error al actualizar el estado de la postulación:', error);
       }
     });
   }

@@ -21,7 +21,7 @@ Route::post('login', [UserController::class, 'loginUser']);
 Route::post('register', [UserController::class, 'store']);
 Route::post('/contactUs', [EmailController::class, 'contactUs']);
 Route::post('/contactMe', [EmailController::class, 'contactMe']);
-
+Route::post('/mensajes', [CompanyController::class, 'createMensaje']);
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::get('user', [UserController::class, 'userDetails']);
@@ -41,16 +41,15 @@ Route::get('/companybyphone/{phone}', [CompanyController::class, 'obtenerEmpresa
 
 //POSTULACIONES
 Route::post('/postular', [PublicationController::class, 'crearPostulacion']);
-Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [PublicationController::class, 'actualizarEstadoPostulacion']);
+Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [CompanyController::class, 'actualizarEstadoPostulacion']);
 Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtenerDatosEstudiante']);
 
 //GUARDAR
 Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPublicacion']);
 
+
 //ADMIN
-
 Route::middleware('auth:sanctum')->group(function () {
-
     Route::get('/admin/users', [AdminController::class, 'getAllUsers']);
     Route::get('/admin/users/search', [AdminController::class, 'searchUsers']);
     Route::patch('/admin/publications/update/{id}', [AdminController::class, 'updatePublication']);
@@ -58,6 +57,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/admin/publications/soft-delete/{id}', [AdminController::class, 'softDeletePublication']);
     Route::patch('/admin/users/deactivate/{id}', [AdminController::class, 'deactivateUser']);
     Route::delete('/admin/users/delete/{id}', [AdminController::class, 'deleteUser']);
+    Route::get('admin/mensajes', [AdminController::class, 'getAllMensajes']);
+    Route::get('admin/mensajes/search', [AdminController::class, 'searchMensajes']);
+    Route::delete('admin/mensajes/{id}', [AdminController::class, 'deleteMensaje']);
+    Route::post('/admin/approve-user/{id}', [AdminController::class, 'approveUser']);
+    Route::post('/admin/reject-user/{id}', [AdminController::class, 'rejectUser']);
 });
 
 //CV
@@ -95,6 +99,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::patch('/publications/updatePartial/{id}', [PublicationController::class, 'updatePartial']);
     Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
     Route::put('publications/reactivate', [PublicationController::class, 'reactivatePublication']);
+    Route::get('/company/saldo/{empresaId}', [CompanyController::class, 'obtenerSaldo']);
 });
 
 Route::get('/publications', [PublicationController::class, 'index']);

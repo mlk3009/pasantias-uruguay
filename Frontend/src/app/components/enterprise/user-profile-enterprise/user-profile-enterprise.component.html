@@ -4,7 +4,7 @@
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
                 <div class="w-full border-b-2 flex justify-center flex-col items-center">   
                     <div class="w-full rounded-lg flex flex-col items-center">
-                        <img src="../../../../assets/img/Fish_wearing_a_chicken_smoking_a_cigarette_cover.webp" alt="" class="rounded-full w-40">
+                        <img [src]="userImageUrl" alt="" class="rounded-full w-40">
                         <h1 class="text-gray-900 font-semibold text-4xl mt-5">{{ empresa.name }}</h1>
                     </div>
                     <div class="buttons">
@@ -100,8 +100,8 @@
 
                 <section class="bg-grey-50 dark:bg-gray-900">
                     <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
-                        <img class="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg" alt="dashboard image">
-                        <img class="w-full hidden dark:block" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg" alt="dashboard image">
+                        <img class="w-full dark:hidden" [src]="empresaImageUrl" alt="dashboard image">
+                        <img class="w-full hidden dark:block" [src]="empresaImageUrl" alt="dashboard image">
                         <div class="mt-4 md:mt-0">
                             <h2 class="mb-4 text-xl tracking-tight font-semibold text-gray-900 dark:text-white"> {{ desc3Title }}</h2>
                             <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400"> {{ desc3Paragraph }} </p>

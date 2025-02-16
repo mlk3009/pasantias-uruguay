@@ -1,58 +1,106 @@
-import { Component, ViewChildren, ViewChild, ElementRef, QueryList } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
 import { NavComponent } from '../../home/nav/nav.component';
+import { UserService } from '../../../services/user.service';
+import { AdminService } from '../../../services/admin.service';
 
 @Component({
   selector: 'app-user-admin-profile',
   standalone: true,
-  imports: [ CommonModule, NavComponent],
+  imports: [CommonModule, NavComponent],
   templateUrl: './user-admin-profile.component.html',
   styleUrl: './user-admin-profile.component.css'
 })
-export class UserAdminProfileComponent {
+export class UserAdminProfileComponent implements OnInit {
+  user: any = {};
+  mensajes: any[] = [];
+  mensajeIdSeleccionado: number | null = null;
+  currentPage: number = 1;
+  itemsPerPage: number = 10;
+  totalPages: number = 1;
+  totalMensajes: number = 0;
+  userimage: string = 'http://localhost:8000/images/user.png';
 
-  @ViewChild('carousel', { static: false }) carousel: ElementRef | undefined;
-  @ViewChildren('card') cards: QueryList<ElementRef> | undefined;
-  createPublication: boolean = false; // Hacer que esto dependa de la url, sacar el valor default.
 
-  ngAfterViewInit() {
+  constructor(private _userService: UserService, private _adminService: AdminService) {}
+
+  ngOnInit(): void {
+    this.obtenerUsuario();
+    this.getAllMensajes(false);
   }
 
-  onArrowLeftClick(event: MouseEvent) {
-    // Encuentra el contenedor del carousel específico
-    const carouselContainer = (event.target as HTMLElement).closest('.section1');
-    if (!carouselContainer) return;
-  
-    // Selecciona solo el carousel dentro del contenedor específico
-    const carousel = carouselContainer.querySelector('.carousel');
-    const cardWidth = carouselContainer.querySelector('.card')?.clientWidth || 0;
-    if (carousel) {
-      carousel.scrollLeft -= cardWidth;
-    }
-  }
-  
-  onArrowRightClick(event: MouseEvent) {
-    // Encuentra el contenedor del carousel específico
-    const carouselContainer = (event.target as HTMLElement).closest('.section1');
-    if (!carouselContainer) return;
-  
-    // Selecciona solo el carousel dentro del contenedor específico
-    const carousel = carouselContainer.querySelector('.carousel');
-    const cardWidth = carouselContainer.querySelector('.card')?.clientWidth || 0;
-    if (carousel) {
-      carousel.scrollLeft += cardWidth;
+  obtenerUsuario(): void {
+    const token = this._userService.getToken();
+    if (token) {
+      this._userService.obtenerUsuario(token).subscribe({
+        next: (response) => {
+          this.user = response.data;
+        },
+        error: (error) => {
+          console.error('Error fetching user:', error);
+        }
+      });
     }
   }
 
-  modalDelete(){
+  getAllMensajes(solicitud?: boolean, page: number = 1): void {
+    this._adminService.getAllMensajes(solicitud, page, this.itemsPerPage).subscribe(
+      (response) => {
+        this.mensajes = response.data;
+        this.currentPage = response.current_page;
+        this.totalPages = response.total_pages;
+        this.totalMensajes = response.total_mensajes;
+      },
+      (error) => {
+        console.error('Error fetching mensajes:', error);
+      }
+    );
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.getAllMensajes(false, this.currentPage);
+      document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  previousPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.getAllMensajes(false, this.currentPage);
+      document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  getEndIndex(): number {
+    return Math.min(this.currentPage * this.itemsPerPage, this.totalMensajes);
+  }
+
+  modalDelete(id: number): void {
+    this.mensajeIdSeleccionado = id;
     const modal = document.getElementById('deleteModal') as HTMLElement;
     modal.style.display = 'flex';
   }
 
-  modalDeleteClose() {
+  modalDeleteClose(): void {
+    this.mensajeIdSeleccionado = null;
     const modal = document.getElementById('deleteModal') as HTMLElement;
     modal.style.display = 'none';
   }
 
+  deleteMensaje(): void {
+    if (this.mensajeIdSeleccionado !== null) {
+      this._adminService.deleteMensaje(this.mensajeIdSeleccionado).subscribe({
+        next: (response) => {
+          console.log('Mensaje deleted:', response);
+          this.getAllMensajes(false); 
+          this.modalDeleteClose(); 
+        },
+        error: (error) => {
+          console.error('Error deleting mensaje:', error);
+        }
+      });
+    }
+  }
 }

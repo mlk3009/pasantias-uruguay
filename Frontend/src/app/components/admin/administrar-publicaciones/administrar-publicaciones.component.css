@@ -12,6 +12,13 @@
     padding-bottom: 7vh;
 }
 
+.home_button{
+    color: #15c3c3;
+}
+.home_button2:hover{
+    color: #15c3c3;
+}
+
 .h1{
     margin: 0 auto;
     text-align: center;

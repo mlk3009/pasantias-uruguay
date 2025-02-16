@@ -6,7 +6,7 @@
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
                 <div class="w-full border-b-2 flex justify-center flex-col items-center">   
                     <div class="w-full rounded-lg flex flex-col items-center">
-                        <img src="../../../../assets/img/Fish_wearing_a_chicken_smoking_a_cigarette_cover.webp" alt="" class="rounded-full w-40">
+                        <img [src]="userImageUrl" alt="" class="rounded-full w-40">
                         <h1 class="text-gray-900 font-semibold text-4xl mt-5">{{empresa.name}}</h1>
                     </div>
                     <div class="buttons">
@@ -19,7 +19,7 @@
                               <a href="/enterprise-abaut-us" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sobre nosotros</a>
                             </li>
                             <li>
-                                <a href="/my-publications" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Administrar publicaiones</a>
+                                <a href="/my-publications" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Administrar publicaciones</a>
                             </li>
                             <li>
                                 <a href="/postulantes" class="home_button block py-2 px-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Ver postulantes</a>
@@ -83,28 +83,6 @@
                                 </button>
                                 <div id="filterDropdown" class="z-10 hidden w-48 p-3 bg-white rounded-lg shadow dark:bg-gray-700">
                                     <h6 class="mb-3 text-sm font-medium text-gray-900 dark:text-white">Choose brand</h6>
-                                    <ul class="space-y-2 text-sm" aria-labelledby="filterDropdownButton">
-                                        <li class="flex items-center">
-                                            <input id="apple" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                            <label for="apple" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Apple (56)</label>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <input id="fitbit" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                            <label for="fitbit" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Microsoft (16)</label>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <input id="razor" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                            <label for="razor" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Razor (49)</label>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <input id="nikon" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                            <label for="nikon" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">Nikon (12)</label>
-                                        </li>
-                                        <li class="flex items-center">
-                                            <input id="benq" type="checkbox" value="" class="w-4 h-4 bg-gray-100 border-gray-300 rounded text-primary-600 focus:ring-primary-500 dark:focus:ring-primary-600 dark:ring-offset-gray-700 focus:ring-2 dark:bg-gray-600 dark:border-gray-500">
-                                            <label for="benq" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-100">BenQ (74)</label>
-                                        </li>
-                                    </ul>
                                 </div>
                             </div>
                         </div>
@@ -118,8 +96,8 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-4 py-3">Nombre</th>
-                    <th scope="col" class="px-4 py-3">Email</th>
-                    <th scope="col" class="px-4 py-3">Teléfono</th>
+                    <th scope="col" class="px-4 py-3">CV</th>
+                    <th scope="col" class="px-4 py-3">Publicación</th>
                     <th scope="col" class="px-4 py-3">Estado</th>
                     <th scope="col" class="px-4 py-3">Fecha de Postulación</th>
                     <th scope="col" class="px-4 py-3">
@@ -130,9 +108,15 @@
             
             <tbody>
                 <tr *ngFor="let postulante of postulantes" class="border-b dark:border-gray-700">
-                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">{{ postulante.name }}</th>
-                    <td class="px-4 py-3">{{ postulante.email }}</td>
-                    <td class="px-4 py-3">{{ postulante.phone }}</td>
+                    <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <a [href]="'/user-profile/' + postulante.phone">{{ postulante.name }}</a>
+                    </th>  
+                    <td class="px-4 py-3">
+                        <a *ngIf="postulante.cv_pdf; else noCv" [href]="cvLink + postulante.cv_pdf + '.pdf'" target="_blank">CV</a>
+                        <ng-template #noCv>No tiene</ng-template>
+                    </td>                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                        <a [href]="'/publication/' + postulante.publication_id">{{ postulante.publication_title }}</a>
+                    </td>
                     <td class="px-4 py-3">{{ postulante.estado }}</td>
                     <td class="px-4 py-3">{{ postulante.created_at | date: 'short' }}</td>
                     <td class="px-4 py-3 flex items-center justify-end">

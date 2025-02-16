@@ -21,6 +21,7 @@ use Illuminate\Process\Pipe;
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\SMTP;
+use App\Models\Mensaje;
 
 
 
@@ -155,6 +156,7 @@ class UserController extends Controller
             'genero' => 'required_if:rol,estudiante|in:Masculino,Femenino,Otro',
             'sede' => 'required_if:rol,empresa|string|max:100',
             'id_image' => 'nullable|integer',
+            'desc' => 'nullable|string'
         ]);
     
         if ($validator->fails()) {
@@ -172,6 +174,7 @@ class UserController extends Controller
                 'password' => bcrypt($jsonData['password']),
                 'rol' => $jsonData['rol'],
                 'phone' => $jsonData['phone'],
+                'is_suspended' => $jsonData['rol'] === 'empresa' ? true : false
             ]);
     
             // Crear estudiante si el rol es estudiante
@@ -216,6 +219,16 @@ class UserController extends Controller
                         $image->save();
                     }
                 }
+    
+                // Crear mensaje de solicitud de registro
+                $mensajeData = [
+                    'asunto' => 'Peticion de registro de empresa',
+                    'mensaje' => $jsonData['desc'] ?? 'Solicitud para registrar empresa en la web',
+                    'solicitud' => true,
+                    'user_id' => $user->id
+                ];
+    
+                Mensaje::create($mensajeData);
             }
     
             $data = [

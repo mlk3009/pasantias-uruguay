@@ -14,6 +14,12 @@ use App\Models\Publication;
 use App\Models\Postula;
 use App\Models\Necesita;
 use App\Models\Saldo;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Estudiante;
+use Illuminate\Support\Facades\DB;
+use App\Models\Mensaje;
+
+
 
 class CompanyController extends Controller
 {
@@ -36,17 +42,16 @@ class CompanyController extends Controller
                 'sede' => $empresa->sede,
             ];
 
-            // Buscar imagen de la empresa
-            $image = ImageUpload::where('empresa_id', $empresa->id)->first();
-            if ($image) {
-                $data['image'] = $image->image;
-                $data['id_image'] = $image->id;
-            }
+            // Buscar todas las imágenes de la empresa
+            $images = ImageUpload::where('empresa_id', $empresa->id)->get();
+            $data['images'] = [];
 
-            // Buscar archivo de la empresa
-            $file = FileUpload::where('empresa_id', $empresa->id)->first();
-            if ($file) {
-                $data['file'] = $file->file;
+            foreach ($images as $image) {
+                $data['images'][] = [
+                    'id' => $image->id,
+                    'image' => $image->image,
+                    'desc' => $image->desc,
+                ];
             }
 
             return response(['data' => $data], 200);
@@ -77,17 +82,17 @@ class CompanyController extends Controller
             'desc3' => $empresa->desc3
         ];
 
-        // Buscar imagen de la empresa
-        $image = ImageUpload::where('empresa_id', $empresa->id)->first();
-        if ($image) {
-            $data['image'] = $image->image;
-        }
+            // Buscar todas las imágenes de la empresa
+            $images = ImageUpload::where('empresa_id', $empresa->id)->get();
+            $data['images'] = [];
 
-        // Buscar archivo de la empresa
-        $file = FileUpload::where('empresa_id', $empresa->id)->first();
-        if ($file) {
-            $data['file'] = $file->file;
-        }
+            foreach ($images as $image) {
+                $data['images'][] = [
+                    'id' => $image->id,
+                    'image' => $image->image,
+                    'desc' => $image->desc,
+                ];
+            }
 
         return response(['data' => $data], 200);
     }
@@ -140,21 +145,25 @@ class CompanyController extends Controller
         }
     }
 
+
     public function obtenerPostulantes($empresaId): Response
     {
         $publicaciones = Publication::where('empresa_id', $empresaId)->pluck('id');
         $postulantes = Postula::whereIn('publication_id', $publicaciones)
             ->join('estudiante', 'postula.estudiante_id', '=', 'estudiante.id')
             ->join('users', 'estudiante.id', '=', 'users.id')
-            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'postula.publication_id', 'postula.estado', 'postula.created_at')
+            ->join('publications', 'postula.publication_id', '=', 'publications.id')
+            ->leftJoin('cv', 'estudiante.id', '=', 'cv.estudiante_id') // Join con la tabla cv
+            ->select('users.id', 'users.name', 'users.email', 'users.phone', 'postula.publication_id', 'postula.estado', 'postula.created_at', 'publications.title as publication_title', 'cv.pdf as cv_pdf') // Seleccionar el atributo pdf de la tabla cv
             ->get();
-
+    
         if ($postulantes->isEmpty()) {
             return response(['message' => 'No se encontraron postulantes para las publicaciones de esta empresa'], 404);
         }
-
+    
         return response(['data' => $postulantes], 200);
     }
+
 
     public function obtenerSaldo($empresaId): Response
     {
@@ -168,6 +177,7 @@ class CompanyController extends Controller
                     'pack' => $necesita->saldo->pack,
                     'precio' => $necesita->saldo->precio,
                     'quantity' => $necesita->quantity,
+                    'saldo_id' => $necesita->saldo->id,
                 ];
             });
     
@@ -210,4 +220,73 @@ class CompanyController extends Controller
 }
 
 
+public function actualizarEstadoPostulacion(Request $request, $publication_id, $estudiante_id)
+{
+    $validator = Validator::make($request->all(), [
+        'estado' => 'required|in:aprobado,rechazado,pendiente'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error al actualizar el estado de la postulacion',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+
+    $estudiante = Estudiante::find($estudiante_id);
+    if (!$estudiante) {
+        $data = [
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    $postulacion = Postula::where('publication_id', $publication_id)
+        ->where('estudiante_id', $estudiante_id)
+        ->first();
+
+    if (!$postulacion) {
+        $data = [
+            'message' => 'Postulación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    DB::table('postula')
+        ->where('publication_id', $publication_id)
+        ->where('estudiante_id', $estudiante_id)
+        ->update(['estado' => $request->input('estado')]);
+
+    $data = [
+        'message' => 'Estado de la postulación actualizado correctamente',
+        'status' => 200
+    ];
+    return response()->json($data, 200);
+}
+
+
+    public function createMensaje(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'user_id' => 'required|exists:users,id',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['message' => 'Error de validación', 'errors' => $validator->errors()], 400);
+        }
+
+        $mensaje = Mensaje::create([
+            'asunto' => 'Solicitud de registro',
+            'mensaje' => 'Solicitud para registrar empresa en la web',
+            'solicitud' => true,
+            'user_id' => $request->input('user_id'),
+        ]);
+
+        return response()->json(['message' => 'Mensaje creado exitosamente', 'data' => $mensaje, 'status' => 201], 201);
+    }
 }

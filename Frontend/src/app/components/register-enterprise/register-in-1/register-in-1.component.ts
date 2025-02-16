@@ -1,15 +1,16 @@
 import { Component } from '@angular/core';
-import { Router, RouterModule, NavigationExtras } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { User } from '../../../models/user';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { UserService, etiqueta } from '../../../services/user.service';
+import { UserService } from '../../../services/user.service';
+import { CompanyService } from '../../../services/company.service';
+
 import { HttpClientModule } from '@angular/common/http';
 
 import { MatDialog } from '@angular/material/dialog';
 import { MatDialogModule } from '@angular/material/dialog';
 
-import { routes } from '../../../app.routes';
 import { CookieService } from 'ngx-cookie-service';
 
 import { NavComponent } from '../../home/nav/nav.component';
@@ -17,29 +18,19 @@ import { NavComponent } from '../../home/nav/nav.component';
 @Component({
   selector: 'app-register-in-1',
   standalone: true,
-  imports: [ NavComponent,
-      ReactiveFormsModule,
-      FormsModule,
-      CommonModule,
-      RouterModule,
-      HttpClientModule,
-      MatDialogModule,],
+  imports: [NavComponent, ReactiveFormsModule, FormsModule, CommonModule, RouterModule, HttpClientModule, MatDialogModule],
   templateUrl: './register-in-1.component.html',
   styleUrl: './register-in-1.component.css'
 })
 export class RegisterIn1Component {
-  public user: User;
-  public token: any;
+  public user: any = {};
   public confirmPassword: any;
   public status: string = '';
   public showError: boolean = false;
   public loading: boolean = false;
   public inputType: string = 'password';
   public inputType2: string = 'password';
-  public surName: string = '';
-  public location: any;
-  public etiquetas: etiqueta[] = [];
-  public selectedEtiquetaId: number | null = null;
+  public desc: string = '';
 
   public locations = [
     'Montevideo',
@@ -63,37 +54,13 @@ export class RegisterIn1Component {
     'Treinta y Tres'
   ];
 
-  public day: number = 0;
-  public month: number = 0;
-  public year: number = 0;
-
   constructor(
     private _userService: UserService,
     private _router: Router,
     private _cookieService: CookieService,
-    private dialog: MatDialog
-  ) {
-    this.user = new User(0, '', '', '', '', '', '', '', '','');
-    const navigation = this._router.getCurrentNavigation();
-    if (navigation?.extras?.state) {
-      const state = navigation.extras.state;
-      this.user["name"] = state["name"].split(' ')[0];
-      this.surName = state["surname"];
-      this.user["email"] = state["email"];
-      this.user["password"] = state["password"];
-      this.confirmPassword = state["password"];
-      this.user["location"] = state["location"];
-      this.selectedEtiquetaId = state["selectedEtiquetaId"];
-
-      this.user["ci_estudiante"] = state["ci"] || '';
-      this.user["cod_postal"] = state["cod_postal"] || '';
-      this.user["phone"] = state["phone"] || '';
-      this.day = state["day"];
-      this.month = state["month"];
-      this.year = state["year"];
-    }
-
-  }
+    private dialog: MatDialog,
+    private _companyService: CompanyService
+  ) {}
 
   capitalize(sentence: string): string {
     const words = sentence.split(' ');
@@ -113,19 +80,6 @@ export class RegisterIn1Component {
     if (this._cookieService.get('token')) {
       this._router.navigate(['/inicio']);
     }
-
-    this.getEtiquetas();
-  }
-
-  getEtiquetas(): void {
-    this._userService.getEtiquetas().subscribe(
-      response => {
-        this.etiquetas = response;
-      },
-      error => {
-        console.error('Error al obtener las etiquetas', error);
-      }
-    );
   }
 
   showPassword() {
@@ -144,28 +98,25 @@ export class RegisterIn1Component {
       return;
     }
 
-    this.user.name = this.capitalize(this.user.name) + ' ' + this.capitalize(this.surName);
+    this.user.name = this.capitalize(this.user.name);
     this.user.email = this.user.email.toLowerCase();
+    this.user.rol = 'empresa'; // Asegurarse de que el rol sea "empresa"
+    this.user.phone = this.user.phone; // Asegurarse de que el teléfono esté incluido
 
-    const navigationExtras: NavigationExtras = {
-      state: {
-        name: this.user.name,
-        surname: this.surName,
-        email: this.user.email,
-        password: this.user.password,
-        confirmPassword: this.confirmPassword,
-        location: this.user.location,
-        selectedEtiquetaId: this.selectedEtiquetaId,
+    // Añadir la descripción al objeto user
+    this.user.desc = this.desc;
 
-        ci: this.user.ci_estudiante,
-        cod_postal: this.user.cod_postal,
-        phone: this.user.phone,
-        day: this.day,
-        month: this.month,
-        year: this.year
+    this.loading = true;
+    this._userService.register(this.user).subscribe(
+      response => {
+        this.loading = false;
+        this._router.navigate(['/inicio']);
+      },
+      error => {
+        this.loading = false;
+        this.status = 'Error al registrar la empresa';
+        this.showError = true;
       }
-    };
-
-    this._router.navigate(['register-p2'], navigationExtras);
+    );
   }
 }
