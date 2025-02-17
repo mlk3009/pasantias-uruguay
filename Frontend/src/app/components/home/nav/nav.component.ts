@@ -12,14 +12,13 @@ import { UserService } from '../../../services/user.service';
   standalone: true,
   imports: [
     CommonModule,
-    RouterOutlet,
     RouterModule,
   ],
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements AfterViewInit {
-
+  isDropdownVisible = false;
   public token: string = '';
   public username: string = '';
   public dropdown = false;
@@ -184,6 +183,29 @@ export class NavComponent implements AfterViewInit {
     this.router.navigate(['/publications']).then(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
+  }
+
+  toggleDropdown() {
+    this.isDropdownVisible = !this.isDropdownVisible;
+  }
+
+  @HostListener('document:click', ['$event'])
+  onDocumentClick(event: MouseEvent) {
+    const target = event.target as HTMLElement;
+    if (!target.closest('#hide') && !target.closest('#dropdown-container')) {
+      this.isDropdownVisible = false;
+    }
+  }
+
+
+  modal(){
+    const modal = document.getElementById('shopModal') as HTMLElement;
+    modal.style.display = 'flex';
+  }
+
+  modalClose() {
+    const modal = document.getElementById('shopModal') as HTMLElement;
+    modal.style.display = 'none';
   }
 
   
