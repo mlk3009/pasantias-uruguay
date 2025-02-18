@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { NavComponent } from '../../home/nav/nav.component';
 import { UserService } from '../../../services/user.service';
 import { AdminService } from '../../../services/admin.service';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-user-admin-profile',
   standalone: true,
-  imports: [CommonModule, NavComponent],
+  imports: [CommonModule, NavComponent, FormsModule],
   templateUrl: './user-admin-profile.component.html',
   styleUrl: './user-admin-profile.component.css'
 })
@@ -20,7 +21,11 @@ export class UserAdminProfileComponent implements OnInit {
   totalPages: number = 1;
   totalMensajes: number = 0;
   userimage: string = 'http://localhost:8000/images/user.png';
-
+  searchParams: any = {
+    search: '',
+    location: '',
+    rol: ''
+  };
 
   constructor(private _userService: UserService, private _adminService: AdminService) {}
 
@@ -43,7 +48,7 @@ export class UserAdminProfileComponent implements OnInit {
     }
   }
 
-  getAllMensajes(solicitud?: boolean, page: number = 1): void {
+  getAllMensajes(solicitud: boolean = false, page: number = 1): void {
     this._adminService.getAllMensajes(solicitud, page, this.itemsPerPage).subscribe(
       (response) => {
         this.mensajes = response.data;
@@ -53,6 +58,18 @@ export class UserAdminProfileComponent implements OnInit {
       },
       (error) => {
         console.error('Error fetching mensajes:', error);
+      }
+    );
+  }
+
+  searchMensajes(): void {
+    this.searchParams.solicitud = false;
+    this._adminService.searchMensajes(this.searchParams).subscribe(
+      (response) => {
+        this.mensajes = response;
+      },
+      (error) => {
+        console.error('Error searching mensajes:', error);
       }
     );
   }

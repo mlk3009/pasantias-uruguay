@@ -34,11 +34,13 @@ export class AdminService {
   searchUsers(params: any): Observable<any> {
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
     let httpParams = new HttpParams();
+  
     for (let key in params) {
-      if (params.hasOwnProperty(key)) {
+      if (params.hasOwnProperty(key) && params[key]) {
         httpParams = httpParams.set(key, params[key]);
       }
     }
+  
     return this._http.get(global.url + 'admin/users/search', { headers: headers, params: httpParams });
   }
 
@@ -86,11 +88,13 @@ export class AdminService {
   searchMensajes(params: any): Observable<any> {
     let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
     let httpParams = new HttpParams();
+  
     for (let key in params) {
-      if (params.hasOwnProperty(key)) {
-        httpParams = httpParams.set(key, params[key]);
+      if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
+        httpParams = httpParams.set(key, params[key].toString());
       }
     }
+  
     return this._http.get(global.url + 'admin/mensajes/search', { headers: headers, params: httpParams });
   }
 

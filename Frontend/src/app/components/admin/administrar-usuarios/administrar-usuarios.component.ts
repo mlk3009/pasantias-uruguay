@@ -1,17 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { NavComponent } from '../../home/nav/nav.component';
-import { HttpParams, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
 import { UserService } from '../../../services/user.service';
 import { AdminService } from '../../../services/admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-administrar-usuarios',
   standalone: true,
-  imports: [NavComponent, CommonModule],
+  imports: [NavComponent, CommonModule, FormsModule], 
   templateUrl: './administrar-usuarios.component.html',
   styleUrl: './administrar-usuarios.component.css'
 })
@@ -26,6 +24,11 @@ export class AdministrarUsuariosComponent implements OnInit {
   totalPages: number = 1;
   totalUsers: number = 0;
   userimage: string = 'http://localhost:8000/images/user.png';
+  searchParams: any = {
+    name: '',
+    location: '',
+    rol: ''
+  };
 
   constructor(
     private _userService: UserService,
@@ -143,5 +146,17 @@ export class AdministrarUsuariosComponent implements OnInit {
         }
       );
     }
+  }
+
+  searchUsers(): void {
+    this._adminService.searchUsers(this.searchParams).subscribe(
+      (response) => {
+        this.users = response;
+        this.updateDisplayedUsers();
+      },
+      (error) => {
+        console.error('Error searching users:', error);
+      }
+    );
   }
 }
