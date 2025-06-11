@@ -23,6 +23,11 @@ export class AdministrarSolicitudesComponent {
   totalPages: number = 1;
   totalMensajes: number = 0;
   userimage: string = 'http://localhost:8000/images/user.png';
+  searchParams: any = {
+    search: '',
+    location: '',
+    rol: ''
+  };
 
 
   constructor(private _userService: UserService, private _adminService: AdminService) {}
@@ -60,15 +65,16 @@ export class AdministrarSolicitudesComponent {
     });
   }
 
-  searchMensajes(params: any): void {
-    this._adminService.searchMensajes(params).subscribe({
-      next: (response) => {
+  searchMensajes(): void {
+    this.searchParams.solicitud = false;
+    this._adminService.searchMensajes(this.searchParams).subscribe(
+      (response) => {
         this.mensajes = response;
       },
-      error: (error) => {
+      (error) => {
         console.error('Error searching mensajes:', error);
       }
-    });
+    );
   }
 
   rejectUser(): void {

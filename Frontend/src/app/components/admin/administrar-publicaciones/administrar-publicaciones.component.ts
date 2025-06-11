@@ -8,11 +8,12 @@ import { UserService } from '../../../services/user.service';
 import { AdminService } from '../../../services/admin.service';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-administrar-publicaciones',
   standalone: true,
-  imports: [NavComponent, CommonModule],
+  imports: [NavComponent, CommonModule, FormsModule],
   templateUrl: './administrar-publicaciones.component.html',
   styleUrl: './administrar-publicaciones.component.css'
 })
@@ -24,6 +25,15 @@ export class AdministrarPublicacionesComponent implements OnInit {
   data: any = {};
   userimage: string = 'http://localhost:8000/images/user.png';
   selectedPublicationId: number | null = null;
+  searchParams: any = {
+    search: '',
+    location: '',
+    etiqueta: '',
+    featured: false,
+    is_deleted: false
+  };
+noPublicationsMessage: string = '';
+
 
   constructor(
     private _publicationService: PublicationService,
@@ -109,10 +119,33 @@ export class AdministrarPublicacionesComponent implements OnInit {
         } else {
           this.publications = [];
         }
-        this.updateDisplayedPublications(); // Actualizar las publicaciones mostradas
+        this.updateDisplayedPublications();
       },
       (error) => {
         console.error(error);
+      }
+    );
+  }
+
+  searchPublications(): void {
+    this._publicationService.searchPublications(this.searchParams).subscribe(
+      (response) => {
+        if (response && response.length > 0 && response[0].publications) {
+          this.publications = response[0].publications;
+        } else {
+          this.publications = [];
+        }
+        this.noPublicationsMessage = ''; 
+        this.updateDisplayedPublications();
+      },
+      (error) => {
+        if (error.message === 'No se encontraron publicaciones.') {
+          this.publications = [];
+          this.noPublicationsMessage = 'No se encontraron publicaciones.';
+          this.updateDisplayedPublications();
+        } else {
+          console.error('Error searching publications:', error);
+        }
       }
     );
   }

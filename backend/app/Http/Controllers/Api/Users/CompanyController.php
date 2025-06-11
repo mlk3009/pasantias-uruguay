@@ -223,7 +223,7 @@ class CompanyController extends Controller
 public function actualizarEstadoPostulacion(Request $request, $publication_id, $estudiante_id)
 {
     $validator = Validator::make($request->all(), [
-        'estado' => 'required|in:aprobado,rechazado,pendiente'
+        'estado' => 'required|in:aprobado,rechazado,pendiente,interesado'
     ]);
 
     if ($validator->fails()) {

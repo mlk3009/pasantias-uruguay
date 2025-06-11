@@ -50,7 +50,6 @@ class User extends Authenticatable implements MustVerifyEmail
         ];
     }
 
-
     protected static function booted()
     {
         static::updated(function ($user) {
@@ -65,4 +64,18 @@ class User extends Authenticatable implements MustVerifyEmail
         return $this->hasMany(Mensaje::class);
     }
 
+    public function estudiante()
+    {
+        return $this->hasOne(Estudiante::class, 'id');
+    }
+
+    public function empresa()
+    {
+        return $this->hasOne(Empresa::class, 'id');
+    }
+
+    public function administrador()
+    {
+        return $this->hasOne(Administrador::class, 'id');
+    }
 }

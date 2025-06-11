@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Publication;
 use App\Models\Necesita;
+use App\Models\Estudiante;
 use App\Models\Saldo;
 use App\Models\Mensaje;
 use Illuminate\Support\Facades\Validator;
@@ -33,25 +34,35 @@ class AdminController extends Controller
         ], 200);
     }
 
-    // Buscar usuarios según diferentes parámetros opcionales
+
+
     public function searchUsers(Request $request)
     {
         $query = User::query();
 
         if ($request->has('name')) {
-            $query->where('name', 'like', '%' . $request->name . '%');
+            $query->where(function ($q) use ($request) {
+                $q->where('name', 'like', '%' . $request->name . '%')
+                ->orWhere('phone', 'like', '%' . $request->name . '%');
+            });
         }
 
         if ($request->has('location')) {
-            $query->whereHas('estudiante', function ($q) use ($request) {
-                $q->where('location', $request->location);
-            })->orWhereHas('empresa', function ($q) use ($request) {
-                $q->where('sede', 'like', '%' . $request->location . '%');
+            $query->where(function ($q) use ($request) {
+                $q->whereHas('estudiante', function ($q) use ($request) {
+                    $q->where('location', $request->location);
+                })->orWhereHas('empresa', function ($q) use ($request) {
+                    $q->where('sede', 'like', '%' . $request->location . '%');
+                });
             });
         }
 
         if ($request->has('phone')) {
             $query->where('phone', 'like', '%' . $request->phone . '%');
+        }
+
+        if ($request->has('rol')) {
+            $query->where('rol', $request->rol);
         }
 
         $users = $query->get();
@@ -252,21 +263,42 @@ class AdminController extends Controller
         if (Auth::user()->rol !== 'administrador') {
             return response()->json(['message' => 'No autorizado'], 403);
         }
-
+    
         $query = Mensaje::query();
-
-        if ($request->has('asunto')) {
-            $query->where('asunto', 'like', '%' . $request->asunto . '%');
+    
+        if ($request->has('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('asunto', 'like', '%' . $search . '%')
+                ->orWhere('mensaje', 'like', '%' . $search . '%')
+                ->orWhereHas('user', function ($q) use ($search) {
+                    $q->where('email', 'like', '%' . $search . '%');
+                });
+            });
         }
-
-        if ($request->has('mail')) {
-            $query->where('mail', 'like', '%' . $request->mail . '%');
-        }
-
+    
         if ($request->has('user_id')) {
             $query->where('user_id', $request->user_id);
         }
-
+    
+        if ($request->has('location')) {
+            $query->whereHas('user.estudiante', function ($q) use ($request) {
+                $q->where('location', $request->location);
+            })->orWhereHas('user.empresa', function ($q) use ($request) {
+                $q->where('sede', 'like', '%' . $request->location . '%');
+            });
+        }
+    
+        if ($request->has('rol')) {
+            $query->whereHas('user', function ($q) use ($request) {
+                $q->where('rol', $request->rol);
+            });
+        }
+    
+        if ($request->has('solicitud')) {
+            $query->where('solicitud', filter_var($request->solicitud, FILTER_VALIDATE_BOOLEAN));
+        }
+    
         $mensajes = $query->with('user')->get();
         return response()->json($mensajes, 200);
     }

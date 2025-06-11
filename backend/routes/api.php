@@ -100,6 +100,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
     Route::put('publications/reactivate', [PublicationController::class, 'reactivatePublication']);
     Route::get('/company/saldo/{empresaId}', [CompanyController::class, 'obtenerSaldo']);
+    Route::get('publications/search', [PublicationController::class, 'searchPublications']);
 });
 
 Route::get('/publications', [PublicationController::class, 'index']);

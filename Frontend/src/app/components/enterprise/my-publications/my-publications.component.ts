@@ -25,7 +25,7 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
   itemsPerPage: number = 18;
   isPhoneAccess: boolean = false;
   userImageUrl: string = '';
-  saldos: any[] = []; // Nueva variable para almacenar los saldos
+  saldos: any[] = []; 
 
   newPublication: any = {
     title: '',
@@ -44,6 +44,15 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
 
   startDate: string = '';
   endDate: string = '';
+  searchParams: any = {
+    search: '',
+    location: '',
+    etiqueta: '',
+    featured: false,
+    is_deleted: false,
+    phone: ''
+  };
+  noPublicationsMessage: string = '';
 
   constructor(
     private companyService: CompanyService,
@@ -71,6 +80,7 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
         next: (response) => {
           this.empresa = response.data;
           this.newPublication.empresa_id = this.empresa.id; // Asignar empresa_id a la nueva publicación
+          this.searchParams.phone = this.empresa.phone; // Asignar el phone a searchParams
           this.obtenerPublicaciones(this.empresa.phone);
           this.cargarImagenesEmpresa(this.empresa.images);
           this.obtenerSaldo(this.empresa.id); // Obtener los saldos
@@ -86,10 +96,11 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
       this.companyService.obtenerEmpresa(token).subscribe({
         next: (response) => {
           this.empresa = response.data;
-          this.newPublication.empresa_id = this.empresa.id; // Asignar empresa_id a la nueva publicación
+          this.newPublication.empresa_id = this.empresa.id; 
+          this.searchParams.phone = this.empresa.phone; 
           this.obtenerPublicaciones(this.empresa.id);
           this.cargarImagenesEmpresa(this.empresa.images);
-          this.obtenerSaldo(this.empresa.id); // Obtener los saldos
+          this.obtenerSaldo(this.empresa.id); 
           this.loading = false;
         },
         error: (error) => {
@@ -252,6 +263,29 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
       },
       error => {
         console.error('Error al eliminar la imagen:', error);
+      }
+    );
+  }
+
+  searchPublications(): void {
+    this.publicationService.searchPublications(this.searchParams).subscribe(
+      (response) => {
+        if (response && response.length > 0 && response[0].publications) {
+          this.publicaciones = response[0].publications;
+        } else {
+          this.publicaciones = [];
+        }
+        this.noPublicationsMessage = ''; 
+        this.updateDisplayedPublications();
+      },
+      (error) => {
+        if (error.message === 'No se encontraron publicaciones.') {
+          this.publicaciones = [];
+          this.noPublicationsMessage = 'No se encontraron publicaciones.';
+          this.updateDisplayedPublications(); 
+        } else {
+          console.error('Error searching publications:', error);
+        }
       }
     );
   }
