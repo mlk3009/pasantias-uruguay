@@ -1,104 +1,190 @@
-<section class="body">
-    
-<h2 class="absolute left-1/2 transform -translate-x-1/2 text-xl font-medium text-gray-900 dark:text-white sm:text-2xl md:mb-8">Categorías</h2>
 
-<section class="bg-white mt-12 py-8 antialiased dark:bg-gray-900 md:py-16 categories">
-  <div class="mx-auto max-w-96 md:max-w-screen-xl px-4 md:px-28 2xl:px-0">
-      <div class="grid gap-3 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3">
-          <a href="/publications-in/Backend%20Developer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+<section class="title2">
+    <h3 class="mb-4 text-4xl tracking-tight font-semibold text-center text-black dark:text-white">Categorías</h3>
+</section>
+
+
+
+<section class="hidden md:block max-w-5xl mx-auto my-10 sizing">
+    <div class="flex flex-col">
+      <div class="flex flex-row justify-between my-5">
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Backend Developer</span>
-          </a>
-          <a href="/publications-in/Frontend%20Designer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Frontend Designer</span>
-          </a>
-          <a href="/publications-in/Cybersecurity" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 19V4a1 1 0 0 1 1-1h12a1 1 0 0 1 1 1v13H7a2 2 0 0 0-2 2Zm0 0a2 2 0 0 0 2 2h12M9 3v14m7 0v4"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Cybersecurity</span>
-          </a>
-          <a href="/publications-in/Data%20Scientist" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.079 6.839a3 3 0 0 0-4.255.1M13 20h1.083A3.916 3.916 0 0 0 18 16.083V9A6 6 0 1 0 6 9v7m7 4v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1Zm-7-4v-6H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1Zm12-6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1v-6Z" />
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Data Scientist</span>
-          </a>
-          <a href="/publications-in/DevOps%20Engineer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V5Zm16 14a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2ZM4 13a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6Zm16-2a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v6Z" />
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">DevOps Engineer</span>
-          </a>
-          <a href="/publications-in/Full%20Stack%20Developer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 9a3 3 0 0 1 3-3m-2 15h4m0-3c0-4.1 4-4.9 4-9A6 6 0 1 0 6 9c0 4 4 5 4 9h4Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Full Stack Developer</span>
-          </a>
-          <a href="/publications-in/Machine%20Learning%20Engineer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m4 12 8-8 8 8M6 10.5V19a1 1 0 0 0 1 1h3v-3a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v3h3a1 1 0 0 0 1-1v-8.5"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Machine Learning Engineer</span>
-          </a>
-          <a href="/publications-in/Mobile%20Developer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Mobile Developer</span>
-          </a>
-          <a href="/publications-in/Network%20Administrator" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.079 6.839a3 3 0 0 0-4.255.1M13 20h1.083A3.916 3.916 0 0 0 18 16.083V9A6 6 0 1 0 6 9v7m7 4v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1Zm-7-4v-6H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1Zm12-6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1v-6Z" />
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Network Administrator</span>
-          </a>
-          <a href="/publications-in/Product%20Manager" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Product Manager</span>
-          </a>
-          <a href="/publications-in/QA%20Engineer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 18V8a1 1 0 0 1 1-1h1.5l1.707-1.707A1 1 0 0 1 8.914 5h6.172a1 1 0 0 1 .707.293L17.5 7H19a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z"></path>
-                  <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">QA Engineer</span>
-          </a>
-          <a href="/publications-in/Software%20Architect" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 16H5a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v1M9 12H4m8 8V9h8v11h-8Zm0 0H9m8-4a1 1 0 1 0-2 0 1 1 0 0 0 2 0Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Software Architect</span>
-          </a>
-          <a href="/publications-in/System%20Administrator" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.079 6.839a3 3 0 0 0-4.255.1M13 20h1.083A3.916 3.916 0 0 0 18 16.083V9A6 6 0 1 0 6 9v7m7 4v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1h1a1 1 0 0 0 1-1Zm-7-4v-6H5a2 2 0 0 0-2 2v2a2 2 0 0 0 2 2h1Zm12-6h1a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-1v-6Z" />
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">System Administrator</span>
-            </a>
-            <a href="/publications-in/Licensed%20Driver" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h6l2 4m-8-4v8m0-8V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1v9h2m8 0H9m4 0h2m4 0h2v-4m0 0h-5m3.5 5.5a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Zm-10 0a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">Licensed Driver</span>
-            </a>
-            <a href="/publications-in/UI%2FUX%20Designer" class="category flex items-center rounded-lg border border-gray-200 bg-white px-4 py-2 hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
-              <svg class="me-2 h-4 w-4 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M4 18V8a1 1 0 0 1 1-1h1.5l1.707-1.707A1 1 0 0 1 8.914 5h6.172a1 1 0 0 1 .707.293L17.5 7H19a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1Z"></path>
-                <path stroke="currentColor" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"></path>
-              </svg>
-              <span class="text-md font-medium text-gray-900 dark:text-white">UI/UX Designer</span>
-            </a>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="flex flex-row justify-between my-10">
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+
     </div>
-  </div>
-</section>
-
-</section>
+  </section>
