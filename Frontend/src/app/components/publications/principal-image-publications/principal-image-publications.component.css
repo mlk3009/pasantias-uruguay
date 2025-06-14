@@ -1,15 +1,19 @@
 .principalImage{
     background-image: url(../../../../assets/img/principalimage_edit2.jpg);
-    height: 80vh;
+    height: 65vh;
     background-size: cover;
     background-position: center center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 .principalImage h1{
     color: white;
     font-size: 1.8em;
     font-weight: 600;
     text-align: center;
-    padding-top: 16vh;
+    padding-top: 14vh;
+    margin-bottom: 5vh;
     font-family: Arial, Helvetica, sans-serif;
 }
 .form{
@@ -21,11 +25,8 @@
     align-items: start;
 }
 .searcher{
-    margin-top: 8vh;
+    margin-top: 2vh;
     z-index: 1;
-}
-.button1{
-    background-color: #03051e;
 }
 h2{
     color: white;
@@ -47,20 +48,68 @@ h3{
     font-family: Arial, Helvetica, sans-serif;
     letter-spacing: .2px;
 }
-.lowwave{
-    display: flex;
-    justify-content: space-between;
-    flex-direction: column;
-}
+
 .font{
     font-family: Arial, Helvetica, sans-serif;
 }
-.button{
-    color: white;
-    background-color: #008fa8;
+.button {
+  position: relative;
+  background: #008fa8;
+  color: #fff;
+  padding: 0.7rem 1.5rem 0.7rem 2.5rem;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.08);
+  cursor: pointer;
+  transition: 
+    background 0.1s cubic-bezier(.4,0,.2,1),
+    transform 0.2s cubic-bezier(.4,0,.2,1),
+    box-shadow 0.2s cubic-bezier(.4,0,.2,1);
+  overflow: visible;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
 }
-.button:hover{
-    background-color: #15c3c3;
+
+.button__icon {
+  position: relative;
+  z-index: 2;
+  margin-left: -1.8rem;
+  background: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+}
+
+.button::before {
+  content: '';
+  position: absolute;
+  left: -0.4rem;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  width: 3.6rem;
+  height: 3.6rem;
+  background: #008fa8;
+  border-radius: 50%;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.10);
+  transition: transform 0.2s cubic-bezier(.4,0,.2,1);
+  z-index: 1;
+}
+
+.button:hover,
+.button:focus {
+  transform: scale(1.04);
+}
+
+.button:hover .button__icon,
+.button:focus .button__icon {
+  transform: scale(1.22);
+}
+
+.button:hover::before,
+.button:focus::before {
+  transform: translateY(-50%) scale(1);
 }
 .button_container{
     margin-top: 6vh;
@@ -69,4 +118,15 @@ h3{
     justify-content: center;
     align-items: center;
     flex-direction: row;
+}
+.lowwave{
+    display: flex;
+    justify-content: center;
+    align-items: baseline;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+}
+.lowwave div{
+    width: 100%;
 }

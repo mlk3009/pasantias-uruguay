@@ -1,5 +1,5 @@
 .title{
-    padding-bottom: 10vh;
+    padding-bottom: 5vh;
     margin-top: 5vh;
 }
 .title h1{
@@ -41,7 +41,6 @@
 
 .section1{
     margin: 0 auto;
-    margin-top: 5vh;
     max-width: 1580px;
     width: 100%;
     display: flex;
@@ -50,7 +49,7 @@
     overflow: hidden;
     box-shadow: none;
     padding: 0 30px;
-    padding-bottom: 20vh;
+    padding-bottom: 10vh;
     border-bottom: 1px solid #efefef;
 }
 .body-nh2 {
@@ -116,10 +115,10 @@
     background-color: #15c3c3;
 }
 .size{
-    min-width: 20rem;
-    min-height: 20rem;
-    max-width: 20rem;
-    max-height: 20rem;
+    min-width: 19.9rem;
+    min-height: 19.9rem;
+    max-width: 19.9rem;
+    max-height: 19.9rem;
     position: relative;
 }
 .body-nh{
@@ -167,23 +166,27 @@ h5:hover {
     height: auto;
     transition: opacity 0.4s; /* Aumenta la duración de la transición */
 }
-/* 
+
 .image-container::after {
     content: "";
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../../../../assets/img/trabajoPersonalT.jpg'); 
+    min-width: 19.9rem;
+    min-height: 19.9rem;
+    max-width: 19.9rem;
+    max-height: 19.9rem;
+    background-image: url('../../../../assets/img/hoverpub.jpg'); 
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 0.4s; Aumenta la duración de la transición 
+    transition: opacity 0.3s;
 }
-*/
+
 .image-container:hover::after {
     opacity: 1;
+    transition: opacity 0.4s;
 }
 
 .category:hover {
@@ -240,4 +243,35 @@ h5:hover {
         flex-direction: column;
         justify-content: space-between;
     }
+}
+
+/* Animación de línea debajo del título al hacer hover en la carta */
+.card-title {
+  position: relative;
+  display: inline-block;
+  /* ...otros estilos... */
+}
+
+.card-title::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -4px; /* Ajusta según el espacio que quieras */
+  width: 0;
+  height: 2px;
+  background: #0064ce; /* Cambia el color si lo deseas */
+  transition: width 0.3s ease;
+}
+
+.card:hover .card-title::after {
+  width: 100%;
+}
+.card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ...otros estilos... */
+}
+
+.card:hover {
+  transform: scale(1.02);
 }

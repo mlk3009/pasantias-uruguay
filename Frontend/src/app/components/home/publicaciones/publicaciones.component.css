@@ -4,12 +4,14 @@
     margin: 0 auto;
     border-bottom: 1px solid rgba(0, 0, 0, 0.049);
     margin-top: 12vh;
+    border-bottom: 1px solid #efefef;
 }
 .principal2{
     font-family: Arial, Helvetica, sans-serif;
     max-width: 82%;
     margin: 0 auto;
     margin-top: 2vh;
+    border-bottom: 1px solid #efefef;
 }
 .h1{
     font-size: 2em;

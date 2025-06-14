@@ -21,6 +21,7 @@ export class PublicationsListComponent implements OnInit {
   publications: any[] = [];
   categoryPublications: { [key: string]: any[] } = {};
   data: any; // Asume que tienes una propiedad para almacenar los datos del usuario
+  displayedPublications: any[] = [];
 
   constructor(
     private publicationService: PublicationService,
@@ -56,18 +57,21 @@ export class PublicationsListComponent implements OnInit {
     this.publicationService.getPublications(category, featured).subscribe(
       (response) => {
         if (response && response.length > 0 && response[0].publications) {
-          this.publications = response[0].publications;
+          this.displayedPublications = response[0].publications;
+          this.displayedPublications.forEach(publication => {
+            publication.imageUrl = publication.image 
+              ? `http://localhost:8000/images/uploads/${publication.image}` 
+              : 'http://localhost:8000/images/defaultpub.jpg';
+          });
         } else {
-          this.publications = [];
+          this.displayedPublications = [];
         }
-        // console.log(this.publications); 
       },
       (error) => {
         console.error(error);
       }
     );
   }
-
   loadAdditionalPublications(userId: number | null): void {
     if (userId) {
       this.userService.getUserEtiquetas(userId).pipe(
