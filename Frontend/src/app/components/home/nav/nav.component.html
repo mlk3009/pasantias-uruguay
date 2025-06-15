@@ -89,55 +89,109 @@
               <span class="sr-only">Open actions menu</span>
             </button>
 
-            <div
-              id="dropdown-container"
-              class="dropdown-container"
-              [ngClass]="{ 'dropdown-hidden': !isDropdownVisible, 'visible': isDropdownVisible }"
-              (click)="$event.stopPropagation()"
-            >
-              <ul class="text-base text-gray-500 dark:text-gray-300">
-                <li class="cursor-pointer hover:rounded">
-                  <a
-                    (click)="open_profile()"
-                    class="hover:rounded-t-md flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-                  >
-                    Mi perfil
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-                  >
-                    Crear CV
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="#"
-                    class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-                  >
-                    Modificar CV
-                  </a>
-                </li>
-                <li>
-                  <a
-                    href="/user-postulations"
-                    class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-                  >
-                    Mis postulaciones
-                  </a>
-                </li>
-                <li>
-                  <a
-                    (click)="logout()"
-                    class="hover:rounded-b-md hover:cursor-pointer flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
-                  >
-                    Cerrar sesión
-                  </a>
-                </li>
-              </ul>
-            </div>
+<!-- Menú para estudiante -->
+<div
+  *ngIf="data?.rol === 'estudiante'"
+  id="dropdown-container"
+  class="dropdown-container"
+  [ngClass]="{ 'dropdown-hidden': !isDropdownVisible, 'visible': isDropdownVisible }"
+  (click)="$event.stopPropagation()"
+>
+  <ul class="text-base text-gray-500 dark:text-gray-300">
+    <li class="cursor-pointer hover:rounded">
+      <a
+        (click)="open_profile()"
+        class="hover:rounded-t-md flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Mi perfil
+      </a>
+    </li>
+    <li>
+      <a
+        href="#"
+        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Crear CV
+      </a>
+    </li>
+    <li>
+      <a
+        href="/user-postulations"
+        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Mis postulaciones
+      </a>
+    </li>
+    <li>
+      <a
+        href="/user-saves"
+        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Mis guardados
+      </a>
+    </li>
+    <li>
+      <a
+        (click)="logout()"
+        class="hover:rounded-b-md hover:cursor-pointer flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
+      >
+        Cerrar sesión
+      </a>
+    </li>
+  </ul>
+</div>
+
+<!-- Menú para empresa (ejemplo, modifícalo a tu gusto) -->
+<div
+  *ngIf="data?.rol === 'empresa'"
+  id="dropdown-container"
+  class="dropdown-container"
+  [ngClass]="{ 'dropdown-hidden': !isDropdownVisible, 'visible': isDropdownVisible }"
+  (click)="$event.stopPropagation()"
+>
+  <ul class="text-base text-gray-500 dark:text-gray-300">
+    <li>
+      <a
+        href="/enterprise-profile"
+        class="hover:rounded-t-md flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Perfil empresa
+      </a>
+    </li>
+    <li>
+      <a
+        href="/my-publications"
+        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Mis publicaciones
+      </a>
+    </li>
+    <li>
+      <a
+        href="/postulantes"
+        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Candidatos
+      </a>
+    </li>
+    <li>
+      <a
+        href="/edit-enterprise-profile"
+        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Editar perfil
+      </a>
+    </li>
+    <li>
+      <a
+        (click)="logout()"
+        class="hover:rounded-b-md hover:cursor-pointer flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
+      >
+        Cerrar sesión
+      </a>
+    </li>
+  </ul>
+</div>
 
 
 

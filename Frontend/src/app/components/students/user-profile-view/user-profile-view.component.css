@@ -124,3 +124,9 @@
     object-fit: cover; /* Esto asegura que la imagen se ajuste al cuadrado sin distorsionarse */
     border-radius: 50%; /* Esto hará que la imagen sea circular */
 }
+
+#alert-container,
+#alert-container2,
+#alert-container3 {
+  display: none;
+}

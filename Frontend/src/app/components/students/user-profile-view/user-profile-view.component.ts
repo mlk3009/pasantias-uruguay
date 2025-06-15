@@ -64,7 +64,7 @@ export class UserProfileViewComponent implements OnInit {
   }
 
 
-  sendContactEmail(contactForm: any): void {
+sendContactEmail(contactForm: any): void {
     const email = localStorage.getItem('email') || 'No encontrado';
     const asunto = contactForm.value.subject;
     const descripcion = contactForm.value.message;
@@ -75,6 +75,7 @@ export class UserProfileViewComponent implements OnInit {
             console.log('Correo enviado correctamente', response);
             this.showAlert1();
             this.modalClose();
+            contactForm.resetForm(); // Limpia los campos del formulario
         },
         error: (error) => {
             console.error('Error al enviar el correo:', error);
