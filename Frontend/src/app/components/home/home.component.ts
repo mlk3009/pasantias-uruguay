@@ -13,11 +13,12 @@ import { SliderComponent } from './slider/slider.component';
 import { CategoriesComponent } from './categories/categories.component';
 import { UserService } from '../../services/user.service';
 import { BigSliderComponent } from './big-slider/big-slider.component';
+import { GaficaEstudiantesComponent } from './gafica-estudiantes/gafica-estudiantes.component';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent, ValidAcountComponent, SliderComponent, CategoriesComponent, BigSliderComponent],
+  imports: [CommonModule, NavComponent, PrincipalImageComponent, NosotrosComponent, OfertasComponent, FooterComponent, PublicacionesComponent, ContactComponent, ValidAcountComponent, SliderComponent, CategoriesComponent, BigSliderComponent, GaficaEstudiantesComponent],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
