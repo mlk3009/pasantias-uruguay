@@ -1,12 +1,14 @@
 <div class="body flex items-center justify-center">
-  <div class="content bg-gray-50 w-11/12 h-5/6 mt-10 rounded-lg">
+  <div class="content bg-gray-50 w-full mx-8 h-5/6 mt-10 rounded-lg">
     <div class="flex flex-row justify-center w-full">
-      <div class="user-data max-w-3/4 flex items-center pt-10 flex-col">
+      <div class="user-data flex items-center pt-10 flex-col">
         <div class="flex flex-col items-center">
-          <img
-            [src]="userImageUrl"
-            class="rounded-full w-40"
-          />
+          <div class="cuadro-imagen">
+            <img
+              [src]="userImageUrl"
+              class=""
+            />
+          </div>
           <h1 class="text-gray-900 font-semibold text-4xl mt-5">
             {{ data.name }}
           </h1>
@@ -20,7 +22,7 @@
               <li>
                 <a
                   href="/user-profile"
-                  class="home_button block py-2 px-3 text-white rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
+                  class="home_button block py-2 px-3 text-white rounded md:p-2 dark:text-white md:dark:text-blue-500 md:text-lg"
                   aria-current="page"
                   >Inicio</a
                 >
@@ -28,21 +30,21 @@
               <li>
                 <a
                   href="/user-postulations"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                   >Postulaciones</a
                 >
               </li>
               <li>
                 <a
                   href="/user-saves"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                   >Guardados</a
                 >
               </li>
               <li>
                 <a
                   href="/edit-profile"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
+                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-2 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                   >Editar perfil</a
                 >
               </li>
@@ -50,13 +52,14 @@
           </div>
         </div>
 
-        <div class="flex flex-col justify-center items-center max-w-6xl">
-          <h2 class="text-2xl font-medium text-gray-900">Sobre mí</h2>
+        <section>
+          <div class="flex flex-col justify-center items-start max-w-6xl">
+          <h2 class="text-2xl font-medium text-gray-900 p-4">Sobre mí</h2>
           <div class="texto mb-6">
-            <p class="text-gray-700 text-sm p-4 text-center max-w-2/3">
+            <p class="text-gray-700 text-sm p-4 max-w-2/3">
               {{ data.desc1 }}
             </p>
-            <p class="text-gray-700 text-sm p-4 text-center max-w-2/3">
+            <p class="text-gray-700 text-sm p-4 max-w-2/3">
               {{ data.desc2 }}
             </p>
           </div>
@@ -193,11 +196,14 @@
               }
             </div>
           </div>
-
-
-
-          
         </div>
+
+
+        <div>
+
+        </div>
+        </section>
+
       </div>
     </div>
   </div>
