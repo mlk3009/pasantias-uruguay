@@ -21,8 +21,9 @@
     "@angular/platform-browser-dynamic": "^17.0.0",
     "@angular/router": "^17.0.0",
     "animate.css": "^4.1.1",
-    "apexcharts": "^4.7.0",
+    "apexcharts": "^3.41.0",
     "flowbite": "^2.3.0",
+    "ng-apexcharts": "^1.8.0",
     "ngx-cookie-service": "^17.1.0",
     "rxjs": "~7.8.0",
     "zone.js": "~0.14.2"
