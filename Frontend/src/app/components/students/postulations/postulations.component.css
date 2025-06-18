@@ -7,24 +7,6 @@
 }
 .content{
     height: 85%;
-    margin-top: 10vh;
-    margin-bottom: 10vh;
-    padding-bottom: 7vh;
-}
-.buttons{
-    min-width: 25%;
-}
-.home_button{
-    color: #15c3c3;
-}
-.home_button2:hover{
-    color: #15c3c3;
-}
-.filter_button:hover * {
-    color: #15c3c3;
-}
-.filter_button:hover {
-    color: #15c3c3;
 }
 .container-modal{
     position: fixed;
