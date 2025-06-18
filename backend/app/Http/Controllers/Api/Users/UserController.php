@@ -260,7 +260,6 @@ class UserController extends Controller
             'ci_estudiante' => 'nullable|string|max:8|unique:estudiante,ci_estudiante,' . $id . ',id',
             'fec_nacimiento' => 'nullable|date',
             'cod_postal' => 'nullable|string|max:5',
-            'id_image' => 'nullable|integer',
             'genero' => 'nullable|string|in:Masculino,Femenino,Otro',
             'desc1' => 'nullable|string|max:1000',
             'desc2' => 'nullable|string|max:1000',
@@ -313,11 +312,7 @@ class UserController extends Controller
                 if (isset($jsonData['cod_postal']) && $jsonData['cod_postal'] != $student->cod_postal) {
                     $student->cod_postal = $jsonData['cod_postal'];
                 }
-    
-                if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
-                    $student->id_image = $jsonData['id_image'];
-                }
-    
+
                 if (isset($jsonData['genero']) && $jsonData['genero'] !== '') {
                     $student->genero = $jsonData['genero'];
                 }
@@ -353,11 +348,7 @@ class UserController extends Controller
                 if (isset($jsonData['sede']) && $jsonData['sede'] != $empresa->sede) {
                     $empresa->sede = $jsonData['sede'];
                 }
-    
-                if (isset($jsonData['id_image']) && $jsonData['id_image'] !== '') {
-                    $empresa->id_image = $jsonData['id_image'];
-                }
-    
+
                 $empresa->save();
             }
     
