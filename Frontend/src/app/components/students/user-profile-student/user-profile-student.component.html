@@ -1,8 +1,8 @@
 <div class="body flex items-center justify-center">
-  <div class="content bg-gray-50 w-full mx-8 h-5/6 mt-10 rounded-lg">
+  <div class="content bg-gray-100 w-full mx-8 h-5/6 mt-10 rounded-lg">
     <div class="flex flex-row justify-center w-full">
       <div class="user-data flex items-center pt-10 flex-col">
-        <div class="flex flex-col items-center">
+        <div class="flex flex-col items-center md:hidden">
           <div class="cuadro-imagen">
             <img
               [src]="userImageUrl"
@@ -14,67 +14,138 @@
           </h1>
           <h2 class="text-gray-500 text-lg">{{ data.location }}</h2>
         </div>
-        <div class="buttons border-b-2 w-full flex justify-center">
+        <div class="buttons w-full flex justify-center">
           <div class="w-full md:block md:w-auto pt-4">
             <ul
-              class="text-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+              class="text-center font-medium flex flex-col p-4 md:p-0 md:px-14 mt-4 border shadow-lg rounded-full bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
             >
-              <li>
+              <li class="py-2 px-3">
                 <a
                   href="/user-profile"
-                  class="home_button block py-2 px-3 text-white rounded md:p-2 dark:text-white md:dark:text-blue-500 md:text-lg"
+                  class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg"
                   aria-current="page"
-                  >Inicio</a
+                  >
+                  <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                  </svg>
+                  Perfil</a
                 >
               </li>
-              <li>
+              <li class="py-2 px-3">
                 <a
                   href="/user-postulations"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
-                  >Postulaciones</a
+                  class="group hover:bg-sky-700 hover:text-white flex flex-row text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                 >
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
+                  </svg>
+                  Postulaciones
+                </a>
               </li>
-              <li>
+              <li class="py-2 px-3">
                 <a
                   href="/user-saves"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-2 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
-                  >Guardados</a
+                  class="group hover:bg-sky-700 hover:text-white flex flex-row text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                 >
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 11v5m0 0 2-2m-2 2-2-2M3 6v1a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V6a1 1 0 0 0-1-1H4a1 1 0 0 0-1 1Zm2 2v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V8H5Z"/>
+                  </svg>
+                  Guardados
+                </a>
               </li>
-              <li>
+              <li class="py-2 px-3">
+                <a
+                  href="/user-saves"
+                  class="group hover:bg-sky-700 hover:text-white flex flex-row text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
+                >
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                    <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                  </svg>
+                  Ver CV
+                </a>
+              </li>
+              <li class="py-2 px-3">
+                <a
+                  href="/user-saves"
+                  class="group hover:bg-sky-700 hover:text-white flex flex-row text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
+                >
+                  <svg
+                  class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white"
+                  aria-hidden="true"
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M5 12h14m-7 7V5"
+                  />
+                </svg>
+                  Crear CV
+                </a>
+              </li>
+              <li class="py-2 px-3">
                 <a
                   href="/edit-profile"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-2 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
-                  >Editar perfil</a
+                  class="group hover:bg-sky-700 hover:text-white flex flex-row text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                 >
+                  <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="square" stroke-linejoin="round" stroke-width="2" d="M7 19H5a1 1 0 0 1-1-1v-1a3 3 0 0 1 3-3h1m4-6a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm7.441 1.559a1.907 1.907 0 0 1 0 2.698l-6.069 6.069L10 19l.674-3.372 6.07-6.07a1.907 1.907 0 0 1 2.697 0Z"/>
+                  </svg>
+                  Editar perfil
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
-        <section>
-          <div class="flex flex-col justify-center items-start max-w-6xl">
-          <h2 class="text-2xl font-medium text-gray-900 p-4">Sobre mí</h2>
-          <div class="texto mb-6">
-            <p class="text-gray-700 text-sm p-4 max-w-2/3">
+        <section class="grid grid-cols-2 gap-4 max-w-screen-2xl">
+          <div class="flex flex-col justify-center items-start max-w-6xl border p-4 rounded-lg bg-gray-50 shadow-xl">
+            <div class="ml-14 flex flex-row items-start justify-start w-full">
+              <div class="cuadro-imagen">
+                <img
+                  [src]="userImageUrl"
+                  class=""
+                />
+              </div>
+              <div class="flex-col justify-center items-start ms-5 sm:hidden md:flex">
+                <h1 class="text-gray-900 font-semibold text-4xl mt-5">
+                  {{ data.name }}
+                </h1>
+                <h2 class="text-gray-500 text-lg">{{ data.location }}</h2>
+                <div class="flex flex-row items-center">
+                  <div *ngFor="let etiqueta of userEtiquetas">
+                    <p class="text-gray-800 font-medium text-md p-2 pl-0 max-w-1/2">{{ etiqueta.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="texto mb-6 mt-6 mx-auto">
+            <p class="text-gray-700 text-md p-4 max-w-2/3">
               {{ data.desc1 }}
             </p>
-            <p class="text-gray-700 text-sm p-4 max-w-2/3">
+            <p class="text-gray-700 text-md p-4 max-w-2/3">
               {{ data.desc2 }}
             </p>
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-col justify-between w-full p-4">
             <div class="flex justify-between flex-row">
               <div class="flex flex-col justify-start">
                 <div class=" flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Nombre completo:</span
                     >
                     {{ data.name }}
                   </p>
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Fecha de nacimiento:</span
                     >
                     {{ data.fec_nacimiento }}
@@ -82,26 +153,26 @@
                 </div>
 
                 <div class="flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Género:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Género:</span>
                     {{ data.genero }}
                   </p>
                 </div>
                 
                 <div class="flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Correo:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Correo:</span>
                     {{ data.email }}
                   </p>
 
 
 
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Puesto de trabajo:</span
                     >
                     <div *ngFor="let etiqueta of userEtiquetas">
-                      <p class="text-gray-700 text-sm p-2 max-w-1/2">{{ etiqueta.name }}</p>
+                      <p class="text-gray-800 text-md p-2 max-w-1/2">{{ etiqueta.name }}</p>
                     </div>
                     
                 </div>
@@ -113,27 +184,27 @@
               
               <div class="flex flex-col justify-between col2">
                 <div class="flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Departamento:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Departamento:</span>
                     {{ data.location }}
                   </p>
                 </div>
                 <div class="flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Identificación:</span
                     >
                     {{ data.ci_estudiante }}
                   </p>
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Código postal:</span
                     >
                     {{ data.cod_postal }}
                   </p>
 
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Telefono:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Telefono:</span>
                     {{ data.phone }}
                   </p>
 
@@ -145,38 +216,104 @@
                 </div>
               </div>
             </div>
-            <div class="flex justify-center items-center button">
+          </div>
+        </div>
+
+
+        <div class="border rounded-lg shadow-xl bg-gray-50">
+          <div class="h-40 flex justify-start items-center bg-gray-50 p-4 rounded-t-lg">
+            <h2 class="text-2xl font-semibold text-gray-800">Ofertas que <span class="text-sky-900">encajan con tu perfil</span></h2>
+          </div>
+          <!-- Mensaje si no hay ofertas para mostrar -->
+          <div class="border-2 rounded-lg h-40 bg-gray-50 shadow-md mx-2 mb-4 p-4">
+            <div class="flex flex-col justify-center items-center h-full">
+              <p class="text-gray-500 text-lg">Aún no tienes ofertas guardadas</p>
+              <p class="text-gray-500 text-md">¡Explora las ofertas disponibles!</p>
+            </div>
+          </div>
+          <!-- Aquí se pueden agregar las ofertas -->
+          <div class="border-2 rounded-lg bg-gray-50 shadow-md mx-2 mb-4 p-4 hover:bg-gray-100 cursor-pointer transition duration-100 hover">
+            <div>
+            <h3 class="text-gray-800 text-xl font-semibold">Nombre empleo</h3>
+            <h4 class="flex flex-row font-medium text-gray-800">
+              Empresa ejemplo
+              <svg class="w-6 h-6 text-sky-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m8.032 12 1.984 1.984 4.96-4.96m4.55 5.272.893-.893a1.984 1.984 0 0 0 0-2.806l-.893-.893a1.984 1.984 0 0 1-.581-1.403V7.04a1.984 1.984 0 0 0-1.984-1.984h-1.262a1.983 1.983 0 0 1-1.403-.581l-.893-.893a1.984 1.984 0 0 0-2.806 0l-.893.893a1.984 1.984 0 0 1-1.403.581H7.04A1.984 1.984 0 0 0 5.055 7.04v1.262c0 .527-.209 1.031-.581 1.403l-.893.893a1.984 1.984 0 0 0 0 2.806l.893.893c.372.372.581.876.581 1.403v1.262a1.984 1.984 0 0 0 1.984 1.984h1.262c.527 0 1.031.209 1.403.581l.893.893a1.984 1.984 0 0 0 2.806 0l.893-.893a1.985 1.985 0 0 1 1.403-.581h1.262a1.984 1.984 0 0 0 1.984-1.984V15.7c0-.527.209-1.031.581-1.403Z"/>
+              </svg>
+            </h4>
+            <h5 class="text-gray-600">Montevideo</h5>
+            </div>
+            <!--En la descripcion solo se deben mostrar 3 lineas de texto-->
+            <div class="py-5">
+              <p class="text-gray-800">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorem dignissimos recusandae, aperiam corporis magnam quo ex repudiandae consequuntur, voluptatum distinctio doloremque porro, quidem veritatis laudantium voluptatibus molestiae minus? Nobis, suscipit?</p>
+            </div>
+          </div>
+          
+        </div>
+        </section>
+        <section class="grid grid-cols-2 gap-4 w-full">
+          <div class="w-full">
+            <div class="flex justify-between items-center w-full bg-gray-50 rounded-lg shadow-xl my-4 border-2">
+              <div class="flex flex-row justify-center items-start ms-4">
+                <!-- Donut Chart Small - Single Percentage -->
+                  <div class="m-2 relative w-16 h-16 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 36 36">
+                      <!-- Fondo gris (100%) -->
+                      <circle
+                        class="text-gray-200"
+                        stroke-width="4"
+                        stroke="currentColor"
+                        fill="transparent"
+                        r="16"
+                        cx="18"
+                        cy="18"
+                      />
+                      <!-- Porcentaje de avance (azul) -->
+                      <circle
+                        class="text-blue-500"
+                        stroke-width="4"
+                        [attr.stroke-dasharray]="percent + ', 100'"
+                        stroke-linecap="round"
+                        stroke="currentColor"
+                        fill="transparent"
+                        r="16"
+                        cx="18"
+                        cy="18"
+                        transform="rotate(-90 18 18)"
+                      />
+                    </svg>
+                    <!-- Texto central -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <span class="text-xs font-bold">{{ percent }}%</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h2 class="text-2xl font-semibold text-gray-800 pt-4">Currículum Vitae</h2>
+                    <p class="text-gray-500 text-md">Completa tu CV para que las empresas puedas saber mas de ti!</p>
+                  </div>
+              </div>
+              
               @if(data.cv){
                 <a *ngIf="data.cv"
                 [href]="cvLink"
-                class="flex flex-row items-center justify-between button1 text-gray-800 bg-gray-50 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                class="flex flex-row items-center justify-between text-white bg-sky-700 font-medium rounded-full text-md px-4 py-2 me-2 mb-2 hover:bg-sky-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Ver currículum
-                <svg
-                  class="w-4 h-4 text-gray-800 dark:text-white ml-2"
-                  viewBox="0 0 16 16"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M8.29289 3.70711L1 11V15H5L12.2929 7.70711L8.29289 3.70711Z"
-                    fill="#000000"
-                  />
-                  <path
-                    d="M9.70711 2.29289L13.7071 6.29289L15.1716 4.82843C15.702 4.29799 16 3.57857 16 2.82843C16 1.26633 14.7337 0 13.1716 0C12.4214 0 11.702 0.297995 11.1716 0.828428L9.70711 2.29289Z"
-                    fill="#000000"
-                  />
+                <svg class="w-6 h-6 text-white dark:text-white ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                  <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
                 </svg>
+
               </a>
               } @else {
               <button
                 routerLink="/cv"
                 type="button"
-                class="flex flex-row items-center justify-between button1 text-gray-800 bg-gray-50 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
+                class="flex flex-row items-center justify-between text-white bg-sky-700 font-medium rounded-full text-md px-4 py-2 me-2 mb-2 hover:bg-sky-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
                 Crear currículum
                 <svg
-                  class="w-6 h-6 text-gray-800 dark:text-white"
+                  class="w-6 h-6 text-white dark:text-white"
                   aria-hidden="true"
                   xmlns="http://www.w3.org/2000/svg"
                   width="24"
@@ -196,12 +333,9 @@
               }
             </div>
           </div>
-        </div>
+          <div>
 
-
-        <div>
-
-        </div>
+          </div>
         </section>
 
       </div>

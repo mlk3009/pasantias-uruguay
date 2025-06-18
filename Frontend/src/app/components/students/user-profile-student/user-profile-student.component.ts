@@ -21,6 +21,7 @@ export class UserProfileStudentComponent {
   etiquetas: any[] = [];
   userImageUrl: string = '';
   cvLink: string = '';
+  percent = 100; // Cambia este valor según el avance
   
 
   constructor(
