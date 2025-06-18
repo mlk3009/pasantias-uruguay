@@ -7,9 +7,6 @@
 }
 .content{
     height: 85%;
-    margin-top: 10vh;
-    margin-bottom: 10vh;
-    padding-bottom: 7vh;
 }
 .user-data{
     min-width: 70%;
@@ -61,7 +58,4 @@
   object-fit: cover; /* Hace que la imagen llene el cuadro y se recorte si es necesario */
   display: block;
   border-radius: 100%;
-}
-.hover:hover{
-    transform: scale(1.005);
 }
