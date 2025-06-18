@@ -2,13 +2,13 @@ import { Component, AfterViewInit } from '@angular/core';
 import ApexCharts from 'apexcharts';
 
 @Component({
-  selector: 'app-gafica-estudiantes',
+  selector: 'app-grafica-estudiantes',
   standalone: true,
   imports: [],
-  templateUrl: './gafica-estudiantes.component.html',
-  styleUrl: './gafica-estudiantes.component.css'
+  templateUrl: './grafica-estudiantes.component.html',
+  styleUrl: './grafica-estudiantes.component.css'
 })
-export class GaficaEstudiantesComponent implements AfterViewInit {
+export class GraficaEstudiantesComponent implements AfterViewInit {
   ngAfterViewInit(): void {
     const options = {
       chart: {
