@@ -4,13 +4,16 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 import { global } from './global'; // Importa global
 import { CookieService } from 'ngx-cookie-service';
+import { BehaviorSubject } from 'rxjs';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublicationService {
   constructor(private _http: HttpClient, private cookieService: CookieService) {}
-
+  private publicationsSubject = new BehaviorSubject<any[]>([]);
+  publications$ = this.publicationsSubject.asObservable();
   getToken() {
     let token = this.cookieService.get('token');
     if (token && token != 'undefined') {
@@ -20,6 +23,20 @@ export class PublicationService {
     }
   }
 
+    setPublications(publications: any[]) {
+    this.publicationsSubject.next(publications);
+  }
+
+  private filtered = false;
+
+  setFiltered(value: boolean) {
+    this.filtered = value;
+  }
+
+  isFiltered(): boolean {
+    return this.filtered;
+  }
+  
   getPublications(category?: string, featured?: boolean | null, empresaId?: string): Observable<any[]> {
     let params = new HttpParams();
     if (category) {
@@ -107,29 +124,33 @@ export class PublicationService {
     );
   }
 
-  searchPublications(params: any): Observable<any[]> {
-    const token = this.getToken();
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${token}`,
-      'Content-Type': 'application/json',
-    });
-  
-    let httpParams = new HttpParams();
-    for (let key in params) {
-      if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
-        httpParams = httpParams.set(key, params[key].toString());
-      }
+searchPublications(params: any): Observable<any[]> {
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+
+  let httpParams = new HttpParams();
+  for (let key in params) {
+    if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
+      httpParams = httpParams.set(key, params[key].toString());
     }
-  
-    return this._http.get<any[]>(global.url + 'publications/search', { headers: headers, params: httpParams }).pipe(
-      map(response => Array.isArray(response) ? response : [response]),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 404) {
-          return throwError(() => new Error('No se encontraron publicaciones.'));
-        } else {
-          return throwError(() => error);
-        }
-      })
-    );
   }
+
+  return this._http.get<any>(global.url + 'publications/search', { headers: headers, params: httpParams }).pipe(
+    // Ahora response es un objeto, no un array
+    map(response => response.publications || []),
+    map(publications => {
+      this.setPublications(publications);
+      return publications;
+    }),
+    catchError((error: HttpErrorResponse) => {
+      this.setPublications([]);
+      if (error.status === 404) {
+        return throwError(() => new Error('No se encontraron publicaciones.'));
+      } else {
+        return throwError(() => error);
+      }
+    })
+  );
+}
 }

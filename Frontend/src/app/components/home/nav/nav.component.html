@@ -193,6 +193,34 @@
   </ul>
 </div>
 
+<!-- Menú para admin -->
+<div
+  *ngIf="data?.rol === 'administrador'"
+  id="dropdown-container"
+  class="dropdown-container"
+  [ngClass]="{ 'dropdown-hidden': !isDropdownVisible, 'visible': isDropdownVisible }"
+  (click)="$event.stopPropagation()"
+>
+  <ul class="text-base text-gray-500 dark:text-gray-300">
+    <li class="cursor-pointer hover:rounded">
+      <a
+        (click)="open_profile()"
+        class="hover:rounded-t-md flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
+      >
+        Mi perfil
+      </a>
+    </li>
+    <li>
+      <a
+        (click)="logout()"
+        class="hover:rounded-b-md hover:cursor-pointer flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
+      >
+        Cerrar sesión
+      </a>
+    </li>
+  </ul>
+</div>
+
           </div>
         </div>
       </section>
