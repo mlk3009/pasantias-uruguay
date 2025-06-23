@@ -127,28 +127,33 @@ noPublicationsMessage: string = '';
     );
   }
 
-  searchPublications(): void {
-    this._publicationService.searchPublications(this.searchParams).subscribe(
-      (response) => {
-        if (response && response.length > 0 && response[0].publications) {
-          this.publications = response[0].publications;
-        } else {
-          this.publications = [];
-        }
-        this.noPublicationsMessage = ''; 
-        this.updateDisplayedPublications();
-      },
-      (error) => {
-        if (error.message === 'No se encontraron publicaciones.') {
-          this.publications = [];
-          this.noPublicationsMessage = 'No se encontraron publicaciones.';
-          this.updateDisplayedPublications();
-        } else {
-          console.error('Error searching publications:', error);
-        }
+searchPublications(): void {
+  this._publicationService.searchPublications(this.searchParams).subscribe(
+    (response: any) => {
+      // Si es un array plano
+      if (Array.isArray(response)) {
+        this.publications = response;
       }
-    );
-  }
+      // Si es un objeto con publications
+      else if (response && response.publications) {
+        this.publications = response.publications;
+      } else {
+        this.publications = [];
+      }
+      this.noPublicationsMessage = '';
+      this.updateDisplayedPublications();
+    },
+    (error) => {
+      if (error.message === 'No se encontraron publicaciones.') {
+        this.publications = [];
+        this.noPublicationsMessage = 'No se encontraron publicaciones.';
+        this.updateDisplayedPublications();
+      } else {
+        console.error('Error searching publications:', error);
+      }
+    }
+  );
+}
 
   destroyPublication(id: number | null): void {
     if (id !== null) {

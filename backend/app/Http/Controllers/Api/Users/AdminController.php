@@ -13,6 +13,7 @@ use App\Models\Mensaje;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\Api\Email\EmailController;
+use Illuminate\Support\Facades\Log;
 
 class AdminController extends Controller
 {
@@ -230,94 +231,110 @@ class AdminController extends Controller
     }
 
 
-    public function getAllMensajes(Request $request)
-    {
-        if (Auth::user()->rol !== 'administrador') {
-            return response()->json(['message' => 'No autorizado'], 403);
-        }
-    
-        $perPage = $request->input('itemsPerPage', 10);
-        $page = $request->input('page', 1);
-    
-        $query = Mensaje::with('user');
-    
-        if ($request->has('solicitud') && $request->solicitud == 'true') {
+public function getAllMensajes(Request $request)
+{
+    if (Auth::user()->rol !== 'administrador') {
+        return response()->json(['message' => 'No autorizado'], 403);
+    }
+
+    $perPage = $request->input('itemsPerPage', 10);
+    $page = $request->input('page', 1);
+
+    $query = Mensaje::with('user');
+
+    if ($request->has('solicitud') && $request->solicitud == 'true') {
+        $query->where('solicitud', true);
+    } else {
+        $query->where('solicitud', false);
+    }
+
+    // Filtro por empresa
+    if ($request->has('empresa') && ($request->empresa === 'true' || $request->empresa === true || $request->empresa === 1 || $request->empresa === '1')) {
+        $query->whereHas('user', function ($q) {
+            $q->where('rol', 'empresa');
+        });
+    }
+
+    $mensajes = $query->paginate($perPage, ['*'], 'page', $page);
+
+    return response()->json([
+        'data' => $mensajes->items(),
+        'current_page' => $mensajes->currentPage(),
+        'total_pages' => $mensajes->lastPage(),
+        'total_mensajes' => $mensajes->total()
+    ], 200);
+}
+
+
+
+public function filterMensajes(Request $request)
+{
+    if (Auth::user()->rol !== 'administrador') {
+        return response()->json(['message' => 'No autorizado'], 403);
+    }
+
+    $perPage = $request->input('itemsPerPage', 10);
+    $page = $request->input('page', 1);
+
+    $query = Mensaje::with(['user.estudiante', 'user.empresa']);
+
+    // Filtro por search
+    if ($request->filled('search')) {
+        $search = $request->input('search');
+        $query->where(function ($q) use ($search) {
+            $q->where('asunto', 'like', "%$search%")
+              ->orWhere('mensaje', 'like', "%$search%")
+              ->orWhereHas('user', function ($q2) use ($search) {
+                  $q2->where('name', 'like', "%$search%")
+                     ->orWhere('email', 'like', "%$search%");
+              });
+        });
+    }
+
+    // Filtro por rol
+    if ($request->filled('rol')) {
+        $rol = $request->input('rol');
+        $query->whereHas('user', function ($q) use ($rol) {
+            $q->where('rol', $rol);
+        });
+    }
+
+    // Filtro por location/sede
+    if ($request->filled('location')) {
+        $location = $request->input('location');
+        $query->whereHas('user', function ($q) use ($location) {
+            $q->where(function ($q2) use ($location) {
+                $q2->whereHas('estudiante', function ($q3) use ($location) {
+                    $q3->where('location', $location);
+                })
+                ->orWhereHas('empresa', function ($q3) use ($location) {
+                    $q3->where('sede', 'like', "%$location%");
+                });
+            })
+            ->where('rol', '!=', 'administrador');
+        });
+    }
+
+    // Filtro por solicitud (opcional)
+    if ($request->has('solicitud')) {
+        $solicitud = $request->input('solicitud');
+        if ($solicitud === 'true' || $solicitud === true || $solicitud === 1 || $solicitud === '1') {
             $query->where('solicitud', true);
-        } else {
+        } elseif ($solicitud === 'false' || $solicitud === false || $solicitud === 0 || $solicitud === '0') {
             $query->where('solicitud', false);
         }
-    
-        $mensajes = $query->paginate($perPage, ['*'], 'page', $page);
-    
-        return response()->json([
-            'data' => $mensajes->items(),
-            'current_page' => $mensajes->currentPage(),
-            'total_pages' => $mensajes->lastPage(),
-            'total_mensajes' => $mensajes->total()
-        ], 200);
+        // Si llega cualquier otro valor, no filtra por solicitud
     }
 
+    $mensajes = $query->paginate($perPage, ['*'], 'page', $page);
 
-    public function searchMensajes(Request $request)
-    {
-        if (Auth::user()->rol !== 'administrador') {
-            return response()->json(['message' => 'No autorizado'], 403);
-        }
-    
-        $query = Mensaje::query();
-    
-        if ($request->has('search')) {
-            $search = $request->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('asunto', 'like', '%' . $search . '%')
-                ->orWhere('mensaje', 'like', '%' . $search . '%')
-                ->orWhereHas('user', function ($q) use ($search) {
-                    $q->where('email', 'like', '%' . $search . '%');
-                });
-            });
-        }
-    
-        if ($request->has('user_id')) {
-            $query->where('user_id', $request->user_id);
-        }
-    
-        if ($request->has('location')) {
-            $query->whereHas('user.estudiante', function ($q) use ($request) {
-                $q->where('location', $request->location);
-            })->orWhereHas('user.empresa', function ($q) use ($request) {
-                $q->where('sede', 'like', '%' . $request->location . '%');
-            });
-        }
-    
-        if ($request->has('rol')) {
-            $query->whereHas('user', function ($q) use ($request) {
-                $q->where('rol', $request->rol);
-            });
-        }
-    
-        if ($request->has('solicitud')) {
-            $query->where('solicitud', filter_var($request->solicitud, FILTER_VALIDATE_BOOLEAN));
-        }
-    
-        $mensajes = $query->with('user')->get();
-        return response()->json($mensajes, 200);
-    }
-
-
-    public function deleteMensaje($id)
-    {
-        if (Auth::user()->rol !== 'administrador') {
-            return response()->json(['message' => 'No autorizado'], 403);
-        }
-
-        $mensaje = Mensaje::find($id);
-        if (!$mensaje) {
-            return response()->json(['message' => 'Mensaje no encontrado'], 404);
-        }
-
-        $mensaje->delete();
-        return response()->json(['message' => 'Mensaje eliminado', 'status' => 200], 200);
-    }
+    return response()->json([
+        'data' => $mensajes->items(),
+        'current_page' => $mensajes->currentPage(),
+        'total_pages' => $mensajes->lastPage(),
+        'total_mensajes' => $mensajes->total()
+    ], 200);
+}
 
 
 

@@ -24,15 +24,36 @@ export class PublicationsInComponent implements OnInit {
   constructor(
     private publicationService: PublicationService,
     private route: ActivatedRoute
-  ) {}
+  ) {
 
-  ngOnInit(): void {
-    this.route.paramMap.subscribe(params => {
-      this.category = params.get('category') || undefined;
-    this.getPublications(this.category);
-    });
+    this.publicationService.publications$.subscribe(data => {
+    this.publications = data;
+  });
   }
 
+ngOnInit(): void {
+  this.publicationService.publications$.subscribe(data => {
+    this.publications = data;
+  });
+
+  if (!this.publicationService.isFiltered()) {
+    this.getPublications(this.category);
+  } else {
+    this.publicationService.setFiltered(false);
+  }
+}
+
+  buscarPublicaciones(params: any) {
+  const payload = { ...params };
+  if (!payload.location || payload.location === 'Lugar') {
+    delete payload.location;
+  }
+  if (this.category) {
+    payload.category = this.category;
+  }
+  this.publicationService.searchPublications(payload).subscribe();
+  // El subscribe en el padre actualizará las tarjetas automáticamente
+}
 
   getPublications(category?: string, featured: boolean = false): void {
     this.publicationService.getPublications(category, featured).subscribe(
@@ -42,7 +63,6 @@ export class PublicationsInComponent implements OnInit {
         } else {
           this.publications = [];
         }
-        console.log(this.publications); 
       },
       (error) => {
         console.error(error);

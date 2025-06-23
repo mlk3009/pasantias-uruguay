@@ -84,19 +84,18 @@ export class AdminService {
     return this._http.get(global.url + 'admin/mensajes', { headers: headers, params: params });
   }
 
-
-  searchMensajes(params: any): Observable<any> {
-    let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
-    let httpParams = new HttpParams();
-  
-    for (let key in params) {
-      if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null) {
-        httpParams = httpParams.set(key, params[key].toString());
-      }
+  filterMensajes(params: any): Observable<any> {
+  let headers = new HttpHeaders().set('Authorization', 'Bearer ' + this.getToken());
+  let httpParams = new HttpParams();
+  for (let key in params) {
+    if (params.hasOwnProperty(key) && params[key] !== undefined && params[key] !== null && params[key] !== '') {
+      httpParams = httpParams.set(key, params[key]);
     }
-  
-    return this._http.get(global.url + 'admin/mensajes/search', { headers: headers, params: httpParams });
   }
+  return this._http.get(global.url + 'admin/mensajes/filter', { headers: headers, params: httpParams });
+}
+
+
 
 
   deleteMensaje(id: number): Observable<any> {

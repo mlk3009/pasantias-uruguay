@@ -35,3 +35,7 @@
 .button2:hover{
     background-color: #15c3c3;
 }
+ul.flex.h-8.items-center li a {
+    user-select: none;
+    cursor: pointer;
+}

@@ -141,6 +141,15 @@ class EmailController extends Controller
             $phpMailer->Body = "Remitente: " . $email . ".<br><br>" . $body;    
             // Enviar el correo
             $phpMailer->send();
+
+                    // Guardar en la base de datos
+        $user = \App\Models\User::where('email', $email)->first();
+        \App\Models\Mensaje::create([
+            'asunto'    => $subject,
+            'mensaje'   => $body,
+            'solicitud' => false,
+            'user_id'   => $user ? $user->id : null,
+        ]);
             return response()->json(['message' => 'Correo enviado correctamente'], 200);
         } catch (Exception $e) {
             // Manejar el error si el correo no se pudo enviar

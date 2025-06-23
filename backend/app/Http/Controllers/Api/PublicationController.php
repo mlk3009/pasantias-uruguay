@@ -604,7 +604,6 @@ public function updatePartial(Request $request, $id)
             if ($search) {
                 $query->where(function ($q) use ($search) {
                     $q->where('title', 'like', '%' . $search . '%')
-                    ->orWhere('salary', 'like', '%' . $search . '%')
                     ->orWhereHas('empresa.user', function ($q) use ($search) {
                         $q->where('name', 'like', '%' . $search . '%');
                     });
@@ -619,6 +618,11 @@ public function updatePartial(Request $request, $id)
                 $query->whereHas('etiquetas', function ($q) use ($etiqueta) {
                     $q->where('name', 'like', '%' . $etiqueta . '%');
                 });
+            }
+
+            // Salario mínimo
+            if ($request->filled('salary')) {
+                $query->where('salary', '>=', $request->input('salary'));
             }
     
             if ($featured !== null) {
