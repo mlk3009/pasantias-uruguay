@@ -39,7 +39,7 @@ return new class extends Migration
         for ($i = 41; $i <= 60; $i++) {
             DB::table('mensajes')->insert([
                 'asunto' => 'Asunto ' . $i,
-                'mensaje' => 'Mensaje de prueba ' . $i,
+                'mensaje' => 'Solicitud de prueba ' . $i,
                 'user_id' => ($i % 10) + 1,
                 'solicitud' => true,
                 'created_at' => now(),

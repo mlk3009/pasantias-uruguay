@@ -58,7 +58,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::patch('/admin/users/deactivate/{id}', [AdminController::class, 'deactivateUser']);
     Route::delete('/admin/users/delete/{id}', [AdminController::class, 'deleteUser']);
     Route::get('admin/mensajes', [AdminController::class, 'getAllMensajes']);
-    Route::get('admin/mensajes/search', [AdminController::class, 'searchMensajes']);
+    Route::get('admin/mensajes/filter', [AdminController::class, 'filterMensajes']);    
     Route::delete('admin/mensajes/{id}', [AdminController::class, 'deleteMensaje']);
     Route::post('/admin/approve-user/{id}', [AdminController::class, 'approveUser']);
     Route::post('/admin/reject-user/{id}', [AdminController::class, 'rejectUser']);

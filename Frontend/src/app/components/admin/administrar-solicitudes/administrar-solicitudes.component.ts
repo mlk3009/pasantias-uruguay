@@ -26,8 +26,10 @@ export class AdministrarSolicitudesComponent {
   searchParams: any = {
     search: '',
     location: '',
-    rol: ''
+    rol: '',
   };
+isFiltering: boolean = false;
+activeFilters: any = {};
 
 
   constructor(private _userService: UserService, private _adminService: AdminService) {}
@@ -65,17 +67,86 @@ export class AdministrarSolicitudesComponent {
     });
   }
 
-  searchMensajes(): void {
-    this.searchParams.solicitud = false;
-    this._adminService.searchMensajes(this.searchParams).subscribe(
-      (response) => {
-        this.mensajes = response;
-      },
-      (error) => {
-        console.error('Error searching mensajes:', error);
-      }
-    );
+searchMensajes(): void {
+  this.isFiltering = true;
+  this.activeFilters = { ...this.searchParams }; // Guarda los filtros actuales
+  const filters = {
+    ...this.activeFilters,
+    page: this.currentPage,
+    itemsPerPage: this.itemsPerPage,
+    solicitud: true,
+    empresa: true
+  };
+  this._adminService.filterMensajes(filters).subscribe(
+    (response) => {
+      this.mensajes = response.data;
+      this.currentPage = response.current_page;
+      this.totalPages = response.total_pages;
+      this.totalMensajes = response.total_mensajes;
+    },
+    (error) => {
+      console.error('Error searching mensajes:', error);
+    }
+  );
+}
+
+nextPage(): void {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    if (this.isFiltering) {
+      const filters = {
+        ...this.activeFilters,
+        page: this.currentPage,
+        itemsPerPage: this.itemsPerPage,
+        solicitud: true,
+        empresa: true
+      };
+      this._adminService.filterMensajes(filters).subscribe(
+        (response) => {
+          this.mensajes = response.data;
+          this.currentPage = response.current_page;
+          this.totalPages = response.total_pages;
+          this.totalMensajes = response.total_mensajes;
+        },
+        (error) => {
+          console.error('Error paginando mensajes filtrados:', error);
+        }
+      );
+    } else {
+      this.getAllMensajes(true, this.currentPage);
+    }
+    document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' });
   }
+}
+
+previousPage(): void {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    if (this.isFiltering) {
+      const filters = {
+        ...this.activeFilters,
+        page: this.currentPage,
+        itemsPerPage: this.itemsPerPage,
+        solicitud: true,
+        empresa: true
+      };
+      this._adminService.filterMensajes(filters).subscribe(
+        (response) => {
+          this.mensajes = response.data;
+          this.currentPage = response.current_page;
+          this.totalPages = response.total_pages;
+          this.totalMensajes = response.total_mensajes;
+        },
+        (error) => {
+          console.error('Error paginando mensajes filtrados:', error);
+        }
+      );
+    } else {
+      this.getAllMensajes(true, this.currentPage);
+    }
+    document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' });
+  }
+}
 
   rejectUser(): void {
     if (this.userIdSeleccionado !== null) {
@@ -107,21 +178,6 @@ export class AdministrarSolicitudesComponent {
     }
   }
 
-  nextPage(): void {
-    if (this.currentPage < this.totalPages) {
-      this.currentPage++;
-      this.getAllMensajes(true, this.currentPage);
-      document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-
-  previousPage(): void {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.getAllMensajes(true, this.currentPage);
-      document.getElementById('top')?.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
 
   getEndIndex(): number {
     return Math.min(this.currentPage * this.itemsPerPage, this.totalMensajes);
