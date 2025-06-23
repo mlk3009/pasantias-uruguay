@@ -7,9 +7,6 @@
 }
 .content{
     height: 85%;
-    margin-top: 10vh;
-    margin-bottom: 10vh;
-    padding-bottom: 7vh;
 }
 .user-data{
     min-width: 70%;
@@ -22,23 +19,11 @@
     align-items: center;
 }
 .texto{
-    max-width: 60%;
-}
-.button{
-    min-height: 15vh;
+    max-width: 95%;
 }
 .buttons{
     min-width: 30%;
     margin-bottom: 5vh;
-}
-.home_button{
-    color: #15c3c3;
-}
-.home_button2:hover{
-    color: #15c3c3;
-}
-.button1:hover, .button1:hover * {
-    color: #15c3c3;
 }
 .col2{
     min-width: 40%;
@@ -57,76 +42,20 @@
     top: 0;
     left: 0;
 }
-.button2{
-    background-color: #008fa8;
-    color: white;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-.button2:hover{
-    background-color: #15c3c3;
-}
 
-.alert-container{
-    position: fixed;
-    width: 15vw;
-    display: flex;
-    justify-content: center;
-    align-items: start;
-    z-index: 100;
-    top: 5px;
-    left: 0;
-    margin-inline: 42%;
-  }
-
-  @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-  }
-  
-  @keyframes fadeOut {
-    from { opacity: 1; }
-    to { opacity: 0; }
-  }
-  
-  .fade-in {
-    animation: fadeIn 0.5s forwards;
-  }
-  
-  .fade-out {
-    animation: fadeOut 0.5s forwards;
-  }
-  .cross{
-    margin-left: -8px;
-  }
-  
-  
-  @keyframes slideDown {
-    from {
-      transform: translateY(-5%);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
-  }
-  
-  .slide-down {
-    animation: slideDown 0.3s forwards;
-  }
-  .alerta{
-    z-index: 100;
-  }
-
-  .photo {
-    width: 20px; /* Puedes ajustar el tamaño según tus necesidades */
-    height: 20px; /* Puedes ajustar el tamaño según tus necesidades */
-    object-fit: cover; /* Esto asegura que la imagen se ajuste al cuadrado sin distorsionarse */
-    border-radius: 50%; /* Esto hará que la imagen sea circular */
+.cuadro-imagen {
+  width: 125px;      /* Ajusta el tamaño según lo que necesites */
+  aspect-ratio: 1/1; /* Mantiene el div cuadrado */
+  overflow: hidden;  /* Oculta el exceso de imagen */
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-#alert-container,
-#alert-container2,
-#alert-container3 {
-  display: none;
+.cuadro-imagen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Hace que la imagen llene el cuadro y se recorte si es necesario */
+  display: block;
+  border-radius: 100%;
 }

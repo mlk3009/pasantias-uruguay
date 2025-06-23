@@ -21,6 +21,7 @@ export class UserProfileViewComponent implements OnInit {
   loading: boolean = false;
   userEtiquetas: any[] = [];
   cvLink: string = '';
+  percent = 100; // Cambia este valor según el avance
 
   constructor(
     private _route: ActivatedRoute,

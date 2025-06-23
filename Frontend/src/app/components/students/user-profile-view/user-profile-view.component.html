@@ -1,134 +1,247 @@
 <app-nav/>
 <div class="body flex items-center justify-center">
-  <div class="content bg-gray-50 w-11/12 h-5/6 mt-10 rounded-lg">
+  <div class="content bg-gray-100 w-full md:mx-8 h-5/6 mt-20 mb-20 pb-20 rounded-lg">
     <div class="flex flex-row justify-center w-full">
-      <div class="user-data max-w-3/4 flex items-center pt-10 flex-col">
-        <div class="flex flex-col items-center">
-          <img
-              [src]="userImageUrl"
-              class="photo"
-              alt="User Photo"
-              class="rounded-full w-40"
-          />
-          <h1 class="text-gray-900 font-semibold text-4xl mt-5">
-            {{ data.name }}
-          </h1>
-          <h2 class="text-gray-500 text-lg">{{ data.location }}</h2>
-        </div>
-        <div class="buttons border-b-2 w-full flex justify-center">
-          <div class="w-full md:block md:w-auto pt-4">
-            <ul
-              class="text-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
-            >
-              <li>
-                <a
-                  href="/user-profile"
-                  class="home_button block py-2 px-3 text-white rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500"
-                  aria-current="page"
-                  >Inicio</a
-                >
-              </li>
-              <li>
-                <button
-                  (click)="modal()"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  aria-disabled="true"
-                  >Contacto
-                </button>
-              </li>
-              <li>
-                <a
-                *ngIf="data.cv"
-                [href]="cvLink" target="_blank"
-                  class="home_button2 block py-2 px-3 text-gray-800 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-                  >Ver CV</a
-                >
-              </li>
-            </ul>
+      <div class="user-data flex items-center md:pt-10 flex-col">
+        <div class="bg-gray-50 md:bg-gray-100 w-full max-w-screen-2xl md:border-0 border rounded-lg md:shadow-none shadow-xl pt-4 mb-4">
+          
+          <div class="flex flex-col items-center md:hidden">
+            <div class="cuadro-imagen">
+              <img
+                [src]="userImageUrl"
+                class=""
+              />
+            </div>
+            <h1 class="text-gray-900 font-semibold text-4xl mt-5">
+              {{ data.name }}
+            </h1>
+            <h2 class="text-gray-500 text-lg">{{ data.location }}</h2>
+          </div>
+          
+          <div class="mb-12 w-full flex justify-center">
+            <div class="w-full md:block md:w-auto pt-4">
+              <ul
+                class="text-center font-medium flex flex-col items-center p-4 md:p-0 md:px-14 mt-4 md:shadow-lg md:rounded-full md:bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+              >
+                <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                  <a
+                    href="/user-profile"
+                    class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg"
+                    aria-current="page"
+                    >
+                    <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                    </svg>
+                    Perfil</a
+                  >
+                </li>
+                <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                  <a
+                    (click)="modal()"
+                    class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 md:text-lg hover:cursor-pointer"
+                  >
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 4h3a1 1 0 0 1 1 1v15a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1h3m0 3h6m-6 5h6m-6 4h6M10 3v4h4V3h-4Z"/>
+                    </svg>
+                    Contacto
+                  </a>
+                </li>
+                <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                  <a
+                   *ngIf="data.cv"
+                    [href]="cvLink" target="_blank"
+                    class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
+                  >
+                    <svg class="w-6 h-6 text-gray-800 group-hover:text-white mr-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                      <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                    </svg>
+                    Ver CV
+                  </a>
+                </li>
+              </ul>
+            </div>
           </div>
         </div>
 
-        <div class="flex flex-col justify-center items-center max-w-6xl">
-          <h2 class="text-2xl font-medium text-gray-900">Sobre mí</h2>
-          <div class="texto mb-6">
-            <p class="text-gray-700 text-sm p-4 text-center max-w-2/3">
+        <section class="grid grid-cols-1 md:grid-cols-1 gap-4 max-w-screen-2xl">
+          <div class="flex flex-col justify-center items-start max-w-4xl border md:p-4 rounded-lg bg-gray-50 shadow-xl">
+            <div class="md:ml-14 hidden md:flex flex-row items-start justify-start w-full">
+              <div class="cuadro-imagen">
+                <img
+                  [src]="userImageUrl"
+                  class=""
+                />
+              </div>
+              <div class="flex-col justify-center items-start ms-5 sm:hidden md:flex">
+                <h1 class="text-gray-900 font-semibold text-4xl mt-5">
+                  {{ data.name }}
+                </h1>
+                <h2 class="text-gray-500 text-lg px-1">{{ data.location }}</h2>
+                <div class="flex flex-row items-center">
+                  <div class="" *ngFor="let etiqueta of userEtiquetas">
+                    <p class="text-sky-900 border border-sky-900 mr-1 rounded-full font-medium text-md py-2 px-2 hover:cursor-pointer">{{ etiqueta.name }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <div class="texto mb-6 mt-6 mx-auto max-w-2xl">
+            <h2 class="mx-auto text-center text-gray-800 text-2xl font-semibold md:hidden">Acerca de mi</h2>
+            <p class="text-gray-700 text-md p-4 break-words whitespace-pre-line">
               {{ data.desc1 }}
             </p>
-            <p class="text-gray-700 text-sm p-4 text-center max-w-2/3">
+            <p class="text-gray-700 text-md p-4 break-words whitespace-pre-line">
               {{ data.desc2 }}
             </p>
           </div>
-          <div class="flex flex-col">
+          <div class="flex flex-col justify-between w-full p-4">
             <div class="flex justify-between flex-row">
               <div class="flex flex-col justify-start">
                 <div class=" flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Nombre completo:</span
                     >
                     {{ data.name }}
                   </p>
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Fecha de nacimiento:</span
                     >
                     {{ data.fec_nacimiento }}
                   </p>
                 </div>
-
                 <div class="flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Género:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Género:</span>
                     {{ data.genero }}
                   </p>
                 </div>
-                
                 <div class="flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Correo:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Correo:</span>
                     {{ data.email }}
                   </p>
-
-
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Puesto de trabajo:</span>
-                    <div *ngFor="let etiqueta of userEtiquetas">
-                      <p class="text-gray-700 text-sm p-2 max-w-1/2">{{ etiqueta.name }}</p>
+                  <div class="flex flex-col p-2">
+                    <span class="text-gray-800 font-semibold">Puesto de trabajo:</span>
+                    <div class="flex justify-start items-center" *ngFor="let etiqueta of userEtiquetas">
+                      <p class="bg-sky-700 text-white p-2 my-1 rounded-full hover:cursor-pointer">{{ etiqueta.name }}</p>
                     </div>
-                  
-                    
+                  </div>
                 </div>
               </div>
-
-              
-
-              
               <div class="flex flex-col justify-between col2">
                 <div class="flex flex-col">
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Departamento:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Departamento:</span>
                     {{ data.location }}
                   </p>
                 </div>
-  
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold"
+                <div class="flex flex-col">
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
+                      >Identificación:</span
+                    >
+                    {{ data.ci_estudiante }}
+                  </p>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold"
                       >Código postal:</span
                     >
                     {{ data.cod_postal }}
                   </p>
 
-                  <p class="text-gray-700 text-sm p-2 max-w-1/2">
-                    <span class="text-gray-700 font-semibold">Telefono:</span>
+                  <p class="text-gray-800 text-md p-2 max-w-1/2">
+                    <span class="text-gray-800 font-semibold">Telefono:</span>
                     {{ data.phone }}
                   </p>
-
                 </div>
               </div>
             </div>
-
-            
+          </div>
         </div>
+        </section>
+        
+        <section class="flex flex-col w-full max-w-screen-2xl">
+          <div class="w-full max-w-4xl mx-auto">
+            <div class="flex justify-between items-center flex-col md:flex-row w-full bg-gray-50 rounded-lg shadow-xl my-4 border-2">
+              <div class="flex flex-row justify-center items-start ms-4">
+                <!-- Donut Chart Small - Single Percentage -->
+                  <div class="m-2 relative w-16 h-16 flex items-center justify-center">
+                    <svg class="w-full h-full" viewBox="0 0 36 36">
+                      <!-- Fondo gris (100%) -->
+                      <circle
+                        class="text-gray-200"
+                        stroke-width="4"
+                        stroke="currentColor"
+                        fill="transparent"
+                        r="16"
+                        cx="18"
+                        cy="18"
+                      />
+                      <!-- Porcentaje de avance (azul) -->
+                      <circle
+                        class="text-blue-500"
+                        stroke-width="4"
+                        [attr.stroke-dasharray]="percent + ', 100'"
+                        stroke-linecap="round"
+                        stroke="currentColor"
+                        fill="transparent"
+                        r="16"
+                        cx="18"
+                        cy="18"
+                        transform="rotate(-90 18 18)"
+                      />
+                    </svg>
+                    <!-- Texto central -->
+                    <div class="absolute inset-0 flex items-center justify-center">
+                      <span class="text-xs font-bold">{{ percent }}%</span>
+                    </div>
+                  </div>
+                  <div>
+                    <h2 class="text-2xl font-semibold text-gray-800 pt-4">Currículum Vitae</h2>
+                    <p class="text-gray-500 text-md">Porcentaje del CV completo...</p>
+                  </div>
+              </div>
+              
+              
+              <button class="flex flex-row items-center justify-between text-white bg-sky-700 font-medium rounded-full text-md mx-2 px-4 py-2 hover:bg-sky-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                Ver CV
+                <svg class="w-6 h-6 text-white dark:text-white ml-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-width="2" d="M21 12c0 1.2-4.03 6-9 6s-9-4.8-9-6c0-1.2 4.03-6 9-6s9 4.8 9 6Z"/>
+                  <path stroke="currentColor" stroke-width="2" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                </svg>
+              </button>
+              
+            </div>
+          </div>
+          <div class="w-full max-w-4xl mx-auto">
+            <div class="flex justify-between items-center w-full bg-gray-50 rounded-lg shadow-xl border-2">
+              <div class="flex flex-col md:flex-row justify-between w-full p-3">
+                  <div class=" flex flex-row">
+                    <div class="flex justify-center items-center mx-2">
+                      <svg class="w-14 h-14 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 1 0 0 4h16a2 2 0 1 0 0-4H4Zm0 6h16v8a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-8Zm10.707 5.707a1 1 0 0 0-1.414-1.414l-.293.293V12a1 1 0 1 0-2 0v2.586l-.293-.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l2-2Z" clip-rule="evenodd"/>
+                      </svg>
+                    </div>
+                    <div class="flex flex-col justify-center items-start">
+                      <h2 class="text-2xl font-semibold text-gray-800">Descargar CV</h2>
+                      <p class="text-gray-500 text-md">Descargar Curriculum Vitae en formato .pdf</p>
+                    </div>
+                  </div>
+                  <div class="flex items-center justify-center md:justify-end my-2 md:my-0">
+                    <button class="flex flex-row items-center justify-between text-white bg-sky-700 font-medium rounded-full text-md px-4 py-2 hover:bg-sky-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-1">
+                      Descargar CV
+                      <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 15v2a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-2m-8 1V4m0 12-4-4m4 4 4-4"/>
+                      </svg>
+                    </button>
+                  </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
       </div>
     </div>
   </div>
@@ -147,87 +260,30 @@
         <span class="sr-only">Close modal</span>
       </button>
       
-      <section class="bg-white dark:bg-gray-900 px-20" id="contact">
-        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-          <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Contacto</h2>
-          <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">Contacta a la persona para coordinar reuniones, solicitar información, o cualquier necesidad.</p>
-          <form (ngSubmit)="sendContactEmail(contactForm)" #contactForm="ngForm" class="space-y-8">
-            <div>
-              <label for="subject" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asunto</label>
-              <input type="text" id="subject" name="subject" ngModel class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Asunto sobre tu consulta" required>
-            </div>
-            <div class="sm:col-span-2">
-              <label for="message" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mensaje</label>
-              <textarea id="message" name="message" ngModel rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..."></textarea>
-            </div>
-            <button type="submit" class="button2 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Enviar mensaje
-            </button>
-          </form>
-        </div>
+        <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+          <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+              <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Contacto</h2>
+              <p class="mb-8 lg:mb-16 font-light text-center text-black dark:text-gray-400 sm:text-xl">Contacta a la persona para coordinar reuniones, solicitar información, o cualquier necesidad.</p>
+              <form class="space-y-8">
+                  <div>
+                      <label for="email" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">E-Mail</label>
+                      <input type="email" id="email"  name="email" ngModel class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="name@pasantiasuy.com" required>
+                  </div>
+                  <div>
+                      <label for="subject" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Asunto</label>
+                      <input type="text" id="subject"  name="subject" ngModel class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="Asunto sobre tu consulta" required>
+                  </div>
+                  <div class="sm:col-span-2">
+                      <label for="message" class="text-left block mb-2 text-sm font-medium text-gray-900 dark:text-gray-400">Mensaje</label>
+                      <textarea id="message"  name="message" ngModel rows="6" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Deja un comentario..."></textarea>
+                  </div>
+                  <button type="submit" class="button2 py-3 px-5 text-sm font-medium text-center text-black rounded-lg bg-primary-700 sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+                      Enviar mensaje
+                  </button>
+              </form>
+          </div>
       </section>
       
-    </div>
-  </div>
-</div>
-
-
- <!-- Alert1 -->
- <div id="alert-container" class="alert-container alerta">
-  <div class="flex shadow-lg mb-4 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-    <div class="pointer-events-none flex items-center p-4 text-red-500 text-md">
-      <svg class="w-5 h-5 text-gray-800 dark:text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-      </svg>      
-      <span class="sr-only">Info</span>
-      <div>
-        <span class="font-medium text-black">Correo enviado correctamente</span>
-      </div>
-    </div>
-    <div (click)="alert1Close()" class="mr-1 mt-1 cursor-pointer cross h-3">
-      <svg class="w-3 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- Alert2 -->
-<div id="alert-container2" class="alert-container alerta">
-  <div class="flex shadow-lg mb-4 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-    <div class="pointer-events-none flex items-center p-4 text-red-500 text-md">
-      <svg class="w-5 h-5 text-gray-800 dark:text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-      </svg>      
-      <span class="sr-only">Info</span>
-      <div>
-        <span class="font-medium text-black">Error al enviar el correo</span>
-      </div>
-    </div>
-    <div (click)="alert2Close()" class="mr-1 mt-1 cursor-pointer cross h-3">
-      <svg class="w-3 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-      </svg>
-    </div>
-  </div>
-</div>
-
-<!-- Alert3 -->
-<div id="alert-container3" class="alert-container3 alerta">
-  <div class="flex shadow-lg mb-4 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400" role="alert">
-    <div class="pointer-events-none flex items-center p-4 text-red-500 text-md">
-      <svg class="w-5 h-5 text-gray-800 dark:text-white me-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 13V8m0 8h.01M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
-      </svg>      
-      <span class="sr-only">Info</span>
-      <div>
-        <span class="font-medium text-black">Error al encontrar estudiante</span>
-      </div>
-    </div>
-    <div (click)="alert3Close()" class="mr-1 mt-1 cursor-pointer cross h-3">
-      <svg class="w-3 h-3 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-      </svg>
     </div>
   </div>
 </div>
