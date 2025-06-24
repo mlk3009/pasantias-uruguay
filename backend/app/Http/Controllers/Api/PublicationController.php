@@ -589,87 +589,93 @@ public function updatePartial(Request $request, $id)
 
 
 
-    public function searchPublications(Request $request)
-    {
-        try {
-            $search = $request->input('search');
-            $location = $request->input('location');
-            $etiqueta = $request->input('etiqueta');
-            $featured = $request->input('featured');
-            $isDeleted = $request->input('is_deleted');
-            $phone = $request->input('phone');
-    
-            $query = Publication::query();
-    
-            if ($search) {
-                $query->where(function ($q) use ($search) {
-                    $q->where('title', 'like', '%' . $search . '%')
-                    ->orWhereHas('empresa.user', function ($q) use ($search) {
-                        $q->where('name', 'like', '%' . $search . '%');
-                    });
-                });
-            }
-    
-            if ($location) {
-                $query->where('location', 'like', '%' . $location . '%');
-            }
-    
-            if ($etiqueta) {
-                $query->whereHas('etiquetas', function ($q) use ($etiqueta) {
-                    $q->where('name', 'like', '%' . $etiqueta . '%');
-                });
-            }
 
-            // Salario mínimo
-            if ($request->filled('salary')) {
-                $query->where('salary', '>=', $request->input('salary'));
-            }
-    
-            if ($featured !== null) {
-                $query->where('featured', filter_var($featured, FILTER_VALIDATE_BOOLEAN));
-            }
-    
-            if ($isDeleted !== null) {
-                $query->where('is_deleted', filter_var($isDeleted, FILTER_VALIDATE_BOOLEAN));
-            }
-    
-            if ($phone) {
-                $query->whereHas('empresa.user', function ($q) use ($phone) {
-                    $q->where('phone', 'like', '%' . $phone . '%');
+public function searchPublications(Request $request)
+{
+    try {
+        $search = $request->input('search');
+        $location = $request->input('location');
+        $etiqueta = $request->input('etiqueta');
+        $featured = $request->input('featured');
+        $isDeleted = $request->input('is_deleted');
+        $phone = $request->input('phone');
+
+        $query = Publication::query();
+
+        if ($search) {
+            $query->where(function ($q) use ($search) {
+                $q->where('title', 'like', '%' . $search . '%')
+                    ->orWhereHas('empresa.user', function ($q) use ($search) {
+                    $q->where('name', 'like', '%' . $search . '%');
                 });
-            }
-    
-            $publications = $query->with(['etiquetas', 'empresa.user'])->get();
-    
-            if ($publications->isEmpty()) {
-                return response()->json(['message' => 'No se encontraron publicaciones', 'status' => 404], 404);
-            }
-    
-            $formattedPublications = $publications->map(function ($publication) {
-                return [
-                    'id' => $publication->id,
-                    'title' => $publication->title,
-                    'description' => $publication->description,
-                    'salary' => $publication->salary,
-                    'location' => $publication->location,
-                    'type' => $publication->type,
-                    'time' => $publication->time,
-                    'deathline' => $publication->deathline,
-                    'empresa_id' => $publication->empresa_id,
-                    'vacancies' => $publication->vacancies,
-                    'featured' => $publication->featured,
-                    'created_at' => $publication->created_at,
-                    'updated_at' => $publication->updated_at,
-                    'etiquetas' => $publication->etiquetas->pluck('name'),
-                    'company_name' => $publication->empresa->user->name,
-                    'company_email' => $publication->empresa->user->email,
-                    'company_phone' => $publication->empresa->user->phone,
-                ];
             });
-    
-            return response()->json(['publications' => $formattedPublications, 'status' => 200], 200);
-        } catch (\Exception $e) {
-            return response()->json(['message' => 'Error al buscar publicaciones', 'error' => $e->getMessage(), 'status' => 500], 500);
         }
+
+        if ($location) {
+            $query->where('location', 'like', '%' . $location . '%');
+        }
+
+        if ($etiqueta) {
+            $query->whereHas('etiquetas', function ($q) use ($etiqueta) {
+                $q->where('name', 'like', '%' . $etiqueta . '%');
+            });
+        }
+
+        // Salario mínimo
+        if ($request->filled('salary')) {
+            $query->where('salary', '>=', $request->input('salary'));
+        }
+
+        // Aquí el filtro especial para featured
+        if ($featured !== null) {
+            $isFeatured = filter_var($featured, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE);
+            if ($isFeatured === true) {
+                $query->where('featured', true);
+            }
+            // Si es false, no se agrega ningún where (trae todas)
+        }
+
+        if ($isDeleted !== null) {
+            $query->where('is_deleted', filter_var($isDeleted, FILTER_VALIDATE_BOOLEAN));
+        }
+
+        if ($phone) {
+            $query->whereHas('empresa.user', function ($q) use ($phone) {
+                $q->where('phone', 'like', '%' . $phone . '%');
+            });
+        }
+
+        $publications = $query->with(['etiquetas', 'empresa.user'])->get();
+
+        if ($publications->isEmpty()) {
+            return response()->json(['message' => 'No se encontraron publicaciones', 'status' => 404], 404);
+        }
+
+        $formattedPublications = $publications->map(function ($publication) {
+            return [
+                'id' => $publication->id,
+                'title' => $publication->title,
+                'description' => $publication->description,
+                'salary' => $publication->salary,
+                'location' => $publication->location,
+                'type' => $publication->type,
+                'time' => $publication->time,
+                'deathline' => $publication->deathline,
+                'empresa_id' => $publication->empresa_id,
+                'vacancies' => $publication->vacancies,
+                'featured' => $publication->featured,
+                'created_at' => $publication->created_at,
+                'updated_at' => $publication->updated_at,
+                'etiquetas' => $publication->etiquetas->pluck('name'),
+                'company_name' => $publication->empresa->user->name,
+                'company_email' => $publication->empresa->user->email,
+                'company_phone' => $publication->empresa->user->phone,
+            ];
+        });
+
+        return response()->json(['publications' => $formattedPublications, 'status' => 200], 200);
+    } catch (\Exception $e) {
+        return response()->json(['message' => 'Error al buscar publicaciones', 'error' => $e->getMessage(), 'status' => 500], 500);
     }
+}
 }

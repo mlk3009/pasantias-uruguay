@@ -15,10 +15,21 @@ export class PostulantesComponent implements OnInit {
 
   empresa: any;
   postulantes: any[] = [];
+  filteredPostulantes: any[] = [];
+  displayedPostulantes: any[] = [];
   loading: boolean = false;
   estado: string = '';
+  searchText: string = '';
   userImageUrl: string = '';
   cvLink: string = 'http://localhost:8000/pdfs/cv_';
+  fechaFiltro: string = 'reciente';
+  // Paginación
+  currentPage: number = 1;
+  itemsPerPage: number = 6;
+  totalPages: number = 1;
+  estadoFiltro: string = '';
+
+
   constructor(private companyService: CompanyService) {}
 
   ngOnInit(): void {
@@ -43,7 +54,6 @@ export class PostulantesComponent implements OnInit {
     }
   }
 
-
   cargarImagenesEmpresa(images: any[]): void {
     const profileImage = images.find((img: any) => img.desc === 'profile');
     if (profileImage) {
@@ -53,17 +63,91 @@ export class PostulantesComponent implements OnInit {
     }
   }
 
-
   obtenerPostulantes(empresaId: string): void {
     this.companyService.obtenerPostulantes(empresaId).subscribe({
       next: (response) => {
         this.postulantes = response.data;
-        console.log(this.postulantes);
+        this.filteredPostulantes = this.postulantes;
+        this.currentPage = 1;
+        this.aplicarFiltros();
       },
       error: (error) => {
         console.error('Error al obtener los postulantes:', error);
       }
     });
+  }
+
+  aplicarFiltros(): void {
+    let filtradas = this.postulantes;
+
+    // Filtro por buscador: busca cada palabra en nombre, apellido o email (ajusta los campos según tu modelo)
+    if (this.searchText.trim() !== '') {
+      const palabras = this.searchText.toLowerCase().split(' ').filter(Boolean);
+      filtradas = filtradas.filter(p =>
+        palabras.every(palabra =>
+          (p.name || '').toLowerCase().includes(palabra) ||
+          (p.estado || '').toLowerCase().includes(palabra) ||
+          (p.phone || '').toLowerCase().includes(palabra) ||
+          (p.publication_title || '').toLowerCase().includes(palabra) ||
+          (p.email || '').toLowerCase().includes(palabra)
+        )
+      );
+    }
+
+  if (this.estadoFiltro !== '') {
+    filtradas = filtradas.filter(p => p.estado === this.estadoFiltro);
+  }
+    
+
+// ...otros filtros...
+if (this.fechaFiltro === 'reciente') {
+  filtradas = filtradas.sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+} else if (this.fechaFiltro === 'antiguo') {
+  filtradas = filtradas.sort((a, b) => new Date(a.created_at).getTime() - new Date(b.created_at).getTime());
+}
+    this.filteredPostulantes = filtradas;
+    this.totalPages = Math.ceil(this.filteredPostulantes.length / this.itemsPerPage) || 1;
+    this.currentPage = 1;
+    this.updateDisplayedPostulantes();
+  }
+
+  updateDisplayedPostulantes(): void {
+    const start = (this.currentPage - 1) * this.itemsPerPage;
+    const end = start + this.itemsPerPage;
+    this.displayedPostulantes = this.filteredPostulantes.slice(start, end);
+  }
+
+  goToPage(page: number): void {
+    if (page >= 1 && page <= this.totalPages) {
+      this.currentPage = page;
+      this.updateDisplayedPostulantes();
+    }
+  }
+
+  prevPage(): void {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updateDisplayedPostulantes();
+    }
+  }
+
+  nextPage(): void {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updateDisplayedPostulantes();
+    }
+  }
+
+  getPages(): number[] {
+    if (this.totalPages <= 6) {
+      return Array.from({ length: this.totalPages - 1 }, (_, i) => i + 1);
+    } else if (this.currentPage <= 3) {
+      return [1, 2, 3, 4, 5];
+    } else if (this.currentPage >= this.totalPages - 3) {
+      return [this.totalPages - 4, this.totalPages - 3, this.totalPages - 2, this.totalPages - 1];
+    } else {
+      return [this.currentPage - 2, this.currentPage - 1, this.currentPage, this.currentPage + 1, this.currentPage + 2];
+    }
   }
 
   actualizarEstadoPostulacion(publicationId: string, estudianteId: string, estado: string): void {

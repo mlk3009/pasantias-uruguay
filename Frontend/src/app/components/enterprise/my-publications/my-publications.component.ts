@@ -53,6 +53,7 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
     phone: ''
   };
   noPublicationsMessage: string = '';
+  deletePublicationId: number | null = null;
 
   constructor(
     private companyService: CompanyService,
@@ -153,16 +154,33 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
     this.endDate = endDate;
   }
 
-  modalDelete() {
+  modalDelete(id: number) {
+    this.deletePublicationId = id;
     const modal = document.getElementById('deleteModal') as HTMLElement;
     modal.style.display = 'flex';
   }
 
   modalDeleteClose() {
+    this.deletePublicationId = null;
     const modal = document.getElementById('deleteModal') as HTMLElement;
     modal.style.display = 'none';
   }
 
+  confirmDeletePublication() {
+    if (this.deletePublicationId !== null) {
+      this.publicationService.destroyPublication(this.deletePublicationId).subscribe(
+        response => {
+          // Actualiza la lista después de eliminar
+          this.obtenerPublicaciones(this.empresa.id);
+          this.modalDeleteClose();
+        },
+        error => {
+          console.error('Error al eliminar la publicación:', error);
+          this.modalDeleteClose();
+        }
+      );
+    }
+  }
   modalModificar(publication: any) {
     this.loadPublicationData(publication);
     const modal = document.getElementById('modificarModal') as HTMLElement;
@@ -267,26 +285,33 @@ export class MyPublicationsComponent implements OnInit, OnChanges {
     );
   }
 
-  searchPublications(): void {
-    this.publicationService.searchPublications(this.searchParams).subscribe(
-      (response) => {
-        if (response && response.length > 0 && response[0].publications) {
-          this.publicaciones = response[0].publications;
-        } else {
-          this.publicaciones = [];
-        }
-        this.noPublicationsMessage = ''; 
-        this.updateDisplayedPublications();
-      },
-      (error) => {
-        if (error.message === 'No se encontraron publicaciones.') {
-          this.publicaciones = [];
-          this.noPublicationsMessage = 'No se encontraron publicaciones.';
-          this.updateDisplayedPublications(); 
-        } else {
-          console.error('Error searching publications:', error);
-        }
+searchPublications(): void {
+  this.publicationService.searchPublications(this.searchParams).subscribe(
+    (response: any) => { // <-- aquí el cast
+      if (Array.isArray(response) && response.length > 0 && response[0].publications) {
+        this.publicaciones = response[0].publications;
       }
-    );
-  }
+      else if (!Array.isArray(response) && response && response.publications) {
+        this.publicaciones = response.publications;
+      }
+      else if (Array.isArray(response)) {
+        this.publicaciones = response;
+      }
+      else {
+        this.publicaciones = [];
+      }
+      this.noPublicationsMessage = '';
+      this.updateDisplayedPublications();
+    },
+    (error) => {
+      if (error.message === 'No se encontraron publicaciones.') {
+        this.publicaciones = [];
+        this.noPublicationsMessage = 'No se encontraron publicaciones.';
+        this.updateDisplayedPublications();
+      } else {
+        console.error('Error searching publications:', error);
+      }
+    }
+  );
+}
 }
