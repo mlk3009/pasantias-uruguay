@@ -497,6 +497,10 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
   }
 }
 
+setView(view: 'empresarial' | 'cliente'): void {
+  this.selectedView = view;
+}
+
   
 }
 

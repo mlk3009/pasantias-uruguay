@@ -16,6 +16,7 @@
                         <h2 class="text-gray-500 text-lg">{{ empresa.location }}</h2>
                         <div class="mx-auto flex flex-row justify-center items-center mt-4 bg-gray-200 rounded-full gap-1">
                             <button
+                            (click)="setView('empresarial')"
                             [ngClass]="{
                                 'bg-sky-700 text-white': selectedView === 'empresarial',
                                 'bg-gray-200': selectedView !== 'empresarial'
@@ -23,12 +24,13 @@
                             (click)="selectedView = 'empresarial'"
                             class="py-2 px-4 rounded-full text-md font-medium ">Vista empresarial</button>
                             <button
+                            (click)="setView('cliente')"
                             [ngClass]="{
                                 'bg-sky-700 text-white': selectedView === 'cliente',
                                 'bg-gray-200': selectedView !== 'cliente'
                             }" 
                             (click)="selectedView = 'cliente'"
-                            class="py-2 px-4 rounded-full text-md font-medium ">Vista empresarial</button>
+                            class="py-2 px-4 rounded-full text-md font-medium ">Vista usuario</button>
                         </div>
                     </div>
                     <div class="mb-12 w-full flex justify-center my-10">
@@ -61,7 +63,7 @@
                 </div>
                 
                 
-                <section class="shadow-lg w-full">
+                <section *ngIf="selectedView === 'cliente'" class="shadow-lg w-full">
                     <!-- Imagen de muro como banner -->
                     <div id="muro-image" class="mx-auto relative w-full">
                         <div class="h-64 md:h-80 w-full overflow-hidden rounded-lg">
@@ -74,7 +76,7 @@
                     </div>
                 </section>
 
-                <section class="my-20">
+                <section *ngIf="selectedView === 'cliente'" class="my-20">
                     <div class="py-8 px-4 mx-auto lg:py-16 lg:px-6">
                         <div class="max-w-screen-lg text-gray-500 sm:text-lg dark:text-gray-400">
                             <h2 class="mb-4 text-3xl tracking-tight text-center font-semibold text-gray-900 dark:text-white">{{ desc1Title }}</h2>
@@ -90,7 +92,7 @@
                     </div>
                 </section>
 
-                <section class="max-w-5xl my-20">
+                <section *ngIf="selectedView === 'cliente'" class="max-w-5xl my-20">
                     <div class=" mx-auto">
                         <div class="mt-4 md:mt-0">
                             <h2 class="mb-4 text-3xl tracking-tight font-semibold text-gray-900 dark:text-white"> {{ desc3Title }}</h2>
@@ -103,7 +105,7 @@
                     </div>
                 </section>
 
-                <section class="body-nh2 my-10 mt-20">
+                <section *ngIf="selectedView === 'cliente'" class="body-nh2 my-10 mt-20">
                     <div>
                         <h2 class="text-3xl font-bold text-gray-900 dark:text-white text-center mb-6">Publicaciones destacadas</h2>
                         <p class="text-lg text-gray-500 dark:text-gray-400 text-center mb-8">Explora nuestras ofertas de empleo más recientes y únete a nuestro equipo.</p>
@@ -141,7 +143,7 @@
                     </section>
                 </section>
 
-                <section class="my-10 w-11/12">
+                <section *ngIf="selectedView === 'cliente'" class="my-10 w-11/12">
                     <div class="flex flex-col items-center py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
                         <p class="mb-8 text-center text-gray-900 font-semibold dark:text-gray-400 text-xl md:text-3xl">Consúltanos a nuestro mail</p>
                         <form class="space-y-8 w-full flex flex-col items-end" (ngSubmit)="sendContactEmail(contactForm)" #contactForm="ngForm">
@@ -164,7 +166,7 @@
                 <!--Solo empresas view-->
 
 
-                <section class="flex flex-col justify-center items-center w-10/12 mx-auto my-10 bg-gray-50 shadow-lg h-72 rounded-lg">
+                <section *ngIf="selectedView === 'empresarial'" class="flex flex-col justify-center items-center w-10/12 mx-auto my-10 bg-gray-50 shadow-lg h-72 rounded-lg">
                     <div class="w-full flex justify-center items-center pt-4">
                         <h2 class="text-3xl font-semibold">Estadísticas</h2>
                     </div>
@@ -219,10 +221,9 @@
                             </div>
                         </div>
                     </div>
-                    
                 </section>
                 
-                <section class="flex flex-row justify-center w-10/12 my-10 px-4 gap-4">
+                <section *ngIf="selectedView === 'empresarial'" class="flex flex-row justify-center w-full my-10 px-4 gap-4">
                     <div class="flex flex-col items-center justify-between max-h-60 max-w-md mt-10">
                         <h2 class="text-3xl text-gray-900 font-semibold"><span class="text-sky-900">Usuarios</span> que han visitado tu perfil en esta semana</h2>
                         <p class="text-lg text-gray-600">Esta gráfica muestra la cantidad de personas que visitaron tu perfil durante la última semana, comparado con la semana anterior. Podés visualizar claramente el cambio en la actividad, identificar tendencias y evaluar el alcance de tu presencia. Un aumento puede reflejar mayor visibilidad o interacción, mientras que una baja puede ser una oportunidad para mejorar tu contenido o estrategia.</p>
@@ -258,7 +259,7 @@
                     </div>
                 </section>
 
-                <section class="flex flex-row justify-center w-10/12 my-10 px-4 gap-4">
+                <section *ngIf="selectedView === 'empresarial'" class="flex flex-row justify-center w-full my-10 px-4 gap-4">
                     <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
                         <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center">

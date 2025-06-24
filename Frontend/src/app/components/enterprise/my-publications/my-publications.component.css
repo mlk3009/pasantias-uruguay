@@ -53,95 +53,8 @@
     justify-content: center;
     align-items: center;
     flex-wrap: wrap;
+    gap: 1rem;
 }
-.card{
-    margin-left: 1em;
-    margin-right: 1em;
-}
-.img{
-    min-width: 320px;
-    max-width: 320px;
-    min-height: 320px;
-    max-height: 320px;
-}
-.button-color{
-    background-color: #008fa8;
-}
-.button-color:hover{
-    background-color: #15c3c3;
-}
-.button{
-    color: rgb(49, 49, 49);
-    background-color: white;
-    border: 1px solid rgb(129, 129, 129);
-}
-.button:hover{
-    background-color: #15c3c311;
-    color: black;
-}
-.span{
-    margin: auto 2.5rem;
-}
-
-
-
-
-
-
-
-.size{
-    min-width: 19.9rem;
-    min-height: 19.9rem;
-    max-width: 19.9rem;
-    max-height: 19.9rem;
-    position: relative;
-}
-.price-rating {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.price {
-    font-size: 1.5em;
-    font-weight: bold;
-    color: #000;
-    transition: transform 0.2s;
-}
-
-.price:hover {
-    transform: scale(1.01);
-    cursor: pointer;
-}
-
-.rating {
-    display: flex;
-    gap: 5px;
-}
-
-.star {
-    font-size: 1.5em;
-    color: gold;
-    position: relative;
-    transition: transform 0.2s;
-}
-
-.star-icon {
-    transition: transform 0.3s ease;
-}
-.star-icon:hover {
-    transform: scale(1.5);
-    cursor: pointer;
-}
-
-h5 {
-    transition: transform 0.2s;
-}
-
-h5:hover {
-    transform: scale(1.02);
-}
-
 .image-container {
     position: relative;
 }
@@ -155,31 +68,37 @@ h5:hover {
 
 .image-container::after {
     content: "";
+    display: block;
     position: absolute;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-image: url('../../../../assets/img/trabajoPersonalT.jpg'); /* Ruta de la nueva imagen */
+    min-width: 19.9rem;
+    min-height: 19.9rem;
+    max-width: 19.9rem;
+    max-height: 19.9rem;
+    background-image: url('../../../../assets/img/hoverpub.jpg'); 
     background-size: cover;
     background-position: center;
     opacity: 0;
-    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+    transition: opacity 0.3s;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
 }
 
 .image-container:hover::after {
     opacity: 1;
+    transition: opacity 0.4s;
+}
+.size{
+    min-width: 19.9rem;
+    min-height: 19.9rem;
+    max-width: 19.9rem;
+    max-height: 19.9rem;
+    position: relative;
 }
 
-.category:hover {
-    transform: scale(1.02);
-    transition: transform 0.2s;
-  }
 
-.prev-next{
-    padding-bottom: 5vh;
-    margin-top: 10vh;
-}
+
 
 .container-modal{
     position: fixed;
@@ -230,4 +149,35 @@ h5:hover {
 }
 .home_button2:hover{
     color: #15c3c3;
+}
+
+/* Animación de línea debajo del título al hacer hover en la carta */
+.card-title {
+  position: relative;
+  display: inline-block;
+  /* ...otros estilos... */
+}
+
+.card-title::after {
+  content: "";
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: -4px; /* Ajusta según el espacio que quieras */
+  width: 0;
+  height: 2px;
+  background: #0064ce; /* Cambia el color si lo deseas */
+  transition: width 0.3s ease;
+}
+
+.card:hover .card-title::after {
+  width: 100%;
+}
+.card {
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ...otros estilos... */
+}
+
+.card:hover {
+  transform: scale(1.02);
 }
