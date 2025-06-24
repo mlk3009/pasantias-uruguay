@@ -157,6 +157,9 @@ export class EditProfileComponent implements OnInit {
     } else {
         console.error('Token no encontrado');
     }
+    setTimeout(function() {
+      window.location.href = '/user-profile';
+  }, 1200);
 }
 
   reloadPage(): void {

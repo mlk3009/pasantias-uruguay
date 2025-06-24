@@ -4,7 +4,6 @@
       <div class="flex flex-row justify-center w-full">
         <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
           <div class="flex flex-col items-center">
-            
             <div class="relative w-40 h-40 flex items-center justify-center bg-gray-100 rounded-full">
               <img [src]="userImageUrl" class="object-cover w-full h-full cursor-pointer rounded-full" (click)="onImageClick()" />
               <input type="file" #fileInput style="display: none;" (change)="onFileSelected($event)" />
@@ -20,7 +19,7 @@
             </h1>
             <h2 class="text-gray-500 text-lg">{{ data.location }}</h2>
           </div>
-          <div class="buttons w-full flex justify-center">
+          <div class="mb-14 w-full flex justify-center">
             <div class="w-full md:block md:w-auto pt-4">
               <ul
                 class="text-center font-medium flex flex-col items-center p-4 md:p-0 md:px-14 mt-4 md:rounded-full md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
@@ -96,19 +95,19 @@
             </div>
           </div>
   
-          <div class="flex flex-row justify-center max-w-screen-2xl">
+          <div class="flex flex-col md:flex-row justify-center max-w-screen-2xl">
             <div class="flex flex-col">
-              <div class="flex justify-between flex-row">
-                <div class="flex flex-col justify-start">
+              <div class="flex justify-center md:justify-between flex-col md:flex-row">
+                <div class="flex flex-col justify-center md:justify-start">
                   <div class=" flex flex-col">
-                    <div class="flex justify-start flex-row">
+                    <div class="flex justify-start flex-row pl-4 md:pl-0">
                       <p class="text-gray-700 text-sm font-semibold p-2">
                         Nombre completo: 
                       </p>
                       <input type="text" [value]="data.name" [(ngModel)]="data.name" maxlength="50" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="" />
                     </div>
                     
-                    <div class="flex justify-start flex-row mt-2">
+                    <div class="flex justify-start flex-row mt-2 pl-4 md:pl-0">
                       <p class="text-gray-700 text-sm font-semibold p-2">
                         Fecha de nacimiento:
                       </p>
@@ -116,7 +115,7 @@
                     </div>
                   </div>
 
-                  <div class="flex justify-start flex-row">
+                  <div class="flex justify-start flex-row pl-4 md:pl-0">
                     <p class="text-gray-700 text-sm font-semibold p-2">
                       Género:
                     </p>
@@ -134,7 +133,7 @@
 
                   
                   <div class="flex flex-col">
-                    <div class="flex justify-start flex-row mt-2">
+                    <div class="flex justify-start flex-row mt-2 pl-4 md:pl-0">
                       <p class="text-gray-700 text-sm font-semibold p-2">
                         E-mail:
                       </p>
@@ -144,7 +143,7 @@
                   </div>
                   
                 </div>
-                <div class="flex flex-col justify-between col2">
+                <div class="flex flex-col justify-between col2 pl-4 md:pl-0">
                   <div class="flex flex-col">
                     <div class="flex justify-start flex-row">
                       <p class="text-gray-700 text-sm font-semibold p-2">
@@ -175,7 +174,7 @@
                     </div>
                   </div>
                   <div class="flex flex-col">
-                    <div class="flex justify-start flex-row mt-2">
+                    <div class="flex justify-start flex-row mt-2 ">
                       <p class="readonly-input text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                         Identificación:
                       </p>
@@ -197,7 +196,7 @@
                 </div>
               </div>
 
-              <div class="flex justify-start flex-row mt-2">
+              <div class="flex justify-start flex-row mt-2 ">
                 <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
                   Puesto de trabajo (maximo 3):
                 </p>
@@ -215,29 +214,7 @@
                 </div>
               </div>
 
-              <div class="pt-20 flex justify-center items-center button">
-                <button
-                  type="button"
-                  (click)="updateProfile()"
-                  class="flex flex-row items-center justify-between button1 text-gray-800 bg-gray-50 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                >
-                  <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 11.917 9.724 16.5 19 7.5"/>
-                  </svg>
-                  Actualizar
-                </button>
               
-                <button
-                type="button"
-                class="flex flex-row items-center justify-between button1 text-gray-800 bg-gray-50 border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700"
-                (click)="reloadPage()"
-              >
-                <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
-                </svg>
-                Cancelar
-              </button>
-              </div>
 
               <div *ngIf="status" class="text-red-500">
                 {{ status }}
@@ -247,11 +224,33 @@
   
   
   
-            <div class="texto ml-2">
+            <div class="texto md:ml-2 mx-auto mt-4 md:mt-0">
               <textarea [value]="data.desc1" [(ngModel)]="data.desc1" id="message" name="message" ngModel rows="6" maxlength="280" class="description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..."></textarea>              
               <textarea [value]="data.desc2" [(ngModel)]="data.desc2" id="message2"  name="message2" ngModel rows="6" maxlength="280" class="mt-2 description block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Segunda descripción..."></textarea>
             </div>
           </div>
+          <div class="pt-20 flex justify-center items-center button">
+                <button
+                  type="button"
+                  (click)="updateProfile()"
+                  class="flex flex-row items-center justify-between text-white bg-sky-700 font-medium rounded-full text-md px-4 py-3 mx-1 hover:bg-sky-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 3v4a1 1 0 0 1-1 1H5m4 6 2 2 4-4m4-8v16a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7.914a1 1 0 0 1 .293-.707l3.914-3.914A1 1 0 0 1 9.914 3H18a1 1 0 0 1 1 1Z"/>
+                  </svg>
+                  Actualizar
+                </button>
+              
+                <button
+                type="button"
+                class="flex flex-row items-center justify-between text-white bg-sky-700 font-medium rounded-full text-md px-4 py-3 mx-1 hover:bg-sky-800 focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                (click)="reloadPage()">
+                <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+                </svg>
+                Reestablecer
+              </button>
+              </div>
         </div>
       </div>
     </div>

@@ -7,43 +7,12 @@
 .content{
     height: 85%;
 }
-.cv{
-    width: 100%;
-    height: 85vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.texto{
-    max-width: 40%;
-}
-.button{
-    min-height: 15vh;
-}
-.buttons{
-    min-width: 25%;
-    margin-bottom: 5vh;
-}
-.home_button{
-    color: #15c3c3;
-}
-.home_button2:hover{
-    color: #15c3c3;
-}
-.button1:hover, .button1:hover * {
-    color: #15c3c3;
-}
-.col2{
-    min-width: 40%;
-    display: flex;
-    justify-content: start;
-}
 .description{
     min-width: 350px;
 }
 .readonly-input {
     color: #6b7280; /* Tono gris */
-    background-color: #f9fafb; /* Fondo gris claro */
+    cursor: not-allowed; /* Cambia el cursor para indicar que es de solo lectura */
 }
 .container-modal{
     position: fixed;
