@@ -60,6 +60,15 @@ export class PublicationService {
       map(response => response)
     );
   }
+  
+destroyPublication(id: number): Observable<any> {
+  const token = this.getToken();
+  let headers = new HttpHeaders();
+  if (token) {
+    headers = headers.set('Authorization', 'Bearer ' + token);
+  }
+  return this._http.delete(global.url + 'admin/publications/delete/' + id, { headers: headers });
+}
 
   loadPublication(token: string, publication: any): Observable<any> {
     let params = JSON.stringify(publication);

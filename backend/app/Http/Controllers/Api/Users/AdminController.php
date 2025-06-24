@@ -160,20 +160,28 @@ class AdminController extends Controller
 
 
 
-    public function destroyPublication($id)
-    {
-        if (Auth::user()->rol !== 'administrador') {
-            return response()->json(['message' => 'No autorizado'], 403);
-        }
+public function destroyPublication($id)
+{
+    $user = Auth::user();
 
-        $publication = Publication::find($id);
-        if (!$publication) {
-            return response()->json(['message' => 'Publicación no encontrada'], 404);
-        }
-
-        $publication->delete();
-        return response()->json(['message' => 'Publicación eliminada', 'status' => 200], 200);
+    // Solo administrador o empresa pueden eliminar
+    if (!in_array($user->rol, ['administrador', 'empresa'])) {
+        return response()->json(['message' => 'No autorizado'], 403);
     }
+
+    $publication = Publication::find($id);
+    if (!$publication) {
+        return response()->json(['message' => 'Publicación no encontrada'], 404);
+    }
+
+    // Si es empresa, solo puede eliminar sus propias publicaciones
+    if ($user->rol === 'empresa' && $publication->empresa_id !== $user->id) {
+        return response()->json(['message' => 'No autorizado para eliminar esta publicación'], 403);
+    }
+
+    $publication->delete();
+    return response()->json(['message' => 'Publicación eliminada', 'status' => 200], 200);
+}
 
 
 
