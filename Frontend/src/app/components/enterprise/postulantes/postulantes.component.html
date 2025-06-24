@@ -4,30 +4,43 @@
     <div class="content bg-gray-50 w-11/12 h-5/6 mt-10 rounded-lg">
         <div class="flex flex-row justify-center w-full">
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
-                <div class="w-full border-b-2 flex justify-center flex-col items-center">   
-                    <div class="w-full rounded-lg flex flex-col items-center">
-                        <img [src]="userImageUrl" alt="" class="rounded-full w-40">
-                        <h1 class="text-gray-900 font-semibold text-4xl mt-5">{{empresa.name}}</h1>
+                <div class="w-full flex justify-center flex-col items-center">   
+                    <div class="flex flex-col items-center">
+                        <div class="relative w-40 h-40 flex items-center justify-center rounded-full">
+                        <img
+                            [src]="userImageUrl"
+                            class="object-cover w-full h-full rounded-full"
+                        />
+                        </div>
+                        <h1 class="text-gray-900 font-semibold text-4xl mt-5">
+                        {{ empresa.name }}
+                        </h1>
+                        <h2 class="text-gray-500 text-lg">{{ empresa.location }}</h2>
                     </div>
-                    <div class="buttons">
+                    <div class="mb-12 w-full flex justify-center my-10">
                         <div class="w-full md:block md:w-auto pt-4">
-                          <ul class="text-center font-medium flex flex-col p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 md:border-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
-                            <li>
-                              <a href="/enterprise-profile" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Home</a>
+                        <ul class="text-center font-medium flex flex-col items-center p-4 md:p-0 md:px-14 mt-4 md:shadow-md md:rounded-full md:bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
+                            <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                                <a class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg" aria-current="page">Home</a>
                             </li>
-                            <li>
-                              <a href="/enterprise-abaut-us" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Sobre nosotros</a>
+                            <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                                <a href="" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Sobre nosotros</a>
                             </li>
-                            <li>
-                                <a href="/my-publications" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Administrar publicaciones</a>
+                            <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                                <a href="" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">
+                                    Administrar publicaciones
+                                </a>
                             </li>
-                            <li>
-                                <a href="/postulantes" class="home_button block py-2 px-3 text-white rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white md:dark:text-blue-500" aria-current="page">Ver postulantes</a>
+
+                            <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                                <a href="/postulantes" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Ver postulantes</a>
                             </li>
-                            <li>
-                                <a href="/edit-enterprise-profile" class="home_button2 block py-2 px-3 text-gray-900 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent">Editar perfil</a>
+
+                            <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                                <a href="/edit-enterprise-profile" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Editar perfil</a>
                             </li>
-                          </ul>
+
+                        </ul>
                         </div>
                     </div>
                 </div>
@@ -57,7 +70,7 @@
                                 (ngModelChange)="aplicarFiltros()"
                                 name="searchText"
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                                placeholder="Titulo de la publicación, nombre, email y/o telefono del postulante"
+                                placeholder="Titulo de la publicación y/o nombre de empresa"
                                 autocomplete="off"
                                 >
                             </div>
