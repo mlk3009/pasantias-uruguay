@@ -717,7 +717,7 @@ foreach ($publications as $publicationId) {
 
             
                 // Volcado de datos de ejemplo para postula y guarda
-                for ($i = 1; $i <= 100; $i++) {
+                for ($i = 1; $i <= 31; $i++) {
                     DB::table('postula')->insert([
                         'publication_id' => $i,
                         'estudiante_id' => 1,
