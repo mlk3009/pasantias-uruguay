@@ -56,7 +56,7 @@ export class CategoriesContentComponent implements OnChanges {
 
   getPages(): number[] {
     if (this.totalPages <= 6) {
-      return Array.from({ length: this.totalPages - 1 }, (_, i) => i + 1);
+      return Array.from({ length: this.totalPages }, (_, i) => i + 1);
     } else if (this.currentPage <= 3) {
       return [1, 2, 3, 4, 5];
     } else if (this.currentPage >= this.totalPages - 3) {

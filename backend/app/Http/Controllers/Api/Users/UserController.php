@@ -94,8 +94,10 @@ class UserController extends Controller
 
                 if ($cv) {
                     $data['cv'] = $cv->pdf;
+                    $data['cv_id'] = $cv->id;
                 } else {
                     $data['cv'] = null;
+                    $data['cv_id'] = null;
                 }
         
                 // Buscar imagen del estudiante

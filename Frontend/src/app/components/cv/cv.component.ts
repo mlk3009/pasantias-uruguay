@@ -57,6 +57,8 @@ export class CvComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Asegurar que no estamos en modo edición al crear un nuevo CV
+    this.servicioCv.setEditMode(false, '');
 
     const modalButton = document.getElementById('modalButton');
     if (modalButton) {

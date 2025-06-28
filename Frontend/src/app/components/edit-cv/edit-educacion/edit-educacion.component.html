@@ -1,0 +1,154 @@
+<div class="bg-white p-8 rounded-lg px-16">
+    <h2 class="text-gray-500 mb-3 text-lg sm:mb-0 pb-1">Editar estudios:</h2>
+    
+    <div *ngFor="let estudio of estudios; let i = index; let last = last" class="mb-6 border-b border-gray-200 pb-6">
+        <div class="grid md:grid-cols-2 md:gap-6 col-span-1">
+            <!-- Nivel -->
+            <div class="grid md:grid-cols-2">
+                <div class="relative z-0 w-full mb-3 group">
+                  <label [for]="'nivel' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Nivel *</label>
+                  <select autocomplete="off" [(ngModel)]="estudio.nivel" #nivel="ngModel" type="text"
+                  pattern="^[^\d]*$" [name]="'nivel' + i" [id]="'nivel' + i" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60">
+                    <option value="">Seleccionar nivel</option>
+                    <option value="ciclo-basico">Ciclo básico</option>
+                    <option value="bachillerato">Bachillerato</option>
+                    <option value="utu1">UTU (C.Básico)</option>
+                    <option value="utu2">UTU (Bachillerato)</option>
+                    <option value="tecnico">Técnico</option>
+                    <option value="tecnologo">Tecnólogo</option>
+                    <option value="licenciatura">Licenciatura</option>
+                    <option value="maestria">Maestría</option>
+                    <option value="doctorado">Doctorado</option>
+                    <option value="otro">Otro</option>
+                  </select>
+                </div>
+            </div>
+
+            <!-- Título -->
+            <div class="grid md:grid-cols-2">
+                <div class="relative z-0 w-full mb-3 group">
+                  <label [for]="'titulo' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Título *</label>
+                  <input autocomplete="off" type="text" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" [name]="'titulo' + i"
+                  [id]="'titulo' + i" [(ngModel)]="estudio.titulo" maxlength="60" #titulo="ngModel" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60"
+                  placeholder="Ingrese el título" required>
+                <small *ngIf="titulo.invalid && titulo.touched" class="text-red-500">Título inválido.</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Institución -->
+        <div class="grid md:grid-cols-2">
+          <div class="relative z-0 w-full mb-3 group">
+            <label [for]="'institucion' + i" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Institución *</label>
+            <input autocomplete="off" [name]="'institucion' + i"
+              [id]="'institucion' + i" [(ngModel)]="estudio.institucion" #institucion1="ngModel" type="text"
+              pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" maxlength="60" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 w-60"
+              placeholder="Ingrese la institución" required>
+            <small *ngIf="institucion1.invalid && institucion1.touched" class="text-red-500">Institución inválida.</small>
+          </div>
+        </div>
+
+        <!-- Fechas -->
+        <div class="flex flex-row justify-between mb-4">
+            <div class="flex flex-col">
+              <div id="date-range-picker" date-rangepicker class="flex flex-col">
+                <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Inicio</p>
+                <div class="relative">
+                    <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                        <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                        </svg>
+                    </div>
+                    <input [(ngModel)]="estudio.fecha_inicio" maxlength="10" #inicio="ngModel" pattern="^\d{4}/\d{2}/\d{2}$"
+                    [id]="'datepicker-range-start-' + i" [name]="'start' + i" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="YYYY/MM/DD">
+                </div>
+                <small *ngIf="inicio.invalid && inicio.touched" class="text-red-500">Fecha inválida.</small>
+            </div>
+            </div>
+
+            <!-- Fecha fin o cursando -->
+            <div id="date-range-picker" date-rangepicker class="flex flex-col">
+              <div *ngIf="!estudio.actualmente" class="flex flex-col">
+                <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Final</p>
+                <div  class="relative">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                    </svg>
+                  </div>
+                  <input [(ngModel)]="estudio.fecha_fin" #fin="ngModel"
+                    [id]="'datepicker-range-end-' + i" [name]="'end' + i" type="text" pattern="^\d{4}/\d{2}/\d{2}$"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="YYYY/MM/DD">
+                </div>
+                <small *ngIf="fin.invalid && fin.touched" class="text-red-500">Fecha inválida.</small>
+              </div>
+              
+              <!-- Fecha fin estimado si está cursando -->
+              <div *ngIf="estudio.actualmente" class="flex flex-col">
+                <p class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Fin estimado</p>
+                <div  class="relative">
+                  <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+                    <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                      <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+                    </svg>
+                  </div>
+                  <input [(ngModel)]="estudio.fin_estimado" #finEstimado="ngModel"
+                    [id]="'datepicker-range-estimated-' + i" [name]="'estimated' + i" type="text" pattern="^\d{4}/\d{2}/\d{2}$"
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="YYYY/MM/DD">
+                </div>
+                <small *ngIf="finEstimado.invalid && finEstimado.touched" class="text-red-500">Fecha inválida.</small>
+              </div>
+            </div>
+
+            <!-- Checkbox Cursando -->
+            <div class="flex flex-row items-center pt-10">
+              <input class="rounded mr-1" type="checkbox" [name]="'actualmente' + i" [id]="'actualmente' + i" [(ngModel)]="estudio.actualmente">
+              <label [for]="'actualmente' + i" class="text-gray-500">Cursando</label>
+            </div>
+        </div>
+
+        <!-- Descripción -->
+        <div class="relative z-0 w-full mb-5 group">
+            <textarea autocomplete="off" type="text" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" maxlength="500" [name]="'descripcion' + i"
+                [id]="'descripcion' + i" [(ngModel)]="estudio.descripcion" #descripcion="ngModel"
+                class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                placeholder=" "></textarea>
+            <label [for]="'descripcion' + i"
+                class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Descripción
+            </label>
+            <small *ngIf="descripcion.invalid && descripcion.touched" class="text-red-500">Descripción inválida.</small>
+        </div>
+
+        <!-- Botones de eliminar/agregar estudio -->
+        <div class="grid grid-cols-2 gap-4 mb-4" *ngIf="last">
+            <button (click)="removeEstudio(i)" type="button" *ngIf="estudios.length > 1"
+              class="text-red-500 hover:text-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-red-500 hover:border-red-700">
+              Eliminar estudio
+            </button>
+            <button (click)="addEstudio()" type="button"
+              class="text-blue-500 hover:text-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-blue-500 hover:border-blue-700">
+              Agregar otro estudio
+            </button>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="grid grid-cols-2 w-full gap-6 mt-8">
+        <button
+          (click)="saveAndGoBack()"
+          type="button"
+          class="bg-green-600 hover:bg-green-700 text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        >
+          Guardar cambios
+        </button>
+        <button
+          (click)="nextSection()"
+          type="button"
+          class="bg-blue-600 hover:bg-blue-700 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        >
+          Siguiente →
+        </button>
+    </div>
+</div>
