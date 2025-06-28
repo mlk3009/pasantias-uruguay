@@ -1,8 +1,17 @@
 <app-nav/>
 <div class="body flex items-center justify-center">
     <div class="content bg-gray-100 w-full md:mx-16 h-5/6 mt-20 mb-20 pb-20 rounded-lg">
-      <div class="flex flex-row justify-center w-full">
-        <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
+        
+        <!-- Loading Spinner - Se muestra mientras cargan los datos -->
+        <div *ngIf="!dataLoaded" class="flex flex-col justify-center items-center h-full min-h-96">
+            <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-sky-700 mb-4"></div>
+            <p class="text-gray-600 text-lg font-medium">Cargando editor de perfil...</p>
+        </div>
+        
+        <!-- Contenido principal - Se muestra solo cuando todos los datos están cargados -->
+        <div *ngIf="dataLoaded">
+            <div class="flex flex-row justify-center w-full">
+                <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
           <div class="flex flex-col items-center">
             <div class="relative w-40 h-40 flex items-center justify-center bg-gray-100 rounded-full">
               <img [src]="userImageUrl" class="object-cover w-full h-full cursor-pointer rounded-full" (click)="onImageClick()" />
@@ -25,20 +34,20 @@
                 class="text-center font-medium flex flex-col items-center p-4 md:p-0 md:px-14 mt-4 md:rounded-full md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
               >
                 <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                <a
-                  href="/user-profile"
-                  class="flex flex-row text-gray-800 rounded-full px-4 py-1 md:p-2 md:px-4 md:text-lg"
-                  aria-current="page"
-                >
-                  <svg class="w-6 h-6 text-gray-800" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                    <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
-                  </svg>
-                  Perfil
-                </a>
+                  <a
+                    routerLink="/user-profile"
+                    class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
+                    aria-current="page"
+                  >
+                    <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                      <path stroke="currentColor" stroke-width="2" d="M7 17v1a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-4a3 3 0 0 0-3 3Zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"/>
+                    </svg>
+                    Perfil
+                  </a>
                 </li>
                 <li class="py-2 px-3 flex border-b-2 md:border-b-0">
                   <a
-                    href="/user-postulations"
+                    routerLink="/user-postulations"
                     class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                   >
                     <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -49,7 +58,7 @@
                 </li>
                 <li class="py-2 px-3 flex border-b-2 md:border-b-0">
                   <a
-                    href="/user-saves"
+                    routerLink="/user-saves"
                     class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                   >
                     <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -58,9 +67,9 @@
                     Guardados
                   </a>
                 </li>
-                <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                <li class="py-2 px-3 flex border-b-2 md:border-b-0" [style.display]="dataLoaded && data.cv ? 'flex' : 'none'">
                   <a
-                    href="/user-saves"
+                    routerLink="/edit-cv"
                     class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                   >
                     <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -69,9 +78,9 @@
                     Editar CV
                   </a>
                 </li>
-                <li class="py-2 px-3 flex border-b-2 md:border-b-0">
+                <li class="py-2 px-3 flex border-b-2 md:border-b-0" [style.display]="dataLoaded && !data.cv ? 'flex' : 'none'">
                   <a
-                    href="/user-saves"
+                    routerLink="/cv"
                     class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg"
                   >
                     <svg class="w-6 h-6 text-gray-800 dark:text-white group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -82,7 +91,7 @@
                 </li>
                 <li class="py-2 px-3 flex border-b-2 md:border-b-0">
                   <a
-                    href="/edit-profile"
+                    routerLink="/edit-profile"
                     class="flex flex-row items-center text-white bg-sky-700 rounded-full md:p-2 md:px-4 dark:text-white md:text-lg"
                   >
                     <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -201,7 +210,15 @@
                   Puesto de trabajo (maximo 3):
                 </p>
                 <select name="" id="" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" (change)="onTagSelect($event)" [disabled]="userEtiquetas.length >= 3">
-                  <option *ngFor="let etiqueta of etiquetas" [value]="etiqueta.id">{{ etiqueta.name }}</option>
+                  <option value="" disabled selected>Seleccionar etiqueta</option>
+                  <ng-container *ngFor="let etiqueta of etiquetas">
+                    <option 
+                      *ngIf="!isEtiquetaSelected(etiqueta.id)"
+                      [value]="etiqueta.id"
+                    >
+                      {{ etiqueta.name }}
+                    </option>
+                  </ng-container>
                 </select>
               </div>
               <div class="mt-4">
@@ -405,4 +422,6 @@
       </svg>
     </div>
   </div>
-</div>
+        </div>
+        <!-- Fin del contenido principal condicional -->
+    </div>

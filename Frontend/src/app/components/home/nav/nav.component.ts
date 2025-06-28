@@ -1,9 +1,10 @@
 import { Component, AfterViewInit, HostListener } from '@angular/core';
 import { CommonModule, ViewportScroller } from '@angular/common';
-import { Router, RouterOutlet, RouterModule } from '@angular/router';
+import { Router, RouterOutlet, RouterModule, NavigationEnd } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 import { CookieService } from 'ngx-cookie-service';
 import { NavigationExtras } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 import { UserService } from '../../../services/user.service';
 
@@ -22,6 +23,7 @@ export class NavComponent implements AfterViewInit {
   public token: string = '';
   public username: string = '';
   public dropdown = false;
+  public currentRoute: string = '';
 
   public emprise = false;
   public scroll_var = true;
@@ -37,6 +39,16 @@ export class NavComponent implements AfterViewInit {
     private router: Router,
   ) {
     this.token = this._cookieService.get('token');
+    this.currentRoute = this.router.url;
+    
+    // Escuchar cambios de ruta
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.currentRoute = event.url;
+      }
+    });
   }
 
   ngOnInit() {
@@ -208,6 +220,58 @@ export class NavComponent implements AfterViewInit {
     modal.style.display = 'none';
   }
 
-  
+  isActiveRoute(route: string): boolean {
+    if (route === 'inicio') {
+      return this.currentRoute === '/' || this.currentRoute === '/inicio' || this.currentRoute.startsWith('/inicio');
+    }
+    if (route === 'abaut-us') {
+      return this.currentRoute.startsWith('/abaut-us');
+    }
+    if (route === 'publications') {
+      return this.currentRoute.startsWith('/publications');
+    }
+    return false;
+  }
+
+  navigateToContact() {
+    // Navegar a /inicio primero
+    this.router.navigate(['/inicio']).then(() => {
+      // Esperar y hacer scroll hacia el área de contacto (no completamente al final)
+      setTimeout(() => {
+        // Calcular una posición que sea aproximadamente el 80% de la página
+        const scrollPosition = document.body.scrollHeight * 0.8;
+        
+        window.scrollTo({
+          top: scrollPosition,
+          behavior: 'smooth'
+        });
+        console.log('Scroll ejecutado a posición:', scrollPosition);
+      }, 500);
+    });
+  }
+
+  navigateToInicio() {
+    if (this.currentRoute === '/' || this.currentRoute === '/inicio') {
+      // Si ya estamos en inicio, solo hacer scroll al top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Si estamos en otra página, navegar a inicio
+      this.router.navigate(['/inicio']).then(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
+
+  navigateToAboutUs() {
+    if (this.currentRoute.startsWith('/abaut-us')) {
+      // Si ya estamos en nosotros, solo hacer scroll al top
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else {
+      // Si estamos en otra página, navegar a nosotros
+      this.router.navigate(['/abaut-us']).then(() => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    }
+  }
 
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { UserService } from '../../../services/user.service';
@@ -8,13 +8,14 @@ import { NavComponent } from '../../home/nav/nav.component';
 @Component({
   selector: 'app-postulations',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavComponent], 
+  imports: [CommonModule, FormsModule, NavComponent, RouterModule], 
   templateUrl: './postulations.component.html',
   styleUrl: './postulations.component.css'
 })
 export class PostulationsComponent implements OnInit {
   loading: boolean = false;
   data: any = {};
+  dataLoaded: boolean = false; // Nueva propiedad para controlar si los datos están cargados
   userEtiquetas: any[] = [];
   postulaciones: any[] = [];
   displayedPostulaciones: any[] = [];
@@ -37,6 +38,7 @@ export class PostulationsComponent implements OnInit {
       this._userService.obtenerUsuario(token).subscribe({
         next: (response) => {
           this.data = response.data;
+          this.dataLoaded = true; // Marcar que los datos han sido cargados
           console.log(this.data); 
         },
         error: (error) => {

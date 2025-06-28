@@ -1,0 +1,116 @@
+<div class="bg-white p-8 rounded-lg px-16">
+    <h2 class="text-gray-500 mb-3 text-lg sm:mb-0 pb-1">Editar experiencias:</h2>
+    
+    <div *ngFor="let experiencia of experiencias; let i = index; let last = last" class="mb-6 border-b border-gray-200 pb-6">
+      <div class="grid md:grid-cols-2 md:gap-6 col-span-1">
+        <div class="relative z-0 w-full mb-5 group">
+          <input autocomplete="off" [(ngModel)]="experiencia.puesto" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" maxlength="50" #puesto="ngModel" type="text"
+            [name]="'puesto' + i" [id]="'puesto' + i"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " required />
+          <label [for]="'puesto' + i"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Puesto *
+          </label>
+          <small *ngIf="puesto.invalid && puesto.touched" class="text-red-500">Puesto inválido.</small>
+        </div>
+
+        <div class="relative z-0 w-full mb-5 group">
+          <input autocomplete="off" type="text" maxlength="50" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" [name]="'empresa' + i"
+            [id]="'empresa' + i" [(ngModel)]="experiencia.empresa" #empresa="ngModel"
+            class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+            placeholder=" " required />
+          <label [for]="'empresa' + i"
+            class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Empresa *
+          </label>
+          <small *ngIf="empresa.invalid && empresa.touched" class="text-red-500">Empresa inválida.</small>
+        </div>
+      </div>
+
+      <div class="relative z-0 w-full mb-5 group">
+        <input autocomplete="off" type="text" [name]="'referencias' + i" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" 
+          [id]="'referencias' + i" [(ngModel)]="experiencia.referencias" maxlength="50" #referencias1="ngModel"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=" " required />
+        <label [for]="'referencias' + i"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 rtl:peer-focus:left-auto peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Referencia *
+        </label>
+        <small *ngIf="referencias1.invalid && referencias1.touched" class="text-red-500">Referencia inválida.</small>
+      </div>
+
+      <!-- Fechas -->
+      <div class="flex flex-row items-center justify-between mb-4">
+        <div id="date-range-picker" date-rangepicker class="flex items-center">
+          <div class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+              </svg>
+            </div>
+            <input [(ngModel)]="experiencia.fecha_inicio" maxlength="10" #inicio="ngModel" pattern="^\d{4}/\d{2}/\d{2}$"
+              [id]="'datepicker-range-start-' + i" [name]="'start' + i" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Inicio YYYY/MM/DD">
+            <small *ngIf="inicio.invalid && inicio.touched" class="text-red-500">Fecha inválida.</small>
+          </div>
+        </div>
+
+        <div id="date-range-picker" date-rangepicker class="flex items-center">
+          <div *ngIf="!experiencia.actualmente" class="relative">
+            <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+              <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z"/>
+              </svg>
+            </div>
+            <input [(ngModel)]="experiencia.fecha_fin" maxlength="10" #fin="ngModel" pattern="^\d{4}/\d{2}/\d{2}$"
+              [id]="'datepicker-range-end-' + i" [name]="'end' + i" type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Fin YYYY/MM/DD">
+            <small *ngIf="fin.invalid && fin.touched" class="text-red-500">Fecha inválida.</small>
+          </div>
+        </div>
+
+        <div class="flex flex-row items-center pt-5">
+          <input class="rounded mr-1" type="checkbox" [name]="'actualmente' + i" [id]="'actualmente' + i" [(ngModel)]="experiencia.actualmente">
+          <label [for]="'actualmente' + i" class="text-gray-500">En curso</label>
+        </div>
+      </div>
+
+      <!-- Descripción -->
+      <div class="relative z-0 w-full mb-5 group">
+        <textarea autocomplete="off" type="text" pattern="^[a-zA-Z0-9áéíóúÁÉÍÓÚñÑ\s]*$" [name]="'descripcion' + i"
+          [id]="'descripcion' + i" [(ngModel)]="experiencia.descripcion" maxlength="500" #descripcion="ngModel"
+          class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+          placeholder=" "></textarea>
+        <label [for]="'descripcion' + i"
+          class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">Descripción
+        </label>
+        <small *ngIf="descripcion.invalid && descripcion.touched" class="text-red-500">Descripción inválida.</small>
+      </div>
+
+      <!-- Botones de eliminar/agregar experiencia -->
+      <div class="grid grid-cols-2 gap-4 mb-4" *ngIf="last">
+          <button (click)="removeExperiencia(i)" type="button" *ngIf="experiencias.length > 1"
+            class="text-red-500 hover:text-red-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-red-500 hover:border-red-700">
+            Eliminar experiencia
+          </button>
+          <button (click)="addExperiencia()" type="button"
+            class="text-blue-500 hover:text-blue-700 font-medium rounded-lg text-sm px-5 py-2.5 text-center border border-blue-500 hover:border-blue-700">
+            Agregar otra experiencia
+          </button>
+      </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="grid grid-cols-2 w-full gap-6 mt-8">
+        <button
+          (click)="saveAndGoBack()"
+          type="button"
+          class="bg-green-600 hover:bg-green-700 text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        >
+          Guardar cambios
+        </button>
+        <button
+          (click)="finishEditing()"
+          type="button"
+          class="bg-blue-600 hover:bg-blue-700 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+        >
+          Finalizar edición →
+        </button>
+    </div>
+</div>

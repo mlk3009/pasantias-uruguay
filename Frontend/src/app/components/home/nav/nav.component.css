@@ -1,4 +1,3 @@
-
 .nav001{
 /*    background-color: #000220; */
     background-color: transparent;
@@ -29,6 +28,12 @@
 }
 .resto:hover{
     color: #90ecec;
+}
+.nav-active{
+    color: #90ecec !important;
+}
+.nav-active:hover{
+    color: #90ecec !important;
 }
 nav.down{
     background-color: #000220d4;

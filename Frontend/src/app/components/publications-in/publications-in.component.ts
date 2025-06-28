@@ -32,6 +32,21 @@ export class PublicationsInComponent implements OnInit {
   }
 
 ngOnInit(): void {
+  // Scroll to top when component loads
+  window.scrollTo(0, 0);
+  
+  // Capturar el parámetro de categoría de la ruta
+  this.route.paramMap.subscribe(params => {
+    this.category = params.get('category') || undefined;
+    console.log('Categoría capturada:', this.category);
+    
+    // Scroll to top when category changes
+    window.scrollTo(0, 0);
+    
+    // Cargar publicaciones con la categoría especificada
+    this.getPublications(this.category);
+  });
+
   this.publicationService.publications$.subscribe(data => {
     this.publications = data;
   });

@@ -99,15 +99,55 @@ destroyPublication(id: number): Observable<any> {
     );
   }
   
-  guardarPublicacion(guarda: any): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    return this._http.post<any>(`${global.url}guardar-publicacion`, guarda, { headers: headers }).pipe(
-      map(response => response)
-    );
+guardarPublicacion(guarda: any): Observable<any> {
+  const token = this.getToken();
+  let headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
   }
+
+  return this._http.post<any>(`${global.url}guardar-publicacion`, guarda, { headers: headers }).pipe(
+    map(response => response)
+  );
+}
+
+verificarPublicacionGuardada(publicationId: number, estudianteId: number): Observable<any> {
+  const token = this.getToken();
+  let headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  let params = new HttpParams()
+    .set('publication_id', publicationId.toString())
+    .set('estudiante_id', estudianteId.toString());
+
+  return this._http.get<any>(`${global.url}verificar-publicacion-guardada`, { headers: headers, params: params }).pipe(
+    map(response => response)
+  );
+}
+
+verificarPostulacion(publicationId: number, estudianteId: number): Observable<any> {
+  const token = this.getToken();
+  let headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
+  }
+
+  let params = new HttpParams()
+    .set('publication_id', publicationId.toString())
+    .set('estudiante_id', estudianteId.toString());
+
+  return this._http.get<any>(`${global.url}verificar-postulacion`, { headers: headers, params: params }).pipe(
+    map(response => response)
+  );
+}
 
   createPublication(publication: any): Observable<any> {
     const token = this.getToken();

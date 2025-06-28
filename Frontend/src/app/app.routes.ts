@@ -92,6 +92,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'edit-cv',
+    loadComponent: () =>
+      import('./components/edit-cv/edit-cv.component').then(
+        (m) => m.EditCvComponent
+      ),
+  },
+  {
     path: 'my-publications',
     loadComponent: () =>
       import('./components/enterprise/my-publications/my-publications.component').then(

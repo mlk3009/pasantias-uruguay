@@ -1,0 +1,39 @@
+/* Estilos específicos para el componente de editar educación */
+.date-input {
+  position: relative;
+}
+
+.date-input svg {
+  pointer-events: none;
+}
+
+.border-bottom-focus:focus {
+  border-bottom-color: #3b82f6;
+  outline: none;
+}
+
+.section-divider {
+  border-bottom: 1px solid #e5e7eb;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.button-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .button-group {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+}

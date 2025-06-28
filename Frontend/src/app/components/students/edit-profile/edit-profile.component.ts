@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { UserService } from '../../../services/user.service';
@@ -8,12 +8,13 @@ import { NavComponent } from '../../home/nav/nav.component';
 @Component({
   selector: 'app-edit-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavComponent], 
+  imports: [CommonModule, FormsModule, NavComponent, RouterModule], 
   templateUrl: './edit-profile.component.html',
   styleUrl: './edit-profile.component.css'
 })
 export class EditProfileComponent implements OnInit {
   data: any = {};
+  dataLoaded: boolean = false; // Nueva propiedad para controlar si los datos están cargados
   userEtiquetas: any[] = [];
   etiquetas: any[] = [];
   userImageUrl: string = '';
@@ -34,6 +35,7 @@ export class EditProfileComponent implements OnInit {
       this._userService.obtenerUsuario(token).subscribe({
         next: (response) => {
           this.data = response.data;
+          this.dataLoaded = true; // Marcar que los datos han sido cargados
           console.log(this.data); 
           this.getUserEtiquetas(this.data.id); 
           if (this.data.id_image) {
@@ -111,11 +113,19 @@ export class EditProfileComponent implements OnInit {
     });
   }
 
+  isEtiquetaSelected(etiquetaId: number): boolean {
+    return this.userEtiquetas.some(etiqueta => etiqueta.id === etiquetaId);
+  }
+
   onTagSelect(event: Event): void {
     const selectElement = event.target as HTMLSelectElement;
     const etiquetaId = Number(selectElement.value);
-    if (this.data.id) {
+    
+    // Verificar que se haya seleccionado una etiqueta válida
+    if (etiquetaId && this.data.id) {
       this.addUserTag(this.data.id, etiquetaId);
+      // Resetear el select a la opción por defecto después de agregar
+      selectElement.value = '';
     }
   }
 

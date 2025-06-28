@@ -1,0 +1,186 @@
+<div class="bg-white p-8 rounded-lg px-16">
+  <h2 class="text-gray-500 mb-3 text-lg sm:mb-0">Editar datos generales:</h2>
+  
+  <div class="grid md:grid-cols-2 md:gap-6 mt-2">
+    <div class="relative z-0 w-full group">
+      <input
+        autocomplete="off"
+        type="text"
+        [(ngModel)]="studentData.nombre_completo"
+        name="floating_name"
+        id="floating_name"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        required
+      />
+      <label
+        for="floating_name"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Nombre Completo *</label
+      >
+    </div>
+    
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        autocomplete="off"
+        type="text"
+        [(ngModel)]="studentData.cedula"
+        name="cedula"
+        id="cedula"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        required
+        readonly
+      />
+      <label
+        for="cedula"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Cédula *</label
+      >
+    </div>
+    
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        autocomplete="off"
+        type="email"
+        [(ngModel)]="studentData.email"
+        name="email"
+        id="email"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        required
+        readonly
+      />
+      <label
+        for="email"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Email *</label
+      >
+    </div>
+    
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        autocomplete="off"
+        type="text"
+        [(ngModel)]="studentData.cel"
+        name="cel"
+        id="cel"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        required
+        readonly
+      />
+      <label
+        for="cel"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Celular de contacto *</label
+      >
+    </div>
+    
+    <div class="relative z-0 w-full mb-5 group">
+      <input
+        autocomplete="off"
+        type="text"
+        [(ngModel)]="studentData.fecha_nacimiento"
+        name="fecha_nacimiento"
+        id="fecha_nacimiento"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        required
+        readonly
+      />
+      <label
+        for="fecha_nacimiento"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Fecha de Nacimiento *</label
+      >
+    </div>
+    
+    <div class="relative z-0 w-full mb-5 group">
+      <label for="genero" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Género</label>
+      <select id="genero" name="genero" [(ngModel)]="studentData.genero" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="Masculino">Masculino</option>
+        <option value="Femenino">Femenino</option>
+        <option value="Otro">Otro</option>
+      </select>
+    </div>
+    
+    <div class="relative z-0 w-full mb-5 group">
+      <label for="estado_civil" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Estado civil</label>
+      <select id="estado_civil" name="estado_civil" [(ngModel)]="studentData.estado_civil" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="Soltero">Soltero</option>
+        <option value="Casado">Casado</option>
+        <option value="Divorciado">Divorciado</option>
+        <option value="Viudo">Viudo</option>
+        <option value="Separado">Separado</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid md:grid-cols-2 md:gap-6">
+    <div class="relative z-0 w-full mt-5 mb-5 group">
+      <input
+        autocomplete="off"
+        type="text"
+        pattern="[a-zA-Z]{3}\s\d{5}"
+        [(ngModel)]="studentData.credencial_civica"
+        #credencial="ngModel"
+        name="credencial"
+        id="credencial"
+        class="block py-2.5 px-0 w-full text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+        placeholder=" "
+        maxlength="9" 
+      />
+      <label
+        for="credencial"
+        class="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 rtl:peer-focus:translate-x-1/4 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
+        >Credencial Cívica</label
+      >
+      <small
+        *ngIf="credencial.invalid"
+        class="text-red-500"
+        >Credencial inválida.</small
+      >
+    
+      <div>
+        <input type="checkbox" name="proceso" id="proceso" 
+        [(ngModel)]="credencial_en_tramite"
+        class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+        <label for="proceso" class="ms-2 text-sm font-medium text-gray-500 dark:text-gray-300">En proceso</label> 
+      </div>
+    </div>
+
+    <div class="relative z-0 w-full mb-5 group">
+      <label for="licencia" class="block mb-2 text-sm font-medium text-gray-500 dark:text-white">Libreta de conducir</label>
+      <select id="licencia" name="licencia" [(ngModel)]="studentData.licencia" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+        <option value="Cat. A">Cat. A</option>
+        <option value="Cat. B">Cat. B</option>
+        <option value="Cat. C">Cat. C</option>
+        <option value="Cat. D">Cat. D</option>
+        <option value="Cat. E">Cat. E</option>
+        <option value="Cat. F">Cat. F</option>
+        <option value="Cat. G1">Cat. G1</option>
+        <option value="Cat. G2">Cat. G2</option>
+        <option value="Cat. G3">Cat. G3</option>
+        <option value="Cat. H">Cat. H</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="grid grid-cols-2 w-full gap-6 mt-8">
+    <button
+      (click)="saveAndGoBack()"
+      type="button"
+      class="bg-green-600 hover:bg-green-700 text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+    >
+      Guardar cambios
+    </button>
+    <button
+      (click)="nextSection()"
+      type="button"
+      class="bg-blue-600 hover:bg-blue-700 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+    >
+      Siguiente →
+    </button>
+  </div>
+</div>

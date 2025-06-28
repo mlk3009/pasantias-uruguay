@@ -28,6 +28,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('cv-details', [CvController::class, 'cvDetails']);
     Route::get('/cvPDF/{cvId}', [CvController::class, 'generarPDF']);
+    Route::post('/cvPDF/{cvId}/regenerate', [CvController::class, 'regenerarPDF']);
+    Route::get('/cv-for-edit', [CvController::class, 'getCvForEdit']);
     Route::post('/updateProfile', [UserController::class, 'update']);    
     Route::get('company', [CompanyController::class, 'companyDetails']);
     Route::get('company/applicants/{empresaId}', [CompanyController::class, 'obtenerPostulantes']);
@@ -46,6 +48,10 @@ Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtene
 
 //GUARDAR
 Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPublicacion']);
+Route::get('/verificar-publicacion-guardada', [PublicationController::class, 'verificarPublicacionGuardada']);
+
+//POSTULACIONES
+Route::get('/verificar-postulacion', [PublicationController::class, 'verificarPostulacion']);
 
 
 //ADMIN
@@ -66,6 +72,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 //CV
 Route::post('/cv', [CvController::class, 'storeCV']);
+Route::put('/cv/{cvId}', [CvController::class, 'updateCV']);
 Route::delete('/dropcv/{estudiante_id}', [CvController::class, 'deleteCV']);
 Route::delete('cvdeletePDF/{estudianteId}', [CvController::class, 'borrarPDF']);
 

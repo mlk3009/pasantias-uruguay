@@ -216,6 +216,7 @@ public function store(Request $request)
     
         $companyName = $publication->empresa->user->name;
         $companyEmail = $publication->empresa->user->email;
+        $companyPhone = $publication->empresa->user->phone;
     
         $data = [
             'publication' => [
@@ -236,6 +237,7 @@ public function store(Request $request)
                 'updated_at' => $publication->updated_at,
                 'company_name' => $companyName,
                 'company_email' => $companyEmail,
+                'company_phone' => $companyPhone,
             ],
             'status' => 200
         ];
@@ -487,67 +489,82 @@ public function updatePartial(Request $request, $id)
         return response()->json($data, 201);
     }
 
-    public function guardarPublicacion(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'publication_id' => 'required|numeric|exists:publications,id',
-            'estudiante_id' => 'required|numeric|exists:estudiante,id'
-        ]);
-    
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error al guardar la publicación',
-                'status' => 400,
-                'errors' => $validator->errors()
-            ];
-            return response()->json($data, 400);
-        }
-    
-        $publicacion = Publication::find($request->publication_id);
-        if (!$publicacion) {
-            $data = [
-                'message' => 'Publicación no encontrada',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-    
-        $estudiante = Estudiante::find($request->estudiante_id);
-        if (!$estudiante) {
-            $data = [
-                'message' => 'Estudiante no encontrado',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-    
-        $existingGuarda = Guarda::where('publication_id', $request->publication_id)
-            ->where('estudiante_id', $request->estudiante_id)
-            ->first();
-    
-        if ($existingGuarda) {
-            Guarda::where('publication_id', $request->publication_id)
-                ->where('estudiante_id', $request->estudiante_id)
-                ->delete();
-            $data = [
-                'message' => 'Publicación eliminada de guardados',
-                'status' => 200
-            ];
-            return response()->json($data, 200);
-        }
-    
-        $guarda = Guarda::create([
-            'publication_id' => $request->publication_id,
-            'estudiante_id' => $request->estudiante_id
-        ]);
-    
+public function guardarPublicacion(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'publication_id' => 'required|numeric|exists:publications,id',
+        'estudiante_id' => 'required|numeric|exists:estudiante,id'
+    ]);
+
+    if ($validator->fails()) {
         $data = [
-            'guarda' => $guarda,
-            'message' => 'Publicación guardada exitosamente',
-            'status' => 201
+            'message' => 'Error al guardar la publicación',
+            'status' => 400,
+            'errors' => $validator->errors()
         ];
-        return response()->json($data, 201);
+        return response()->json($data, 400);
     }
+
+    $publicacion = Publication::find($request->publication_id);
+    if (!$publicacion) {
+        $data = [
+            'message' => 'Publicación no encontrada',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    $estudiante = Estudiante::find($request->estudiante_id);
+    if (!$estudiante) {
+        $data = [
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    // Nuevo: Si llega el parámetro borrar en true, elimina el guardado si existe y responde
+    $borrar = $request->input('borrar', false);
+    if ($borrar) {
+        $deleted = Guarda::where('publication_id', $request->publication_id)
+            ->where('estudiante_id', $request->estudiante_id)
+            ->delete();
+        $data = [
+            'message' => $deleted ? 'Publicación eliminada de guardados' : 'No había guardado para eliminar',
+            'status' => 200
+        ];
+        return response()->json($data, 200);
+    }
+
+    // Si ya existe, elimina (comportamiento anterior)
+    $existingGuarda = Guarda::where('publication_id', $request->publication_id)
+        ->where('estudiante_id', $request->estudiante_id)
+        ->first();
+
+    if ($existingGuarda) {
+        Guarda::where('publication_id', $request->publication_id)
+            ->where('estudiante_id', $request->estudiante_id)
+            ->delete();
+        $data = [
+            'message' => 'Publicación eliminada de guardados',
+            'status' => 200
+        ];
+        return response()->json($data, 200);
+    }
+
+    // Si no existe y no se pidió borrar, guarda
+    $guarda = Guarda::create([
+        'publication_id' => $request->publication_id,
+        'estudiante_id' => $request->estudiante_id
+    ]);
+
+    $data = [
+        'guarda' => $guarda,
+        'message' => 'Publicación guardada exitosamente',
+        'status' => 201
+    ];
+    return response()->json($data, 201);
+}
 
 
     public function obtenerDatosEstudiante($estudiante_id)
@@ -599,6 +616,7 @@ public function searchPublications(Request $request)
         $featured = $request->input('featured');
         $isDeleted = $request->input('is_deleted');
         $phone = $request->input('phone');
+        $limit = $request->input('limit'); // Nuevo parámetro para limitar resultados
 
         $query = Publication::query();
 
@@ -645,6 +663,14 @@ public function searchPublications(Request $request)
             });
         }
 
+        // Aplicar límite si se proporciona
+        if ($limit && is_numeric($limit) && $limit > 0) {
+            $query->limit($limit);
+        }
+
+        // Ordenar por destacados primero, luego por fecha de creación
+        $query->orderBy('featured', 'desc')->orderBy('created_at', 'desc');
+
         $publications = $query->with(['etiquetas', 'empresa.user'])->get();
 
         if ($publications->isEmpty()) {
@@ -677,5 +703,32 @@ public function searchPublications(Request $request)
     } catch (\Exception $e) {
         return response()->json(['message' => 'Error al buscar publicaciones', 'error' => $e->getMessage(), 'status' => 500], 500);
     }
+}
+
+public function verificarPostulacion(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'publication_id' => 'required|numeric|exists:publications,id',
+        'estudiante_id' => 'required|numeric|exists:estudiante,id'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error en los parámetros',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+    $existe = Postula::where('publication_id', $request->publication_id)
+        ->where('estudiante_id', $request->estudiante_id)
+        ->exists();
+
+    $data = [
+        'postulado' => $existe,
+        'status' => 200
+    ];
+    return response()->json($data, 200);
 }
 }

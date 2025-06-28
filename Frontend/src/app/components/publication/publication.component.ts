@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
@@ -21,11 +21,14 @@ export class PublicationComponent implements OnInit {
   data: any;
   asunto: string = '';
   descripcion: string = '';
+  isPublicationSaved: boolean = false;
+  isAlreadyApplied: boolean = false;
 
   constructor(
     private publicationService: PublicationService,
     private route: ActivatedRoute,
-    private userService: UserService
+    private userService: UserService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -42,10 +45,19 @@ export class PublicationComponent implements OnInit {
     }
   }
 
+  redirectToCompanyProfile(): void {
+    if (this.publication && this.publication.company_phone) {
+      this.router.navigate(['/enterprise-profile', this.publication.company_phone]);
+    }
+  }
+
   getPublication(id: string): void {
     this.publicationService.getPublicationById(id).subscribe(
       (response) => {
         this.publication = response.publication;
+        // Verificar estado una vez que tenemos la publicación y los datos del usuario
+        this.checkIfPublicationIsSaved();
+        this.checkIfAlreadyApplied();
       },
       (error) => {
         console.error(error);
@@ -65,6 +77,11 @@ export class PublicationComponent implements OnInit {
       return;
     }
 
+    // No permitir postularse si ya se postuló
+    if (this.isAlreadyApplied) {
+      return;
+    }
+
     const postulacion = {
       publication_id: this.publication.id,
       estudiante_id: this.data.id,
@@ -73,11 +90,13 @@ export class PublicationComponent implements OnInit {
 
     this.publicationService.createPostulacion(postulacion).subscribe(
       (response) => {
+        this.isAlreadyApplied = true; // Actualizar estado local
         this.showAlert2();
       },
       (error) => {
         console.error('Error al crear la postulación', error);
         if (error.status === 400 && error.error.message === 'El estudiante ya se ha postulado a esta publicación') {
+          this.isAlreadyApplied = true; // Actualizar estado local
           this.showAlert3();
         }
       }
@@ -104,13 +123,51 @@ export class PublicationComponent implements OnInit {
     this.publicationService.guardarPublicacion(guarda).subscribe(
       (response) => {
         if (response.status === 200) {
-          this.showAlert6();
-        } else {
-          alert('Publicación guardada exitosamente');
+          // La publicación fue eliminada de guardados
+          this.isPublicationSaved = false;
+          this.showAlert7(); // Mensaje de eliminado
+        } else if (response.status === 201) {
+          // La publicación fue guardada
+          this.isPublicationSaved = true;
+          this.showAlert6(); // Mensaje de guardado
         }
       },
       (error) => {
-        console.error('Error al guardar la publicación', error);
+        console.error('Error al gestionar la publicación guardada', error);
+      }
+    );
+  }
+
+  checkIfPublicationIsSaved(): void {
+    // Solo verificar si tenemos tanto la publicación como los datos del usuario
+    if (!this.publication || !this.data) {
+      return;
+    }
+
+    this.publicationService.verificarPublicacionGuardada(this.publication.id, this.data.id).subscribe(
+      (response) => {
+        this.isPublicationSaved = response.guardada;
+      },
+      (error) => {
+        console.error('Error al verificar si la publicación está guardada', error);
+        this.isPublicationSaved = false;
+      }
+    );
+  }
+
+  checkIfAlreadyApplied(): void {
+    // Solo verificar si tenemos tanto la publicación como los datos del usuario
+    if (!this.publication || !this.data) {
+      return;
+    }
+
+    this.publicationService.verificarPostulacion(this.publication.id, this.data.id).subscribe(
+      (response) => {
+        this.isAlreadyApplied = response.postulado;
+      },
+      (error) => {
+        console.error('Error al verificar si ya se postuló', error);
+        this.isAlreadyApplied = false;
       }
     );
   }
@@ -119,6 +176,9 @@ export class PublicationComponent implements OnInit {
     this.userService.obtenerUsuario(token).subscribe(
       (response) => {
         this.data = response.data;
+        // Verificar estado una vez que tenemos los datos del usuario
+        this.checkIfPublicationIsSaved();
+        this.checkIfAlreadyApplied();
       },
       (error) => {
         console.error(error);

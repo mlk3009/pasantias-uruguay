@@ -1,183 +1,106 @@
 
 <section class="title2">
-    <h3 class="mb-4 text-4xl tracking-tight font-semibold text-center text-black dark:text-white">Categorías</h3>
+    <h3 class="mb-1 text-4xl tracking-tight font-semibold text-center text-black dark:text-white">Categorías</h3>
 </section>
 
-
-
-<section class="hidden md:block max-w-5xl mx-auto my-10 sizing">
-    <div class="flex flex-col">
-      <div class="flex flex-row justify-between my-5">
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+<section class="hidden md:block max-w-5xl mx-auto my-3 sizing">
+    <div class="flex flex-col gap-4">
+      <!-- Primera fila de categorías (primeras 4) -->
+      <div class="flex flex-row justify-between gap-4">
+        <!-- Backend Developer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Backend Developer')">
           <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
             </svg>
           </div>
           <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+            <h3 class="text-lg font-semibold tracking-wide z-30">Backend Developer</h3>
           </div>
           <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+          <div class="absolute z-20 wave1">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
             </svg>
           </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+          <div class="absolute z-10 wave2">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
             </svg>
           </div>
         </div>
 
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+        <!-- Frontend Designer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Frontend Designer')">
           <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
             </svg>
           </div>
           <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+            <h3 class="text-lg font-semibold tracking-wide z-30">Frontend Designer</h3>
           </div>
           <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+          <div class="absolute z-20 wave1">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
             </svg>
           </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+          <div class="absolute z-10 wave2">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
             </svg>
           </div>
         </div>
 
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+        <!-- Cybersecurity -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Cybersecurity')">
           <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
             </svg>
           </div>
           <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+            <h3 class="text-lg font-semibold tracking-wide z-30">Cybersecurity</h3>
           </div>
           <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+          <div class="absolute z-20 wave1">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
             </svg>
           </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+          <div class="absolute z-10 wave2">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
             </svg>
           </div>
         </div>
 
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
+        <!-- Data Scientist -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Data Scientist')">
           <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
             </svg>
           </div>
           <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
+            <h3 class="text-lg font-semibold tracking-wide z-30">Data Scientist</h3>
           </div>
           <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
+          <div class="absolute z-20 wave1">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
             </svg>
           </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
-            </svg>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="flex flex-row justify-between my-10">
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
-          <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
-            </svg>
-          </div>
-          <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
-          </div>
-          <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
-            </svg>
-          </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
-            </svg>
-          </div>
-        </div>
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
-          <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
-            </svg>
-          </div>
-          <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
-          </div>
-          <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
-            </svg>
-          </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
-            </svg>
-          </div>
-        </div>
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
-          <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
-            </svg>
-          </div>
-          <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
-          </div>
-          <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
-            </svg>
-          </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
-            </svg>
-          </div>
-        </div>
-        <div id="category" class="border flex flex-col justify-between items-center py-16 px-20 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative">
-          <div class="my-1">
-            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v5m-3 0h6M4 11h16M5 15h14a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v9a1 1 0 0 0 1 1Z"></path>
-            </svg>
-          </div>
-          <div class="my-1 z-30">
-            <h3 class="text-lg font-semibold tracking-wide z-30">Nombre</h3>
-          </div>
-          <!--Waves-->
-          <div class="absolute z-20 wave1" style="height: 150px; overflow: hidden;">
-            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
-              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
-            </svg>
-          </div>
-          <div class="absolute z-10 wave2" style="height: 150px; overflow: hidden;" >
+          <div class="absolute z-10 wave2">
             <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
               <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
             </svg>
@@ -185,6 +108,289 @@
         </div>
       </div>
 
+      <!-- Segunda fila de categorías (siguientes 4) -->
+      <div class="flex flex-row justify-between gap-4">
+        <!-- DevOps Engineer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('DevOps Engineer')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">DevOps Engineer</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
 
-    </div>
-  </section>
+        <!-- Full Stack Developer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Full Stack Developer')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Full Stack Developer</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Machine Learning Engineer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Machine Learning Engineer')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30 text-center">
+              Machine Learning<br>Engineer
+            </h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Mobile Developer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Mobile Developer')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a1 1 0 001-1V4a1 1 0 00-1-1H8a1 1 0 00-1 1v16a1 1 0 001 1z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Mobile Developer</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tercera fila de categorías (siguientes 4) -->
+      <div class="flex flex-row justify-between gap-4">
+        <!-- Network Administrator -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Network Administrator')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.111 16.404a5.5 5.5 0 017.778 0M12 20h.01m-7.08-7.071c3.904-3.905 10.236-3.905 14.141 0M1.394 9.393c5.857-5.857 15.355-5.857 21.213 0"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Network Administrator</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Product Manager -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Product Manager')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Product Manager</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- QA Engineer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('QA Engineer')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">QA Engineer</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Software Architect -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Software Architect')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Software Architect</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuarta fila de categorías (últimas 3) -->
+      <div class="flex flex-row justify-center gap-4">
+        <!-- System Administrator -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('System Administrator')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">System Administrator</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- UI/UX Designer -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('UI/UX Designer')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21a4 4 0 01-4-4V5a2 2 0 012-2h4a2 2 0 012 2v12a4 4 0 01-4 4zM21 5a2 2 0 00-2-2h-4a2 2 0 00-2 2v6a2 2 0 002 2h4a2 2 0 002-2V5z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">UI/UX Designer</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+
+        <!-- Licensed Driver -->
+        <div 
+          class="category-card border flex flex-col justify-between items-center py-12 px-16 bg-gray-50 hover:shadow-lg hover:cursor-pointer rounded-lg transform transition-transform duration-100 hover:scale-105 relative w-60"
+          (click)="navigateToCategory('Licensed Driver')">
+          <div class="my-1">
+            <svg class="h-10 w-10 shrink-0 text-gray-900 dark:text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+            </svg>
+          </div>
+          <div class="my-1 z-30">
+            <h3 class="text-lg font-semibold tracking-wide z-30">Licensed Driver</h3>
+          </div>
+          <!--Waves-->
+          <div class="absolute z-20 wave1">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-104.74,148.12 C150.00,149.60 332.61,131.39 514.33,-8.37 L518.28,250.48 L-84.42,261.30 Z" style="stroke: none; fill: #357ABD;"></path>
+            </svg>
+          </div>
+          <div class="absolute z-10 wave2">
+            <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
+              <path d="M-83.86,135.33 C60.04,35.92 268.28,87.09 523.92,169.77 L514.90,219.96 L-56.20,227.84 Z" style="stroke: none; fill: #1565C0;"></path>
+            </svg>
+          </div>
+        </div>
+      </div>
+

@@ -165,7 +165,7 @@ class CvController extends Controller
             }
     
             try {
-                $this->generarPDF($cv->id);
+                $this->generatePDFInternal(null, $cv->id, false);
             } catch (\Exception $e) {
                 return response()->json([
                     'status' => 'error',
@@ -285,7 +285,17 @@ class CvController extends Controller
 
 
 
-    public function generarPDF($cvId)
+    public function generarPDF(Request $request, $cvId)
+    {
+        return $this->generatePDFInternal($request, $cvId);
+    }
+
+    public function regenerarPDF(Request $request, $cvId)
+    {
+        return $this->generatePDFInternal($request, $cvId, true); // Force true para regenerar
+    }
+
+    private function generatePDFInternal($request, $cvId, $force = false)
     {
         if (Auth::check()) {
             $user = Auth::user();
@@ -301,11 +311,28 @@ class CvController extends Controller
             $pdfName = $cv->pdf ?? 'sin_identificar';
 
             // Ruta del archivo PDF
-            $pdfPath = 'pdfs/cv_' . $pdfName . '.pdf';
+            $pdfPath = public_path('pdfs/cv_' . $pdfName . '.pdf');
 
-                // Verificar si el archivo ya existe
-                if (file_exists($pdfPath)) {
+                // Verificar el parámetro force (del request o del parámetro directo)
+                $forceParam = $force;
+                if ($request && is_object($request)) {
+                    $forceFromQuery = $request->query('force', false);
+                    // Convertir string 'true' a booleano true
+                    $forceParam = ($forceFromQuery === 'true' || $forceFromQuery === true || $forceFromQuery === '1') || $force;
+                }
+                
+                // Log para debugging
+                error_log("Generando PDF - Force: " . ($forceParam ? 'true' : 'false') . ", Archivo existe: " . (file_exists($pdfPath) ? 'true' : 'false'));
+                
+                // Verificar si el archivo ya existe y no se está forzando la regeneración
+                if (file_exists($pdfPath) && !$forceParam) {
                     return response(['data' => 'El PDF ya existe.'], 409);
+                }
+                
+                // Si el archivo existe y se está forzando, eliminarlo primero
+                if (file_exists($pdfPath) && $forceParam) {
+                    error_log("Eliminando archivo existente: " . $pdfPath);
+                    unlink($pdfPath);
                 }
     
                 // Crear una instancia de FPDF
@@ -460,5 +487,218 @@ class CvController extends Controller
         }
         $contentCallback($pdf);
         $pdf->Ln(5); // Añadir espacio después de cada sección
+    }
+
+    public function updateCV(Request $request, $cvId)
+    {
+        $jsonData = $request->all();
+
+        $validator = Validator::make($jsonData, [
+            'nombre_completo' => 'required|string|max:100',
+            'cedula' => 'required|int',
+            'fecha_nacimiento' => 'required|date',
+            'genero' => 'required|string',
+            'estado_civil' => 'nullable|string|max:50',
+            'licencia' => 'nullable|string|max:255',
+            'carnet_de_conducir' => 'nullable|string|max:255',
+            'idiomas.idiomas' => 'nullable|array',
+            'idiomas.*.idioma' => 'required|string|max:50',
+            'idiomas.*.nivel' => 'required|string|max:50',
+            'educacion.estudios' => 'nullable|array',
+            'educacion.*.nivel' => 'required|string|max:50',
+            'educacion.*.institucion' => 'required|string|max:100',
+            'educacion.*.titulo' => 'required|string|max:100',
+            'educacion.*.fecha_inicio' => 'required|date',
+            'educacion.*.fecha_fin' => 'nullable|date',
+            'educacion.*.actualmente' => 'nullable|boolean',
+            'educacion.*.fin_estimado' => 'nullable|date',
+            'educacion.*.descripcion' => 'nullable|string|max:500',
+            'experiencias' => 'nullable|array',
+            'experiencias.*.puesto' => 'nullable|string|max:100',
+            'experiencias.*.empresa' => 'nullable|string|max:100',
+            'experiencias.*.fecha_inicio' => 'nullable|date',
+            'experiencias.*.fecha_fin' => 'nullable|date',
+            'experiencias.*.descripcion' => 'nullable|string|max:500',
+            'experiencias.*.referencias' => 'nullable|string|max:255',
+            'habilidades.habilidades' => 'nullable|array',
+            'habilidades.habilidades.*.habilidad' => 'required|string|max:50',
+            'habilidades.habilidades.*.nivel' => 'required|string|max:50'
+        ]);
+
+        if ($validator->fails()) {
+            $errors = $validator->errors()->toArray();
+            $formattedErrors = [];
+
+            foreach ($errors as $field => $messages) {
+                foreach ($messages as $message) {
+                    $formattedErrors[] = [
+                        'field' => $field,
+                        'message' => $message,
+                        'type' => 'validation'
+                    ];
+                }
+            }
+
+            $data = [
+                'status' => 'error',
+                'message' => 'Validation Error',
+                'errors' => $formattedErrors,
+                'code' => 422
+            ];
+            return response()->json($data, 422);
+        }
+
+        // Buscar el CV existente
+        $cv = CV::find($cvId);
+        if (!$cv) {
+            $data = [
+                'status' => 'error',
+                'message' => 'CV no encontrado.',
+                'code' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        // Verificar que el estudiante existe
+        $estudiante = Estudiante::where('ci_estudiante', $jsonData['cedula'])->first();
+        if (!$estudiante) {
+            $data = [
+                'status' => 'error',
+                'message' => 'Estudiante no encontrado.',
+                'code' => 404
+            ];
+            return response()->json($data, 404);
+        }
+
+        // Actualizar datos principales del CV
+        $cv->update([
+            'nombre_completo' => $jsonData['nombre_completo'],
+            'fecha_nacimiento' => $jsonData['fecha_nacimiento'],
+            'genero' => $jsonData['genero'],
+            'estado_civil' => $jsonData['estado_civil'],
+            'licencia' => $jsonData['licencia']
+        ]);
+
+        // Eliminar datos relacionados existentes
+        Educacion::where('cv_id', $cv->id)->delete();
+        Experiencia::where('cv_id', $cv->id)->delete();
+        Habilidades::where('cv_id', $cv->id)->delete();
+        Idiomas::where('cv_id', $cv->id)->delete();
+
+        // Recrear educación
+        if (isset($jsonData['educacion'])) {
+            foreach ($jsonData['educacion'] as $educacion) {
+                Educacion::create([
+                    'cv_id' => $cv->id,
+                    'nivel' => $educacion['nivel'],
+                    'institucion' => $educacion['institucion'],
+                    'titulo' => $educacion['titulo'],
+                    'fecha_inicio' => $educacion['fecha_inicio'],
+                    'fecha_fin' => $educacion['fecha_fin'],
+                    'actualmente' => $educacion['actualmente'],
+                    'fin_estimado' => $educacion['fin_estimado'],
+                    'descripcion' => $educacion['descripcion'],
+                ]);
+            }
+        }
+
+        // Recrear experiencias
+        if (isset($jsonData['experiencias'])) {
+            foreach ($jsonData['experiencias'] as $experiencia) {
+                Experiencia::create([
+                    'cv_id' => $cv->id,
+                    'puesto' => $experiencia['puesto'],
+                    'empresa' => $experiencia['empresa'],
+                    'fecha_inicio' => $experiencia['fecha_inicio'],
+                    'fecha_fin' => $experiencia['fecha_fin'],
+                    'descripcion' => $experiencia['descripcion'],
+                    'referencias' => $experiencia['referencias'],
+                ]);
+            }
+        }
+
+        // Recrear habilidades
+        if (isset($jsonData['habilidades'])) {
+            foreach ($jsonData['habilidades'] as $habilidad) {
+                Habilidades::create([
+                    'cv_id' => $cv->id,
+                    'habilidad' => $habilidad['habilidad'],
+                    'nivel' => $habilidad['nivel'],
+                ]);
+            }
+        }
+
+        // Recrear idiomas
+        if (isset($jsonData['idiomas'])) {
+            foreach ($jsonData['idiomas'] as $idioma) {
+                Idiomas::create([
+                    'cv_id' => $cv->id,
+                    'idioma' => $idioma['idioma'],
+                    'nivel' => $idioma['nivel'],
+                ]);
+            }
+        }
+
+        // Regenerar PDF
+        try {
+            $this->generatePDFInternal(null, $cv->id, true); // Force true para regenerar
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error generating PDF: ' . $e->getMessage(),
+                'code' => 500
+            ], 500);
+        }
+
+        $data = [
+            'status' => 'success',
+            'message' => 'CV updated successfully',
+            'cv' => $cv,
+            'code' => 200
+        ];
+
+        return response()->json($data, 200);
+    }
+
+    public function getCvForEdit(): Response
+    {
+        if (Auth::check()) {
+            $user = Auth::user();
+            $cv = CV::where('estudiante_id', $user->id)->first();
+            
+            if (!$cv) {
+                return response(['status' => 'error', 'message' => 'CV no encontrado'], 404);
+            }
+            
+            $estudiante = Estudiante::where('id', $user->id)->first();
+            $idiomas = Idiomas::where('cv_id', $cv->id)->get();
+            $educacion = Educacion::where('cv_id', $cv->id)->get();
+            $experiencia = Experiencia::where('cv_id', $cv->id)->get();
+            $habilidades = Habilidades::where('cv_id', $cv->id)->get();
+
+            $cvData = [
+                'cv' => [
+                    'id' => $cv->id,
+                    'nombre_completo' => $cv->nombre_completo,
+                    'fecha_nacimiento' => $cv->fecha_nacimiento,
+                    'genero' => $cv->genero,
+                    'estado_civil' => $cv->estado_civil,
+                    'licencia' => $cv->licencia,
+                ],
+                'estudiante' => [
+                    'ci_estudiante' => $estudiante->ci_estudiante ?? null,
+                    'location' => $estudiante->location ?? null,
+                    'cod_postal' => $estudiante->cod_postal ?? null,
+                ],
+                'idiomas' => $idiomas,
+                'educacion' => $educacion,
+                'experiencia' => $experiencia,
+                'habilidades' => $habilidades
+            ];
+            
+            return response(['status' => 'success', 'data' => $cvData], 200);
+        }
+
+        return response(['status' => 'error', 'message' => 'Unauthorized'], 401);
     }
 }

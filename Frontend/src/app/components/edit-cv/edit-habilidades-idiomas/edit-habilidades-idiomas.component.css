@@ -1,0 +1,58 @@
+/* Estilos específicos para el componente de editar habilidades e idiomas */
+.section-divider {
+  border-bottom: 1px solid #e5e7eb;
+  margin: 1.5rem 0;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.form-group {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+}
+
+.button-container {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding-top: 2rem;
+}
+
+.section-title {
+  color: #6b7280;
+  font-size: 1.125rem;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+}
+
+.navigation-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .form-group {
+    grid-template-columns: 1fr;
+  }
+  
+  .navigation-buttons {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  
+  .button-container {
+    padding-top: 1rem;
+  }
+}

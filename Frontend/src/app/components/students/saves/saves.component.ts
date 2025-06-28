@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 import { UserService } from '../../../services/user.service';
+import { PublicationService } from '../../../services/publication.service';
 import { NavComponent } from '../../home/nav/nav.component';
 
 
 @Component({
   selector: 'app-guardados',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavComponent], 
+  imports: [CommonModule, FormsModule, NavComponent, RouterModule], 
   templateUrl: './saves.component.html',
   styleUrl: './saves.component.css'
 })
@@ -22,12 +23,16 @@ export class SavesComponent implements OnInit {
   itemsPerPage: number = 6; 
   totalPages: number = 1;
   data: any = {};
+  dataLoaded: boolean = false; // Nueva propiedad para controlar si los datos están cargados
   searchText: string = '';
   filteredPostulaciones: any[] = [];
+  deletePublicationId: number | null = null;
+
   constructor(
     private _userService: UserService,
     private _router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private _publicationService: PublicationService
   ) {}
   
 ngOnInit(): void {
@@ -36,6 +41,7 @@ ngOnInit(): void {
     this._userService.obtenerUsuario(token).subscribe({
       next: (response) => {
         this.data = response.data;
+        this.dataLoaded = true; // Marcar que los datos han sido cargados
         console.log(this.data); 
       },
       error: (error) => {
@@ -151,4 +157,34 @@ goToPage(page: number): void {
     const modal = document.getElementById('contactModal') as HTMLElement;
     modal.style.display = 'none';
   }
+
+  modalDelete(publicationId: number) {
+  this.deletePublicationId = publicationId;
+  const modal = document.getElementById('deleteModal') as HTMLElement;
+  if (modal) modal.style.display = 'flex';
+}
+
+modalDeleteClose() {
+  this.deletePublicationId = null;
+  const modal = document.getElementById('deleteModal') as HTMLElement;
+  if (modal) modal.style.display = 'none';
+}
+
+deleteSavedPublication(publicationId: number | null) {
+  if (!publicationId || !this.data?.id) return;
+  this._publicationService.guardarPublicacion({
+    publication_id: publicationId,
+    estudiante_id: this.data.id,
+    borrar: true
+  }).subscribe({
+    next: () => {
+      this.getSavedPublications();
+      this.modalDeleteClose();
+    },
+    error: (error) => {
+      console.error('Error al borrar la publicación guardada:', error);
+      this.modalDeleteClose();
+    }
+  });
+}
 }
