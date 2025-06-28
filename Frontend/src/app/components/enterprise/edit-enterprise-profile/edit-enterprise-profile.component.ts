@@ -5,6 +5,7 @@ import { NavComponent } from '../../home/nav/nav.component';
 import { ActivatedRoute, Router } from '@angular/router'; // Importar Router
 import { CompanyService } from '../../../services/company.service';
 import { UserService } from '../../../services/user.service';
+import { PublicationService } from '../../../services/publication.service';
 
 @Component({
   selector: 'app-edit-enterprise-profile',
@@ -18,6 +19,7 @@ export class EditEnterpriseProfileComponent implements OnInit {
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('fileInputEmpresa') fileInputEmpresa!: ElementRef;
   @ViewChild('fileInputMuro') fileInputMuro!: ElementRef;
+  @ViewChildren('card') cards: QueryList<ElementRef> | undefined;
   createPublication: boolean = false; // Hacer que esto dependa de la url, sacar el valor default.
   empresa: any = {};
   publications: any[] = [];
@@ -29,6 +31,7 @@ export class EditEnterpriseProfileComponent implements OnInit {
   previousImageId: string | null = null;
   previousEmpresaImageId: string | null = null;
   previousMuroImageId: string | null = null;
+  displayedPublications: any[] = [];
 
   desc1Title: string = '';
   desc1Paragraph1: string = '';
@@ -46,7 +49,8 @@ export class EditEnterpriseProfileComponent implements OnInit {
     private companyService: CompanyService,
     private userService: UserService,
     private route: ActivatedRoute,
-    private router: Router 
+    private router: Router,
+    private publicationService: PublicationService
   ) {}
 
   ngOnInit(): void {
@@ -57,7 +61,7 @@ export class EditEnterpriseProfileComponent implements OnInit {
       this.companyService.obtenerEmpresa(token).subscribe({
         next: (response) => {
           this.empresa = response.data;
-          this.obtenerPublicaciones(this.empresa.id);
+          this.getPublications(); // Llamar sin parámetros para obtener publicaciones destacadas
           this.processDesc1(this.empresa.desc1);
           this.processDesc2(this.empresa.desc2);
           this.processDesc3(this.empresa.desc3);
@@ -103,16 +107,28 @@ export class EditEnterpriseProfileComponent implements OnInit {
     }
   }
 
-  obtenerPublicaciones(empresaId: string): void {
-    this.companyService.obtenerPublicaciones(empresaId, undefined, 9).subscribe({
-      next: (response) => {
-        this.publications = response.data;
+  getPublications(category?: string, featured: boolean = true): void {
+    this.publicationService.getPublications(category, featured).subscribe(
+      (response) => {
+        console.log('Respuesta de publicaciones:', response); // Debug log
+        if (response && response.length > 0 && response[0].publications) {
+          this.displayedPublications = response[0].publications;
+          console.log('Publicaciones encontradas:', this.displayedPublications.length); // Debug log
+          this.displayedPublications.forEach(publication => {
+            publication.imageUrl = publication.image 
+              ? `http://localhost:8000/images/uploads/${publication.image}` 
+              : 'http://localhost:8000/images/defaultpub.jpg';
+          });
+        } else {
+          console.log('No se encontraron publicaciones o estructura de respuesta incorrecta'); // Debug log
+          this.displayedPublications = [];
+        }
       },
-      error: (error) => {
-        console.error('Error al obtener las publicaciones:', error);
-        this.errorMessage = 'Error al obtener las publicaciones: ' + error.message;
+      (error) => {
+        console.error('Error al obtener publicaciones:', error);
+        this.displayedPublications = [];
       }
-    });
+    );
   }
 
   ngAfterViewInit() {}
