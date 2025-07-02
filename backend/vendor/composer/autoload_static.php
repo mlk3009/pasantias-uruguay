@@ -367,8 +367,8 @@ class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -412,8 +412,8 @@ class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
         ),
         'League\\Uri\\' => 
         array (
-            0 => __DIR__ . '/..' . '/league/uri',
-            1 => __DIR__ . '/..' . '/league/uri-interfaces',
+            0 => __DIR__ . '/..' . '/league/uri-interfaces',
+            1 => __DIR__ . '/..' . '/league/uri',
         ),
         'League\\MimeTypeDetection\\' => 
         array (
@@ -556,6 +556,9 @@ class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
 
     public static $classMap = array (
         'App\\Console\\Commands\\CheckPublicationExpiry' => __DIR__ . '/../..' . '/app/Console/Commands/CheckPublicationExpiry.php',
+        'App\\Console\\Commands\\DeleteOldPublications' => __DIR__ . '/../..' . '/app/Console/Commands/DeleteOldPublications.php',
+        'App\\Console\\Commands\\ListPromociones' => __DIR__ . '/../..' . '/app/Console/Commands/ListPromociones.php',
+        'App\\Console\\Commands\\TestPurchaseSystem' => __DIR__ . '/../..' . '/app/Console/Commands/TestPurchaseSystem.php',
         'App\\Console\\Kernel' => __DIR__ . '/../..' . '/app/Console/Kernel.php',
         'App\\Http\\Controllers\\Api\\CvController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CvController.php',
         'App\\Http\\Controllers\\Api\\Email\\EmailController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Email/EmailController.php',
@@ -567,6 +570,7 @@ class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
         'App\\Http\\Controllers\\Api\\Users\\StudentsController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Users/StudentsController.php',
         'App\\Http\\Controllers\\Api\\Users\\UserController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/Users/UserController.php',
         'App\\Http\\Controllers\\Controller' => __DIR__ . '/../..' . '/app/Http/Controllers/Controller.php',
+        'App\\Http\\Middleware\\TrackUserActivity' => __DIR__ . '/../..' . '/app/Http/Middleware/TrackUserActivity.php',
         'App\\Models\\Administrador' => __DIR__ . '/../..' . '/app/Models/Administrador.php',
         'App\\Models\\CV' => __DIR__ . '/../..' . '/app/Models/CV.php',
         'App\\Models\\Educacion' => __DIR__ . '/../..' . '/app/Models/Educacion.php',
@@ -586,6 +590,7 @@ class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
         'App\\Models\\Password' => __DIR__ . '/../..' . '/app/Models/Password.php',
         'App\\Models\\Postula' => __DIR__ . '/../..' . '/app/Models/Postula.php',
         'App\\Models\\Publication' => __DIR__ . '/../..' . '/app/Models/Publication.php',
+        'App\\Models\\PublicationVisit' => __DIR__ . '/../..' . '/app/Models/PublicationVisit.php',
         'App\\Models\\Saldo' => __DIR__ . '/../..' . '/app/Models/Saldo.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Providers\\AppServiceProvider' => __DIR__ . '/../..' . '/app/Providers/AppServiceProvider.php',
@@ -708,6 +713,10 @@ class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
         'Cron\\MonthField' => __DIR__ . '/..' . '/dragonmantank/cron-expression/src/Cron/MonthField.php',
         'Database\\Factories\\UserFactory' => __DIR__ . '/../..' . '/database/factories/UserFactory.php',
         'Database\\Seeders\\DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeders/DatabaseSeeder.php',
+        'Database\\Seeders\\PostulaSeeder' => __DIR__ . '/../..' . '/database/seeders/PostulaSeeder.php',
+        'Database\\Seeders\\PublicationSeeder' => __DIR__ . '/../..' . '/database/seeders/PublicationSeeder.php',
+        'Database\\Seeders\\SaldoEmpresaSeeder' => __DIR__ . '/../..' . '/database/seeders/SaldoEmpresaSeeder.php',
+        'Database\\Seeders\\UserSeeder' => __DIR__ . '/../..' . '/database/seeders/UserSeeder.php',
         'DateError' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateError.php',
         'DateException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateException.php',
         'DateInvalidOperationException' => __DIR__ . '/..' . '/symfony/polyfill-php83/Resources/stubs/DateInvalidOperationException.php',
@@ -6319,6 +6328,7 @@ class ComposerStaticInit67f72c37541c05290aaecdd1b69914e6
         'Symfony\\Component\\HttpKernel\\Fragment\\RoutableFragmentRenderer' => __DIR__ . '/..' . '/symfony/http-kernel/Fragment/RoutableFragmentRenderer.php',
         'Symfony\\Component\\HttpKernel\\Fragment\\SsiFragmentRenderer' => __DIR__ . '/..' . '/symfony/http-kernel/Fragment/SsiFragmentRenderer.php',
         'Symfony\\Component\\HttpKernel\\HttpCache\\AbstractSurrogate' => __DIR__ . '/..' . '/symfony/http-kernel/HttpCache/AbstractSurrogate.php',
+        'Symfony\\Component\\HttpKernel\\HttpCache\\CacheWasLockedException' => __DIR__ . '/..' . '/symfony/http-kernel/HttpCache/CacheWasLockedException.php',
         'Symfony\\Component\\HttpKernel\\HttpCache\\Esi' => __DIR__ . '/..' . '/symfony/http-kernel/HttpCache/Esi.php',
         'Symfony\\Component\\HttpKernel\\HttpCache\\HttpCache' => __DIR__ . '/..' . '/symfony/http-kernel/HttpCache/HttpCache.php',
         'Symfony\\Component\\HttpKernel\\HttpCache\\ResponseCacheStrategy' => __DIR__ . '/..' . '/symfony/http-kernel/HttpCache/ResponseCacheStrategy.php',
