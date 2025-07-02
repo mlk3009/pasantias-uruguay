@@ -2,7 +2,7 @@ import { Component, ViewChildren, ViewChild, ElementRef, QueryList, OnInit } fro
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; // Importar FormsModule
 import { NavComponent } from '../../home/nav/nav.component';
-import { ActivatedRoute, Router } from '@angular/router'; // Importar Router
+import { ActivatedRoute, Router, RouterModule } from '@angular/router'; // Importar Router
 import { CompanyService } from '../../../services/company.service';
 import { UserService } from '../../../services/user.service';
 import { PublicationService } from '../../../services/publication.service';
@@ -10,7 +10,7 @@ import { PublicationService } from '../../../services/publication.service';
 @Component({
   selector: 'app-edit-enterprise-profile',
   standalone: true,
-  imports: [CommonModule, FormsModule, NavComponent], // Agregar FormsModule a imports
+  imports: [CommonModule, FormsModule, NavComponent, RouterModule], // Agregar FormsModule a imports
   templateUrl: './edit-enterprise-profile.component.html',
   styleUrls: ['./edit-enterprise-profile.component.css']
 })
@@ -18,6 +18,7 @@ export class EditEnterpriseProfileComponent implements OnInit {
 
   @ViewChild('fileInput') fileInput!: ElementRef;
   @ViewChild('fileInputEmpresa') fileInputEmpresa!: ElementRef;
+  @ViewChild('fileInputMuro2') fileInputMuro2!: ElementRef;
   @ViewChild('fileInputMuro') fileInputMuro!: ElementRef;
   @ViewChildren('card') cards: QueryList<ElementRef> | undefined;
   createPublication: boolean = false; // Hacer que esto dependa de la url, sacar el valor default.
@@ -27,9 +28,11 @@ export class EditEnterpriseProfileComponent implements OnInit {
   errorMessage: string = ''; 
   userImageUrl: string = '';
   empresaImageUrl: string = '';
+  muro2ImageUrl: string = '';
   muroImageUrl: string = '';
   previousImageId: string | null = null;
   previousEmpresaImageId: string | null = null;
+  previousMuro2ImageId: string | null = null;
   previousMuroImageId: string | null = null;
   displayedPublications: any[] = [];
 
@@ -86,24 +89,39 @@ export class EditEnterpriseProfileComponent implements OnInit {
   cargarImagenesEmpresa(images: any[]): void {
     const profileImage = images.find((img: any) => img.desc === 'profile');
     const empresaImage = images.find((img: any) => img.desc === 'empresaimg');
+    const muro2Image = images.find((img: any) => img.desc === 'muro2');
     const muroImage = images.find((img: any) => img.desc === 'muro');
 
     if (profileImage) {
       this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+      this.previousImageId = profileImage.id;
     } else {
       this.userImageUrl = 'http://localhost:8000/images/user.png';
+      this.previousImageId = null;
     }
 
     if (empresaImage) {
       this.empresaImageUrl = `http://localhost:8000/images/uploads/${empresaImage.image}`;
+      this.previousEmpresaImageId = empresaImage.id;
     } else {
       this.empresaImageUrl = 'http://localhost:8000/images/empresa.png';
+      this.previousEmpresaImageId = null;
+    }
+
+    if (muro2Image) {
+      this.muro2ImageUrl = `http://localhost:8000/images/uploads/${muro2Image.image}`;
+      this.previousMuro2ImageId = muro2Image.id;
+    } else {
+      this.muro2ImageUrl = 'http://localhost:8000/images/default-muro2.png';
+      this.previousMuro2ImageId = null;
     }
 
     if (muroImage) {
       this.muroImageUrl = `http://localhost:8000/images/uploads/${muroImage.image}`;
+      this.previousMuroImageId = muroImage.id;
     } else {
       this.muroImageUrl = 'http://localhost:8000/images/default-muro.png';
+      this.previousMuroImageId = null;
     }
   }
 
@@ -222,18 +240,18 @@ export class EditEnterpriseProfileComponent implements OnInit {
   onFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
-      this.uploadNewImage(file, 'profile');
+      this.uploadNewImage(file, 'empresaimg');
     }
   }
 
   onEmpresaImageClick(): void {
-    this.fileInputEmpresa.nativeElement.click();
+    this.fileInputMuro2.nativeElement.click();
   }
 
   onEmpresaFileSelected(event: any): void {
     const file: File = event.target.files[0];
     if (file) {
-      this.uploadNewImage(file, 'empresaimg');
+      this.uploadNewImage(file, 'muro2');
     }
   }
 
@@ -256,41 +274,53 @@ export class EditEnterpriseProfileComponent implements OnInit {
       response => {
         console.log('Imagen cargada exitosamente', response);
         const newImageId = response.id;
+        
         if (desc === 'profile') {
+          // Borrar la imagen anterior si existe y no es una imagen predeterminada
+          if (this.previousImageId && this.previousImageId !== null) {
+            this.userService.deleteImage(this.previousImageId).subscribe(
+              () => console.log('Imagen anterior de perfil eliminada'),
+              error => console.error('Error al eliminar imagen anterior de perfil:', error)
+            );
+          }
+          
           this.userImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
-  
-          // Borrar la imagen anterior si existe
-          if (this.previousImageId) {
-            this.userService.deleteImage(this.previousImageId).subscribe(() => {
-              console.log('Imagen anterior eliminada');
-            });
-          }
-  
-          // Actualizar el id_image anterior
           this.previousImageId = newImageId;
+          
         } else if (desc === 'empresaimg') {
+          // Borrar la imagen anterior si existe y no es una imagen predeterminada
+          if (this.previousEmpresaImageId && this.previousEmpresaImageId !== null) {
+            this.userService.deleteImage(this.previousEmpresaImageId).subscribe(
+              () => console.log('Imagen anterior de empresa eliminada'),
+              error => console.error('Error al eliminar imagen anterior de empresa:', error)
+            );
+          }
+          
           this.empresaImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
-  
-          // Borrar la imagen anterior si existe
-          if (this.previousEmpresaImageId) {
-            this.userService.deleteImage(this.previousEmpresaImageId).subscribe(() => {
-              console.log('Imagen anterior eliminada');
-            });
-          }
-  
-          // Actualizar el id_empresa_image anterior
           this.previousEmpresaImageId = newImageId;
-        } else if (desc === 'muro') {
-          this.muroImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
-  
-          // Borrar la imagen anterior si existe
-          if (this.previousMuroImageId) {
-            this.userService.deleteImage(this.previousMuroImageId).subscribe(() => {
-              console.log('Imagen anterior eliminada');
-            });
+          
+        } else if (desc === 'muro2') {
+          // Borrar la imagen anterior si existe y no es una imagen predeterminada
+          if (this.previousMuro2ImageId && this.previousMuro2ImageId !== null) {
+            this.userService.deleteImage(this.previousMuro2ImageId).subscribe(
+              () => console.log('Imagen anterior de muro2 eliminada'),
+              error => console.error('Error al eliminar imagen anterior de muro2:', error)
+            );
           }
-  
-          // Actualizar el id_muro_image anterior
+          
+          this.muro2ImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
+          this.previousMuro2ImageId = newImageId;
+          
+        } else if (desc === 'muro') {
+          // Borrar la imagen anterior si existe y no es una imagen predeterminada
+          if (this.previousMuroImageId && this.previousMuroImageId !== null) {
+            this.userService.deleteImage(this.previousMuroImageId).subscribe(
+              () => console.log('Imagen anterior de muro eliminada'),
+              error => console.error('Error al eliminar imagen anterior de muro:', error)
+            );
+          }
+          
+          this.muroImageUrl = `http://localhost:8000/images/uploads/${response.image}`;
           this.previousMuroImageId = newImageId;
         }
       },

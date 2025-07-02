@@ -18,6 +18,13 @@ export class CategoriesContentComponent implements OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['publications']) {
+      // Asignar imageUrl a cada publicación
+      this.publications.forEach((publication: any) => {
+        publication.imageUrl = publication.image 
+          ? `http://localhost:8000/images/uploads/${publication.image}` 
+          : 'http://localhost:8000/images/defaultPubli.jpg';
+      });
+      
       this.currentPage = 1; 
       this.updateDisplayedPublications();
     }

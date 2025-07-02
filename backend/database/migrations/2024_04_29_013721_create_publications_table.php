@@ -15,13 +15,14 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->text('description')->nullable();
+            $table->unsignedInteger('visitas')->default(0);
             $table->text('description2')->nullable();
             $table->text('description3')->nullable();
-            $table->string('salary');
+            $table->decimal('salary', 10, 2); // Cambiado a decimal para manejar valores monetarios
             $table->string('location');
-            $table->string('type');
-            $table->string('time');
-            $table->integer('vacancies');
+            $table->string('type')->nullable();
+            $table->string('time')->nullable();
+            $table->unsignedInteger('vacancies'); // Cambiado a unsignedInteger para solo números positivos
             $table->string('deathline');
             $table->boolean('is_deleted')->default(false);
             $table->foreignId('empresa_id')->constrained('empresa')->onDelete('cascade');

@@ -1,6 +1,6 @@
 import { Component, ViewChildren, ViewChild, ElementRef, QueryList, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CompanyService } from '../../../services/company.service';
 import { UserService } from '../../../services/user.service';
 import { FormsModule } from '@angular/forms';
@@ -12,7 +12,7 @@ import ApexCharts from 'apexcharts';
 @Component({
   selector: 'app-user-profile-enterprise',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './user-profile-enterprise.component.html',
   styleUrls: ['./user-profile-enterprise.component.css']
 })
@@ -26,14 +26,22 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
   isPhoneAccess: boolean = false; // Variable para determinar si se accedió mediante phone
   userImageUrl: string = '';
   empresaImageUrl: string = '';
+  muro2ImageUrl: string = '';
   muroImageUrl: string = '';
   displayedPublications: any[] = [];
   categoryPublications: { [key: string]: any[] } = {};
   data: any;
   ApexCharts: any;
   
+  // Propiedades para estadísticas
+  estadisticas: any = {
+    total_publicaciones: 0,
+    total_visitas: 0,
+    total_postulaciones: 0,
+    ratio_postulacion: 0,
+    visitas_por_dia: []
+  };
   
-
   desc1Title: string = '';
   desc1Paragraph1: string = '';
   desc1Paragraph2: string = '';
@@ -65,8 +73,9 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
           this.processDesc1(this.empresa.desc1);
           this.processDesc2(this.empresa.desc2);
           this.processDesc3(this.empresa.desc3);
-          this.getPublications(this.empresa.phone);
+          this.getPublications(this.empresa.id);
           this.cargarImagenesEmpresa(this.empresa.images);
+          this.cargarEstadisticas();
           this.loading = false;
           
         },
@@ -85,6 +94,7 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
           this.processDesc3(this.empresa.desc3);
           this.getPublications(this.empresa.id);
           this.cargarImagenesEmpresa(this.empresa.images);
+          this.cargarEstadisticas();
           this.loading = false;
         },
         error: (error) => {
@@ -123,6 +133,7 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
   cargarImagenesEmpresa(images: any[]): void {
     const profileImage = images.find((img: any) => img.desc === 'profile');
     const empresaImage = images.find((img: any) => img.desc === 'empresaimg');
+    const muro2Image = images.find((img: any) => img.desc === 'muro2');
     const muroImage = images.find((img: any) => img.desc === 'muro');
 
     if (profileImage) {
@@ -135,6 +146,12 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
       this.empresaImageUrl = `http://localhost:8000/images/uploads/${empresaImage.image}`;
     } else {
       this.empresaImageUrl = 'http://localhost:8000/images/empresa.png';
+    }
+
+    if (muro2Image) {
+      this.muro2ImageUrl = `http://localhost:8000/images/uploads/${muro2Image.image}`;
+    } else {
+      this.muro2ImageUrl = 'http://localhost:8000/images/default-muro2.png';
     }
 
     if (muroImage) {
@@ -248,8 +265,11 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    this.renderLegendChart();
-    this.renderColumnChart();
+    // Las gráficas se renderizarán después de cargar las estadísticas
+    if (this.estadisticas && this.estadisticas.total_publicaciones > 0) {
+      this.renderLegendChart();
+      this.renderColumnChart();
+    }
   }
 
   onArrowLeftClick(event: MouseEvent) {
@@ -298,16 +318,33 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
 
 
   renderLegendChart(): void {
+    // Verificar que las estadísticas estén cargadas
+    if (!this.estadisticas || !this.estadisticas.visitas_por_dia) {
+      console.log('No se pueden renderizar las gráficas: estadísticas no disponibles');
+      return;
+    }
+
+    // Preparar datos de visitas por día
+    const fechas = this.estadisticas.visitas_por_dia.map((item: any) => {
+      const fecha = new Date(item.fecha);
+      return fecha.toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
+    });
+    
+    const visitasReales = this.estadisticas.visitas_por_dia.map((item: any) => item.visitas);
+    
+    // Generar datos simulados para "semana anterior" (como referencia)
+    const visitasAnterior = visitasReales.map((visita: number) => Math.max(0, visita + Math.floor(Math.random() * 200) - 100));
+
     const options = {
       series: [
         {
           name: "Semana anterior",
-          data: [1500, 1418, 1456, 1526, 1356, 1256, 1456],
+          data: visitasAnterior,
           color: "#1A56DB",
         },
         {
           name: "Esta semana",
-          data: [643, 413, 765, 412, 1423, 1731, 1234],
+          data: visitasReales,
           color: "#7E3BF2",
         },
       ],
@@ -357,7 +394,7 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
         },
       },
       xaxis: {
-        categories: ['01 February', '02 February', '03 February', '04 February', '05 February', '06 February', '07 February'],
+        categories: fechas,
         labels: {
           show: false,
         },
@@ -380,127 +417,175 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
 
     const chartElement = document.getElementById("legend-chart");
     if (chartElement && typeof ApexCharts !== 'undefined') {
+      // Limpiar el contenido anterior
+      chartElement.innerHTML = '';
       const chart = new ApexCharts(chartElement, options);
       chart.render();
     }
   }
 
   renderColumnChart(): void {
-  const options: ApexCharts.ApexOptions = {
-    colors: ["#1A56DB", "#FDBA8C"],
-    series: [
-      {
-        name: "Postulaciones",
-        color: "#1A56DB",
-        data: [
-          { x: "Lun", y: 231 },
-          { x: "Mar", y: 122 },
-          { x: "Mie", y: 63 },
-          { x: "Jue", y: 421 },
-          { x: "Vie", y: 122 },
-          { x: "Sab", y: 323 },
-          { x: "Dom", y: 111 },
-        ],
-      },
-      {
-        name: "Visualizaciones",
-        color: "#FDBA8C",
-        data: [
-          { x: "Lun", y: 232 },
-          { x: "Mar", y: 113 },
-          { x: "Mie", y: 341 },
-          { x: "Jue", y: 224 },
-          { x: "Vie", y: 522 },
-          { x: "Sab", y: 411 },
-          { x: "Dom", y: 243 },
-        ],
-      },
-    ],
-    chart: {
-      type: "bar",
-      height: "320px",
-      fontFamily: "Inter, sans-serif",
-      toolbar: {
-        show: false,
-      },
-    },
-    plotOptions: {
-      bar: {
-        horizontal: false,
-        columnWidth: "70%",
-        borderRadiusApplication: "end",
-        borderRadius: 8,
-      },
-    },
-    tooltip: {
-      shared: true,
-      intersect: false,
-      style: {
+    // Verificar que las estadísticas estén cargadas
+    if (!this.estadisticas || !this.estadisticas.visitas_por_dia) {
+      console.log('No se pueden renderizar las gráficas: estadísticas no disponibles');
+      return;
+    }
+
+    // Preparar datos basados en visitas reales
+    const diasSemana = ['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'];
+    const visitasPorDia = this.estadisticas.visitas_por_dia.slice(-7); // Últimos 7 días
+    
+    // Datos de postulaciones (calculamos un estimado basado en el ratio)
+    const postulacionesPorDia = visitasPorDia.map((item: any, index: number) => ({
+      x: diasSemana[index] || `Día ${index + 1}`,
+      y: Math.floor(item.visitas * (this.estadisticas.ratio_postulacion / 100))
+    }));
+    
+    // Datos de visualizaciones reales
+    const visualizacionesPorDia = visitasPorDia.map((item: any, index: number) => ({
+      x: diasSemana[index] || `Día ${index + 1}`,
+      y: item.visitas
+    }));
+
+    const options: ApexCharts.ApexOptions = {
+      colors: ["#1A56DB", "#FDBA8C"],
+      series: [
+        {
+          name: "Postulaciones",
+          color: "#1A56DB",
+          data: postulacionesPorDia,
+        },
+        {
+          name: "Visualizaciones",
+          color: "#FDBA8C",
+          data: visualizacionesPorDia,
+        },
+      ],
+      chart: {
+        type: "bar",
+        height: "320px",
         fontFamily: "Inter, sans-serif",
-      },
-    },
-    states: {
-      hover: {
-        filter: {
-          type: "darken",
+        toolbar: {
+          show: false,
         },
       },
-    },
-    stroke: {
-      show: true,
-      width: 0,
-      colors: ["transparent"],
-    },
-    grid: {
-      show: false,
-      strokeDashArray: 4,
-      padding: {
-        left: 2,
-        right: 2,
-        top: -14
+      plotOptions: {
+        bar: {
+          horizontal: false,
+          columnWidth: "70%",
+          borderRadiusApplication: "end",
+          borderRadius: 8,
+        },
       },
-    },
-    dataLabels: {
-      enabled: false,
-    },
-    legend: {
-      show: false,
-    },
-    xaxis: {
-      floating: false,
-      labels: {
-        show: true,
+      tooltip: {
+        shared: true,
+        intersect: false,
         style: {
           fontFamily: "Inter, sans-serif",
-          cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-        }
+        },
       },
-      axisBorder: {
+      states: {
+        hover: {
+          filter: {
+            type: "darken",
+          },
+        },
+      },
+      stroke: {
+        show: true,
+        width: 0,
+        colors: ["transparent"],
+      },
+      grid: {
+        show: false,
+        strokeDashArray: 4,
+        padding: {
+          left: 2,
+          right: 2,
+          top: -14
+        },
+      },
+      dataLabels: {
+        enabled: false,
+      },
+      legend: {
         show: false,
       },
-      axisTicks: {
+      xaxis: {
+        floating: false,
+        labels: {
+          show: true,
+          style: {
+            fontFamily: "Inter, sans-serif",
+            cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+          }
+        },
+        axisBorder: {
+          show: false,
+        },
+        axisTicks: {
+          show: false,
+        },
+      },
+      yaxis: {
         show: false,
       },
-    },
-    yaxis: {
-      show: false,
-    },
-    fill: {
-      opacity: 1,
-    },
-  };
+      fill: {
+        opacity: 1,
+      },
+    };
 
-  const chartElement = document.getElementById("column-chart");
-  if (chartElement && typeof ApexCharts !== 'undefined') {
-    const chart = new ApexCharts(chartElement, options);
-    chart.render();
+    const chartElement = document.getElementById("column-chart");
+    if (chartElement && typeof ApexCharts !== 'undefined') {
+      // Limpiar el contenido anterior
+      chartElement.innerHTML = '';
+      const chart = new ApexCharts(chartElement, options);
+      chart.render();
+    }
   }
-}
 
 setView(view: 'empresarial' | 'cliente'): void {
   this.selectedView = view;
+  
+  // Si se cambia a vista empresarial y no se han cargado las estadísticas, cargarlas
+  if (view === 'empresarial' && this.empresa.id && this.estadisticas.total_publicaciones === 0) {
+    this.cargarEstadisticas();
+  }
+  
+  // Si cambiamos a vista empresarial y ya tenemos estadísticas, renderizar las gráficas
+  if (view === 'empresarial' && this.estadisticas && this.estadisticas.total_publicaciones > 0) {
+    setTimeout(() => {
+      this.renderLegendChart();
+      this.renderColumnChart();
+    }, 100);
+  }
 }
 
+cargarEstadisticas(): void {
+  if (!this.empresa.id) {
+    console.log('No se puede cargar estadísticas: empresa.id no está definido');
+    return;
+  }
+  
+  console.log('Cargando estadísticas para empresa ID:', this.empresa.id);
+  
+  this.companyService.obtenerEstadisticasEmpresa(this.empresa.id).subscribe({
+    next: (response: any) => {
+      console.log('Respuesta de estadísticas:', response);
+      this.estadisticas = response;
+      console.log('Estadísticas asignadas:', this.estadisticas);
+      
+      // Renderizar las gráficas después de cargar las estadísticas
+      setTimeout(() => {
+        this.renderLegendChart();
+        this.renderColumnChart();
+      }, 100);
+    },
+    error: (error: any) => {
+      console.error('Error al cargar estadísticas:', error);
+    }
+  });
+}
   
 }
 

@@ -58,11 +58,7 @@ export class PublicationsListComponent implements OnInit {
       (response) => {
         if (response && response.length > 0 && response[0].publications) {
           this.displayedPublications = response[0].publications;
-          this.displayedPublications.forEach(publication => {
-            publication.imageUrl = publication.image 
-              ? `http://localhost:8000/images/uploads/${publication.image}` 
-              : 'http://localhost:8000/images/defaultpub.jpg';
-          });
+          this.publicationService.setPublicationImageUrls(this.displayedPublications);
         } else {
           this.displayedPublications = [];
         }
@@ -92,7 +88,9 @@ export class PublicationsListComponent implements OnInit {
         responses => {
           responses.forEach((response, index) => {
             if (response && response.length > 0 && response[0].publications) {
-              this.categoryPublications[`category${index + 1}`] = response[0].publications;
+              const publications = response[0].publications;
+              this.publicationService.setPublicationImageUrls(publications);
+              this.categoryPublications[`category${index + 1}`] = publications;
             }
           });
           // console.log(this.categoryPublications);
@@ -111,7 +109,9 @@ export class PublicationsListComponent implements OnInit {
         responses => {
           responses.forEach((response, index) => {
             if (response && response.length > 0 && response[0].publications) {
-              this.categoryPublications[`category${index + 1}`] = response[0].publications;
+              const publications = response[0].publications;
+              this.publicationService.setPublicationImageUrls(publications);
+              this.categoryPublications[`category${index + 1}`] = publications;
             }
           });
           // console.log(this.categoryPublications);

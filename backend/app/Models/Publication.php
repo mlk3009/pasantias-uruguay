@@ -24,7 +24,8 @@ class Publication extends Model
         'vacancies',
         'featured',
         'is_deleted',
-        'empresa_id'
+        'empresa_id',
+        'visitas'
     ];
     
     public $timestamps = true;
@@ -42,5 +43,15 @@ class Publication extends Model
     public function images()
     {
         return $this->hasMany(ImageUpload::class, 'publication_id');
+    }
+
+    public function visits()
+    {
+        return $this->hasMany(PublicationVisit::class, 'publication_id');
+    }
+
+    public function postulaciones()
+    {
+        return $this->hasMany(Postula::class, 'publication_id');
     }
 }

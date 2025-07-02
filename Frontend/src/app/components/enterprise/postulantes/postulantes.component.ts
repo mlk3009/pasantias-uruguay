@@ -3,12 +3,13 @@ import { CompanyService } from '../../../services/company.service';
 import { NavComponent } from '../../home/nav/nav.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { RouterModule, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-postulantes',
   templateUrl: './postulantes.component.html',
   styleUrls: ['./postulantes.component.css'],
-  imports: [NavComponent, CommonModule, FormsModule],
+  imports: [NavComponent, CommonModule, FormsModule, RouterModule],
   standalone: true
 })
 export class PostulantesComponent implements OnInit {
@@ -29,11 +30,26 @@ export class PostulantesComponent implements OnInit {
   totalPages: number = 1;
   estadoFiltro: string = '';
 
+  // Modal de contacto
+  showModalContacto: boolean = false;
+  postulanteSeleccionado: any = null;
 
-  constructor(private companyService: CompanyService) {}
+
+  constructor(
+    private companyService: CompanyService,
+    private route: ActivatedRoute
+  ) {}
 
   ngOnInit(): void {
     this.loading = true;
+    
+    // Verificar si hay un query parameter de búsqueda
+    this.route.queryParams.subscribe(params => {
+      if (params['search']) {
+        this.searchText = params['search'];
+      }
+    });
+    
     const token = this.companyService.getToken();
     if (token) {
       this.companyService.obtenerEmpresa(token).subscribe({
@@ -55,11 +71,11 @@ export class PostulantesComponent implements OnInit {
   }
 
   cargarImagenesEmpresa(images: any[]): void {
-    const profileImage = images.find((img: any) => img.desc === 'profile');
-    if (profileImage) {
-      this.userImageUrl = `http://localhost:8000/images/uploads/${profileImage.image}`;
+    const empresaImage = images.find((img: any) => img.desc === 'empresaimg');
+    if (empresaImage) {
+      this.userImageUrl = `http://localhost:8000/images/uploads/${empresaImage.image}`;
     } else {
-      this.userImageUrl = 'http://localhost:8000/images/user.png';
+      this.userImageUrl = 'http://localhost:8000/images/empresa.png';
     }
   }
 
@@ -158,6 +174,53 @@ if (this.fechaFiltro === 'reciente') {
       },
       error: (error) => {
         console.error('Error al actualizar el estado de la postulación:', error);
+      }
+    });
+  }
+
+  abrirModalContacto(postulante: any): void {
+    // No abrir el modal si el estudiante ya está en proceso
+    if (postulante.estado === 'En proceso') {
+      return;
+    }
+    
+    this.postulanteSeleccionado = postulante;
+    this.showModalContacto = true;
+  }
+
+  cerrarModal(): void {
+    this.showModalContacto = false;
+    this.postulanteSeleccionado = null;
+  }
+
+  contactarEstudiante(tipoContacto: string): void {
+    if (!this.postulanteSeleccionado) return;
+
+    this.companyService.contactarEstudiante(
+      this.postulanteSeleccionado.publication_id,
+      this.postulanteSeleccionado.id,
+      tipoContacto,
+      this.empresa.id
+    ).subscribe({
+      next: (response) => {
+        console.log('Contacto realizado exitosamente:', response);
+        
+        // Mostrar mensaje de éxito
+        if (tipoContacto === 'web') {
+          alert('Contacto realizado exitosamente. Se ha enviado un email al estudiante.');
+        } else {
+          alert('Estado actualizado a "En proceso". Puedes contactar al estudiante directamente.');
+        }
+        
+        // Actualizar la lista de postulantes para reflejar el cambio de estado
+        this.obtenerPostulantes(this.empresa.id);
+        
+        // Cerrar modal
+        this.cerrarModal();
+      },
+      error: (error) => {
+        console.error('Error al contactar estudiante:', error);
+        alert('Error al contactar estudiante. Por favor, inténtalo de nuevo.');
       }
     });
   }

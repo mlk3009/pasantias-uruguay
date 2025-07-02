@@ -402,7 +402,58 @@ class UserController extends Controller
         return response()->json($data, $data['code']);
     }
 
+    /**
+     * Obtener estadísticas de usuarios activos por día en la última semana
+     */
+    public function getActiveUsersStats(Request $request)
+    {
+        try {
+            // Obtener fecha de hace 7 días
+            $weekAgo = now()->subDays(7)->startOfDay();
+            
+            // Query para obtener usuarios activos por día (solo estudiantes)
+            $dailyActiveUsers = User::where('rol', 'estudiante')
+                ->where('last_activity_at', '>=', $weekAgo)
+                ->selectRaw('DATE(last_activity_at) as date, COUNT(DISTINCT id) as active_users')
+                ->groupBy('date')
+                ->orderBy('date')
+                ->get();
 
+            // Crear array con todos los días de la semana (incluso si no hay actividad)
+            $statsArray = [];
+            for ($i = 6; $i >= 0; $i--) {
+                $date = now()->subDays($i)->format('Y-m-d');
+                $dateFormatted = now()->subDays($i)->format('d/m');
+                
+                $found = $dailyActiveUsers->firstWhere('date', $date);
+                $statsArray[] = [
+                    'date' => $dateFormatted,
+                    'active_users' => $found ? $found->active_users : 0
+                ];
+            }
+
+            // Calcular total de usuarios activos únicos en la semana
+            $totalActiveThisWeek = User::where('rol', 'estudiante')
+                ->where('last_activity_at', '>=', $weekAgo)
+                ->count();
+
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'daily_stats' => $statsArray,
+                    'total_active_week' => $totalActiveThisWeek,
+                    'period' => 'última semana'
+                ]
+            ]);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Error al obtener estadísticas de usuarios activos',
+                'error' => $e->getMessage()
+            ], 500);
+        }
+    }
 
     public function destroy() {}
 }

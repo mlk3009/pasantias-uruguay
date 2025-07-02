@@ -23,7 +23,7 @@ Route::post('/contactUs', [EmailController::class, 'contactUs']);
 Route::post('/contactMe', [EmailController::class, 'contactMe']);
 Route::post('/mensajes', [CompanyController::class, 'createMensaje']);
 
-Route::group(['middleware' => 'auth:sanctum'], function () {
+Route::group(['middleware' => ['auth:sanctum', 'track.activity']], function () {
     Route::get('user', [UserController::class, 'userDetails']);
     Route::post('logout', [UserController::class, 'logout']);
     Route::get('cv-details', [CvController::class, 'cvDetails']);
@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::post('/updateProfile', [UserController::class, 'update']);    
     Route::get('company', [CompanyController::class, 'companyDetails']);
     Route::get('company/applicants/{empresaId}', [CompanyController::class, 'obtenerPostulantes']);
+    Route::get('/users/active-stats', [UserController::class, 'getActiveUsersStats']);
 });
 
 Route::get('company/publications/{phone}', [CompanyController::class, 'obtenerPublicaciones']);
@@ -42,16 +43,24 @@ Route::get('/companybyphone/{phone}', [CompanyController::class, 'obtenerEmpresa
 
 
 //POSTULACIONES
-Route::post('/postular', [PublicationController::class, 'crearPostulacion']);
-Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [CompanyController::class, 'actualizarEstadoPostulacion']);
-Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtenerDatosEstudiante']);
+Route::post('/postular', [PublicationController::class, 'crearPostulacion'])->middleware(['auth:sanctum', 'track.activity']);
+Route::put('/actualizar-postulacion/{publication_id}/{estudiante_id}', [CompanyController::class, 'actualizarEstadoPostulacion'])->middleware(['auth:sanctum', 'track.activity']);
+Route::post('/contactar-estudiante', [CompanyController::class, 'contactarEstudiante'])->middleware(['auth:sanctum', 'track.activity']);
+Route::get('/postulante/{estudiante_id}', [PublicationController::class, 'obtenerDatosEstudiante'])->middleware(['auth:sanctum', 'track.activity']);
+
+//VISITAS
+Route::post('/publicaciones/visita', [PublicationController::class, 'estudianteVisita'])->middleware(['auth:sanctum', 'track.activity']);
+Route::get('/empresa/estadisticas', [PublicationController::class, 'getEstadisticasEmpresa'])->middleware(['auth:sanctum', 'track.activity']);
+
+//CONTACTO ESTUDIANTES
+Route::post('/empresa/contactar-estudiante', [CompanyController::class, 'contactarEstudiante'])->middleware(['auth:sanctum', 'track.activity']);
 
 //GUARDAR
-Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPublicacion']);
-Route::get('/verificar-publicacion-guardada', [PublicationController::class, 'verificarPublicacionGuardada']);
+Route::post('/guardar-publicacion', [PublicationController::class, 'guardarPublicacion'])->middleware(['auth:sanctum', 'track.activity']);
+Route::get('/verificar-publicacion-guardada', [PublicationController::class, 'verificarPublicacionGuardada'])->middleware(['auth:sanctum', 'track.activity']);
 
 //POSTULACIONES
-Route::get('/verificar-postulacion', [PublicationController::class, 'verificarPostulacion']);
+Route::get('/verificar-postulacion', [PublicationController::class, 'verificarPostulacion'])->middleware(['auth:sanctum', 'track.activity']);
 
 
 //ADMIN
@@ -93,6 +102,7 @@ Route::post('upload-image', [ImagesController::class, 'store_image']);
 Route::delete('delete-image/{id}', [ImagesController::class, 'delete_image']);
 Route::post('upload-file', [ImagesController::class, 'store_file']);
 Route::delete('delete-file/{id}', [ImagesController::class, 'delete_file']);
+Route::post('cambiar-orden-img', [ImagesController::class, 'cambiarOrdenImg']);
 
 
 // EMAIL VERIFICATION
@@ -107,6 +117,8 @@ Route::group(['middleware' => 'auth:sanctum'], function () {
     Route::delete('/publications/destroy/{id}', [PublicationController::class, 'destroy']);
     Route::put('publications/reactivate', [PublicationController::class, 'reactivatePublication']);
     Route::get('/company/saldo/{empresaId}', [CompanyController::class, 'obtenerSaldo']);
+    Route::get('/saldos/disponibles', [CompanyController::class, 'obtenerSaldosDisponibles']);
+    Route::post('/saldos/comprar', [CompanyController::class, 'comprarSaldo']);
 });
 Route::get('publications/search', [PublicationController::class, 'searchPublications']);
 
