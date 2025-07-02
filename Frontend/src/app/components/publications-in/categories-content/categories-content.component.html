@@ -12,7 +12,7 @@
         <div *ngFor="let publication of displayedPublications" class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a [href]="'/publication/' + publication.id">
                 <div class="image-container">
-                    <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                    <img class="rounded-t-lg size" [src]="publication.imageUrl" alt="" draggable="false" />
                 </div>
             </a>
             <div class="p-5">

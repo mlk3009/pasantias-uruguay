@@ -12,8 +12,14 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule): void
     {
-        // Aquí puedes definir las tareas programadas
+        // Limpiar tokens expirados de Sanctum cada día
+        $schedule->command('sanctum:prune-expired --hours=720')->daily(); // 30 días
+        
+        // Deshabilitar publicaciones vencidas cada día
         $schedule->command('publications:check-expiry')->daily();
+        
+        // Eliminar publicaciones deshabilitadas hace 3+ meses (cada semana)
+        $schedule->command('publications:delete-old')->weekly();
     }
 
     /**

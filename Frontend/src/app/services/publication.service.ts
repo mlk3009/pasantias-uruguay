@@ -70,6 +70,15 @@ destroyPublication(id: number): Observable<any> {
   return this._http.delete(global.url + 'admin/publications/delete/' + id, { headers: headers });
 }
 
+softDeletePublication(id: number): Observable<any> {
+  const token = this.getToken();
+  let headers = new HttpHeaders();
+  if (token) {
+    headers = headers.set('Authorization', 'Bearer ' + token);
+  }
+  return this._http.put(global.url + 'publications/soft-delete/' + id, {}, { headers: headers });
+}
+
   loadPublication(token: string, publication: any): Observable<any> {
     let params = JSON.stringify(publication);
 
@@ -200,6 +209,48 @@ searchPublications(params: any): Observable<any[]> {
         return throwError(() => error);
       }
     })
+  );
+}
+
+registrarVisita(publicationId: number, estudianteId: number): Observable<any> {
+  const data = {
+    publication_id: publicationId,
+    estudiante_id: estudianteId
+  };
+  
+  return this._http.post(global.url + 'publicaciones/visita', data);
+}
+
+/**
+ * Asigna la URL de imagen correcta a una publicación
+ */
+setPublicationImageUrl(publication: any): void {
+  publication.imageUrl = publication.image 
+    ? `http://localhost:8000/images/uploads/${publication.image}` 
+    : 'http://localhost:8000/images/defaultPubli.jpg';
+}
+
+/**
+ * Asigna URLs de imagen a un array de publicaciones
+ */
+setPublicationImageUrls(publications: any[]): void {
+  publications.forEach(publication => this.setPublicationImageUrl(publication));
+}
+
+cambiarOrdenImg(publicationId: number, imageOrders: any[]): Observable<any> {
+  const body = {
+    publication_id: publicationId,
+    image_orders: imageOrders
+  };
+  
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  
+  return this._http.post(global.url + 'cambiar-orden-img', body, {
+    headers: headers,
+  }).pipe(
+    map(response => response)
   );
 }
 }

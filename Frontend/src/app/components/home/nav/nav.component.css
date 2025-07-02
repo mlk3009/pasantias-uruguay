@@ -106,8 +106,6 @@ nav.down{
 
 
 
-
-
 .dropdown-container {
     position: absolute;
     top: 100%;
@@ -216,4 +214,62 @@ nav.down{
 }
 .select option:hover{
     cursor: pointer;
+}
+
+/* Estilos para el indicador de saldo */
+.saldo-indicator {
+    display: inline-block;
+}
+
+.saldo-indicator:hover .saldo-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.saldo-tooltip {
+    z-index: 60;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
+    transform: translateX(-50%) translateY(-10px);
+}
+
+.saldo-tooltip .arrow::after {
+    content: '';
+    position: absolute;
+    top: -2px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 0;
+    border-left: 8px solid transparent;
+    border-right: 8px solid transparent;
+    border-bottom: 8px solid #ffffff;
+}
+
+/* Tooltips secundarios para detalles */
+.saldo-item-container:hover .saldo-detail-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.saldo-item-trigger.has-tooltip:hover + .saldo-detail-tooltip {
+    opacity: 1;
+    visibility: visible;
+}
+
+.saldo-detail-tooltip {
+    z-index: 100;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    pointer-events: none;
+}
+
+/* Mejorar la visualización del tooltip secundario */
+.saldo-detail-tooltip .arrow-left {
+    filter: drop-shadow(2px 0 2px rgba(0, 0, 0, 0.1));
+}
+
+@media (prefers-color-scheme: dark) {
+    .saldo-tooltip .arrow::after {
+        border-bottom-color: #374151;
+    }
 }

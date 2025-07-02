@@ -1,13 +1,22 @@
 <div class="body flex items-center justify-center">
-    <div class="content bg-gray-100 w-full md:mx-16 h-5/6 mt-20 mb-20 pb-20 rounded-lg">
-        <div class="flex flex-row justify-center w-full">
+  <div class="content bg-gray-100 w-full md:mx-16 h-5/6 mt-20 mb-20 pb-20 rounded-lg">
+    
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="flex flex-col justify-center items-center h-full min-h-96">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-sky-700 mb-4"></div>
+      <p class="text-gray-600 text-lg font-medium">Cargando perfil...</p>
+    </div>
+
+    <!-- Contenido principal -->
+    <div *ngIf="!loading" class="flex flex-row justify-center w-full">
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
                 <div class="w-full flex justify-center flex-col items-center border-b-2">   
                     <div class="flex flex-col items-center">
-                        <div class="relative w-40 h-40 flex items-center justify-center rounded-full">
+                        <div class="profile-container">
                         <img
                             [src]="empresaImageUrl"
-                            class="object-cover w-full h-full rounded-full"
+                            class="profile-image-circular"
+                            alt="Imagen de perfil de la empresa"
                         />
                         </div>
                         <h1 class="text-gray-900 font-semibold text-4xl mt-5">
@@ -37,23 +46,23 @@
                         <div class="w-full md:block md:w-auto pt-4">
                         <ul class="text-center font-medium flex flex-col items-center p-4 md:p-0 md:px-14 mt-4 md:shadow-md md:rounded-full md:bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                                <a [href]="isPhoneAccess ? '/enterprise-profile/' + empresa.phone : '/enterprise-profile'" class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg" aria-current="page">Home</a>
+                                <a [routerLink]="isPhoneAccess ? ['/enterprise-profile', empresa.phone] : ['/enterprise-profile']" class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg" aria-current="page">Home</a>
                             </li>
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                                <a [href]="isPhoneAccess ? '/enterprise-abaut-us/' + empresa.phone : '/enterprise-abaut-us'" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Sobre nosotros</a>
+                                <a [routerLink]="isPhoneAccess ? ['/enterprise-abaut-us', empresa.phone] : ['/enterprise-abaut-us']" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Sobre nosotros</a>
                             </li>
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                                <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">
+                                <a [routerLink]="isPhoneAccess ? ['/my-publications', empresa.phone] : ['/my-publications']" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">
                                     {{ isPhoneAccess ? 'Ver Publicaciones' : 'Administrar publicaciones' }}
                                 </a>
                             </li>
 
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0" *ngIf="!isPhoneAccess">
-                                <a href="/postulantes" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Ver postulantes</a>
+                                <a routerLink="/postulantes" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Ver postulantes</a>
                             </li>
 
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0" *ngIf="!isPhoneAccess">
-                                <a href="/edit-enterprise-profile" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Editar perfil</a>
+                                <a routerLink="/edit-enterprise-profile" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Editar perfil</a>
                             </li>
 
                         </ul>
@@ -83,7 +92,7 @@
                             <p class="mb-4 font-light text-md">{{ desc1Paragraph1 }}</p>
                             <p class="mb-4 font-medium text-md">{{ desc1Paragraph2 }}</p>
                             <div class="flex justify-center mt-6">
-                                <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="bg-sky-700 hover:bg-sky-600 text-white hover:cursor-pointer inline-flex items-center font-medium text-md rounded-lg py-2 px-4">
+                                <a [routerLink]="isPhoneAccess ? ['/my-publications', empresa.phone] : ['/my-publications']" class="bg-sky-700 hover:bg-sky-600 text-white hover:cursor-pointer inline-flex items-center font-medium text-md rounded-lg py-2 px-4">
                                     Ver publicaciones
                                     <svg class="ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                                 </a>
@@ -97,7 +106,7 @@
                         <div class="mt-4 md:mt-0">
                             <h2 class="mb-4 text-3xl tracking-tight font-semibold text-gray-900 dark:text-white"> {{ desc3Title }}</h2>
                             <p class="mb-6 font-light text-gray-500 md:text-lg dark:text-gray-400 text-md"> {{ desc3Paragraph }} </p>
-                            <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="bg-sky-700 hover:bg-sky-600 text-white hover:cursor-pointer inline-flex items-center font-medium text-lg rounded-lg py-2 px-4">
+                            <a [routerLink]="isPhoneAccess ? ['/enterprise-abaut-us', empresa.phone] : ['/enterprise-abaut-us']" class="bg-sky-700 hover:bg-sky-600 text-white hover:cursor-pointer inline-flex items-center font-medium text-lg rounded-lg py-2 px-4">
                                 Conoce mas sobre nosotros
                                 <svg class="ml-1 w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path></svg>
                             </a>
@@ -116,20 +125,20 @@
 
 
                             <div *ngFor="let publication of displayedPublications" class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                <a [href]="'/publication/' + publication.id">
+                                <a [routerLink]="['/publication', publication.id]">
                                     <div class="image-container">
                                         <img class="rounded-t-lg size" [src]="publication.imageUrl" alt="" draggable="false" />
                                     </div>
                                 </a>
                                 <div class="zona-texto p-5">
-                                    <a class="" [href]="'/publication/' + publication.id">
+                                    <a class="" [routerLink]="['/publication', publication.id]">
                                         <h5 class="card-title mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">{{ publication.title }}</h5>
                                     </a>
                                     <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">Estamos buscando un Ingeniero de Software Senior con más de 5 años de experiencia en desarrollo full-stack. Únete a nuestro equipo dinámico para trabajar en proyectos de vanguardia.</p>
                                     <div class="mb-3">
                                         <span class="font-bold text-xl" *ngIf="publication.salary !== null">${{ publication.salary }}</span>
                                     </div>
-                                    <a href="#" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-sky-800 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    <a [routerLink]="['/publication', publication.id]" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-sky-800 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                         Mas info
                                         <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
                                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
@@ -181,7 +190,7 @@
                                     </div>              
                                     <p class="text-2xl font-medium">Ofertas subidas</p>
                                 </div>
-                                <p class="text-2xl font-semibold">0</p>
+                                <p class="text-2xl font-semibold">{{ estadisticas.total_publicaciones }}</p>
                             </div>
                             <div class="flex flex-row justify-between items-center w-64">
                                 <div class="flex flex-row items-center gap-1">
@@ -192,7 +201,7 @@
                                     </div>              
                                     <p class="text-2xl font-medium">Postulados</p>
                                 </div>
-                                <p class="text-2xl font-semibold">0</p>
+                                <p class="text-2xl font-semibold">{{ estadisticas.total_postulaciones }}</p>
                             </div>
                         </div>
                         <div class="flex flex-col p-4 justify-evenly justify-center items-center">
@@ -206,7 +215,7 @@
                                     </div>              
                                     <p class="text-2xl font-medium">CV Vistos</p>
                                 </div>
-                                <p class="text-2xl font-semibold">0</p>
+                                <p class="text-2xl font-semibold">{{ estadisticas.total_visitas }}</p>
                             </div>
                             <div class="flex flex-row justify-between items-center w-64">
                                 <div class="flex flex-row items-center gap-1">
@@ -231,12 +240,12 @@
                     <div class="w-10/12 bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
                         <div class="flex justify-between mb-5">
                             <div>
-                            <h5 class="leading-none text-3xl font-bold text-sky-900 dark:text-white pb-2">1.500</h5>
-                            <p class="text-base font-normal text-gray-500 dark:text-gray-400"><span class="font-semibold">Usuarios</span> esta semana</p>
+                            <h5 class="leading-none text-3xl font-bold text-sky-900 dark:text-white pb-2">{{ estadisticas.total_visitas }}</h5>
+                            <p class="text-base font-normal text-gray-500 dark:text-gray-400"><span class="font-semibold">Visitas totales</span> a tus publicaciones</p>
                             </div>
                             <div
                             class="flex items-center px-2.5 py-0.5 text-base font-semibold text-green-500 dark:text-green-500 text-center">
-                            23%
+                            {{ estadisticas.ratio_postulacion }}%
                             <svg class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
                             </svg>
@@ -247,7 +256,7 @@
                             <div class="flex justify-between items-center pt-5">
                             <!-- Button -->
                             <a
-                                href="#"
+                                routerLink="/postulantes"
                                 class="uppercase text-sm font-medium inline-flex items-center rounded-lg text-white bg-sky-700 hover:bg-sky-600 px-3 py-2">
                                 Ir a postulantes
                                 <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -269,21 +278,20 @@
                                 <path d="M5 19h10v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2ZM5 7a5.008 5.008 0 0 1 4-4.9 3.988 3.988 0 1 0-3.9 5.859A4.974 4.974 0 0 1 5 7Zm5 3a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm5-1h-.424a5.016 5.016 0 0 1-1.942 2.232A6.007 6.007 0 0 1 17 17h2a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5ZM5.424 9H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h2a6.007 6.007 0 0 1 4.366-5.768A5.016 5.016 0 0 1 5.424 9Z"/>
                                 </svg>
                             </div>
-                            <div>
-                                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">27%</h5>
-                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Porcentaje de postulados en relación a las vistas</p>
+                            <div>                            <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">{{ estadisticas.ratio_postulacion }}%</h5>
+                            <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Porcentaje de postulados en relación a las visitas</p>
                             </div>
                             </div>
                         </div>
 
                         <div class="grid grid-cols-2">
                             <dl class="flex items-center">
-                                <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Usuarios postulados:</dt>
-                                <dd class="text-gray-900 text-sm dark:text-white font-semibold">232</dd>
+                                <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Total visitas:</dt>
+                                <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ estadisticas.total_visitas }}</dd>
                             </dl>
                             <dl class="flex items-center justify-end">
-                                <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Ratio de postulación:</dt>
-                                <dd class="text-gray-900 text-sm dark:text-white font-semibold">15%</dd>
+                                <dt class="text-gray-500 dark:text-gray-400 text-sm font-normal me-1">Total postulaciones:</dt>
+                                <dd class="text-gray-900 text-sm dark:text-white font-semibold">{{ estadisticas.total_postulaciones }}</dd>
                             </dl>
                         </div>
 
@@ -292,7 +300,7 @@
                             <div class="flex justify-between items-center pt-5">
                                 <!-- Button -->
                                 <a
-                                href="#"
+                                routerLink="/postulantes"
                                 class="uppercase text-md font-medium inline-flex items-center rounded-lg text-sky-900 hover:bg-gray-100 px-3 py-2">
                                 Ir a postulantes
                                 <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
@@ -314,7 +322,4 @@
             </div>
         </div>
     </div>
-</div>
-
-
-
+  </div>

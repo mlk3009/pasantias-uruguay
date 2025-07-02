@@ -128,4 +128,47 @@ export class CompanyService {
       throw new Error('Token no encontrado');
     }
   }
+
+  obtenerEstadisticasEmpresa(empresaId: string): Observable<any> {
+    let params = new HttpParams();
+    params = params.set('empresa_id', empresaId.toString());
+    
+    return this._http.get(global.url + 'empresa/estadisticas', { params: params });
+  }
+
+  contactarEstudiante(publicationId: number, estudianteId: number, tipoContacto: string, empresaId: number): Observable<any> {
+    const data = {
+      publication_id: publicationId,
+      estudiante_id: estudianteId,
+      tipo_contacto: tipoContacto,
+      empresa_id: empresaId
+    };
+    
+    return this._http.post(global.url + 'empresa/contactar-estudiante', data);
+  }
+
+  obtenerSaldosDisponibles(): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+      });
+      return this._http.get(global.url + 'saldos/disponibles', { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
+
+  comprarSaldo(saldoId: number): Observable<any> {
+    const token = this.getToken();
+    if (token) {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
+      });
+      return this._http.post(global.url + 'saldos/comprar', { saldo_id: saldoId }, { headers: headers });
+    } else {
+      throw new Error('Token no encontrado');
+    }
+  }
 }

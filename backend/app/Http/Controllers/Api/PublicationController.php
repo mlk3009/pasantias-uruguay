@@ -125,13 +125,15 @@ public function store(Request $request)
         'description3' => 'nullable|string',
         'salary' => 'required|numeric',
         'location' => 'required|string',
-        'type' => 'required|string',
-        'time' => 'required|string',
+        'type' => 'nullable|string',
+        'time' => 'nullable|string',
         'vacancies' => 'required|numeric',
         'empresa_id' => 'required|numeric',
         'saldo_id' => 'required|numeric|exists:saldo,id', 
         'id_image' => 'sometimes|array', 
-        'id_image.*' => 'numeric|exists:image_uploads,id'
+        'id_image.*' => 'numeric|exists:image_uploads,id',
+        'etiquetas' => 'required|array|min:1|max:3', // Al menos 1 etiqueta es requerida
+        'etiquetas.*' => 'numeric|exists:etiqueta,id' // Corregido: tabla se llama 'etiqueta' no 'etiquetas'
     ]);
 
     if ($validator->fails()) {
@@ -174,6 +176,14 @@ public function store(Request $request)
 
     $jsonData['deathline'] = now()->addDays($saldo->days)->toDateString();
 
+    // Verificar si type o time son cadenas vacías y convertirlas a null
+    if (isset($jsonData['type']) && $jsonData['type'] === '') {
+        $jsonData['type'] = null;
+    }
+    if (isset($jsonData['time']) && $jsonData['time'] === '') {
+        $jsonData['time'] = null;
+    }
+
     // Crear la publicación
     $publication = Publication::create($jsonData);
 
@@ -195,6 +205,11 @@ public function store(Request $request)
         }
     }
 
+    // Asociar etiquetas a la publicación si se proporcionan
+    if (isset($jsonData['etiquetas']) && is_array($jsonData['etiquetas'])) {
+        $publication->etiquetas()->attach($jsonData['etiquetas']);
+    }
+
     $data = [
         'publication' => $publication,
         'status' => 201
@@ -205,20 +220,54 @@ public function store(Request $request)
 
     public function show($id)
     {
+        // Validar que el ID sea un entero positivo
+        if (!is_numeric($id) || $id <= 0) {
+            return response()->json([
+                'message' => 'ID de publicación inválido',
+                'status' => 400
+            ], 400);
+        }
+
         $publication = Publication::with(['empresa.user'])->find($id);
         if (!$publication) {
-            $data = [
+            return response()->json([
                 'message' => 'Publicación no encontrada',
                 'status' => 404
-            ];
-            return response()->json($data, 404);
+            ], 404);
         }
     
         $companyName = $publication->empresa->user->name;
         $companyEmail = $publication->empresa->user->email;
         $companyPhone = $publication->empresa->user->phone;
-    
-        $data = [
+
+        // Obtener las imágenes asociadas a la publicación usando la relación correcta
+        $images = [];
+        
+        // Buscar imágenes por publication_id en la tabla image_uploads
+        $imageUploads = \App\Models\ImageUpload::where('publication_id', $publication->id)
+            ->orderBy('id')
+            ->get();
+        
+        foreach ($imageUploads as $image) {
+            $images[] = [
+                'id' => $image->id,
+                'image' => $image->image,
+                'desc' => $image->desc,
+                'url' => 'http://localhost:8000/images/uploads/' . $image->image
+            ];
+        }
+        
+        // Si no hay imágenes, agregar la imagen por defecto
+        if (empty($images)) {
+            $images[] = [
+                'id' => 'default',
+                'image' => 'defaultPubli.jpg',
+                'desc' => 'default',
+                'url' => 'http://localhost:8000/images/defaultPubli.jpg'
+            ];
+        }
+
+        return response()->json([
             'publication' => [
                 'id' => $publication->id,
                 'title' => $publication->title,
@@ -235,13 +284,13 @@ public function store(Request $request)
                 'featured' => $publication->featured,
                 'created_at' => $publication->created_at,
                 'updated_at' => $publication->updated_at,
-                'company_name' => $companyName,
-                'company_email' => $companyEmail,
-                'company_phone' => $companyPhone,
+                'company_name' => $publication->empresa->user->name,
+                'company_email' => $publication->empresa->user->email,
+                'company_phone' => $publication->empresa->user->phone,
+                'images' => $images,
             ],
             'status' => 200
-        ];
-        return response()->json($data, 200);
+        ], 200);
     }
 
 
@@ -377,26 +426,76 @@ public function updatePartial(Request $request, $id)
         'description' => 'nullable|string',
         'description2' => 'nullable|string',
         'description3' => 'nullable|string',
-        'salary' => 'nullable|numeric',
+        'salary' => 'sometimes|required|numeric',
         'location' => 'sometimes|required|string',
-        'type' => 'sometimes|required|string',
-        'time' => 'sometimes|required|string',
-        'deathline' => 'sometimes|required|date',
+        'type' => 'nullable|string',
+        'time' => 'nullable|string',
         'vacancies' => 'sometimes|required|numeric',
         'empresa_id' => 'sometimes|required|numeric',
         'saldo_id' => 'sometimes|required|numeric|exists:saldo,id',
         'id_image' => 'sometimes|array',
         'id_image.*' => 'numeric|exists:image_uploads,id',
-        'featured' => 'sometimes|required|boolean'
+        'etiquetas' => 'sometimes|array|min:1|max:3', // Al menos 1 etiqueta es requerida si se envía
+        'etiquetas.*' => 'numeric|exists:etiqueta,id' // Corregido: tabla se llama 'etiqueta' no 'etiquetas'
     ]);
 
     if ($validator->fails()) {
         $data = [
-            'message' => 'Error al actualizar parcialmente la publicación',
+            'message' => 'Error al actualizar la publicación',
             'status' => 400,
             'errors' => $validator->errors()
         ];
         return response()->json($data, 400);
+    }
+
+    // Si se proporciona saldo_id, procesar promoción
+    if (isset($jsonData['saldo_id'])) {
+        $empresaId = $jsonData['empresa_id'] ?? $publication->empresa_id;
+        $saldoId = $jsonData['saldo_id'];
+        
+        $necesita = Necesita::where('empresa_id', $empresaId)
+                            ->where('saldo_id', $saldoId)
+                            ->first();
+        
+        if (!$necesita || $necesita->quantity <= 0) {
+            $data = [
+                'message' => 'Saldo insuficiente para la promoción',
+                'status' => 400,
+                'empresa_id' => $empresaId,
+                'saldo_id' => $saldoId,
+                'necesita' => $necesita
+            ];
+            return response()->json($data, 400);
+        }
+
+        // Obtener el tipo de saldo
+        $saldo = Saldo::find($saldoId);
+
+        // Ajustar los atributos featured y deathline en base al saldo
+        if ($saldo->type == 'Normal') {
+            $jsonData['featured'] = false;
+        } elseif ($saldo->type == 'Destacado') {
+            $jsonData['featured'] = true;
+        }
+
+        $jsonData['deathline'] = now()->addDays($saldo->days)->toDateString();
+
+        // Reducir el saldo disponible
+        $necesita->quantity -= 1;
+
+        if ($necesita->quantity <= 0) {
+            $necesita->delete();
+        } else {
+            $necesita->save();
+        }
+    }
+
+    // Verificar si type o time son cadenas vacías y convertirlas a null
+    if (isset($jsonData['type']) && $jsonData['type'] === '') {
+        $jsonData['type'] = null;
+    }
+    if (isset($jsonData['time']) && $jsonData['time'] === '') {
+        $jsonData['time'] = null;
     }
 
     // Actualizar la publicación
@@ -415,6 +514,12 @@ public function updatePartial(Request $request, $id)
                 ->where('id', $imageId)
                 ->update(['publication_id' => $publication->id]);
         }
+    }
+
+    // Actualizar etiquetas si se proporcionan
+    if (isset($jsonData['etiquetas']) && is_array($jsonData['etiquetas'])) {
+        // Desasociar etiquetas actuales y asociar las nuevas
+        $publication->etiquetas()->sync($jsonData['etiquetas']);
     }
 
     $data = [
@@ -459,6 +564,16 @@ public function updatePartial(Request $request, $id)
                 'status' => 404
             ];
             return response()->json($data, 404);
+        }
+
+        // Verificar si el usuario es estudiante basándose en su rol
+        $user = \App\Models\User::find($request->estudiante_id);
+        if (!$user || $user->rol !== 'estudiante') {
+            $data = [
+                'message' => 'Solo los estudiantes pueden postularse a publicaciones',
+                'status' => 403
+            ];
+            return response()->json($data, 403);
         }
 
         $existingPostulacion = Postula::where('publication_id', $request->publication_id)
@@ -521,6 +636,16 @@ public function guardarPublicacion(Request $request)
             'status' => 404
         ];
         return response()->json($data, 404);
+    }
+
+    // Verificar si el usuario es estudiante basándose en su rol
+    $user = \App\Models\User::find($request->estudiante_id);
+    if (!$user || $user->rol !== 'estudiante') {
+        $data = [
+            'message' => 'Solo los estudiantes pueden guardar publicaciones',
+            'status' => 403
+        ];
+        return response()->json($data, 403);
     }
 
     // Nuevo: Si llega el parámetro borrar en true, elimina el guardado si existe y responde
@@ -721,12 +846,200 @@ public function verificarPostulacion(Request $request)
         return response()->json($data, 400);
     }
 
+    // Verificar si el usuario existe como estudiante
+    $estudiante = \App\Models\Estudiante::find($request->estudiante_id);
+    if (!$estudiante) {
+        $data = [
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    // Verificar si el usuario es estudiante basándose en su rol
+    $user = \App\Models\User::find($request->estudiante_id);
+    if (!$user || $user->rol !== 'estudiante') {
+        $data = [
+            'postulado' => false,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
+    }
+
     $existe = Postula::where('publication_id', $request->publication_id)
         ->where('estudiante_id', $request->estudiante_id)
         ->exists();
 
     $data = [
         'postulado' => $existe,
+        'status' => 200
+    ];
+    return response()->json($data, 200);
+}
+
+public function estudianteVisita(Request $request)
+{
+    try {
+        // Validar los datos de entrada
+        $validator = Validator::make($request->all(), [
+            'publication_id' => 'required|exists:publications,id',
+            'estudiante_id' => 'required|exists:estudiantes,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Datos de validación incorrectos',
+                'errors' => $validator->errors(),
+                'status' => 400
+            ], 400);
+        }
+
+        // Verificar si el usuario es estudiante basándose en su rol
+        $user = \App\Models\User::find($request->estudiante_id);
+        if (!$user || $user->rol !== 'estudiante') {
+            return response()->json([
+                'message' => 'Solo se registran visitas de estudiantes',
+                'status' => 200
+            ], 200);
+        }
+
+        // Verificar si el estudiante ya visitó esta publicación
+        $existingVisit = \App\Models\PublicationVisit::where('publication_id', $request->publication_id)
+            ->where('estudiante_id', $request->estudiante_id)
+            ->first();
+
+        if (!$existingVisit) {
+            // Crear nueva visita
+            \App\Models\PublicationVisit::create([
+                'publication_id' => $request->publication_id,
+                'estudiante_id' => $request->estudiante_id,
+                'visited_at' => now()
+            ]);
+
+            // Incrementar el contador de visitas en la publicación
+            $publication = Publication::find($request->publication_id);
+            $publication->increment('visitas');
+
+            return response()->json([
+                'message' => 'Visita registrada exitosamente',
+                'status' => 200
+            ], 200);
+        }
+
+        return response()->json([
+            'message' => 'Visita ya registrada previamente',
+            'status' => 200
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Error al registrar la visita',
+            'error' => $e->getMessage(),
+            'status' => 500
+        ], 500);
+    }
+}
+
+public function getEstadisticasEmpresa(Request $request)
+{
+    try {
+        $validator = Validator::make($request->all(), [
+            'empresa_id' => 'required|exists:empresa,id'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Datos de validación incorrectos',
+                'errors' => $validator->errors(),
+                'status' => 400
+            ], 400);
+        }
+
+        $empresaId = $request->empresa_id;
+
+        // Obtener estadísticas de la empresa
+        $publicaciones = Publication::where('empresa_id', $empresaId)->get();
+        
+        $totalPublicaciones = $publicaciones->count();
+        $totalVisitas = $publicaciones->sum('visitas');
+        $totalPostulaciones = Postula::whereIn('publication_id', $publicaciones->pluck('id'))->count();
+        
+        // Calcular ratio de postulación
+        $ratioPostulacion = $totalVisitas > 0 ? round(($totalPostulaciones / $totalVisitas) * 100, 2) : 0;
+
+        // Obtener datos de visitas por día (últimos 7 días)
+        $visitasPorDia = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $fecha = now()->subDays($i)->format('Y-m-d');
+            $visitas = \App\Models\PublicationVisit::whereIn('publication_id', $publicaciones->pluck('id'))
+                ->whereDate('visited_at', $fecha)
+                ->count();
+            $visitasPorDia[] = [
+                'fecha' => $fecha,
+                'visitas' => $visitas
+            ];
+        }
+
+        return response()->json([
+            'total_publicaciones' => $totalPublicaciones,
+            'total_visitas' => $totalVisitas,
+            'total_postulaciones' => $totalPostulaciones,
+            'ratio_postulacion' => $ratioPostulacion,
+            'visitas_por_dia' => $visitasPorDia,
+            'status' => 200
+        ], 200);
+
+    } catch (\Exception $e) {
+        return response()->json([
+            'message' => 'Error al obtener estadísticas',
+            'error' => $e->getMessage(),
+            'status' => 500
+        ], 500);
+    }
+}
+
+public function verificarPublicacionGuardada(Request $request)
+{
+    $validator = Validator::make($request->all(), [
+        'publication_id' => 'required|numeric|exists:publications,id',
+        'estudiante_id' => 'required|numeric|exists:estudiante,id'
+    ]);
+
+    if ($validator->fails()) {
+        $data = [
+            'message' => 'Error en los parámetros',
+            'status' => 400,
+            'errors' => $validator->errors()
+        ];
+        return response()->json($data, 400);
+    }
+
+    // Verificar si el usuario existe como estudiante
+    $estudiante = \App\Models\Estudiante::find($request->estudiante_id);
+    if (!$estudiante) {
+        $data = [
+            'message' => 'Estudiante no encontrado',
+            'status' => 404
+        ];
+        return response()->json($data, 404);
+    }
+
+    // Verificar si el usuario es estudiante basándose en su rol
+    $user = \App\Models\User::find($request->estudiante_id);
+    if (!$user || $user->rol !== 'estudiante') {
+        $data = [
+            'guardado' => false,
+            'status' => 200
+        ];
+        return response()->json($data, 200);
+    }
+
+    $existe = Guarda::where('publication_id', $request->publication_id)
+        ->where('estudiante_id', $request->estudiante_id)
+        ->exists();
+
+    $data = [
+        'guardado' => $existe,
         'status' => 200
     ];
     return response()->json($data, 200);

@@ -1,14 +1,23 @@
 <app-nav/>
 <div class="body flex items-center justify-center">
-    <div class="content bg-gray-50 w-11/12 h-5/6 mt-10 rounded-lg">
-        <div class="flex flex-row justify-center w-full">
+  <div class="content bg-gray-50 w-11/12 h-5/6 mt-10 rounded-lg">
+    
+    <!-- Loading Spinner -->
+    <div *ngIf="loading" class="flex flex-col justify-center items-center h-full min-h-96">
+      <div class="animate-spin rounded-full h-16 w-16 border-b-4 border-sky-700 mb-4"></div>
+      <p class="text-gray-600 text-lg font-medium">Cargando publicaciones...</p>
+    </div>
+
+    <!-- Contenido principal -->
+    <div *ngIf="!loading" class="flex flex-row justify-center w-full">
             <div class="user-data max-w-1/2 flex items-center pt-10 flex-col">
                 <div class="w-full flex justify-center flex-col items-center">   
                     <div class="flex flex-col items-center">
-                        <div class="relative w-40 h-40 flex items-center justify-center rounded-full">
+                        <div class="profile-container">
                         <img
                             [src]="userImageUrl"
-                            class="object-cover w-full h-full rounded-full"
+                            class="profile-image-circular"
+                            alt="Imagen de perfil de la empresa"
                         />
                         </div>
                         <h1 class="text-gray-900 font-semibold text-4xl mt-5">
@@ -20,27 +29,39 @@
                         <div class="w-full md:block md:w-auto pt-4">
                         <ul class="text-center font-medium flex flex-col items-center p-4 md:p-0 md:px-14 mt-4 md:shadow-md md:rounded-full md:bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                                <a [href]="isPhoneAccess ? '/enterprise-profile/' + empresa.phone : '/enterprise-profile'" class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg" aria-current="page">Home</a>
+                                <a [routerLink]="isPhoneAccess ? ['/enterprise-profile', empresa.phone] : ['/enterprise-profile']" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Home</a>
                             </li>
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                                <a [href]="isPhoneAccess ? '/enterprise-abaut-us/' + empresa.phone : '/enterprise-abaut-us'" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Sobre nosotros</a>
+                                <a [routerLink]="isPhoneAccess ? ['/enterprise-abaut-us', empresa.phone] : ['/enterprise-abaut-us']" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Sobre nosotros</a>
                             </li>
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                                <a [href]="isPhoneAccess ? '/my-publications/' + empresa.phone : '/my-publications'" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">
+                                <a [routerLink]="isPhoneAccess ? ['/my-publications', empresa.phone] : ['/my-publications']" class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg" aria-current="page">
                                     {{ isPhoneAccess ? 'Ver Publicaciones' : 'Administrar publicaciones' }}
                                 </a>
                             </li>
 
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0" *ngIf="!isPhoneAccess">
-                                <a href="/postulantes" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Ver postulantes</a>
+                                <a routerLink="/postulantes" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Ver postulantes</a>
                             </li>
 
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0" *ngIf="!isPhoneAccess">
-                                <a href="/edit-enterprise-profile" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Editar perfil</a>
+                                <a routerLink="/edit-enterprise-profile" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Editar perfil</a>
                             </li>
 
                         </ul>
                         </div>
+                    </div>
+                    
+                    <!-- Botón Crear Publicación -->
+                    <div class="w-full flex justify-center mb-8" *ngIf="!isPhoneAccess">
+                        <button 
+                            (click)="modalAnadir()" 
+                            class="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-6 rounded-lg shadow-lg transition-all duration-300 flex items-center space-x-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path>
+                            </svg>
+                            <span>Crear Nueva Publicación</span>
+                        </button>
                     </div>
                 </div>
                 
@@ -133,13 +154,41 @@
 
         <!--CARD-->
         <div *ngFor="let publicacion of displayedPublications" class="flex flex-col justify-center items-center pt-10">
-          <div class="w-1/3 flex justify-between items-center">
-            <button *ngIf="!isPhoneAccess" (click)="modalDelete(publicacion.id)" class="p-2 bg-red-600 hover:bg-red-700 rounded-lg">
+          <div class="w-1/2 flex justify-between items-center">
+            <button *ngIf="!isPhoneAccess" (click)="modalDelete(publicacion.id)" 
+                    title="Eliminar publicación"
+                    class="p-2 bg-red-600 hover:bg-red-700 rounded-lg">
               <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
               </svg>                                  
             </button>
-            <button *ngIf="!isPhoneAccess" (click)="modalModificar(publicacion)" class="p-2 bg-amber-500 hover:bg-amber-600 rounded-lg">
+            <button *ngIf="!isPhoneAccess" (click)="verPostulantes(publicacion.title)" 
+                    title="Ver postulantes de esta publicación"
+                    class="p-2 bg-blue-600 hover:bg-blue-700 rounded-lg">
+              <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm-2 9a4 4 0 0 0-4 4v1a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2v-1a4 4 0 0 0-4-4H6Zm7.25-2.095c.478-.86.75-1.85.75-2.905a5.973 5.973 0 0 0-.75-2.906 4 4 0 1 1 0 5.811ZM15.466 20c.34-.588.535-1.271.535-2v-1a5.978 5.978 0 0 0-1.528-4H18a4 4 0 0 1 4 4v1a2 2 0 0 1-2 2h-4.535Z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <!-- Botón deshabilitar (solo si no está deshabilitada) -->
+            <button *ngIf="!isPhoneAccess && !publicacion.is_deleted" (click)="modalDeshabilitar(publicacion.id)" 
+                    title="Deshabilitar publicación"
+                    class="p-2 bg-orange-600 hover:bg-orange-700 rounded-lg">
+              <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            
+            <!-- Candado verde (solo si está deshabilitada) -->
+            <button *ngIf="!isPhoneAccess && publicacion.is_deleted" (click)="modalHabilitarInfo()" 
+                    title="Publicación deshabilitada - Click para ver cómo habilitar"
+                    class="p-2 bg-green-600 hover:bg-green-700 rounded-lg">
+              <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                <path fill-rule="evenodd" d="M8 10V7a4 4 0 1 1 8 0v3h1a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h1Zm2-3a2 2 0 1 1 4 0v3h-4V7Zm2 6a1 1 0 0 1 1 1v3a1 1 0 1 1-2 0v-3a1 1 0 0 1 1-1Z" clip-rule="evenodd"/>
+              </svg>
+            </button>
+            <button *ngIf="!isPhoneAccess" (click)="modalModificar(publicacion)" 
+                    title="Editar publicación"
+                    class="p-2 bg-amber-500 hover:bg-amber-600 rounded-lg">
               <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                 <path fill-rule="evenodd" d="M11.32 6.176H5c-1.105 0-2 .949-2 2.118v10.588C3 20.052 3.895 21 5 21h11c1.105 0 2-.948 2-2.118v-7.75l-3.914 4.144A2.46 2.46 0 0 1 12.81 16l-2.681.568c-1.75.37-3.292-1.263-2.942-3.115l.536-2.839c.097-.512.335-.983.684-1.352l2.914-3.086Z" clip-rule="evenodd"/>
                 <path fill-rule="evenodd" d="M19.846 4.318a2.148 2.148 0 0 0-.437-.692 2.014 2.014 0 0 0-.654-.463 1.92 1.92 0 0 0-1.544 0 2.014 2.014 0 0 0-.654.463l-.546.578 2.852 3.02.546-.579a2.14 2.14 0 0 0 .437-.692 2.244 2.244 0 0 0 0-1.635ZM17.45 8.721 14.597 5.7 9.82 10.76a.54.54 0 0 0-.137.27l-.536 2.84c-.07.37.239.696.588.622l2.682-.567a.492.492 0 0 0 .255-.145l4.778-5.06Z" clip-rule="evenodd"/>
@@ -149,7 +198,7 @@
           <div class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <a [href]="'/publication/' + publicacion.id">
               <div class="image-container">
-                <img class="rounded-t-lg size" src="../../../../assets/img/trabajoProgramación.jpg" alt="" draggable="false" />
+                <img class="rounded-t-lg size" [src]="publicacion.imageUrl" alt="" draggable="false" />
               </div>
             </a>
             <div class="p-5">
@@ -211,7 +260,7 @@
   <div class="relative">
     <!-- Modal content -->
     <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-      <button (click)="modalDeleteClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+      <button (click)="modalDeleteClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
         <!-- ...icono... -->
       </button>
       <section class="bg-white dark:bg-gray-900 px-20" id="contact">
@@ -228,9 +277,91 @@
   </div>
 </div>
 
+<!-- Modal Deshabilitar -->
+<div id="deshabilitarModal" class="container-modal">
+  <div class="relative">
+    <!-- Modal content -->
+    <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+      <button (click)="modalDeshabilitarClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+      </button>
+      <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Deshabilitar publicación</h2>
+          <p class="mb-4 font-light text-center text-black dark:text-gray-400 sm:text-xl">¿Está seguro que desea deshabilitar esta publicación?</p>
+          <div class="mb-8 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div class="flex items-start">
+              <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+              </svg>
+              <div>
+                <h3 class="text-sm font-medium text-blue-800 dark:text-blue-300">Información importante</h3>
+                <p class="mt-1 text-sm text-blue-700 dark:text-blue-400">
+                  La publicación seguirá disponible para ti durante <strong>3 meses</strong> desde la fecha de deshabilitación. Después de este período será eliminada permanentemente.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button (click)="confirmDisablePublication()" class="bg-orange-600 text-white px-4 py-2 rounded-lg font-medium">Sí, deshabilitar</button>
+            <button (click)="modalDeshabilitarClose()" class="bg-white text-gray-900 px-4 py-2 rounded-lg font-medium">No, cancelar</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
 
-
-
+<!-- Modal Información Habilitar -->
+<div id="habilitarInfoModal" class="container-modal">
+  <div class="relative">
+    <!-- Modal content -->
+    <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+      <button (click)="modalHabilitarInfoClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+        <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+        </svg>
+      </button>
+      <section class="bg-white dark:bg-gray-900 px-20" id="contact">
+        <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
+          <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Publicación Deshabilitada</h2>
+          <div class="mb-6 p-4 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg">
+            <div class="flex items-start">
+              <svg class="w-5 h-5 text-green-600 dark:text-green-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+              </svg>
+              <div>
+                <h3 class="text-sm font-medium text-green-800 dark:text-green-300">Estado de la publicación</h3>
+                <p class="mt-1 text-sm text-green-700 dark:text-green-400">
+                  Esta publicación está actualmente <strong>deshabilitada</strong> pero seguirá disponible para ti durante 3 meses.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="mb-6 p-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg">
+            <div class="flex items-start">
+              <svg class="w-5 h-5 text-blue-600 dark:text-blue-400 mt-1 mr-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+              </svg>
+              <div>
+                <h3 class="text-sm font-medium text-blue-800 dark:text-blue-300">¿Cómo volver a habilitar?</h3>
+                <p class="mt-1 text-sm text-blue-700 dark:text-blue-400">
+                  Para volver a habilitar esta publicación, haz clic en el botón <strong>"Editar"</strong> y selecciona un nuevo plan de saldo. 
+                  Esto reactivará automáticamente la publicación y la hará visible para los estudiantes.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button (click)="modalHabilitarInfoClose()" class="bg-blue-600 text-white px-4 py-2 rounded-lg font-medium">Entendido</button>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
 
 
 
@@ -241,7 +372,7 @@
   <div class="relative">
     <!-- Modal content -->
     <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
-      <button (click)="modalModificarClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+      <button (click)="modalModificarClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
         </svg>      
@@ -293,13 +424,13 @@
                     
 
                     <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
-                      <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Remuneración</h2>
-                      <input class="rounded-lg w-full" type="number" placeholder="Remuneración del puesto" [(ngModel)]="newPublication.salary">
+                      <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Remuneración (USD)</h2>
+                      <input class="rounded-lg w-full" type="text" pattern="[0-9]*" inputmode="numeric" placeholder="Remuneración del puesto en USD" [(ngModel)]="newPublication.salary" (input)="onlyNumbers($event)">
                     </div>
 
                     <div class="flex flex-row mt-4 sm:items-center sm:gap-4 sm:flex">
                       <h2>Plazas</h2>
-                      <input type="number" class="rounded-lg w-full" placeholder="Plazas disponibles" [(ngModel)]="newPublication.vacancies">
+                      <input type="text" pattern="[0-9]*" inputmode="numeric" class="rounded-lg w-full" placeholder="Plazas disponibles" [(ngModel)]="newPublication.vacancies" (input)="onlyNumbers($event)">
                     </div>
             
                     <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800" />
@@ -345,11 +476,12 @@
                         </select>                            
                       </div>
                       <div class="w-full flex flex-row items-center my-2">
-                        <label class="mr-1 font-medium text-gray-800" for="">Tiempo</label>
-                        <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id="" [(ngModel)]="newPublication.type">
+                        <label class="mr-1 font-medium text-gray-800" for="">Tipo de trabajo:</label>
+                        <select [(ngModel)]="newPublication.type" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                          <option value="">Seleccionar tipo</option>
                           <option value="Part-time">Part-time</option>
                           <option value="Full-time">Full-time</option>
-                        </select>                            
+                        </select>
                       </div>
                     </div>
                     <div class="w-full flex flex-col">
@@ -386,6 +518,74 @@
                     <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..." [(ngModel)]="newPublication.description"></textarea>
                 </div>
             </div>
+
+                  <!-- Sección de etiquetas/categorías para editar -->
+                  <div class="lg:grid lg:grid-cols-1 lg:gap-4 pt-4">
+                    <div class="w-full flex flex-col items-start">
+                      <div class="w-full flex flex-col my-4">
+                        <label class="mb-2 font-medium text-gray-800" for="">
+                          Categorías/Etiquetas (máximo 3) <span class="text-red-500">*</span>:
+                        </label>
+                        <select 
+                          class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                          (change)="onEtiquetaSelect($event)" 
+                          [disabled]="selectedEtiquetasEdit.length >= 3">
+                          <option value="">Seleccione una categoría...</option>
+                          <ng-container *ngFor="let etiqueta of etiquetas">
+                            <option 
+                              [value]="etiqueta.id" 
+                              *ngIf="!isEtiquetaSelectedEdit(etiqueta.id)"
+                              >{{ etiqueta.name }}</option>
+                          </ng-container>
+                        </select>
+                      </div>
+                      
+                      <div class="mt-4" *ngIf="selectedEtiquetasEdit.length > 0">
+                        <p class="text-sm text-gray-600 mb-2">Categorías seleccionadas:</p>
+                        <div class="flex flex-wrap gap-2">
+                          <div *ngFor="let etiqueta of selectedEtiquetasEdit" class="flex items-center mt-2">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-blue-100 text-blue-800">
+                              {{ etiqueta.name }}
+                              <button 
+                                type="button" 
+                                (click)="removeEtiquetaEdit(etiqueta.id)"
+                                class="ml-2 text-blue-600 hover:text-blue-800">
+                                ×
+                              </button>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                      
+                      <div class="mt-2" *ngIf="selectedEtiquetasEdit.length === 0">
+                        <p class="text-sm text-red-500">Debe seleccionar al menos una categoría</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Sección de promoción -->
+                  <div class="lg:grid lg:grid-cols-1 lg:gap-4 pt-4">
+                    <div class="w-full flex flex-col items-start">
+                      <div class="w-full flex flex-col my-4">
+                        <label class="mb-2 font-medium text-gray-800">Promoción:</label>
+                        <div class="flex items-center gap-4">
+                          <span class="text-sm text-gray-600">
+                            Promoción actual: 
+                            <span class="font-medium" 
+                                  [class]="newPublication.featured ? 'text-yellow-600' : 'text-gray-600'">
+                              {{ newPublication.featured ? 'Destacada' : 'Normal' }}
+                            </span>
+                          </span>
+                          <button 
+                            type="button"
+                            (click)="openPromocionModal()"
+                            class="bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded text-sm font-medium">
+                            Cambiar Promoción
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
                   <div class="flex flex-row justify-evenly items-center mt-6">
                     
@@ -424,7 +624,7 @@
       <div class="relative">
     <!-- Modal content -->
     <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-2">
-      <button (click)="modalAnadirClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-toggle="deleteModal">
+      <button (click)="modalAnadirClose()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
         <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
           <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
         </svg>      
@@ -434,6 +634,7 @@
         <section class="bg-white dark:bg-gray-900 px-20" id="contact">
           <div class="py-2 lg:py-2 px-4 mx-auto max-w-screen-lg">
               <h2 class="mb-4 text-3xl tracking-tight font-bold text-center text-black dark:text-white">Añadir publicación</h2>
+              <p class="mb-4 text-sm text-gray-600 text-center">Los campos marcados con <span class="text-red-500">*</span> son obligatorios. Debe seleccionar al menos una categoría/etiqueta.</p>
 
               <section class="bg-white dark:bg-gray-900 antialiased">
               <div class="max-w-screen-xl px-4 mx-auto 2xl:px-0">
@@ -444,27 +645,50 @@
                   <div id="default-carousel" class="mb-16 mx-auto relative">
                       <!-- Carousel wrapper -->
           
-          
                       <div class="carousel-item duration-700 ease-in-out hover:cursor-pointer">
-                        <img src="../../../../assets/img/img-standard.jpg" class="img2" alt="...">
+                        <img 
+                          [src]="getCurrentImage()?.url || '../../../../assets/img/img-standard.jpg'" 
+                          [alt]="getCurrentImage()?.desc || 'Imagen por defecto'"
+                          class="img2">
                       </div>
+                      
                       <!-- Slider controls -->
-                      <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-not-allowed group focus:outline-none">
-                      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                          <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
-                          </svg>
-                          <span class="sr-only">Previous</span>
-                      </span>
+                      <button type="button" 
+                              class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 group focus:outline-none"
+                              [class.cursor-not-allowed]="publicationImages.length <= 1"
+                              [disabled]="publicationImages.length <= 1"
+                              (click)="prevImage()">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
+                            </svg>
+                            <span class="sr-only">Previous</span>
+                        </span>
                       </button>
-                      <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-not-allowed group focus:outline-none">
-                      <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                          <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-                          </svg>
-                          <span class="sr-only">Next</span>
-                      </span>
+                      
+                      <button type="button" 
+                              class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 group focus:outline-none"
+                              [class.cursor-not-allowed]="publicationImages.length <= 1"
+                              [disabled]="publicationImages.length <= 1"
+                              (click)="nextImage()">
+                        <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-gray-400/50 dark:bg-gray-800/30 group-hover:bg-gray-900 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+                            </svg>
+                            <span class="sr-only">Next</span>
+                        </span>
                       </button>
+                      
+                      <!-- Indicadores de imagen -->
+                      <div class="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1" *ngIf="publicationImages.length > 1">
+                        <button 
+                          *ngFor="let img of publicationImages; let i = index"
+                          type="button"
+                          (click)="currentImageIndex = i"
+                          [class]="currentImageIndex === i ? 'bg-white' : 'bg-gray-400'"
+                          class="w-2 h-2 rounded-full hover:bg-white transition-colors">
+                        </button>
+                      </div>
                   </div>
                   
                   </div>
@@ -472,18 +696,21 @@
                   <div class="mt-6 sm:mt-8 lg:mt-0">
                     <div class="flex flex-row mt-4 sm:items-center sm:gap-4 sm:flex">
                       <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Nombre</h2>
+                      <span class="text-red-500">*</span>
                       <input type="text" class="rounded-lg w-full" placeholder="Nombre de la publicación" [(ngModel)]="newPublication.title">
                     </div>
                     
 
                     <div class="mt-4 sm:items-center sm:gap-4 sm:flex">
-                      <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Remuneración</h2>
-                      <input class="rounded-lg w-full" type="number" placeholder="Remuneración del puesto" [(ngModel)]="newPublication.salary">
+                      <h2 class="text-md font-medium text-gray-900 sm:text-md dark:text-white">Remuneración (USD)</h2>
+                      <span class="text-red-500">*</span>
+                      <input class="rounded-lg w-full" type="text" pattern="[0-9]*" inputmode="numeric" placeholder="Remuneración del puesto en USD" [(ngModel)]="newPublication.salary" (input)="onlyNumbers($event)">
                     </div>
 
                     <div class="flex flex-row mt-4 sm:items-center sm:gap-4 sm:flex">
                       <h2>Plazas</h2>
-                      <input type="number" class="rounded-lg w-full" placeholder="Plazas disponibles" [(ngModel)]="newPublication.vacancies">
+                      <span class="text-red-500">*</span>
+                      <input type="text" pattern="[0-9]*" inputmode="numeric" class="rounded-lg w-full" placeholder="Plazas disponibles" [(ngModel)]="newPublication.vacancies" (input)="onlyNumbers($event)">
                     </div>
             
                     <hr class="my-4 md:my-4 border-gray-200 dark:border-gray-800" />
@@ -494,9 +721,38 @@
 
                   </div>
               </div>
-              <div class="mt-2 w-2/5 flex flex-row justify-between items-center">
-                <button class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded text-md font-base">Añadir imágen</button>
-                <button class="bg-red-700 hover:bg-red-600 text-white py-2 px-4 rounded text-md font-base">Eliminar imágen</button>
+              
+              <!-- Controles de imagen modernizados -->
+              <div class="flex flex-col items-center space-y-4 mb-4">
+                <div class="flex flex-row space-x-4">
+                  <label class="bg-green-700 hover:bg-green-600 text-white py-2 px-4 rounded text-md font-base cursor-pointer">
+                    Añadir imagen
+                    <input type="file" class="hidden" accept="image/*" (change)="onImageFileSelected($event)">
+                  </label>
+                  <button 
+                    type="button"
+                    (click)="removeImageFromPublication(currentImageIndex)"
+                    [disabled]="publicationImages.length === 0"
+                    class="bg-red-700 hover:bg-red-600 text-white py-2 px-4 rounded text-md font-base disabled:bg-gray-400 disabled:cursor-not-allowed">
+                    Eliminar imagen
+                  </button>
+                </div>                    <!-- Control de orden -->
+                    <div class="flex items-center space-x-2" *ngIf="publicationImages.length > 1 && getCurrentImage()">
+                      <span class="text-sm text-gray-600">Cambiar orden:</span>
+                      <select 
+                        [value]=""
+                        (change)="changeImageOrder(currentImageIndex, +$any($event.target).value)"
+                        class="border rounded px-2 py-1 text-sm">
+                        <option value="" disabled>Seleccionar posición</option>
+                        <option 
+                          *ngFor="let i of [].constructor(publicationImages.length); let idx = index" 
+                          [value]="idx + 1"
+                          [disabled]="idx + 1 === getCurrentImage()?.order">
+                          Posición {{ idx + 1 }}{{ idx + 1 === getCurrentImage()?.order ? ' (actual)' : '' }}
+                        </option>
+                      </select>
+                      <span class="text-sm text-gray-500">(Imagen {{ currentImageIndex + 1 }} de {{ publicationImages.length }})</span>
+                    </div>
               </div>
 
                   <div class="lg:grid lg:grid-cols-2 lg:gap-8 xl:gap-16 pt-4">
@@ -505,7 +761,9 @@
                           <div class="w-full flex flex-col items-start mx-2">
                             <div class="w-full flex flex-row items-center my-2">
                               <label class="mr-1 font-medium text-gray-800" for="">Ubicación</label>
+                              <span class="text-red-500 mr-2">*</span>
                               <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id="" [(ngModel)]="newPublication.location">
+                                <option value="" disabled selected>Seleccionar departamento</option>
                                 <option value="Artigas">Artigas</option>
                                 <option value="Canelones">Canelones</option>
                                 <option value="Cerro Largo">Cerro Largo</option>
@@ -530,6 +788,7 @@
                             <div class="w-full flex flex-row items-center my-2">
                               <label class="mr-1 font-medium text-gray-800" for="">Tiempo</label>
                               <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id="" [(ngModel)]="newPublication.type">
+                                <option value="" disabled selected>Seleccionar tipo</option>
                                 <option value="Part-time">Part-time</option>
                                 <option value="Full-time">Full-time</option>
                               </select>                            
@@ -538,7 +797,9 @@
                           <div class="w-full flex flex-col">
                             <div class="w-full flex flex-row items-center my-2">
                               <label class="mr-1 font-medium text-gray-800" for="">Tipo</label>
+                              <span class="text-red-500 mr-2">*</span>
                               <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id="" [(ngModel)]="newPublication.saldo_id">
+                                <option value="" disabled selected>Seleccionar tipo de saldo</option>
                                 <option *ngFor="let saldo of saldos" [value]="saldo.saldo_id">{{ saldo.type }} - {{ saldo.days }} días - {{ saldo.quantity }} disponibles</option>
                               </select>                        
                             </div>
@@ -572,20 +833,65 @@
                         </div>
                       </div>
                       <div>
-                          <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Primer descripción..." [(ngModel)]="newPublication.description"></textarea>
+                          <textarea id="message" name="message" ngModel rows="6" maxlength="280" class=" w-full block p-2.5 text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tercer descripción..." [(ngModel)]="newPublication.description3"></textarea>
                       </div>
                   </div>
 
+                  <!-- Sección de etiquetas/categorías -->
+                  <div class="mt-6 border-t pt-6">
+                    <div class="flex justify-start flex-row">
+                      <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
+                        Categorías/Etiquetas (máximo 3) <span class="text-red-500">*</span>:
+                      </p>
+                      <select 
+                        name="" 
+                        id="" 
+                        class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" 
+                        (change)="onTagSelect($event)" 
+                        [disabled]="selectedEtiquetas.length >= 3">
+                        <option value="" disabled selected>Seleccionar categoría</option>
+                        <ng-container *ngFor="let etiqueta of etiquetas">
+                          <option 
+                            *ngIf="!isEtiquetaSelected(etiqueta.id)"
+                            [value]="etiqueta.id">
+                            {{ etiqueta.name }}
+                          </option>
+                        </ng-container>
+                      </select>
+                    </div>
+                    <div class="mt-4" *ngIf="selectedEtiquetas.length > 0">
+                      <p class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">
+                        Categorías seleccionadas:
+                      </p>
+                      <div *ngFor="let etiqueta of selectedEtiquetas" class="flex items-center mt-2">
+                        <span class="text-gray-700 text-sm font-semibold p-2 max-w-1/2">{{ etiqueta.name }}</span>
+                        <button 
+                          type="button"
+                          class="ml-2 border border-red-500 text-red-500 rounded-lg p-1 text-xs hover:bg-red-500 hover:text-white transition-colors duration-300" 
+                          (click)="onTagDelete(etiqueta.id)">
+                          Eliminar
+                        </button>
+                      </div>
+                    </div>
+                    <div class="mt-2" *ngIf="selectedEtiquetas.length === 0">
+                      <p class="text-red-500 text-xs">Debe seleccionar al menos una categoría/etiqueta.</p>
+                    </div>
+                  </div>
+
                   <div class="flex flex-row justify-evenly items-center mt-6">
-                    
                     <div class="w-full flex flex-row justify-evenly items-center">
                         <button (click)="modalAnadirClose()" class="flex flex-row bg-white hover:bg-gray-200 py-3 px-6 rounded text-lg font-medium">Cancelar
                           <svg class="w-6 h-6 text-gray-800 dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
                           </svg>                          
                         </button>
-                        <button (click)="createPublication()" class="flex flex-row bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded text-lg font-medium">Añadir publicación
-                          <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <button 
+                          (click)="createPublication()" 
+                          [disabled]="!isFormValid()"
+                          [class]="isFormValid() ? 'flex flex-row bg-green-500 hover:bg-green-600 text-white py-3 px-6 rounded text-lg font-medium cursor-pointer' : 'flex flex-row bg-gray-400 text-gray-200 py-3 px-6 rounded text-lg font-medium cursor-not-allowed'"
+                          [title]="!isFormValid() ? 'Complete todos los campos obligatorios para habilitar este botón' : ''">
+                          Añadir publicación
+                          <svg class="w-6 h-6 ml-2" [class]="isFormValid() ? 'text-white' : 'text-gray-200'" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Z"/>
                             <path fill-rule="evenodd" d="M11 7V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm4.707 5.707a1 1 0 0 0-1.414-1.414L11 14.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
                           </svg>                          
@@ -605,3 +911,58 @@
     </div>
   </div>
 </div>
+
+    <!-- Modal Cambiar Promoción -->
+    <div id="promocionModal" class="container-modal">
+      <div class="relative">
+        <!-- Modal content -->
+        <div class="animate__animated animate__jackInTheBox animate__faster relative p-8 text-center bg-white rounded-lg shadow dark:bg-gray-800 sm:p-6">
+          <button (click)="closePromocionModal()" type="button" class="text-gray-400 absolute top-2.5 right-2.5 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-600 dark:hover:text-white">
+            <svg aria-hidden="true" class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path>
+            </svg>      
+            <span class="sr-only">Close modal</span>
+          </button>
+          
+          <div class="p-6 text-center">
+            <svg class="mx-auto mb-4 text-red-600 w-12 h-12" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 11V6m0 8h.01M19 10a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+            </svg>
+            <h3 class="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              ⚠️ Advertencia: Cambio de Promoción
+            </h3>
+            <p class="mb-5 text-sm text-gray-600 dark:text-gray-300">
+              Si eliges una nueva promoción, la promoción anterior será descartada y se aplicará una nueva duración y tipo de promoción.
+            </p>
+            <p class="mb-6 text-sm font-medium text-gray-700 dark:text-gray-200">
+              ¿Estás seguro de que quieres proceder con el cambio?
+            </p>
+            
+            <!-- Selector de nuevo tipo de promoción -->
+            <div class="mb-6">
+              <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
+                Seleccionar nueva promoción:
+              </label>
+              <select 
+                [(ngModel)]="selectedNewPromocion" 
+                class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                <option value="">Seleccione una promoción...</option>
+                <option *ngFor="let saldo of saldos" [value]="saldo.saldo_id">
+                  {{ saldo.type }} ({{ saldo.days }} días) - Disponibles: {{ saldo.quantity }}
+                </option>
+              </select>
+            </div>
+            
+            <div class="flex justify-center gap-4">
+              <button (click)="closePromocionModal()" type="button" class="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">
+                NO
+              </button>
+              <button (click)="confirmPromocionChange()" [disabled]="!selectedNewPromocion" type="button" class="text-white bg-red-600 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:focus:ring-red-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center disabled:opacity-50 disabled:cursor-not-allowed">
+                SÍ, Cambiar
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+

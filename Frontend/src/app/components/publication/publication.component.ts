@@ -23,6 +23,10 @@ export class PublicationComponent implements OnInit {
   descripcion: string = '';
   isPublicationSaved: boolean = false;
   isAlreadyApplied: boolean = false;
+  
+  // Variables para el carrusel de imágenes
+  publicationImages: any[] = [];
+  currentImageIndex: number = 0;
 
   constructor(
     private publicationService: PublicationService,
@@ -55,12 +59,43 @@ export class PublicationComponent implements OnInit {
     this.publicationService.getPublicationById(id).subscribe(
       (response) => {
         this.publication = response.publication;
+        
+        // Cargar imágenes del carrusel
+        if (this.publication.images && this.publication.images.length > 0) {
+          
+          this.publicationImages = this.publication.images.sort((a: any, b: any) => {
+            // Si es imagen por defecto, no necesita ordenar
+            if (a.desc === 'default' || b.desc === 'default') {
+              return 0;
+            }
+            // Extraer número del desc para ordenar correctamente
+            const getOrderFromDesc = (desc: string) => {
+              const match = desc.match(/publicationImage(\d+)/);
+              return match ? parseInt(match[1]) : 0;
+            };
+            return getOrderFromDesc(a.desc) - getOrderFromDesc(b.desc);
+          });
+          
+          // El backend ya envía las URLs correctas, no necesitamos modificarlas
+        } else {
+          // Si no hay imágenes en la respuesta, usar imagen por defecto local
+          this.publicationImages = [{
+            id: 'default',
+            image: 'defaultPubli.jpg',
+            desc: 'default',
+            url: 'http://localhost:8000/images/defaultPubli.jpg'
+          }];
+        }
+        this.currentImageIndex = 0;
+        
         // Verificar estado una vez que tenemos la publicación y los datos del usuario
         this.checkIfPublicationIsSaved();
         this.checkIfAlreadyApplied();
+        // Registrar visita si tenemos los datos del usuario
+        this.registrarVisitaUsuario();
       },
       (error) => {
-        console.error(error);
+        console.error('❌ ERROR al obtener publicación:', error);
       }
     );
   }
@@ -74,6 +109,11 @@ export class PublicationComponent implements OnInit {
 
     if (!this.data) {
       this.showAlert1();
+      return;
+    }
+
+    // No permitir postularse si no es estudiante
+    if (this.data.rol !== 'estudiante') {
       return;
     }
 
@@ -115,6 +155,11 @@ export class PublicationComponent implements OnInit {
       return;
     }
 
+    // No permitir guardar si no es estudiante
+    if (this.data.rol !== 'estudiante') {
+      return;
+    }
+
     const guarda = {
       publication_id: this.publication.id,
       estudiante_id: this.data.id
@@ -140,7 +185,8 @@ export class PublicationComponent implements OnInit {
 
   checkIfPublicationIsSaved(): void {
     // Solo verificar si tenemos tanto la publicación como los datos del usuario
-    if (!this.publication || !this.data) {
+    // Y solo si el usuario es estudiante
+    if (!this.publication || !this.data || this.data.rol !== 'estudiante') {
       return;
     }
 
@@ -157,7 +203,8 @@ export class PublicationComponent implements OnInit {
 
   checkIfAlreadyApplied(): void {
     // Solo verificar si tenemos tanto la publicación como los datos del usuario
-    if (!this.publication || !this.data) {
+    // Y solo si el usuario es estudiante
+    if (!this.publication || !this.data || this.data.rol !== 'estudiante') {
       return;
     }
 
@@ -179,11 +226,28 @@ export class PublicationComponent implements OnInit {
         // Verificar estado una vez que tenemos los datos del usuario
         this.checkIfPublicationIsSaved();
         this.checkIfAlreadyApplied();
+        // Registrar visita si tenemos la publicación
+        this.registrarVisitaUsuario();
       },
       (error) => {
         console.error(error);
       }
     );
+  }
+
+  registrarVisitaUsuario(): void {
+    // Solo registrar la visita si tenemos tanto la publicación como los datos del usuario
+    // Y solo si el usuario es estudiante
+    if (this.publication && this.data && this.publication.id && this.data.id && this.data.rol === 'estudiante') {
+      this.publicationService.registrarVisita(this.publication.id, this.data.id).subscribe(
+        (response) => {
+          // Visita registrada silenciosamente
+        },
+        (error) => {
+          // Error manejado silenciosamente
+        }
+      );
+    }
   }
 
   contactMe(): void {
@@ -412,5 +476,55 @@ export class PublicationComponent implements OnInit {
   alert8Close() {
     const modal = document.getElementById('alert-container8') as HTMLElement;
     modal.style.display = 'none';
+  }
+
+  // Métodos para el carrusel de imágenes
+  nextImage(): void {
+    if (this.publicationImages.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex + 1) % this.publicationImages.length;
+    }
+  }
+
+  prevImage(): void {
+    if (this.publicationImages.length > 0) {
+      this.currentImageIndex = (this.currentImageIndex - 1 + this.publicationImages.length) % this.publicationImages.length;
+    }
+  }
+
+  getCurrentImage(): any {
+    if (this.publicationImages.length > 0 && this.currentImageIndex >= 0 && this.currentImageIndex < this.publicationImages.length) {
+      return this.publicationImages[this.currentImageIndex];
+    }
+    return null;
+  }
+
+  goToSlide(index: number): void {
+    if (index >= 0 && index < this.publicationImages.length) {
+      this.currentImageIndex = index;
+    }
+  }
+
+  isStudentUser(): boolean {
+    return this.data && this.data.rol === 'estudiante';
+  }
+
+  isEnterpriseUser(): boolean {
+    return this.data && this.data.rol === 'empresa';
+  }
+
+  isAdminUser(): boolean {
+    return this.data && this.data.rol === 'admin';
+  }
+
+  shouldShowStudentActions(): boolean {
+    return this.isStudentUser();
+  }
+
+  shouldDisablePostulateButton(): boolean {
+    return !this.isStudentUser() || this.isAlreadyApplied;
+  }
+
+  shouldDisableSaveButton(): boolean {
+    return !this.isStudentUser();
   }
 }

@@ -149,4 +149,42 @@ class ImagesController extends Controller
             'id' => $fileUpload->id,
         ]);
     }
+
+    public function cambiarOrdenImg(Request $request)
+    {
+        $validated = $request->validate([
+            'publication_id' => 'required|exists:publications,id',
+            'image_orders' => 'required|array',
+            'image_orders.*.image_id' => 'required|exists:image_uploads,id',
+            'image_orders.*.new_order' => 'required|integer|min:1',
+        ]);
+
+        $publicationId = $request->input('publication_id');
+        $imageOrders = $request->input('image_orders');
+
+        try {
+            foreach ($imageOrders as $imageOrder) {
+                $imageId = $imageOrder['image_id'];
+                $newOrder = $imageOrder['new_order'];
+                
+                // Actualizar el desc de la imagen para reflejar el nuevo orden
+                $imageUpload = ImageUpload::find($imageId);
+                if ($imageUpload && strpos($imageUpload->desc, 'publicationImage') === 0) {
+                    // Extraer el prefijo y actualizar con el nuevo número
+                    $imageUpload->desc = 'publicationImage' . $newOrder;
+                    $imageUpload->save();
+                }
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Orden de imágenes actualizado con éxito',
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar el orden de las imágenes: ' . $e->getMessage(),
+            ], 500);
+        }
+    }
 }

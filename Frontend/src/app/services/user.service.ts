@@ -23,7 +23,6 @@ export class UserService {
       return null;
     }
   }
-
   logout(): Observable<any> {
     const token = this.getToken();
     return this._http.post(global.url + 'logout', {}, {
@@ -31,8 +30,15 @@ export class UserService {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       })
-    });
-}
+    }).pipe(
+      tap(() => {
+        // Limpiar todas las cookies y localStorage relacionados
+        this.cookieService.delete('token');
+        localStorage.removeItem('token'); // Por si quedó algo del sistema anterior
+        localStorage.removeItem('email');
+      })
+    );
+  }
 
 storeImage(file: File, userId?: number, desc?: string): Observable<any> {
   const formData = new FormData();

@@ -125,20 +125,19 @@ class CompanyController extends Controller
     
             if (!is_null($categoria)) {
                 $query->where('categoria', $categoria);
-            }
-    
-            $query->orderBy('created_at', 'desc');
+            }            $query->orderBy('created_at', 'desc');
             
             if (!is_null($cantidad)) {
                 $query->take((int) $cantidad);
             }
-    
-            $publicaciones = $query->get();
-    
+
+            // Cargar las publicaciones con el conteo de postulaciones
+            $publicaciones = $query->withCount('postulaciones')->get();
+
             if ($publicaciones->isEmpty()) {
                 return response(['message' => 'No se encontraron publicaciones para esta empresa'], 404);
             }
-    
+
             return response(['data' => $publicaciones], 200);
         } catch (\Exception $e) {
             return response(['message' => 'Error al obtener publicaciones', 'error' => $e->getMessage()], 500);
@@ -288,5 +287,152 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
         ]);
 
         return response()->json(['message' => 'Mensaje creado exitosamente', 'data' => $mensaje, 'status' => 201], 201);
+    }
+
+    public function contactarEstudiante(Request $request)
+    {
+        try {
+            $validator = Validator::make($request->all(), [
+                'publication_id' => 'required|exists:publications,id',
+                'estudiante_id' => 'required|exists:estudiante,id',
+                'tipo_contacto' => 'required|in:personal,web',
+                'empresa_id' => 'required|exists:empresa,id'
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'message' => 'Datos de validación incorrectos',
+                    'errors' => $validator->errors(),
+                    'status' => 400
+                ], 400);
+            }
+
+            // Actualizar el estado de la postulación a "En proceso"
+            $postulacion = Postula::where('publication_id', $request->publication_id)
+                                 ->where('estudiante_id', $request->estudiante_id)
+                                 ->first();
+
+            if (!$postulacion) {
+                return response()->json([
+                    'message' => 'No se encontró la postulación',
+                    'status' => 404
+                ], 404);
+            }
+
+            // Usar DB::table para actualizar directamente
+            DB::table('postula')
+                ->where('publication_id', $request->publication_id)
+                ->where('estudiante_id', $request->estudiante_id)
+                ->update(['estado' => 'En proceso']);
+
+            // Si es contacto por web, enviar email
+            if ($request->tipo_contacto === 'web') {
+                // Obtener datos del estudiante
+                $estudiante = Estudiante::find($request->estudiante_id);
+                $userEstudiante = User::find($estudiante->id);
+                
+                // Obtener datos de la empresa
+                $empresa = Empresa::find($request->empresa_id);
+                $userEmpresa = User::find($empresa->id);
+                
+                // Obtener datos de la publicación
+                $publicacion = Publication::find($request->publication_id);
+
+                if (!$estudiante || !$empresa || !$publicacion || !$userEstudiante || !$userEmpresa) {
+                    return response()->json([
+                        'message' => 'No se encontraron los datos necesarios',
+                        'status' => 404
+                    ], 404);
+                }
+
+                // Preparar datos para usar la función contactMe existente
+                $emailData = [
+                    'email' => $userEmpresa->email, // Email del remitente (empresa)
+                    'asunto' => 'Interés en tu postulación - ' . $publicacion->title,
+                    'descripcion' => "Hola {$userEstudiante->name},\n\n" .
+                                   "La empresa {$userEmpresa->name} ha mostrado interés en tu postulación para el puesto: {$publicacion->title}.\n\n" .
+                                   "Se pondrán en contacto contigo pronto para continuar con el proceso.\n\n" .
+                                   "Saludos,\n" .
+                                   "Equipo de Pasantías Uruguay",
+                    'emailDestino' => $userEstudiante->email
+                ];
+
+                // Usar la función contactMe existente del EmailController
+                $emailController = new \App\Http\Controllers\Api\Email\EmailController();
+                $emailRequest = new Request($emailData);
+                $emailResponse = $emailController->contactMe($emailRequest);
+
+                if ($emailResponse->getStatusCode() !== 200) {
+                    return response()->json([
+                        'message' => 'Estado actualizado pero falló el envío del email',
+                        'status' => 206
+                    ], 206);
+                }
+            }
+
+            return response()->json([
+                'message' => 'Contacto realizado exitosamente',
+                'tipo_contacto' => $request->tipo_contacto,
+                'status' => 200
+            ], 200);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'message' => 'Error al contactar estudiante',
+                'error' => $e->getMessage(),
+                'status' => 500
+            ], 500);
+        }
+    }
+
+    public function obtenerSaldosDisponibles(): Response
+    {
+        $saldos = Saldo::orderBy('type')->orderBy('days')->orderBy('pack')->get();
+        
+        return response(['data' => $saldos], 200);
+    }
+
+    public function comprarSaldo(Request $request): Response
+    {
+        $user = Auth::user();
+        $empresa = Empresa::where('id', $user->id)->first();
+        
+        if (!$empresa) {
+            return response(['message' => 'Empresa no encontrada'], 404);
+        }
+
+        $saldoId = $request->input('saldo_id');
+        $saldo = Saldo::find($saldoId);
+
+        if (!$saldo) {
+            return response(['message' => 'Saldo no encontrado'], 404);
+        }
+
+        $necesita = Necesita::where('empresa_id', $empresa->id)
+            ->where('saldo_id', $saldoId)
+            ->first();
+
+        if ($necesita) {
+            // Actualizar el quantity existente sumando el pack del saldo seleccionado
+            $necesita->quantity += $saldo->pack;
+            $necesita->save();
+        } else {
+            // Crear un nuevo registro en necesita
+            Necesita::create([
+                'empresa_id' => $empresa->id,
+                'saldo_id' => $saldoId,
+                'quantity' => $saldo->pack,
+            ]);
+        }
+
+        return response([
+            'message' => 'Compra realizada exitosamente',
+            'data' => [
+                'type' => $saldo->type,
+                'days' => $saldo->days,
+                'pack' => $saldo->pack,
+                'precio' => $saldo->precio
+            ]
+        ], 200);
     }
 }

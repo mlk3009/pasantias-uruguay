@@ -51,7 +51,7 @@ export class LoginComponent {
   }
 
   ngOnInit() {
-    const token = this._cookieService.get('token') || localStorage.getItem('token');
+    const token = this._cookieService.get('token');
     if (token) {
       this._router.navigate(['/inicio']);
     }
@@ -62,7 +62,7 @@ export class LoginComponent {
       this.inputType === 'password' ? 'text' : 'password');
   }
   get isLoggedIn() {
-    const token = this._cookieService.get('token') || localStorage.getItem('token');
+    const token = this._cookieService.get('token');
     return !!token;
   }
   login(form: any) {
@@ -70,11 +70,23 @@ export class LoginComponent {
     this._userService.login(this.user).subscribe(
       (loginResponse) => {
         const token = loginResponse.token;
+        
+        // Configurar cookie según "Recordarme"
         if (this.rememberMe) {
-          localStorage.setItem('token', token);
+          // Cookie persistente - 30 días
+          this._cookieService.set('token', token, { 
+            expires: 30,
+            secure: false, // true en producción
+            sameSite: 'Lax'
+          });
         } else {
-          this._cookieService.set('token', token);
+          // Cookie de sesión - se borra al cerrar navegador
+          this._cookieService.set('token', token, {
+            secure: false, // true en producción  
+            sameSite: 'Lax'
+          });
         }
+        
         localStorage.setItem('email', this.user.email);
   
         return this._router.navigate(['/']);

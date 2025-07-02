@@ -1,6 +1,6 @@
 import { Component, ViewChildren, ViewChild, ElementRef, QueryList, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { NavComponent } from '../../home/nav/nav.component';
 import { CompanyService } from '../../../services/company.service';
 import { FormsModule } from '@angular/forms';
@@ -9,7 +9,7 @@ import { UserService } from '../../../services/user.service';
 @Component({
   selector: 'app-abautus',
   standalone: true,
-  imports: [CommonModule, NavComponent, FormsModule],
+  imports: [CommonModule, NavComponent, FormsModule, RouterModule],
   templateUrl: './abautus.component.html',
   styleUrls: ['./abautus.component.css']
 })
@@ -26,6 +26,7 @@ export class AbautusComponent implements OnInit {
   desc3Paragraph: string = '';
   userImageUrl: string = '';
   empresaImageUrl: string = '';
+  muro2ImageUrl: string = '';
   muroImageUrl: string = '';
 
   constructor(
@@ -96,6 +97,7 @@ export class AbautusComponent implements OnInit {
   cargarImagenesEmpresa(images: any[]): void {
     const profileImage = images.find((img: any) => img.desc === 'profile');
     const empresaImage = images.find((img: any) => img.desc === 'empresaimg');
+    const muro2Image = images.find((img: any) => img.desc === 'muro2');
     const muroImage = images.find((img: any) => img.desc === 'muro');
 
     if (profileImage) {
@@ -108,6 +110,12 @@ export class AbautusComponent implements OnInit {
       this.empresaImageUrl = `http://localhost:8000/images/uploads/${empresaImage.image}`;
     } else {
       this.empresaImageUrl = 'http://localhost:8000/images/empresa.png';
+    }
+
+    if (muro2Image) {
+      this.muro2ImageUrl = `http://localhost:8000/images/uploads/${muro2Image.image}`;
+    } else {
+      this.muro2ImageUrl = 'http://localhost:8000/images/default-muro2.png';
     }
 
     if (muroImage) {
