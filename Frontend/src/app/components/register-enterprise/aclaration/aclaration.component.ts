@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { NavComponent } from '../../home/nav/nav.component';
+import { NavComponent } from '../../../components/home/nav/nav.component';
 
 @Component({
   selector: 'app-aclaration',

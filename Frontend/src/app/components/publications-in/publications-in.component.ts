@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { initFlowbite } from 'flowbite';
 
-import { NavComponent } from '../home/nav/nav.component';
+import { NavComponent } from '../../components/home/nav/nav.component';
 import { PrincipalImageInComponent } from './principal-image-in/principal-image-in.component';
 import { CategoriesContentComponent } from './categories-content/categories-content.component';
 import { FooterComponent } from '../home/footer/footer.component';

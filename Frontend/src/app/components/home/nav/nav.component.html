@@ -1,16 +1,9 @@
-<head>
-  <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
-  />
-</head>
-
 <nav
   [ngClass]="scroll_var ? '' : 'down'"
-  class="bg-white border-gray-200 dark:bg-gray-900 nav001 animate__animated animate__fadeInDown animate__faster"
+  class="bg-white border-gray-200 dark:bg-gray-900 nav001 animate__animated animate__fadeInDown animate__faster relative"
 >
   <div
-    class="flex flex-wrap items-center justify-around max-w-screen-xl mx-auto p-4"
+    class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto p-4 relative"
   >
     <a
       routerLink="/inicio"
@@ -18,468 +11,22 @@
     >
       <img
         src="../../../../assets/img/logo_ 3.png"
-        class="h-10"
+        class="h-8"
         alt="xexperience"
       />
       <span
         class="self-center text-2xl font-semibold whitespace-nowrap dark:text-white"
-        >Pasantías UY</span
-      >
+        >Pasantías UY</span>
     </a>
-    <div
-      class="flex items-center md:order-2 space-x-1 md:space-x-2 rtl:space-x-reverse"
-    >
-      <section class="profile_container hidden md:block" *ngIf="isLoggedIn">
-        <!-- Indicador de saldo para empresas -->
-        <div class="saldo-indicator relative mr-4 inline-block" *ngIf="data?.rol === 'empresa'">
-          <div class="saldo-button bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg cursor-pointer transition-all duration-300 flex items-center space-x-2">
-            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
-              <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path>
-            </svg>
-            <span class="text-sm font-medium">Saldo</span>
-            <span class="bg-blue-500 text-xs px-2 py-1 rounded-full">{{ getTotalSaldo() }}</span>
-          </div>
-          
-          <!-- Tooltip de saldo detallado mejorado -->
-          <div class="saldo-tooltip absolute top-full left-1/2 transform -translate-x-1/2 mt-3 bg-white dark:bg-gray-900 border-0 rounded-xl shadow-2xl p-6 min-w-96 opacity-0 invisible transition-all duration-300 z-50 backdrop-blur-sm">
-            <!-- Flecha mejorada -->
-            <div class="arrow absolute -top-3 left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-12 border-r-12 border-b-12 border-l-transparent border-r-transparent border-b-white dark:border-b-gray-900"></div>
-            
-            <!-- Header elegante -->
-            <div class="text-center mb-6">
-              <div class="inline-flex items-center justify-center w-12 h-12 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-3">
-                <svg class="w-6 h-6 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
-                  <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path>
-                </svg>
-              </div>
-              <h3 class="text-xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">Saldo de Publicaciones</h3>
-              <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Gestiona tus publicaciones disponibles</p>
-            </div>
-            
-            <div *ngIf="!loadingSaldo; else loadingSaldoTemplate">
-              <!-- Desglose completo de publicaciones -->
-              <div class="space-y-4">
-                
-                <!-- Resumen total con diseño mejorado -->
-                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/30 dark:to-indigo-900/30 p-4 rounded-xl border border-blue-100 dark:border-blue-800">
-                  <div class="flex justify-between items-center mb-2">
-                    <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">Total disponible</span>
-                    <div class="flex items-center space-x-2">
-                      <div class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                      <span class="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">{{ getTotalSaldo() }}</span>
-                    </div>
-                  </div>
-                  <p class="text-xs text-gray-600 dark:text-gray-400 flex items-center">
-                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
-                    </svg>
-                    Publicaciones que puedes crear con tus packs actuales
-                  </p>
-                </div>
-
-                <!-- Publicación Normal con diseño mejorado -->
-                <div class="group border border-gray-200 dark:border-gray-700 rounded-xl p-4 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 relative saldo-item-container hover:shadow-lg transition-all duration-300" 
-                     [class.opacity-50]="getSaldoNormal() === 0"
-                     [class.hover:scale-105]="getSaldoNormal() > 0">
-                  <div class="flex justify-between items-start mb-3 saldo-item-trigger" 
-                       [class.cursor-pointer]="getSaldoNormal() > 0"
-                       [class.has-tooltip]="getSaldoNormal() > 0">
-                    <div class="flex items-center space-x-3">
-                      <div class="flex items-center justify-center w-8 h-8 rounded-lg" 
-                           [class]="getSaldoNormal() > 0 ? 'bg-gray-600' : 'bg-gray-400'">
-                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"></path>
-                        </svg>
-                      </div>
-                      <div>
-                        <span class="font-semibold text-gray-900 dark:text-white text-base">{{ getTipoPromocionDescripcion('normal') }}</span>
-                        <p class="text-xs text-gray-500 dark:text-gray-400">Publicación estándar</p>
-                      </div>
-                    </div>
-                    <div class="text-right">
-                      <span class="text-2xl font-bold" 
-                            [class]="getSaldoNormal() > 0 ? 'text-gray-900 dark:text-white' : 'text-gray-400 dark:text-gray-500'">
-                        {{ getSaldoNormal() }}
-                      </span>
-                      <p class="text-xs text-gray-500 dark:text-gray-400">disponibles</p>
-                    </div>
-                  </div>
-                  
-                  <!-- Tooltip detallado mejorado para normales -->
-                  <div *ngIf="getSaldoNormal() > 0" class="saldo-detail-tooltip absolute right-full top-0 mr-3 bg-gray-900 dark:bg-gray-800 text-white text-sm rounded-xl p-4 opacity-0 invisible transition-all duration-300 min-w-64 z-[100] pointer-events-none shadow-2xl">
-                    <div class="mb-2">
-                      <h4 class="font-semibold text-white mb-2 flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
-                        </svg>
-                        Detalles del pack
-                      </h4>
-                    </div>
-                    <div class="space-y-2">
-                      <div *ngFor="let saldo of getSaldosNormalesDetalle()" class="flex justify-between items-center py-2 px-3 bg-gray-800 dark:bg-gray-700 rounded-lg">
-                        <div class="flex items-center space-x-2">
-                          <div class="w-2 h-2 bg-green-400 rounded-full"></div>
-                          <span class="font-medium">{{ saldo.days || 15 }} días</span>
-                        </div>
-                        <span class="text-gray-300 text-sm">({{ saldo.quantity }} restantes)</span>
-                      </div>
-                    </div>
-                    <div class="arrow-right absolute top-4 -right-2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-gray-900 dark:border-l-gray-800"></div>
-                  </div>
-                </div>
-
-                <!-- Publicación Destacada con diseño premium -->
-                <div class="group border border-yellow-300 dark:border-yellow-600 rounded-xl p-4 bg-gradient-to-r from-yellow-50 to-amber-50 dark:from-yellow-900/30 dark:to-amber-900/30 relative saldo-item-container hover:shadow-xl transition-all duration-300"
-                     [class.opacity-50]="getSaldoDestacado() === 0"
-                     [class.hover:scale-105]="getSaldoDestacado() > 0">
-                  <div class="flex justify-between items-start mb-3 saldo-item-trigger" 
-                       [class.cursor-pointer]="getSaldoDestacado() > 0"
-                       [class.has-tooltip]="getSaldoDestacado() > 0">
-                    <div class="flex items-center space-x-3">
-                      <div class="flex items-center justify-center w-8 h-8 rounded-lg bg-gradient-to-r from-yellow-500 to-amber-500">
-                        <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                      </div>
-                      <div>
-                        <span class="font-semibold text-gray-900 dark:text-white text-base flex items-center">
-                          {{ getTipoPromocionDescripcion('destacado') }}
-                          <span class="ml-2 px-2 py-0.5 bg-gradient-to-r from-yellow-400 to-amber-400 text-yellow-900 text-xs font-bold rounded-full">PREMIUM</span>
-                        </span>
-                        <p class="text-xs text-yellow-800 dark:text-yellow-200">✨ Mayor visibilidad en búsquedas</p>
-                      </div>
-                    </div>
-                    <div class="text-right">
-                      <span class="text-2xl font-bold" 
-                            [class]="getSaldoDestacado() > 0 ? 'text-yellow-700 dark:text-yellow-400' : 'text-gray-400 dark:text-gray-500'">
-                        {{ getSaldoDestacado() }}
-                      </span>
-                      <p class="text-xs text-yellow-600 dark:text-yellow-400">disponibles</p>
-                    </div>
-                  </div>
-                  
-                  <!-- Tooltip detallado premium para destacadas -->
-                  <div *ngIf="getSaldoDestacado() > 0" class="saldo-detail-tooltip absolute right-full top-0 mr-3 bg-gradient-to-br from-yellow-600 to-amber-700 text-white text-sm rounded-xl p-4 opacity-0 invisible transition-all duration-300 min-w-64 z-[100] pointer-events-none shadow-2xl">
-                    <div class="mb-2">
-                      <h4 class="font-semibold text-white mb-2 flex items-center">
-                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                        </svg>
-                        Pack Premium
-                      </h4>
-                    </div>
-                    <div class="space-y-2">
-                      <div *ngFor="let saldo of getSaldosDestacadosDetalle()" class="flex justify-between items-center py-2 px-3 bg-yellow-500/20 rounded-lg border border-yellow-400/30">
-                        <div class="flex items-center space-x-2">
-                          <div class="w-2 h-2 bg-yellow-300 rounded-full animate-pulse"></div>
-                          <span class="font-medium">{{ saldo.days || 30 }} días</span>
-                        </div>
-                        <span class="text-yellow-100 text-sm">({{ saldo.quantity }} restantes)</span>
-                      </div>
-                    </div>
-                    <div class="arrow-right absolute top-4 -right-2 w-0 h-0 border-t-8 border-b-8 border-l-8 border-t-transparent border-b-transparent border-l-yellow-600"></div>
-                  </div>
-                </div>
-
-                <!-- Mensaje mejorado si no tiene packs -->
-                <div *ngIf="getTotalSaldo() === 0" class="text-center py-6 border-t border-gray-200 dark:border-gray-600">
-                  <div class="mb-4">
-                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full mb-3">
-                      <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                      </svg>
-                    </div>
-                  </div>
-                  <p class="text-base font-semibold text-gray-600 dark:text-gray-400 mb-2">No tienes packs disponibles</p>
-                  <p class="text-sm text-gray-500 dark:text-gray-500 mb-4">Compra un pack para publicar tus ofertas</p>
-                  <button class="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold px-6 py-2.5 rounded-lg transition-all duration-300 transform hover:scale-105 shadow-lg">
-                    <svg class="w-4 h-4 inline mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M3 4a1 1 0 011-1h12a1 1 0 011 1v2a1 1 0 01-1 1H4a1 1 0 01-1-1V4zM3 10a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H4a1 1 0 01-1-1v-6zM14 9a1 1 0 00-1 1v6a1 1 0 001 1h2a1 1 0 001-1v-6a1 1 0 00-1-1h-2z"></path>
-                    </svg>
-                    Comprar Packs
-                  </button>
-                </div>
-              </div>
-            </div>
-            
-            <!-- Template de loading mejorado -->
-            <ng-template #loadingSaldoTemplate>
-              <div class="flex flex-col items-center justify-center py-8">
-                <div class="relative">
-                  <div class="animate-spin rounded-full h-12 w-12 border-4 border-blue-200 border-t-blue-600"></div>
-                  <div class="absolute inset-0 rounded-full border-4 border-transparent border-r-purple-600 animate-ping"></div>
-                </div>
-                <span class="mt-4 text-sm text-gray-600 dark:text-gray-400 font-medium">Cargando saldo...</span>
-              </div>
-            </ng-template>
-          </div>
-        </div>
-
-        <div class="profile relative top-2 right-20">
-          <div data-dial-init class="fixed top-2 right-20 group">
-            <button
-              id="hide"
-              type="button"
-              data-dial-toggle="speed-dial-menu-dropdown-alternative"
-              aria-controls="speed-dial-menu-dropdown-alternative"
-              aria-expanded="false"
-              class="profile flex items-center justify-center ml-auto text-white bg-white rounded-full w-14 h-14 focus:ring-4 focus:ring-white focus:outline-none dark:focus:ring-white"
-              (click)="toggleDropdown()"
-            >
-            <svg
-              class="w-6 h-6"
-              viewBox="0 0 20 20"
-              version="1.1"
-              xmlns="http://www.w3.org/2000/svg"
-              xmlns:xlink="http://www.w3.org/1999/xlink"
-              fill="#000000"
-            >
-              <g id="SVGRepo_bgCarrier" stroke-width="0" />
-
-              <g
-                id="SVGRepo_tracerCarrier"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-              />
-
-              <g id="SVGRepo_iconCarrier">
-                <title>profile_round [#0002201342]</title>
-                <desc>Created with Sketch.</desc>
-                <defs></defs>
-                <g
-                  id="Page-1"
-                  stroke="none"
-                  stroke-width="1"
-                  fill="none"
-                  fill-rule="evenodd"
-                >
-                  <g
-                    id="Dribbble-Light-Preview"
-                    transform="translate(-140.000000, -2159.000000)"
-                    fill="#000220"
-                  >
-                    <g
-                      id="icons"
-                      transform="translate(56.000000, 160.000000)"
-                    >
-                      <path
-                        d="M100.562548,2016.99998 L87.4381713,2016.99998 C86.7317804,2016.99998 86.2101535,2016.30298 86.4765813,2015.66198 C87.7127655,2012.69798 90.6169306,2010.99998 93.9998492,2010.99998 C97.3837885,2010.99998 100.287954,2012.69798 101.524138,2015.66198 C101.790566,2016.30298 101.268939,2016.99998 100.562548,2016.99998 M89.9166645,2004.99998 C89.9166645,2002.79398 91.7489936,2000.99998 93.9998492,2000.99998 C96.2517256,2000.99998 98.0830339,2002.79398 98.0830339,2004.99998 C98.0830339,2007.20598 96.2517256,2008.99998 93.9998492,2008.99998 C91.7489936,2008.99998 89.9166645,2007.20598 89.9166645,2004.99998 M103.955674,2016.63598 C103.213556,2013.27698 100.892265,2010.79798 97.837022,2009.67298 C99.4560048,2008.39598 100.400241,2006.33098 100.053171,2004.06998 C99.6509769,2001.44698 97.4235996,1999.34798 94.7348224,1999.04198 C91.0232075,1998.61898 87.8750721,2001.44898 87.8750721,2004.99998 C87.8750721,2006.88998 88.7692896,2008.57398 90.1636971,2009.67298 C87.1074334,2010.79798 84.7871636,2013.27698 84.044024,2016.63598 C83.7745338,2017.85698 84.7789973,2018.99998 86.0539717,2018.99998 L101.945727,2018.99998 C103.221722,2018.99998 104.226185,2017.85698 103.955674,2016.63598"
-                        id="profile_round-[#0002201342]"
-                      ></path>
-                    </g>
-                  </g>
-                </g>
-              </g>
-            </svg>
-              <span class="sr-only">Open actions menu</span>
-            </button>
-
-<!-- Menú para estudiante -->
-<div
-  *ngIf="data?.rol === 'estudiante'"
-  id="dropdown-container"
-  class="dropdown-container"
-  [ngClass]="{ 'dropdown-hidden': !isDropdownVisible, 'visible': isDropdownVisible }"
-  (click)="$event.stopPropagation()"
->
-  <ul class="text-base text-gray-500 dark:text-gray-300">
-    <li class="cursor-pointer hover:rounded">
-      <a
-        (click)="open_profile()"
-        class="hover:rounded-t-md flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        Mi perfil
-      </a>
-    </li>
-    <li>
-      <a
-        href="#"
-        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        Crear CV
-      </a>
-    </li>
-    <li>
-      <a
-        href="/user-postulations"
-        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        Mis postulaciones
-      </a>
-    </li>
-    <li>
-      <a
-        href="/user-saves"
-        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        Mis guardados
-      </a>
-    </li>
-    <li>
-      <a
-        (click)="logout()"
-        class="hover:rounded-b-md hover:cursor-pointer flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
-      >
-        Cerrar sesión
-      </a>
-    </li>
-  </ul>
-</div>
-
-<!-- Menú para empresa -->
-<div
-  *ngIf="data?.rol === 'empresa'"
-  id="dropdown-container"
-  class="dropdown-container"
-  [ngClass]="{ 'dropdown-hidden': !isDropdownVisible, 'visible': isDropdownVisible }"
-  (click)="$event.stopPropagation()"
->
-  <ul class="text-base text-gray-500 dark:text-gray-300">
-    <li>
-      <a
-        href="/enterprise-profile"
-        class="hover:rounded-t-md flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
-        </svg>
-        Perfil empresa
-      </a>
-    </li>
-    <li>
-      <a
-        href="/my-publications"
-        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M4 3a2 2 0 100 4h12a2 2 0 100-4H4z"></path>
-          <path fill-rule="evenodd" d="M3 8h14v7a2 2 0 01-2 2H5a2 2 0 01-2-2V8zm5 3a1 1 0 011-1h2a1 1 0 110 2H9a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-        </svg>
-        Mis publicaciones
-      </a>
-    </li>
-    <li>
-      <a
-        (click)="openHistorialModal()"
-        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600 cursor-pointer"
-      >
-        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
-        </svg>
-        Historial de publicaciones
-      </a>
-    </li>
-    <li>
-      <a
-        href="/postulantes"
-        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
-        </svg>
-        Candidatos
-      </a>
-    </li>
-    <li>
-      <a
-        href="/edit-enterprise-profile"
-        class="flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
-        </svg>
-        Editar perfil
-      </a>
-    </li>
-    <li>
-      <a
-        (click)="logout()"
-        class="hover:rounded-b-md hover:cursor-pointer flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
-      >
-        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
-        </svg>
-        Cerrar sesión
-      </a>
-    </li>
-  </ul>
-</div>
-
-<!-- Menú para admin -->
-<div
-  *ngIf="data?.rol === 'administrador'"
-  id="dropdown-container"
-  class="dropdown-container"
-  [ngClass]="{ 'dropdown-hidden': !isDropdownVisible, 'visible': isDropdownVisible }"
-  (click)="$event.stopPropagation()"
->
-  <ul class="text-base text-gray-500 dark:text-gray-300">
-    <li class="cursor-pointer hover:rounded">
-      <a
-        href="/admin-profile"
-        class="hover:rounded-t-md flex items-center px-5 py-2 border-b border-gray-200 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white dark:border-gray-600"
-      >
-        Mi perfil
-      </a>
-    </li>
-    <li>
-      <a
-        (click)="logout()"
-        class="hover:rounded-b-md hover:cursor-pointer flex items-center px-5 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 hover:text-gray-900 dark:hover:text-white"
-      >
-        Cerrar sesión
-      </a>
-    </li>
-  </ul>
-</div>
-
-          </div>
-        </div>
-      </section>
-
-      <div *ngIf="!isLoggedIn">
-        <a
-          routerLink="/login"
-          class="iniciosesion text-white-800 dark:text-white hover:bg-gray-50 focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800"
-          >Iniciar sesión</a
-        >
-        <a
-          routerLink="/register"
-          class="registro text-white bg-white hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 md:px-5 md:py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
-          >Registrarme</a
-        >
-      </div>
-
-      <button
-        data-collapse-toggle="mega-menu"
-        type="button"
-        class="inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"
-        aria-controls="mega-menu"
-        aria-expanded="false"
-      >
-        <span class="sr-only">Open main menu</span>
-        <svg
-          class="w-5 h-5"
-          aria-hidden="true"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 17 14"
-        >
-          <path
-            stroke="currentColor"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            stroke-width="2"
-            d="M1 1h15M1 7h15M1 13h15"
-          />
-        </svg>
-      </button>
-    </div>
+    
+    <!-- Menú de navegación inmediatamente después del logo -->
     <div
       id="mega-menu"
-      class="items-center justify-between hidden w-full md:flex md:w-auto md:order-1"
+      class="navigation-menu items-center w-full md:flex md:w-auto hidden md:block"
+      [class.justify-center]="!isLoggedIn"
+      [class.justify-between]="isLoggedIn"
+      [class.md:-ml-20]="isLoggedIn"
+      [class.md:ml-20]="!isLoggedIn"
     >
       <ul
         class="flex flex-col mt-4 font-medium md:flex-row md:mt-0 md:space-x-8 rtl:space-x-reverse"
@@ -487,7 +34,7 @@
         <li>
           <a
             (click)="navigateToInicio()"
-            [class]="isActiveRoute('inicio') ? 'cursor-pointer inicio block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:p-0 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700' : 'cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700'"
+            [class]="isActiveRoute('inicio') ? 'nav-item active cursor-pointer inicio md:font-medium block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:p-0 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700' : 'nav-item cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700'"
             aria-current="page"
             >Inicio</a
           >
@@ -495,7 +42,7 @@
         <li>
           <a
             (click)="navigateToAboutUs()"
-            [class]="isActiveRoute('abaut-us') ? 'cursor-pointer inicio block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:p-0 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700' : 'cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700'"
+            [class]="isActiveRoute('abaut-us') ? 'nav-item active cursor-pointer md:font-medium inicio block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:p-0 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700' : 'nav-item cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700'"
           >
             Nosotros
           </a>
@@ -503,7 +50,7 @@
         <li>
           <button
             (click)="navigateToContact()"
-            class="hidden md:block resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+            class="nav-item hidden md:block resto block py-2 px-3 text-white-900 border-b md:font-medium border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
           >
             Contacto
           </button>
@@ -511,7 +58,7 @@
         <li>
           <a
             (click)="navigateToPublications()"
-            [class]="isActiveRoute('publications') ? 'hover:cursor-pointer inicio block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:p-0 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700' : 'hover:cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700'"
+            [class]="isActiveRoute('publications') ? 'nav-item active hover:cursor-pointer md:font-medium inicio block py-2 px-3 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:p-0 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700' : 'nav-item hover:cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700'"
             >Publicaciones</a
           >
         </li>
@@ -519,28 +66,453 @@
           <button
             *ngIf="data?.rol === 'empresa'"
             (click)="modal()"
-            class="hidden md:block resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
+            class="nav-item hidden md:block resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700"
           >
             Comprar publicaciones
           </button>
         </li>
-        <li class="md:hidden">
-          <a class="hover:cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700" href="">Mi perfil</a>
-        </li>
-        <li class="md:hidden">
-          <a class="hover:cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700" href="">Crear CV</a>
-        </li>
-        <li class="md:hidden">
-          <a class="hover:cursor-pointer resto block py-2 px-3 text-white-900 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-600 md:p-0 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-blue-500 md:dark:hover:bg-transparent dark:border-gray-700" href="">Ver CV</a>
-        </li>
       </ul>
+    </div>
+
+
+
+    <div
+      class="flex items-center space-x-1 md:space-x-2 rtl:space-x-reverse"
+    >
+      <!-- Botón de perfil para usuarios logueados -->
+      <div *ngIf="isLoggedIn" class="relative mr-10">
+        <button
+          type="button"
+          class="profile-btn group flex items-center justify-center bg-white hover:bg-gray-50 rounded-full w-12 h-12 shadow-lg border-2 border-gray-200 transition-colors duration-200"
+          (click)="toggleSidebar()"
+        >
+          <svg
+            class="w-6 h-6 text-gray-600 group-hover:text-gray-800 transition-colors duration-200"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Botones para usuarios no logueados -->
+      <div *ngIf="!isLoggedIn" class="hidden md:flex items-center space-x-2">
+        <button
+          routerLink="/login"
+          class="btn-iniciar-sesion nav-item resto text-white rounded-lg hover:text-white focus:outline-none font-medium text-sm px-4 py-2 transition-colors duration-200"
+        >
+          Iniciar sesión
+        </button>
+        <button
+          routerLink="/register"
+          class="nav-item text-gray-900 bg-white hover:bg-gray-100 hover:text-sky-800 focus:outline-none font-medium border border-gray-300 rounded-lg text-sm px-4 py-2 transition-all duration-200"
+        >
+          Registrarme
+        </button>
+      </div>
+
+      <!-- Botón de menú móvil elegante -->
+      <button
+        data-collapse-toggle="mega-menu"
+        type="button"
+        class="hamburger-btn inline-flex items-center p-2 w-10 h-10 justify-center text-sm text-white rounded-lg md:hidden transition-all duration-200 ease-in-out hover:bg-gray-100/20 focus:outline-none focus:ring-2 focus:ring-gray-200"
+        aria-controls="mega-menu"
+        [attr.aria-expanded]="mobileMenuOpen"
+        (click)="toggleMobileMenu()"
+      >
+        <span class="sr-only">Abrir menú principal</span>
+        <!-- Icono hamburguesa estático -->
+        <svg class="w-5 h-5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 17 14">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 1h15M1 7h15M1 13h15"/>
+        </svg>
+      </button>
     </div>
   </div>
 </nav>
 
+<!-- Dropdown móvil separado del nav -->
+<div 
+  *ngIf="mobileMenuOpen"
+  class="mobile-dropdown fixed top-20 left-4 right-4 bg-white dark:bg-gray-900 shadow-xl border border-gray-200 dark:border-gray-700 rounded-lg z-40 md:hidden"
+>
+  <div class="p-4 space-y-1">
+    <a
+      (click)="navigateToInicio(); closeMobileMenu()"
+      [class]="isActiveRoute('inicio') ? 'block px-4 py-3 rounded-lg text-base font-medium text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20' : 'block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700'"
+      class="cursor-pointer transition-colors duration-200"
+    >Inicio</a>
+    
+    <a
+      (click)="navigateToAboutUs(); closeMobileMenu()"
+      [class]="isActiveRoute('abaut-us') ? 'block px-4 py-3 rounded-lg text-base font-medium text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20' : 'block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700'"
+      class="cursor-pointer transition-colors duration-200"
+    >Nosotros</a>
+    
+    <a
+      (click)="navigateToContact(); closeMobileMenu()"
+      class="block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200"
+    >Contacto</a>
+    
+    <a
+      (click)="navigateToPublications(); closeMobileMenu()"
+      [class]="isActiveRoute('publications') ? 'block px-4 py-3 rounded-lg text-base font-medium text-blue-600 bg-blue-50 dark:text-blue-400 dark:bg-blue-900/20' : 'block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700'"
+      class="cursor-pointer transition-colors duration-200"
+    >Publicaciones</a>
+    
+    <a
+      *ngIf="data?.rol === 'empresa'"
+      (click)="modal(); closeMobileMenu()"
+      class="block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 cursor-pointer transition-colors duration-200"
+    >Comprar publicaciones</a>
+    
+    <!-- Separador -->
+    <div class="border-t border-gray-200 dark:border-gray-700 my-3"></div>
+    
+    <!-- Opciones de usuario para móvil -->
+    <div *ngIf="!isLoggedIn" class="space-y-2">
+      <a
+        routerLink="/login"
+        (click)="closeMobileMenu()"
+        class="block px-4 py-3 rounded-lg text-base font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50 dark:text-gray-300 dark:hover:text-white dark:hover:bg-gray-700 transition-colors duration-200"
+      >Iniciar sesión</a>
+      
+      <a
+        routerLink="/register"
+        (click)="closeMobileMenu()"
+        class="block px-4 py-3 rounded-lg text-base font-medium bg-blue-600 text-white hover:bg-blue-700 text-center transition-colors duration-200"
+      >Registrarme</a>
+    </div>
+  </div>
+</div>
 
+<!-- Overlay invisible para cerrar sidebar -->
+<div 
+  class="fixed inset-0 z-40 transition-opacity duration-300"
+  [class.opacity-0]="!sidebarOpen"
+  [class.opacity-100]="sidebarOpen"
+  [class.pointer-events-none]="!sidebarOpen"
+  [class.pointer-events-auto]="sidebarOpen"
+  [class.invisible]="!sidebarOpen"
+  [class.visible]="sidebarOpen"
+  (click)="closeSidebar()"
+></div>
 
+<!-- Sidebar lateral -->
+<div 
+  class="sidebar fixed top-0 right-0 h-full w-80 bg-white/90 dark:bg-gray-900/90 shadow-xl z-50 transform transition-all duration-300 ease-in-out translate-x-full backdrop-blur-sm"
+  [class.translate-x-0]="sidebarOpen"
+  [class.translate-x-full]="!sidebarOpen"
+>
+  <!-- Header del sidebar -->
+  <div class="flex items-center justify-between p-4 bg-[#000220]">
+    <div class="flex flex-row items-center space-x-3 rtl:space-x-reverse">
+      <div class="w-12 h-12 bg-white rounded-full flex items-center justify-center">
+        <svg
+          class="w-6 h-6 text-gray-600"
+          fill="currentColor"
+          viewBox="0 0 20 20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+        </svg>
+      </div>
+      <div>
+        <h4 class="font-semibold text-white">{{data.name || 'Usuario'}}</h4>
+        <p class="text-sm text-white/80 capitalize">{{data.rol || 'Sin rol'}}</p>
+      </div>
+    </div>
+    <div>
+    <button 
+      (click)="closeSidebar()"
+      class="sidebar-close-btn"
+    >
+      <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+      </svg>
+    </button>
+    </div>
+  </div>
+  
+  <!-- Contenido del sidebar -->
+  <div class="px-4 py-2 space-y-1">
+    <!-- Tarjeta de saldo para empresas -->
+    <div class="mb-5" *ngIf="data?.rol === 'empresa'">
+      <div class="bg-white rounded-lg shadow-md border border-gray-200 p-5">
+        <!-- Header de la tarjeta de saldo -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center space-x-3">
+            <svg class="w-6 h-6 text-gray-900" fill="currentColor" viewBox="0 0 20 20">
+              <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4z"></path>
+              <path fill-rule="evenodd" d="M18 9H2v5a2 2 0 002 2h12a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z" clip-rule="evenodd"></path>
+            </svg>
+            <h4 class="text-lg font-bold text-gray-900">Mi Saldo</h4>
+          </div>
+          <div class="bg-blue-100 text-sky-800 text-lg font-medium px-3 py-1.5 rounded-full">
+            {{ getTotalSaldo() }}
+          </div>
+        </div>
+        
+        <!-- Desglose de saldo -->
+        <div class="space-y-4 mb-4" *ngIf="!loadingSaldo">
+          <!-- Publicaciones Normales -->
+          <div class="flex justify-between items-center p-4 bg-gray-50 rounded-lg text-base" 
+               [class.opacity-50]="getSaldoNormal() === 0">
+            <div class="flex items-center space-x-4">
+              <div class="w-7 h-7 rounded-full flex items-center justify-center" 
+                   [class]="getSaldoNormal() > 0 ? 'bg-gray-600' : 'bg-gray-400'">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"></path>
+                </svg>
+              </div>
+              <span class="font-medium text-gray-700 text-base">Normales</span>
+            </div>
+            <span class="font-medium text-xl" 
+                  [class]="getSaldoNormal() > 0 ? 'text-gray-900' : 'text-gray-400'">
+              {{ getSaldoNormal() }}
+            </span>
+          </div>
+          
+          <!-- Publicaciones Destacadas -->
+          <div class="flex justify-between items-center p-4 bg-yellow-50 rounded-lg text-base border border-yellow-200" 
+               [class.opacity-50]="getSaldoDestacado() === 0">
+            <div class="flex items-center space-x-4">
+              <div class="w-7 h-7 rounded-full bg-gradient-to-r from-yellow-500 to-amber-500 flex items-center justify-center">
+                <svg class="w-4 h-4 text-white" fill="currentColor" viewBox="0 0 20 20">
+                  <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                </svg>
+              </div>
+              <span class="font-medium text-yellow-800 text-base flex items-center">
+                Destacadas
+                <span class="ml-2 px-2 py-0.5 bg-yellow-400 text-yellow-900 text-xs font-medium rounded">PRO</span>
+              </span>
+            </div>
+            <span class="font-medium text-xl" 
+                  [class]="getSaldoDestacado() > 0 ? 'text-amber-600' : 'text-gray-400'">
+              {{ getSaldoDestacado() }}
+            </span>
+          </div>
+        </div>
+        
+        <!-- Loading estado -->
+        <div *ngIf="loadingSaldo" class="flex items-center justify-center py-4">
+          <div class="animate-spin rounded-full h-5 w-5 border-2 border-blue-200 border-t-blue-600"></div>
+          <span class="ml-3 text-sm text-gray-600">Cargando...</span>
+        </div>
+        
+        <!-- Botón de comprar publicaciones -->
+        <button 
+          (click)="modal()"
+          class="w-full flex items-center justify-center px-5 py-4 text-gray-800 bg-white hover:bg-sky-800 hover:text-white rounded-lg transition-colors cursor-pointer text-base font-medium border border-gray-200 shadow-md"
+        >
+          <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M19 7h-3V5a4 4 0 0 0-8 0v2H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 5a2 2 0 0 1 4 0v2h-4V5zm8 15a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v11z"/>
+          </svg>
+          Comprar publicaciones
+        </button>
+        
+        <!-- Mensaje sin saldo -->
+        <div *ngIf="getTotalSaldo() === 0 && !loadingSaldo" class="text-center mt-3">
+          <p class="text-sm text-gray-500">Sin packs disponibles</p>
+        </div>
+      </div>
+    </div>
 
+    <!-- OPCIONES PARA ESTUDIANTES -->
+    <ng-container *ngIf="data?.rol === 'estudiante'">
+      <!-- Mi perfil -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/user-profile"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Mi perfil</span>
+      </a>
+      
+      <!-- Ver CV / Crear CV -->
+      <a 
+        *ngIf="data.cv"
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/cv"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Ver CV</span>
+      </a>
+      
+      <!-- Crear CV -->
+      <a 
+        *ngIf="!data.cv"
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/edit-cv"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Crear CV</span>
+      </a>
+      
+      <!-- Mis postulaciones -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/user-postulations"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Mis postulaciones</span>
+      </a>
+      
+      <!-- Mis guardados -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/user-saves"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M5 4a2 2 0 012-2h6a2 2 0 012 2v14l-5-2.5L5 18V4z"></path>
+        </svg>
+        <span class="text-sm font-medium">Mis guardados</span>
+      </a>
+    </ng-container>
+
+    <!-- OPCIONES PARA EMPRESAS -->
+    <ng-container *ngIf="data?.rol === 'empresa'">
+      <!-- Mi perfil empresa -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/enterprise-profile"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v8a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2H4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h4a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Mi perfil empresa</span>
+      </a>
+      
+      <!-- Editar perfil empresa -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/edit-enterprise-profile"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"></path>
+        </svg>
+        <span class="text-sm font-medium">Editar perfil</span>
+      </a>
+      
+      <!-- Mis publicaciones -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/my-publications"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Mis publicaciones</span>
+      </a>
+      
+      <!-- Postulantes -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/postulantes"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Postulantes</span>
+      </a>
+    </ng-container>
+
+    <!-- OPCIONES PARA ADMIN -->
+    <ng-container *ngIf="data?.rol === 'admin'">
+      <!-- Perfil admin -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/admin-profile"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Mi perfil</span>
+      </a>
+      
+      <!-- Administrar usuarios -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/admin-users"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"></path>
+        </svg>
+        <span class="text-sm font-medium">Administrar usuarios</span>
+      </a>
+      
+      <!-- Administrar solicitudes -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/admin-solicitudes"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Administrar solicitudes</span>
+      </a>
+      
+      <!-- Administrar publicaciones -->
+      <a 
+        class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+        routerLink="/admin-publications"
+        (click)="closeSidebar()"
+      >
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+          <path fill-rule="evenodd" d="M3 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm0 4a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path>
+        </svg>
+        <span class="text-sm font-medium">Administrar publicaciones</span>
+      </a>
+    </ng-container>
+    
+    <!-- Separador discreto pero perceptible -->
+    <div class="border-t border-gray-500 mx-4" style="border-color: #d1d5db !important; border-width: 1px !important; margin-top: 1rem !important; margin-bottom: 1rem !important; padding-top: 0 !important; padding-bottom: 0 !important;"></div>
+    
+    <!-- Acerca de -->
+    <a 
+      class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
+      routerLink="/abaut-us"
+      (click)="closeSidebar()"
+    >
+      <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"></path>
+      </svg>
+      <span class="text-sm font-medium">Acerca de</span>
+    </a>
+    
+    <!-- Cerrar sesión -->
+    <button 
+      class="flex items-center px-3 py-2 text-red-600 bg-white hover:text-red-800 rounded-lg transition-colors cursor-pointer shadow-md w-full focus:ring-4 focus:ring-red-300 focus:outline-none"
+      (click)="logOut()"
+    >
+      <svg class="w-5 h-5 mr-3 text-red-500" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z" clip-rule="evenodd"></path>
+      </svg>
+      <span class="text-sm font-medium">Cerrar sesión</span>
+    </button>
+  </div>
+</div>
 
 <!-- Modal -->
 <div id="shopModal" class="container-modal">
@@ -554,7 +526,7 @@
         <span class="sr-only">Close modal</span>
       </button>
       
-      <section class="bg-white dark:bg-gray-900 px-10" id="contact">
+      <section class="bg-white dark:bg-gray-900" id="contact">
         <div class="px-2 mx-auto max-w-screen-2xl">
           <section class="bg-white dark:bg-gray-900">
             <div class=" px-4 mx-auto max-w-screen-3xl lg:py-16 lg:px-2">
@@ -562,7 +534,7 @@
                     <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Compra tus publicaciones</h2>
                     <p class="mb-5 font-light text-gray-500 sm:text-xl dark:text-gray-400">Aquí podrás comprar los cupos para subir tus propias publicaciones a la plataforma. Evalúa tus opciones.</p>
                 </div>
-                <div class="space-y-8 lg:grid lg:grid-cols-4 gap-8 lg:space-y-0">
+                <div class="space-y-4 lg:grid lg:grid-cols-4 gap-4 lg:space-y-0">
                     <!-- Publicación Normal Individual -->
                     <div class="flex flex-col p-8 text-center text-gray-900 bg-white rounded-lg border-2 border-blue-300 shadow-lg dark:border-blue-600 xl:p-10 dark:bg-gray-800 dark:text-white">
                         <h3 class="mb-4 text-2xl font-semibold">Publicación Normal</h3>
@@ -735,268 +707,57 @@
   </div>
 </div>
 
-<!-- Modal Historial de Publicaciones -->
-<div *ngIf="isHistorialModalVisible" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="closeHistorialModal()">
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full mx-4 max-h-[90vh] overflow-hidden" (click)="$event.stopPropagation()">
-    <!-- Header del modal -->
-    <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-600">
-      <div class="flex items-center space-x-4">
-        <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
-          Historial de Publicaciones
-        </h3>
-        <!-- Checkbox para filtrar publicaciones -->
-        <label class="flex items-center cursor-pointer">
-          <input 
-            type="checkbox" 
-            [(ngModel)]="mostrarSoloDeshabilitadas"
-            (ngModelChange)="aplicarFiltroPublicaciones()"
-            class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-          <span class="ml-2 text-sm text-gray-600 dark:text-gray-400">Solo deshabilitadas</span>
-        </label>
-      </div>
-      <button (click)="closeHistorialModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+<!-- Modal de confirmación de compra -->
+<div *ngIf="showConfirmModal" class="fixed inset-0 bg-black/50 z-50 flex items-center justify-center p-4">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full">
+    <div class="p-6">
+      <div class="flex items-center justify-center w-12 h-12 mx-auto mb-4 bg-blue-100 dark:bg-blue-900 rounded-full">
+        <svg class="w-6 h-6 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
+          <path d="M4 4a2 2 0 00-2 2v1h16V6a2 2 0 00-2-2H4zM18 9H2v5a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V9zM4 13a1 1 0 011-1h1a1 1 0 110 2H5a1 1 0 01-1-1zm5-1a1 1 0 100 2h1a1 1 0 100-2H9z"></path>
         </svg>
-      </button>
-    </div>
-    
-    <!-- Contenido del modal -->
-    <div class="p-6 overflow-y-auto max-h-[calc(90vh-120px)]">
-      <!-- Loading state -->
-      <div *ngIf="loadingHistorial" class="flex items-center justify-center py-8">
-        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-        <span class="ml-3 text-gray-600 dark:text-gray-400">Cargando historial...</span>
       </div>
       
-      <!-- Contenido del historial -->
-      <div *ngIf="!loadingHistorial">
-        <!-- Estadísticas rápidas -->
-        <div class="grid gap-4 mb-6" [ngClass]="mostrarSoloDeshabilitadas ? 'grid-cols-1 md:grid-cols-2' : 'grid-cols-1 md:grid-cols-3'">
-          <div class="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-            <div class="flex items-center">
-              <svg class="w-8 h-8 text-blue-600 dark:text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z"></path>
-                <path fill-rule="evenodd" d="M4 5a2 2 0 012-2v1a1 1 0 102 0V3h4v1a1 1 0 102 0V3a2 2 0 012 2v6a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm8 8a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path>
-              </svg>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">
-                  {{ mostrarSoloDeshabilitadas ? 'Solo Deshabilitadas' : 'Total Publicaciones' }}
-                </p>
-                <p class="text-2xl font-semibold text-gray-900 dark:text-white">{{ historialPublicaciones.length }}</p>
-                <p *ngIf="!mostrarSoloDeshabilitadas && getPublicacionesSuspendidas() > 0" 
-                   class="text-xs text-red-600 dark:text-red-400">
-                  {{ getPublicacionesSuspendidas() }} suspendidas
-                </p>
-                <p *ngIf="!mostrarSoloDeshabilitadas && getPublicacionesHabilitadas() > 0" 
-                   class="text-xs text-green-600 dark:text-green-400">
-                  {{ getPublicacionesHabilitadas() }} habilitadas
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-yellow-50 dark:bg-yellow-900/20 p-4 rounded-lg" *ngIf="!mostrarSoloDeshabilitadas">
-            <div class="flex items-center">
-              <svg class="w-8 h-8 text-yellow-600 dark:text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
-                <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-              </svg>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Destacadas</p>
-                <p class="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {{ getPublicacionesDestacadas() }}
-                </p>
-              </div>
-            </div>
-          </div>
-          
-          <div class="bg-green-50 dark:bg-green-900/20 p-4 rounded-lg">
-            <div class="flex items-center">
-              <svg class="w-8 h-8 text-green-600 dark:text-green-400" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
-              </svg>
-              <div class="ml-4">
-                <p class="text-sm font-medium text-gray-600 dark:text-gray-400">Postulaciones</p>
-                <p class="text-2xl font-semibold text-gray-900 dark:text-white">
-                  {{ getTotalPostulaciones() }}
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <!-- Lista de publicaciones -->
-        <div class="space-y-4" *ngIf="historialPublicaciones.length > 0; else noPublicationsTemplate">
-          <div *ngFor="let publicacion of historialPublicaciones" 
-               class="border border-gray-200 dark:border-gray-600 rounded-lg p-4 hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors">
-            <div class="flex items-start justify-between">
-              <div class="flex-1">
-                <div class="flex items-center space-x-3 mb-2">
-                  <h4 class="text-lg font-medium text-gray-900 dark:text-white">{{ publicacion.title }}</h4>
-                  <span *ngIf="publicacion.featured && !mostrarSoloDeshabilitadas" 
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400">
-                    <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755  1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-                    </svg>
-                    Destacada
-                  </span>
-                  <span *ngIf="publicacion.is_deleted" 
-                        class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400">
-                    Suspendida
-                  </span>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm text-gray-600 dark:text-gray-400">
-                  <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M4 4a2 2 0 00-2 2v4a2 2 0 002 2V6h10a2 2 0 00-2-2H4zm2 6a2 2 0 012-2h8a2 2 0 012 2v4a2 2 0 01-2 2H8a2 2 0 01-2-2v-4zm6 4a2 2 0 100-4 2 2 0 000 4z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>Salario: ${{ publicacion.salary }}</span>
-                  </div>
-                  
-                  <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
-                    </svg>
-                    <span>{{ publicacion.created_at | date:'dd/MM/yyyy' }}</span>
-                  </div>
-                  
-                  <div class="flex items-center">
-                    <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M13 6a3 3 0 11-6 0 3 3 0 016 0zM18 8a2 2 0 11-4 0 2 2 0 014 0zM14 15a4 4 0 00-8 0v3h8v-3z"></path>
-                    </svg>
-                    <span>{{ publicacion.postulaciones_count }} postulaciones</span>
-                  </div>
-                </div>
-              </div>
-              
-              <div class="flex space-x-2">
-                <a [href]="'/publication/' + publicacion.id" 
-                   class="inline-flex items-center px-3 py-1.5 border border-gray-300 shadow-sm text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50 dark:bg-gray-600 dark:text-white dark:border-gray-500 dark:hover:bg-gray-500">
-                  Ver
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        <ng-template #noPublicationsTemplate>
-          <div class="text-center py-8">
-            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
-            </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900 dark:text-white">
-              {{ mostrarSoloDeshabilitadas ? 'No hay publicaciones deshabilitadas' : 'No hay publicaciones' }}
-            </h3>
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-              {{ mostrarSoloDeshabilitadas ? 'Todas tus publicaciones están activas.' : 'Aún no has creado ninguna publicación.' }}
-            </p>
-            <div class="mt-6" *ngIf="!mostrarSoloDeshabilitadas">
-              <a href="/my-publications" 
-                 class="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                Crear primera publicación
-              </a>
-            </div>
-          </div>
-        </ng-template>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- Modal de Confirmación de Compra -->
-<div *ngIf="showConfirmModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50" (click)="cerrarModalConfirmacion()">
-  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-xl max-w-md w-full mx-4" (click)="$event.stopPropagation()">
-    <!-- Header del modal -->
-    <div class="flex items-center justify-between p-6 border-b border-gray-200 dark:border-gray-600">
-      <h3 class="text-lg font-semibold text-gray-900 dark:text-white">
+      <h3 class="text-lg font-semibold text-center text-gray-900 dark:text-white mb-4">
         Confirmar Compra
       </h3>
-      <button (click)="cerrarModalConfirmacion()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
-        </svg>
-      </button>
-    </div>
-    
-    <!-- Contenido del modal -->
-    <div class="p-6" *ngIf="selectedCompra">
-      <!-- Icono -->
-      <div class="mx-auto flex items-center justify-center h-16 w-16 rounded-full mb-4"
-           [ngClass]="{
-             'bg-blue-100': selectedCompra.tipo.includes('normal'),
-             'bg-yellow-100': selectedCompra.tipo.includes('destacada')
-           }">
-        <svg class="h-8 w-8" 
-             [ngClass]="{
-               'text-blue-600': selectedCompra.tipo.includes('normal'),
-               'text-yellow-600': selectedCompra.tipo.includes('destacada')
-             }" 
-             fill="currentColor" viewBox="0 0 20 20">
-          <path *ngIf="selectedCompra.tipo.includes('normal')" fill-rule="evenodd" d="M4 4a2 2 0 012-2h8a2 2 0 012 2v12a1 1 0 110 2h-3a1 1 0 01-1-1v-2a1 1 0 00-1-1H9a1 1 0 00-1 1v2a1 1 0 01-1 1H4a1 1 0 110-2V4zm3 1h2v2H7V5zm2 4H7v2h2V9zm2-4h2v2h-2V5zm2 4h-2v2h2V9z" clip-rule="evenodd"></path>
-          <path *ngIf="selectedCompra.tipo.includes('destacada')" d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
-        </svg>
-      </div>
       
-      <!-- Título y descripción -->
-      <div class="text-center mb-6">
-        <h4 class="text-xl font-semibold text-gray-900 dark:text-white mb-2">
-          {{ selectedCompra.titulo }}
-        </h4>
-        <p class="text-gray-600 dark:text-gray-400 mb-4">
-          {{ selectedCompra.descripcion }}
+      <div *ngIf="selectedCompra" class="text-center mb-6">
+        <p class="text-gray-600 dark:text-gray-400 mb-2">
+          Estás a punto de comprar:
         </p>
-        
-        <!-- Precio destacado -->
         <div class="bg-gray-50 dark:bg-gray-700 rounded-lg p-4">
-          <p class="text-sm text-gray-600 dark:text-gray-400 mb-1">Total a pagar:</p>
-          <p class="text-3xl font-bold"
-             [ngClass]="{
-               'text-blue-600': selectedCompra.tipo.includes('normal'),
-               'text-yellow-600': selectedCompra.tipo.includes('destacada')
-             }">
-            ${{ selectedCompra.precio }}
-          </p>
+          <div class="font-semibold text-gray-900 dark:text-white">
+            {{selectedCompra.cantidad}} Crédito{{selectedCompra.cantidad > 1 ? 's' : ''}} {{selectedCompra.tipo === 'normal' ? 'Normal' : 'Destacada'}}{{selectedCompra.cantidad > 1 && selectedCompra.tipo === 'normal' ? 'es' : selectedCompra.cantidad > 1 && selectedCompra.tipo === 'destacada' ? 's' : ''}}
+          </div>
+          <div class="text-2xl font-bold text-blue-600 dark:text-blue-400 mt-2">
+            ${{selectedCompra.precio}}
+          </div>
         </div>
       </div>
       
-      <!-- Información adicional -->
-      <div class="bg-blue-50 dark:bg-blue-900/20 border-l-4 border-blue-400 p-4 mb-6">
-        <div class="flex">
-          <div class="flex-shrink-0">
-            <svg class="h-5 w-5 text-blue-400" fill="currentColor" viewBox="0 0 20 20">
-              <path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"></path>
+      <div class="flex space-x-3">
+        <button 
+          (click)="cerrarConfirmacionModal()"
+          [disabled]="processingPurchase"
+          class="flex-1 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 hover:bg-gray-200 rounded-lg transition-colors dark:bg-gray-600 dark:text-gray-300 dark:hover:bg-gray-500 disabled:opacity-50"
+        >
+          Cancelar
+        </button>
+        <button 
+          (click)="confirmarCompra()"
+          [disabled]="processingPurchase"
+          class="flex-1 px-4 py-2 text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 rounded-lg transition-colors flex items-center justify-center disabled:opacity-50"
+        >
+          <span *ngIf="!processingPurchase">Confirmar</span>
+          <span *ngIf="processingPurchase" class="flex items-center">
+            <svg class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
             </svg>
-          </div>
-          <div class="ml-3">
-            <p class="text-sm text-blue-800 dark:text-blue-200">
-              Una vez confirmada la compra, los créditos se añadirán automáticamente a tu cuenta.
-            </p>
-          </div>
-        </div>
+            Procesando...
+          </span>
+        </button>
       </div>
-    </div>
-    
-    <!-- Footer con botones -->
-    <div class="flex items-center justify-end space-x-3 p-6 border-t border-gray-200 dark:border-gray-600">
-      <button (click)="cerrarModalConfirmacion()" 
-              [disabled]="processingPurchase"
-              class="px-6 py-2 text-sm font-medium text-gray-700 bg-gray-100 border border-gray-300 rounded-lg hover:bg-gray-200 focus:ring-4 focus:ring-gray-200 dark:bg-gray-600 dark:text-white dark:border-gray-500 dark:hover:bg-gray-700 disabled:opacity-50 disabled:cursor-not-allowed">
-        Cancelar
-      </button>
-      <button (click)="ejecutarCompra()" 
-              [disabled]="processingPurchase"
-              class="px-6 py-2 text-sm font-medium text-white rounded-lg focus:ring-4 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex items-center space-x-2"
-              [ngClass]="{
-                'bg-blue-600 hover:bg-blue-700 focus:ring-blue-200': selectedCompra?.tipo.includes('normal'),
-                'bg-gradient-to-r from-yellow-500 to-amber-600 hover:from-yellow-600 hover:to-amber-700 focus:ring-yellow-200': selectedCompra?.tipo.includes('destacada')
-              }">
-        <svg *ngIf="processingPurchase" class="animate-spin -ml-1 mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-        <span>{{ processingPurchase ? 'Procesando...' : 'Confirmar Compra' }}</span>
-      </button>
     </div>
   </div>
 </div>

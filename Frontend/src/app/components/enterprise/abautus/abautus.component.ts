@@ -1,7 +1,7 @@
 import { Component, ViewChildren, ViewChild, ElementRef, QueryList, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, RouterModule } from '@angular/router';
-import { NavComponent } from '../../home/nav/nav.component';
+import { NavComponent } from '../../../components/home/nav/nav.component';
 import { CompanyService } from '../../../services/company.service';
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../../../services/user.service';

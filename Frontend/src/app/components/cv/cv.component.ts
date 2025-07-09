@@ -15,7 +15,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { DatosEstudiosComponent } from './datos-estudios/datos-estudios.component';
 import { DatosHabilidadesIdiomasComponent } from './datos-habilidaes-idiomas/datos-habilidades-idiomas.component';
 import { DatosExperienciasComponent } from './datos-experiencias/experiencias.component';
-import { NavComponent } from '../home/nav/nav.component';
+import { NavComponent } from '../../components/home/nav/nav.component';
 
 @Component({
   selector: 'app-cv',

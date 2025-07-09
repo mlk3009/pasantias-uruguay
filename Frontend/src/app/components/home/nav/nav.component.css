@@ -7,6 +7,8 @@
     width: 100%;
     transition: 0.7s;
     z-index: 50;
+    overflow-x: hidden;
+    max-width: 100vw;
 }
 .logotext{
     font-family: Arial, Helvetica, sans-serif;
@@ -104,47 +106,76 @@ nav.down{
 }
 
 
-
-
-.dropdown-container {
-    position: absolute;
-    top: 100%;
-    right: 0;
+  .dropdown-container {
+    position: fixed;
+    top: 64px; /* Equivalente a top-16 */
+    right: 24px; /* Equivalente a right-6 */
     margin-top: 20px; /* Aumenta el margen superior */
-    padding: 10px 5px; /* Añade padding en general */
-    background-color: #f9f9f9; /* Color de fondo gris claro */
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    padding: 24px; /* Padding más generoso como el tooltip de saldo */
+    background-color: white; /* Fondo blanco */
+    border: none; /* Sin borde */
+    border-radius: 12px; /* Bordes más redondeados */
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25); /* Sombra más pronunciada */
     z-index: 1000;
     width: 250px; /* Aumenta el ancho del contenedor */
     opacity: 0; /* Inicialmente oculto */
     transform: translateY(-10px); /* Inicialmente desplazado hacia arriba */
-    transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones para la animación */
+    transition: opacity 0.3s ease, transform 0.3s ease; /* Transiciones más suaves */
+    backdrop-filter: blur(4px); /* Efecto de desenfoque */
+  }
+
+  /* Modo oscuro para dropdown-container */
+  @media (prefers-color-scheme: dark) {
+    .dropdown-container {
+      background-color: #111827; /* Fondo gris oscuro en modo oscuro */
+    }
   }
   
   .dropdown-container.visible {
     opacity: 1; /* Visible */
     transform: translateY(0); /* Posición original */
+    pointer-events: auto; /* Permite interacción */
   }
   
   .dropdown-container.dropdown-hidden {
     opacity: 0; /* Oculto */
     transform: translateY(-10px); /* Desplazado hacia arriba */
+    pointer-events: none; /* Desactiva la interacción */
   }
   
   .dropdown-container::before {
     content: '';
     position: absolute;
-    top: -5px; /* Ajusta la posición de la flecha */
-    right: 20px; /* Mueve la flecha hacia la izquierda */
-    width: 10px;
-    height: 10px;
-    background-color: #f9f9f9; /* Color de fondo gris claro */
-    border-left: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+    top: -6px; /* Ajusta la posición de la flecha */
+    right: 30px; /* Mueve la flecha más a la derecha */
+    width: 12px;
+    height: 12px;
+    background-color: white; /* Color de fondo blanco */
+    border-left: 1px solid rgba(0, 0, 0, 0.1);
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
     transform: rotate(45deg);
     z-index: -1;
+    /* Sin sombra */
+  }
+
+  /* Modo oscuro para la flecha */
+  @media (prefers-color-scheme: dark) {
+    .dropdown-container::before {
+      background-color: #111827; /* Color de fondo gris oscuro en modo oscuro */
+      border-left: 1px solid rgba(255, 255, 255, 0.1);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+  
+  .dropdown-container::after {
+    content: '';
+    position: absolute;
+    top: -25px; /* Cubre el espacio entre el botón y el dropdown */
+    left: 0;
+    right: 0;
+    height: 25px;
+    background: transparent;
+    z-index: 999;
   }
   
   .dropdown-container ul li a {
@@ -170,106 +201,712 @@ nav.down{
 }
 
 .button{
-    background-color: #008fa8;
+    margin-top: 20px;
     color: white;
-    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
-}
-.button:hover{
-    background-color: #15c3c3;
-}
-
-
-/* Minimalist select style */
-.select {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-color: transparent;
+    background-color: #00ddff;
+    padding: 10px 20px;
     border: none;
-    border-bottom: 1px solid #0000002d;
-    padding: 5px 0;
-    font-size: 16px;
-    color: #333;
+    border-radius: 5px;
     cursor: pointer;
-    outline: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
+    transition: 0.3s;
 }
 
-.select:focus {
-    outline: none; /* Elimina el borde azul */
-    border-bottom: 1px solid #000;
+.button:hover{
+    background-color: #00bfdf;
 }
 
-.select option {
-    background-color: white;
+.button:active{
+    background-color: #009fbf;
+}
+
+.card-compra {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+}
+
+.card-compra:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+    border-color: #00ddff;
+}
+
+.card-compra h3 {
     color: #333;
-    padding: 10px; /* Añade padding para un mejor aspecto */
-    font-size: 16px;
-    border-radius: 0; /* Elimina el border-radius */
+    margin-bottom: 10px;
+    font-size: 1.2em;
 }
 
-/* Estilos adicionales para los options cuando están seleccionados */
-.select option:checked {
-    background-color: #f0f0f0; /* Color de fondo cuando está seleccionado */
-    color: #000; /* Color del texto cuando está seleccionado */
+.card-compra p {
+    color: #666;
+    margin-bottom: 15px;
+    font-size: 0.9em;
 }
-.select option:hover{
+
+.precio {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #00ddff;
+    margin-bottom: 15px;
+}
+
+.precio-original {
+    text-decoration: line-through;
+    color: #999;
+    font-size: 0.9em;
+    margin-right: 10px;
+}
+
+.descuento {
+    background-color: #ff4444;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.8em;
+    font-weight: bold;
+}
+
+.btn-comprar {
+    width: 100%;
+    padding: 12px;
+    background-color: #00ddff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
     cursor: pointer;
+    transition: 0.3s;
+    font-size: 1em;
 }
 
-/* Estilos para el indicador de saldo */
-.saldo-indicator {
-    display: inline-block;
+.btn-comprar:hover {
+    background-color: #00bfdf;
+    transform: translateY(-2px);
 }
 
-.saldo-indicator:hover .saldo-tooltip {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0);
+.btn-comprar:active {
+    transform: translateY(0);
 }
 
-.saldo-tooltip {
-    z-index: 60;
-    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.3s ease;
-    transform: translateX(-50%) translateY(-10px);
+.nav-item {
+    text-align: center;
 }
 
-.saldo-tooltip .arrow::after {
-    content: '';
-    position: absolute;
-    top: -2px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 0;
-    height: 0;
-    border-left: 8px solid transparent;
-    border-right: 8px solid transparent;
-    border-bottom: 8px solid #ffffff;
+/* Estilos para el sidebar */
+.sidebar-overlay {
+  backdrop-filter: blur(2px);
 }
 
-/* Tooltips secundarios para detalles */
-.saldo-item-container:hover .saldo-detail-tooltip {
-    opacity: 1;
-    visibility: visible;
+.sidebar {
+  backdrop-filter: blur(12px);
 }
 
-.saldo-item-trigger.has-tooltip:hover + .saldo-detail-tooltip {
-    opacity: 1;
-    visibility: visible;
+.sidebar-content {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e0 transparent;
 }
 
-.saldo-detail-tooltip {
-    z-index: 100;
-    transition: opacity 0.3s ease, visibility 0.3s ease;
-    pointer-events: none;
+.sidebar-content::-webkit-scrollbar {
+  width: 6px;
 }
 
-/* Mejorar la visualización del tooltip secundario */
-.saldo-detail-tooltip .arrow-left {
-    filter: drop-shadow(2px 0 2px rgba(0, 0, 0, 0.1));
+.sidebar-content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-@media (prefers-color-scheme: dark) {
-    .saldo-tooltip .arrow::after {
-        border-bottom-color: #374151;
+.sidebar-content::-webkit-scrollbar-thumb {
+  background-color: #cbd5e0;
+  border-radius: 3px;
+}
+
+.sidebar-content::-webkit-scrollbar-thumb:hover {
+  background-color: #a0aec0;
+}
+
+/* Animaciones suaves para elementos del sidebar */
+.sidebar a, .sidebar button {
+  transition: all 0.2s ease;
+}
+
+.sidebar a:hover, .sidebar button:hover {
+  transform: translateX(2px);
+}
+
+/* Responsive adjustments - sidebar desde la derecha en todos los dispositivos */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        max-width: 320px;
     }
+}
+
+/* Estilo específico para el botón de cerrar del sidebar */
+.sidebar .bg-\[\#000220\] button {
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  color: white !important;
+  transition: opacity 0.2s ease;
+}
+
+.sidebar .bg-\[\#000220\] button:hover {
+  opacity: 0.8 !important;
+  background: transparent !important;
+  color: white !important;
+}
+
+.sidebar .bg-\[\#000220\] button:focus {
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3) !important;
+}
+
+.sidebar .bg-\[\#000220\] button:active {
+  opacity: 0.6 !important;
+}
+
+/* Estilos específicos para tooltips del sidebar */
+.tooltip {
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: #374151;
+  color: white;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
+  z-index: 1000;
+  margin-right: 8px;
+}
+
+.tooltip::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 100%;
+  transform: translateY(-50%);
+  border: 5px solid transparent;
+  border-left-color: #374151;
+}
+
+/* Ajuste específico para el contenedor del sidebar */
+.sidebar .saldo-item-container {
+  overflow: visible;
+}
+
+/* Mejorar el posicionamiento del tooltip */
+.saldo-item-container {
+  position: relative;
+}
+
+.saldo-item-container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(-50%) translateX(-8px);
+}
+
+/* Estilo para el indicador de saldo */
+.saldo-indicator {
+  position: absolute;
+  top: -2px;
+  right: -2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
+
+/* Estilos para diferentes estados del saldo */
+.saldo-bajo {
+  background-color: #f59e0b;
+}
+
+.saldo-normal {
+  background-color: #10b981;
+}
+
+.sin-saldo {
+  background-color: #ef4444;
+}
+
+/* Estilos para el icono de publicaciones */
+.publicaciones-icon {
+  position: relative;
+  display: inline-block;
+}
+
+/* Pulso sutil para indicar estado */
+.saldo-indicator.pulso {
+  animation: pulso 2s infinite;
+}
+
+@keyframes pulso {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Animación para entrada suave del sidebar */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.sidebar.animate-slide-in {
+  animation: slideInRight 0.3s ease-out;
+}
+
+/* Animación para salida suave del sidebar */
+@keyframes slideOutRight {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+.sidebar.animate-slide-out {
+  animation: slideOutRight 0.3s ease-in;
+}
+
+/* Ajustar el espaciado de los elementos del sidebar */
+.sidebar-content > div {
+  margin-bottom: 12px;
+}
+
+/* Mejorar el aspecto de los botones del sidebar */
+.sidebar a, .sidebar button {
+  border-radius: 8px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  text-align: left;
+  width: 100%;
+  padding: 12px 16px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.sidebar a:hover, .sidebar button:hover {
+  color: #075985 !important; /* sky-800 */
+  background-color: transparent !important;
+  transform: translateX(4px);
+}
+
+.sidebar a:active, .sidebar button:active {
+  transform: translateX(2px);
+}
+
+/* Estilo para el botón de cerrar sesión */
+.sidebar button.text-red-600:hover {
+  background-color: transparent !important;
+  color: #dc2626 !important;
+  transform: translateX(4px);
+}
+
+/* Estilos para las tarjetas de información */
+.info-card {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  padding: 16px;
+  color: white;
+  margin-bottom: 16px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.info-card h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.info-card p {
+  font-size: 0.875rem;
+  opacity: 0.9;
+}
+
+/* Estilos para indicadores de estado */
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.status-badge.success {
+  background-color: #dcfce7;
+  color: #166534;
+}
+
+.status-badge.warning {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.status-badge.error {
+  background-color: #fee2e2;
+  color: #991b1b;
+}
+
+/* Responsividad mejorada */
+@media (max-width: 640px) {
+  .sidebar {
+    width: 100vw;
+    max-width: none;
+  }
+  
+  .sidebar-content {
+    padding: 16px;
+  }
+  
+  .info-card {
+    margin-bottom: 12px;
+    padding: 12px;
+  }
+  
+  .sidebar a, .sidebar button {
+    padding: 10px 12px;
+    font-size: 0.875rem;
+  }
+}
+
+/* Estilos para modo oscuro */
+@media (prefers-color-scheme: dark) {
+  .info-card {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3730a3 100%);
+  }
+  
+  .sidebar a:hover, .sidebar button:hover {
+    background-color: transparent !important;
+    color: #075985 !important; /* sky-800 */
+    transform: translateX(4px);
+  }
+  
+  .sidebar button.text-red-600:hover {
+    background-color: transparent !important;
+    color: #f87171 !important;
+    transform: translateX(4px);
+  }
+}
+
+/* Mejoras en la accesibilidad */
+.sidebar a:focus, .sidebar button:focus {
+  outline: 2px solid #3b82f6;
+  outline-offset: 2px;
+}
+
+/* Outline especial para el botón de logout */
+.sidebar button.text-red-600:focus {
+  outline: 2px solid #ef4444;
+  outline-offset: 2px;
+}
+
+/* Animación del botón hamburguesa */
+.hamburger-btn {
+  transition: transform 0.3s ease;
+}
+
+.hamburger-btn:hover {
+  transform: scale(1.1);
+}
+
+.hamburger-btn.clicked {
+  transform: scale(0.95);
+}
+
+/* Estilos para el menú de navegación */
+.navigation-menu {
+  transition: all 0.3s ease;
+}
+
+/* Comportamiento para móvil */
+@media (max-width: 767px) {
+  .navigation-menu.hidden {
+    display: none !important;
+  }
+  
+  .navigation-menu.block {
+    display: block !important;
+  }
+}
+
+/* Asegurar que el menú se muestre en desktop */
+@media (min-width: 768px) {
+  .navigation-menu {
+    display: flex !important;
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+  }
+  
+  .navigation-menu.hidden {
+    display: flex !important;
+  }
+}
+
+/* Estilos para el menú móvil */
+.mobile-dropdown {
+  animation: slideDown 0.3s ease-out;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  max-width: calc(100vw - 2rem);
+  margin: 0 1rem;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hamburger-btn {
+  transition: all 0.3s ease;
+}
+
+.hamburger-btn:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* Estilos para el botón de logout con enfoque rojo */
+.custom-logout-focus:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.5);
+  border-color: #dc2626;
+}
+
+.custom-logout-focus:focus-visible {
+  outline: 2px solid #dc2626;
+  outline-offset: 2px;
+}
+
+/* Prevenir overflow horizontal */
+.overflow-x-hidden {
+  overflow-x: hidden !important;
+}
+
+/* Prevenir overflow horizontal global */
+:host {
+  overflow-x: hidden;
+}
+
+/* Estilos para cuando el menú móvil está abierto */
+:host ::ng-deep body.mobile-menu-open {
+  overflow-x: hidden !important;
+  max-width: 100vw !important;
+}
+
+/* Asegurar que el html tampoco cause overflow */
+:host ::ng-deep html {
+  overflow-x: hidden;
+  max-width: 100vw;
+}
+
+/* Hover effects para las opciones del dropdown */
+.mobile-dropdown a:hover {
+  transform: translateX(2px);
+}
+
+/* Asegurar que el menú interno esté oculto en móvil */
+@media (max-width: 768px) {
+  #mega-menu,
+  .navigation-menu {
+    display: none !important;
+    visibility: hidden !important;
+  }
+}
+
+/* Asegurar que solo se muestre el dropdown separado en móvil */
+@media (max-width: 768px) {
+  .mobile-dropdown {
+    display: block;
+  }
+}
+
+/* Estilos para el botón de cerrar del sidebar */
+.sidebar-close-btn {
+  background: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: white !important;
+  cursor: pointer;
+  transition: transform 0.2s ease !important;
+  padding: 8px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 1 !important;
+}
+
+.sidebar-close-btn:hover {
+  background: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: white !important;
+  transform: scale(1.1) !important;
+  opacity: 1 !important;
+}
+
+.sidebar-close-btn:focus {
+  background: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: white !important;
+  opacity: 1 !important;
+}
+
+.sidebar-close-btn:active {
+  background: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: white !important;
+  transform: scale(0.95) !important;
+  opacity: 1 !important;
+}
+
+.sidebar-close-btn:focus-visible {
+  background: none !important;
+  background-color: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  color: white !important;
+  opacity: 1 !important;
+}
+
+/* Estilos específicos para el SVG del botón de cerrar */
+.sidebar-close-btn svg {
+  color: white !important;
+  stroke: white !important;
+  fill: none !important;
+}
+
+.sidebar-close-btn:hover svg {
+  color: white !important;
+  stroke: white !important;
+  fill: none !important;
+}
+
+.sidebar-close-btn:focus svg {
+  color: white !important;
+  stroke: white !important;
+  fill: none !important;
+}
+
+.sidebar-close-btn:active svg {
+  color: white !important;
+  stroke: white !important;
+  fill: none !important;
+}
+
+/* Sobrescribir las reglas generales del sidebar para el botón de cerrar específico */
+.sidebar .sidebar-close-btn:hover {
+  transform: scale(1.1) !important;
+  opacity: 1 !important;
+  background: none !important;
+  color: white !important;
+}
+
+.sidebar .sidebar-close-btn:focus {
+  outline: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  background: none !important;
+  color: white !important;
+}
+
+.sidebar .sidebar-close-btn:active {
+  opacity: 1 !important;
+  transform: scale(0.95) !important;
+  background: none !important;
+  color: white !important;
+}
+
+/* Estilos para el botón de perfil del nav principal */
+.profile-btn {
+  outline: none !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.profile-btn:hover {
+  outline: none !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.profile-btn:focus {
+  outline: none !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.profile-btn:active {
+  outline: none !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+.profile-btn:focus-visible {
+  outline: none !important;
+  border: 2px solid #e5e7eb !important;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Asegurar que no haya efectos de webkit o navegadores específicos */
+.profile-btn::-moz-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+.profile-btn::-webkit-focus-inner {
+  border: 0;
+  padding: 0;
+}
+
+/* Estilos personalizados para botones de autenticación */
+.btn-iniciar-sesion:hover {
+  background-color: #00bfdf !important;
+  color: white !important;
 }

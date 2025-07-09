@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 
-import { NavComponent } from '../home/nav/nav.component';
+import { NavComponent } from '../../components/home/nav/nav.component';
 import { FooterComponent } from '../home/footer/footer.component';
 import { PublicationService } from '../../services/publication.service';
 import { UserService } from '../../services/user.service';
