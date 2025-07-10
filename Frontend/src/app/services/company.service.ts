@@ -129,12 +129,21 @@ export class CompanyService {
     }
   }
 
-  obtenerEstadisticasEmpresa(empresaId: string): Observable<any> {
+obtenerEstadisticasEmpresa(empresaId: string): Observable<any> {
+  const token = this.getToken();
+  if (token) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
+    
     let params = new HttpParams();
     params = params.set('empresa_id', empresaId.toString());
     
-    return this._http.get(global.url + 'empresa/estadisticas', { params: params });
+    return this._http.get(global.url + 'empresa/estadisticas', { headers: headers, params: params });
+  } else {
+    throw new Error('Token no encontrado');
   }
+}
 
   contactarEstudiante(publicationId: number, estudianteId: number, tipoContacto: string, empresaId: number): Observable<any> {
     const data = {

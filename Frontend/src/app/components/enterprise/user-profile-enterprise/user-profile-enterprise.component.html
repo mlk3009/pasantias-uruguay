@@ -215,7 +215,7 @@
                                     </div>              
                                     <p class="text-2xl font-medium">CV Vistos</p>
                                 </div>
-                                <p class="text-2xl font-semibold">{{ estadisticas.total_visitas }}</p>
+                                <p class="text-2xl font-semibold">{{ estadisticas.cv_vistos }}</p>
                             </div>
                             <div class="flex flex-row justify-between items-center w-64">
                                 <div class="flex flex-row items-center gap-1">
@@ -226,7 +226,7 @@
                                     </div>              
                                     <p class="text-2xl font-medium">Contactados</p>
                                 </div>
-                                <p class="text-2xl font-semibold">0</p>
+                                <p class="text-2xl font-semibold">{{ estadisticas.contactados || 0 }}</p>                          
                             </div>
                         </div>
                     </div>

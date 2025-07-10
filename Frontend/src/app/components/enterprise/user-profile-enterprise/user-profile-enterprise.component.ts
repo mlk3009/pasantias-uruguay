@@ -34,13 +34,15 @@ export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
   ApexCharts: any;
   
   // Propiedades para estadísticas
-  estadisticas: any = {
-    total_publicaciones: 0,
-    total_visitas: 0,
-    total_postulaciones: 0,
-    ratio_postulacion: 0,
-    visitas_por_dia: []
-  };
+estadisticas: any = {
+  total_publicaciones: 0,
+  total_visitas: 0,
+  total_postulaciones: 0,
+  cv_vistos: 0,
+  contactados: 0,
+  ratio_postulacion: 0,
+  visitas_por_dia: [],
+};
   
   desc1Title: string = '';
   desc1Paragraph1: string = '';
