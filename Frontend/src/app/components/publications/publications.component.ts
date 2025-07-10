@@ -7,7 +7,7 @@ import { PrincipalImagePublicationsComponent } from './principal-image-publicati
 
 import { PublicationsListComponent } from './publications-list/publications-list.component';
 import { FooterComponent } from '../home/footer/footer.component';
-import { NavComponent } from '../home/nav/nav.component';
+import { NavComponent } from '../../components/home/nav/nav.component';
 
 @Component({
   selector: 'app-publications',

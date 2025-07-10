@@ -13,7 +13,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { CookieService } from 'ngx-cookie-service';
 
-import { NavComponent } from '../../home/nav/nav.component';
+import { NavComponent } from '../../../components/home/nav/nav.component';
 
 @Component({
   selector: 'app-register-in-1',

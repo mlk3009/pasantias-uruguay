@@ -1,5 +1,5 @@
 import { Component, OnInit, OnChanges, SimpleChanges, HostListener, OnDestroy } from '@angular/core';
-import { NavComponent } from '../../home/nav/nav.component';
+import { NavComponent } from '../../../components/home/nav/nav.component';
 import { CompanyService } from '../../../services/company.service';
 import { PublicationService } from '../../../services/publication.service'; // Importar el servicio
 import { UserService } from '../../../services/user.service'; // Importar el servicio de usuario

@@ -1,5 +1,5 @@
-import { Component, AfterViewInit, HostListener } from '@angular/core';
-import { CommonModule, ViewportScroller, DatePipe } from '@angular/common';
+import { Component, AfterViewInit, HostListener, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
+import { CommonModule, ViewportScroller } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterOutlet, RouterModule, NavigationEnd } from '@angular/router';
 import { initFlowbite } from 'flowbite';
@@ -16,7 +16,6 @@ import { CompanyService } from '../../../services/company.service';
   imports: [
     CommonModule,
     RouterModule,
-    DatePipe,
     FormsModule,
   ],
   templateUrl: './nav.component.html',
@@ -32,6 +31,11 @@ export class NavComponent implements AfterViewInit {
 
   public emprise = false;
   public scroll_var = true;
+  public mobileMenuOpen = false;
+  
+  // Propiedades para el sidebar
+  public sidebarOpen = false;
+  public sidebarClosing = false;
   
   // Propiedades para empresa
   public saldosEmpresa: any[] = [];
@@ -71,6 +75,7 @@ export class NavComponent implements AfterViewInit {
     private _router: Router,
     private router: Router,
     private _companyService: CompanyService,
+    private cdr: ChangeDetectorRef
   ) {
     this.token = this._cookieService.get('token');
     this.currentRoute = this.router.url;
@@ -81,6 +86,10 @@ export class NavComponent implements AfterViewInit {
     ).subscribe((event) => {
       if (event instanceof NavigationEnd) {
         this.currentRoute = event.url;
+        // Cerrar sidebar automáticamente al cambiar de ruta (con animación)
+        if (this.sidebarOpen) {
+          this.closeSidebar();
+        }
       }
     });
   }
@@ -159,7 +168,8 @@ export class NavComponent implements AfterViewInit {
   onScroll(event: Event): void {
     const scrollPosition = this.viewportScroller.getScrollPosition();
     // Decide qué opción del menú debería estar activa
-    if (scrollPosition[1] == 0) {
+    // Si el menú móvil está abierto, mantener el fondo sólido
+    if (scrollPosition[1] == 0 && !this.mobileMenuOpen) {
       this.scroll_var = true;
     } else {
       this.scroll_var = false;
@@ -234,6 +244,7 @@ export class NavComponent implements AfterViewInit {
   }
 
   navigateToPublications() {
+    this.closeMobileMenu(); // Cerrar menú móvil al navegar
     this.router.navigate(['/publications']).then(() => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
@@ -270,12 +281,21 @@ export class NavComponent implements AfterViewInit {
       return this.currentRoute === '/' || this.currentRoute === '/inicio' || this.currentRoute.startsWith('/inicio');
     }
     if (route === 'abaut-us') {
-      return this.currentRoute.startsWith('/abaut-us');
+      return this.currentRoute.includes('#about') || this.currentRoute.startsWith('/abaut-us');
+    }
+    if (route === 'publicaciones') {
+      return this.currentRoute.includes('/publicaciones');
     }
     if (route === 'publications') {
-      return this.currentRoute.startsWith('/publications');
+      return this.currentRoute === '/publications' || this.currentRoute.startsWith('/publications');
     }
-    return false;
+    if (route === 'register') {
+      return this.currentRoute.includes('/register');
+    }
+    if (route === 'login') {
+      return this.currentRoute.includes('/login');
+    }
+    return this.currentRoute.includes(route);
   }
 
   navigateToContact() {
@@ -701,6 +721,189 @@ export class NavComponent implements AfterViewInit {
         alert(errorMsg);
       }
     );
+  }
+
+  // Métodos para el sidebar
+  toggleSidebar() {
+    this.sidebarOpen = !this.sidebarOpen;
+    console.log('toggleSidebar called, sidebarOpen:', this.sidebarOpen);
+  }
+
+  openSidebar() {
+    this.sidebarOpen = true;
+    this.sidebarClosing = false;
+  }
+
+  closeSidebar() {
+    this.sidebarOpen = false;
+  }
+
+  // Método para inicializar tooltips del sidebar (ahora manejado por CSS)
+  initializeTooltips() {
+    // Ya no es necesario JavaScript para posicionamiento
+    // Los tooltips se manejan completamente por CSS hover
+    this.cdr.detectChanges();
+  }
+
+  // Mostrar tooltip
+  showTooltip(tooltip: HTMLElement) {
+    if (tooltip) {
+      tooltip.style.opacity = '1';
+      tooltip.style.visibility = 'visible';
+      tooltip.style.transform = 'translateX(0)';
+    }
+  }
+
+  // Ocultar tooltip
+  hideTooltip(tooltip: HTMLElement) {
+    if (tooltip) {
+      tooltip.style.opacity = '0';
+      tooltip.style.visibility = 'hidden';
+      tooltip.style.transform = 'translateX(-10px)';
+    }
+  }
+
+  logOut() {
+    this.logout();
+  }
+
+  // Funciones para manejar el menú móvil
+  toggleMobileMenu(): void {
+    this.mobileMenuOpen = !this.mobileMenuOpen;
+    
+    // Agregar/quitar clase del body para prevenir overflow
+    if (this.mobileMenuOpen) {
+      document.body.classList.add('mobile-menu-open');
+    } else {
+      document.body.classList.remove('mobile-menu-open');
+    }
+    
+    this.updateNavBackground();
+  }
+
+  closeMobileMenu(): void {
+    this.mobileMenuOpen = false;
+    document.body.classList.remove('mobile-menu-open');
+    this.updateNavBackground();
+  }
+
+  private updateNavBackground(): void {
+    const scrollPosition = this.viewportScroller.getScrollPosition();
+    // Si el menú móvil está abierto o hay scroll, usar fondo sólido
+    if (scrollPosition[1] == 0 && !this.mobileMenuOpen) {
+      this.scroll_var = true;
+    } else {
+      this.scroll_var = false;
+    }
+  }
+
+  // Funciones auxiliares mejoradas
+  getSaldoPorTipo(tipo: string): number {
+    if (!this.saldosEmpresa || this.saldosEmpresa.length === 0) return 0;
+    
+    const saldo = this.saldosEmpresa.find(s => s.type?.toLowerCase() === tipo.toLowerCase());
+    return saldo ? saldo.quantity : 0;
+  }
+
+  // Método para obtener el color del indicador de saldo
+  getSaldoColor(cantidad: number): string {
+    if (cantidad === 0) return 'bg-red-500';
+    if (cantidad <= 2) return 'bg-orange-500';
+    return 'bg-green-500';
+  }
+
+  // Método para obtener texto descriptivo del saldo
+  getSaldoTexto(cantidad: number): string {
+    if (cantidad === 0) return 'Sin saldo';
+    if (cantidad <= 2) return 'Saldo bajo';
+    return 'Saldo disponible';
+  }
+
+  getPublicacionesTooltip(): string {
+    const saldoNormal = this.getSaldoPorTipo('normal');
+    const saldoDestacada = this.getSaldoPorTipo('destacada');
+    
+    return `Publicaciones normales: ${saldoNormal}\nPublicaciones destacadas: ${saldoDestacada}`;
+  }
+
+  // Funciones de navegación mejoradas (mantener compatibilidad con existentes)
+  navigateToPublicationsImproved() {
+    this.closeMobileMenu(); // Cerrar menú móvil al navegar
+    this.router.navigate(['/publications']).then(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+  }
+
+  // Aliases para mantener compatibilidad
+  mostrarHistorialModal() {
+    this.openHistorialModal();
+  }
+
+  cerrarHistorialModal() {
+    this.closeHistorialModal();
+  }
+
+  // Funciones de modal de compra mejoradas
+  mostrarConfirmacionCompra(compra: any) {
+    this.selectedCompra = compra;
+    this.showConfirmModal = true;
+  }
+
+  cerrarConfirmacionModal() {
+    this.showConfirmModal = false;
+    this.selectedCompra = null;
+    this.processingPurchase = false;
+  }
+
+  confirmarCompra() {
+    this.ejecutarCompra();
+  }
+
+  // Funciones de historial mejoradas (aliases y wrappers)
+  loadHistorialPublicacionesWithId(empresaId: number) {
+    this.loadingHistorial = true;
+    this._companyService.obtenerPublicaciones(empresaId.toString()).subscribe(
+      (response: any) => {
+        this.historialPublicacionesCompleto = response.data || [];
+        this.filtrarHistorial(); // Aplicar filtro inicial
+        this.loadingHistorial = false;
+      },
+      (error: any) => {
+        this.loadingHistorial = false;
+      }
+    );
+  }
+
+  // Método para filtrar el historial según el estado
+  filtrarHistorial() {
+    this.aplicarFiltroPublicaciones();
+  }
+
+  // Método para alternar el filtro de deshabilitadas
+  toggleFiltroDeshabilitadas() {
+    this.mostrarSoloDeshabilitadas = !this.mostrarSoloDeshabilitadas;
+    this.filtrarHistorial();
+  }
+
+  // Método para obtener el texto del estado
+  getEstadoTexto(estado: number): string {
+    return estado === 1 ? 'Activa' : 'Deshabilitada';
+  }
+
+  // Método para obtener la clase CSS del estado
+  getEstadoClase(estado: number): string {
+    return estado === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
+  }
+
+  // Método para formatear fecha
+  formatearFecha(fecha: string): string {
+    if (!fecha) return 'N/A';
+    const date = new Date(fecha);
+    return date.toLocaleDateString('es-ES', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    });
   }
 
 }

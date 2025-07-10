@@ -13,7 +13,7 @@ import { routes } from '../../../app.routes';
 import { CookieService } from 'ngx-cookie-service';
 
 import { ValidAcountComponent } from '../valid-acount/valid-acount.component';
-import { NavComponent } from '../../home/nav/nav.component';
+import { NavComponent } from '../../../components/home/nav/nav.component';
 
 @Component({
   selector: 'app-register',
