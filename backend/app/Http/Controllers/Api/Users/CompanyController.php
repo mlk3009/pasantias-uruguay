@@ -121,7 +121,7 @@ class CompanyController extends Controller
             $categoria = $request->input('categoria');
             $cantidad = $request->input('cantidad'); 
     
-            $query = Publication::where('empresa_id', $empresaId);
+            $query = Publication::where('empresa_id', $empresaId)->where('is_deleted', false);
     
             if (!is_null($categoria)) {
                 $query->where('categoria', $categoria);

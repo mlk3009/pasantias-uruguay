@@ -27,7 +27,7 @@ class PublicationController extends Controller
             $empresaId = $request->input('empresa_id'); // Nuevo parámetro opcional
     
             // Iniciar la consulta de publicaciones
-            $query = Publication::query();
+            $query = Publication::where('is_deleted', false);
     
             // Filtrar por categoría (etiqueta) si se proporciona
             if ($category) {
@@ -229,7 +229,7 @@ public function store(Request $request)
         }
 
         $publication = Publication::with(['empresa.user'])->find($id);
-        if (!$publication) {
+        if (!$publication || $publication->is_deleted) {
             return response()->json([
                 'message' => 'Publicación no encontrada',
                 'status' => 404
@@ -288,6 +288,7 @@ public function store(Request $request)
                 'company_email' => $publication->empresa->user->email,
                 'company_phone' => $publication->empresa->user->phone,
                 'images' => $images,
+                'is_deleted' => $publication->is_deleted,
             ],
             'status' => 200
         ], 200);
@@ -821,6 +822,7 @@ public function searchPublications(Request $request)
                 'company_name' => $publication->empresa->user->name,
                 'company_email' => $publication->empresa->user->email,
                 'company_phone' => $publication->empresa->user->phone,
+                'is_deleted' => $publication->is_deleted,
             ];
         });
 

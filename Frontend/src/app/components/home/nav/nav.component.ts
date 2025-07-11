@@ -61,6 +61,9 @@ export class NavComponent implements AfterViewInit {
   public preciosDestacadas: any = {};
   public preciosPackDestacada: any = {};
 
+  public cantidadPackNormal: number = 3;
+  public cantidadPackDestacado: number = 3;
+
   public data = { name: '', surname: '', email: '', password: '', location: '', ci_estudiante: '', cod_postal: '', fec_nacimiento: '', phone: '', rol: '', cv: '' };
 
   // Propiedades para el modal de confirmación
@@ -145,24 +148,28 @@ export class NavComponent implements AfterViewInit {
     this.dropdown = !this.dropdown;
   }
 
-  logout() {
-    this._userService.logout().subscribe(
-      response => {
-        // Logout exitoso - el UserService ya limpia las cookies
-        this._router.navigate(['/inicio']).then(() => {
-          window.location.reload();
-        });
-      },
-      error => {
-        console.error('Logout error', error);
-        // Incluso si hay error, limpiar localmente
-        this._cookieService.delete('token');
-        this._router.navigate(['/inicio']).then(() => {
-          window.location.reload();
-        });
-      }
-    );
-  }
+logout() {
+  this._userService.logout().subscribe(
+    response => {
+      this.mobileMenuOpen = false;
+      this.sidebarOpen = false;
+      document.body.classList.remove('mobile-menu-open');
+      this._router.navigate(['/inicio']).then(() => {
+        window.location.reload();
+      });
+    },
+    error => {
+      console.error('Logout error', error);
+      this.mobileMenuOpen = false;
+      this.sidebarOpen = false;
+      document.body.classList.remove('mobile-menu-open');
+      this._cookieService.delete('token');
+      this._router.navigate(['/inicio']).then(() => {
+        window.location.reload();
+      });
+    }
+  );
+}
 
   @HostListener('window:scroll', ['$event'])
   onScroll(event: Event): void {
@@ -489,20 +496,20 @@ export class NavComponent implements AfterViewInit {
     this.precioNormalIndividual = this.preciosNormales[dias] || 0;
   }
 
-  updatePrecioPackNormal(event: any): void {
-    const cantidad = parseInt(event.target.value);
-    this.precioPackNormal = this.preciosPackNormal[cantidad] || 0;
-  }
+updatePrecioPackNormal(event: any): void {
+  this.cantidadPackNormal = parseInt(event.target.value);
+  this.precioPackNormal = this.preciosPackNormal[this.cantidadPackNormal] || 0;
+}
 
   updatePrecioDestacadaIndividual(event: any): void {
     const dias = parseInt(event.target.value);
     this.precioDestacadaIndividual = this.preciosDestacadas[dias] || 0;
   }
 
-  updatePrecioPackDestacada(event: any): void {
-    const cantidad = parseInt(event.target.value);
-    this.precioPackDestacada = this.preciosPackDestacada[cantidad] || 0;
-  }
+updatePrecioPackDestacada(event: any): void {
+  this.cantidadPackDestacado = parseInt(event.target.value);
+  this.precioPackDestacada = this.preciosPackDestacada[this.cantidadPackDestacado] || 0;
+}
 
   getPublicacionesDestacadas(): number {
     return this.historialPublicaciones.filter(p => p.featured).length;
@@ -634,20 +641,21 @@ export class NavComponent implements AfterViewInit {
     this.showConfirmModal = true;
   }
 
-  confirmarCompraPackNormal() {
-    const saldoSeleccionado = this.saldosDisponibles.find(s => 
-      s.type === 'Normal' && s.pack === 3 && s.days === 60
-    );
-    
-    this.selectedCompra = {
-      tipo: 'pack_normal',
-      titulo: 'Pack Normal',
-      descripcion: `3 Publicaciones Normales por 60 días`,
-      precio: this.precioPackNormal,
-      saldo: saldoSeleccionado
-    };
-    this.showConfirmModal = true;
-  }
+confirmarCompraPackNormal() {
+  const saldoSeleccionado = this.saldosDisponibles.find(s => 
+    s.type === 'Normal' && s.pack === this.cantidadPackNormal
+  );
+  
+  this.selectedCompra = {
+    tipo: 'pack_normal',
+    titulo: 'Pack Normal',
+    descripcion: `${this.cantidadPackNormal} Publicaciones Normales`,
+    cantidad: this.cantidadPackNormal,
+    precio: this.precioPackNormal,
+    saldo: saldoSeleccionado
+  };
+  this.showConfirmModal = true;
+}
 
   confirmarCompraDestacadaIndividual() {
     const saldoSeleccionado = this.saldosDisponibles.find(s => 
@@ -664,20 +672,21 @@ export class NavComponent implements AfterViewInit {
     this.showConfirmModal = true;
   }
 
-  confirmarCompraPackDestacada() {
-    const saldoSeleccionado = this.saldosDisponibles.find(s => 
-      s.type === 'Destacada' && s.pack === 3 && s.days === 30
-    );
-    
-    this.selectedCompra = {
-      tipo: 'pack_destacada',
-      titulo: '🌟 Pack Destacadas',
-      descripcion: `3 Publicaciones Destacadas por 30 días`,
-      precio: this.precioPackDestacada,
-      saldo: saldoSeleccionado
-    };
-    this.showConfirmModal = true;
-  }
+confirmarCompraPackDestacada() {
+  const saldoSeleccionado = this.saldosDisponibles.find(s => 
+    s.type === 'Destacada' && s.pack === this.cantidadPackDestacado
+  );
+  
+  this.selectedCompra = {
+    tipo: 'pack_destacada',
+    titulo: '🌟 Pack Destacadas',
+    descripcion: `${this.cantidadPackDestacado} Publicaciones Destacadas`,
+    cantidad: this.cantidadPackDestacado,
+    precio: this.precioPackDestacada,
+    saldo: saldoSeleccionado
+  };
+  this.showConfirmModal = true;
+}
 
   // Métodos para manejar el modal de confirmación
   cerrarModalConfirmacion() {

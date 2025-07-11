@@ -95,7 +95,9 @@ export class PublicationComponent implements OnInit {
         this.registrarVisitaUsuario();
       },
       (error) => {
-        console.error('❌ ERROR al obtener publicación:', error);
+         if (error.status === 404) {
+          this.router.navigate(['/inicio']);
+        }
       }
     );
   }
