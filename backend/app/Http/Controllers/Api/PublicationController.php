@@ -27,7 +27,7 @@ class PublicationController extends Controller
             $empresaId = $request->input('empresa_id'); // Nuevo parámetro opcional
     
             // Iniciar la consulta de publicaciones
-            $query = Publication::query();
+            $query = Publication::where('is_deleted', false);
     
             // Filtrar por categoría (etiqueta) si se proporciona
             if ($category) {
@@ -229,7 +229,7 @@ public function store(Request $request)
         }
 
         $publication = Publication::with(['empresa.user'])->find($id);
-        if (!$publication) {
+        if (!$publication || $publication->is_deleted) {
             return response()->json([
                 'message' => 'Publicación no encontrada',
                 'status' => 404
@@ -288,6 +288,7 @@ public function store(Request $request)
                 'company_email' => $publication->empresa->user->email,
                 'company_phone' => $publication->empresa->user->phone,
                 'images' => $images,
+                'is_deleted' => $publication->is_deleted,
             ],
             'status' => 200
         ], 200);
@@ -821,6 +822,7 @@ public function searchPublications(Request $request)
                 'company_name' => $publication->empresa->user->name,
                 'company_email' => $publication->empresa->user->email,
                 'company_phone' => $publication->empresa->user->phone,
+                'is_deleted' => $publication->is_deleted,
             ];
         });
 
@@ -940,6 +942,7 @@ public function estudianteVisita(Request $request)
     }
 }
 
+
 public function getEstadisticasEmpresa(Request $request)
 {
     try {
@@ -964,6 +967,16 @@ public function getEstadisticasEmpresa(Request $request)
         $totalVisitas = $publicaciones->sum('visitas');
         $totalPostulaciones = Postula::whereIn('publication_id', $publicaciones->pluck('id'))->count();
         
+        // Calcular CV Vistos y Contactados basándose en los estados de las postulaciones
+        $publicationIds = $publicaciones->pluck('id');
+        $cvVistos = Postula::whereIn('publication_id', $publicationIds)
+            ->where('estado', 'CV Visto')
+            ->count();
+        
+        $contactados = Postula::whereIn('publication_id', $publicationIds)
+            ->whereIn('estado', ['Contactado', 'En proceso'])
+            ->count();
+        
         // Calcular ratio de postulación
         $ratioPostulacion = $totalVisitas > 0 ? round(($totalPostulaciones / $totalVisitas) * 100, 2) : 0;
 
@@ -984,6 +997,8 @@ public function getEstadisticasEmpresa(Request $request)
             'total_publicaciones' => $totalPublicaciones,
             'total_visitas' => $totalVisitas,
             'total_postulaciones' => $totalPostulaciones,
+            'cv_vistos' => $cvVistos,
+            'contactados' => $contactados,
             'ratio_postulacion' => $ratioPostulacion,
             'visitas_por_dia' => $visitasPorDia,
             'status' => 200
