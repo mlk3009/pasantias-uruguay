@@ -17,6 +17,7 @@ import ApexCharts from 'apexcharts';
   styleUrls: ['./user-profile-enterprise.component.css']
 })
 export class UserProfileEnterpriseComponent implements OnInit, AfterViewInit {
+  isOwner: boolean = false;
   @ViewChild('carousel', { static: false }) carousel: ElementRef | undefined;
   @ViewChildren('card') cards: QueryList<ElementRef> | undefined;
   createPublication: boolean = false; // Hacer que esto dependa de la url, sacar el valor default.
@@ -78,8 +79,21 @@ estadisticas: any = {
           this.getPublications(this.empresa.id);
           this.cargarImagenesEmpresa(this.empresa.images);
           this.cargarEstadisticas();
+          // Determinar si el usuario autenticado es el dueño del perfil
+          const tokenEmpresa = this.companyService.getToken();
+          if (tokenEmpresa) {
+            this.companyService.obtenerEmpresa(tokenEmpresa).subscribe({
+              next: (res) => {
+                this.isOwner = res.data && res.data.id === this.empresa.id;
+              },
+              error: () => {
+                this.isOwner = false;
+              }
+            });
+          } else {
+            this.isOwner = false;
+          }
           this.loading = false;
-          
         },
         error: (error) => {
           console.error('Error al obtener la empresa por teléfono:', error);
@@ -97,15 +111,18 @@ estadisticas: any = {
           this.getPublications(this.empresa.id);
           this.cargarImagenesEmpresa(this.empresa.images);
           this.cargarEstadisticas();
+          this.isOwner = true;
           this.loading = false;
         },
         error: (error) => {
           console.error('Error al obtener la empresa:', error);
+          this.isOwner = false;
           this.loading = false;
         }
       });
     } else {
       console.error('Token no encontrado');
+      this.isOwner = false;
       this.loading = false;
     }
 
