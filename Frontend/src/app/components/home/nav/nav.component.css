@@ -910,10 +910,3 @@ nav.down{
   background-color: #00bfdf !important;
   color: white !important;
 }
-
-
-
-/* Para que los modal no se sobrepongan */
-.modal-backdrop {
-  z-index: 9999 !important;
-}

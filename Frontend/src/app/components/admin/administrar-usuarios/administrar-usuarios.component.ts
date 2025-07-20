@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { NavComponent } from '../../home/nav/nav.component';
 import { UserService } from '../../../services/user.service';
 import { AdminService } from '../../../services/admin.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms'; 
 
 @Component({
   selector: 'app-administrar-usuarios',
   standalone: true,
-  imports: [NavComponent, CommonModule, FormsModule], 
+  imports: [NavComponent, CommonModule, FormsModule, RouterModule], 
   templateUrl: './administrar-usuarios.component.html',
   styleUrl: './administrar-usuarios.component.css'
 })

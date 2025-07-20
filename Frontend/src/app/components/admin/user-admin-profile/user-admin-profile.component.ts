@@ -4,11 +4,12 @@ import { NavComponent } from '../../home/nav/nav.component';
 import { UserService } from '../../../services/user.service';
 import { AdminService } from '../../../services/admin.service';
 import { FormsModule } from '@angular/forms'; 
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-admin-profile',
   standalone: true,
-  imports: [CommonModule, NavComponent, FormsModule],
+  imports: [CommonModule, NavComponent, FormsModule, RouterModule],
   templateUrl: './user-admin-profile.component.html',
   styleUrl: './user-admin-profile.component.css'
 })

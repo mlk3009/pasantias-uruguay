@@ -437,8 +437,8 @@
     </ng-container>
 
     <!-- OPCIONES PARA ADMIN -->
-    <ng-container *ngIf="data?.rol === 'admin'">
-      <!-- Perfil admin -->
+    <ng-container *ngIf="data?.rol === 'admin' || data?.rol === 'administrador'">
+      <!-- Perfil admin/administrador -->
       <a 
         class="flex items-center px-3 py-2 text-gray-700 bg-white hover:text-sky-800 rounded-lg transition-colors cursor-pointer shadow-md"
         routerLink="/admin-profile"
@@ -468,8 +468,10 @@
         routerLink="/admin-solicitudes"
         (click)="closeSidebar()"
       >
-        <svg class="w-5 h-5 mr-3 text-gray-500" fill="currentColor" viewBox="0 0 20 20">
-          <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path>
+        <svg class="w-5 h-5 mr-3 text-gray-500" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 20 20">
+          <circle cx="10" cy="10" r="8" />
+          <line x1="10" y1="7.5" x2="10" y2="11.5" stroke-width="1.3" />
+          <circle cx="10" cy="14" r="0.7" fill="currentColor" stroke="none" />
         </svg>
         <span class="text-sm font-medium">Administrar solicitudes</span>
       </a>
