@@ -595,8 +595,14 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18 17.94 6M18 18 6.06 6"/>
                           </svg>                          
                         </button>
-                        <button (click)="updatePartial(newPublication.id, newPublication)" class="flex flex-row bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded text-lg font-medium">Editar publicación
-                          <svg class="w-6 h-6 text-white dark:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
+                        <button (click)="updatePartial(newPublication.id, newPublication)"
+                          [disabled]="newPublication.is_deleted && !promocionCambiada"
+                          [class]="
+                            (!newPublication.is_deleted || promocionCambiada)
+                              ? 'flex flex-row bg-amber-500 hover:bg-amber-600 text-white py-3 px-6 rounded text-lg font-medium'
+                              : 'flex flex-row bg-gray-300 text-gray-400 py-3 px-6 rounded text-lg font-medium cursor-not-allowed pointer-events-none select-none opacity-60'"
+                        >Editar publicación
+                          <svg class="w-6 h-6" [ngClass]="(!newPublication.is_deleted || promocionCambiada) ? 'text-white' : 'text-gray-400'" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M9 7V2.221a2 2 0 0 0-.5.365L4.586 6.5a2 2 0 0 0-.365.5H9Z"/>
                             <path fill-rule="evenodd" d="M11 7V2h7a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9h5a2 2 0 0 0 2-2Zm4.707 5.707a1 1 0 0 0-1.414-1.414L11 14.586l-1.293-1.293a1 1 0 0 0-1.414 1.414l2 2a1 1 0 0 0 1.414 0l4-4Z" clip-rule="evenodd"/>
                           </svg>                          
@@ -798,10 +804,11 @@
                             <div class="w-full flex flex-row items-center my-2">
                               <label class="mr-1 font-medium text-gray-800" for="">Tipo</label>
                               <span class="text-red-500 mr-2">*</span>
-                              <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id="" [(ngModel)]="newPublication.saldo_id">
+                              <select class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" name="" id="" [(ngModel)]="newPublication.saldo_id" [required]="newPublication.is_deleted">
                                 <option value="" disabled selected>Seleccionar tipo de saldo</option>
-                                <option *ngFor="let saldo of saldos" [value]="saldo.saldo_id">{{ saldo.type }} - {{ saldo.days }} días - {{ saldo.quantity }} disponibles</option>
-                              </select>                        
+                                <option *ngFor="let saldo of saldosAgrupados" [ngValue]="saldo.ids[0]">{{ saldo.type }} - {{ saldo.days }} días - {{ saldo.quantity }} disponibles</option>
+                              </select>
+                              <div *ngIf="newPublication.is_deleted && !newPublication.saldo_id" class="text-red-500 text-xs mt-1">Debes seleccionar un nuevo saldo para reactivar la publicación.</div>
                             </div>
                             <div class="flex flex-row items-center my-2">
                               <label class="mr-1 font-medium text-gray-800" for="">Entrada</label>
@@ -947,8 +954,8 @@
                 [(ngModel)]="selectedNewPromocion" 
                 class="w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                 <option value="">Seleccione una promoción...</option>
-                <option *ngFor="let saldo of saldos" [value]="saldo.saldo_id">
-                  {{ saldo.type }} ({{ saldo.days }} días) - Disponibles: {{ saldo.quantity }}
+                <option *ngFor="let saldo of saldosAgrupados" [ngValue]="saldo.ids[0]">
+                  {{ saldo.type }} - {{ saldo.days }} días - {{ saldo.quantity }} disponibles
                 </option>
               </select>
             </div>

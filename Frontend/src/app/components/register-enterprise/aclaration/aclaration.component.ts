@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
 
+import { Component } from '@angular/core';
 import { NavComponent } from '../../../components/home/nav/nav.component';
 
 @Component({
@@ -9,16 +9,4 @@ import { NavComponent } from '../../../components/home/nav/nav.component';
   templateUrl: './aclaration.component.html',
   styleUrl: './aclaration.component.css'
 })
-export class AclarationComponent {
-
-  modal(){
-    const modal = document.getElementById('contactModal') as HTMLElement;
-    modal.style.display = 'flex';
-  }
-
-  modalClose() {
-    const modal = document.getElementById('contactModal') as HTMLElement;
-    modal.style.display = 'none';
-  }
-
-}
+export class AclarationComponent {}

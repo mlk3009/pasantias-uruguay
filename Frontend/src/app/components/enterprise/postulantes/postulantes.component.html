@@ -1,3 +1,4 @@
+
 <app-nav/>
 
 <div class="body flex items-center justify-center">
@@ -108,10 +109,10 @@
                                   class="py-2 px-4 rounded-lg border border-gray-200 bg-white text-gray-900 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600"
                                 >
                                   <option value="">Todos</option>
-                                  <option value="Postulado">Postulado</option>
+                                  <option value="Pendiente">Pendiente</option>
                                   <option value="CV Visto">CV Visto</option>
-                                  <option value="En proceso">En proceso</option>
-                                  <!-- Agrega más estados si los tienes -->
+                                  <option value="Contactado">Contactado</option>
+                                  <option value="Rechazado">Rechazado</option>
                                 </select>
                               </div>
                             </div>
@@ -126,7 +127,6 @@
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                 <tr>
                     <th scope="col" class="px-4 py-3">Nombre</th>
-                    <th scope="col" class="px-4 py-3">CV</th>
                     <th scope="col" class="px-4 py-3">Publicación</th>
                     <th scope="col" class="px-4 py-3">Estado</th>
                     <th scope="col" class="px-4 py-3">Fecha de Postulación</th>
@@ -147,30 +147,47 @@
                     <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <a [href]="'/user-profile/' + postulante.phone">{{ postulante.name }}</a>
                     </th>  
-                    <td class="px-4 py-3">
-                        <a *ngIf="postulante.cv_pdf; else noCv" [href]="cvLink + postulante.cv_pdf + '.pdf'" target="_blank">CV</a>
-                        <ng-template #noCv>No tiene</ng-template>
-                    </td>                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    <td class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         <a [href]="'/publication/' + postulante.publication_id">{{ postulante.publication_title }}</a>
                     </td>
                     <td class="px-4 py-3">
                         <span [class]="'px-2 py-1 text-xs font-medium rounded-full ' + 
-                            (postulante.estado === 'En proceso' ? 'bg-blue-100 text-blue-800' : 
-                             postulante.estado === 'Postulado' ? 'bg-gray-100 text-gray-800' :
+                            (postulante.estado === 'Contactado' ? 'bg-green-100 text-green-800' : 
+                             postulante.estado === 'Rechazado' ? 'bg-red-100 text-red-800' :
+                             postulante.estado === 'Pendiente' ? 'bg-gray-100 text-gray-800' :
                              postulante.estado === 'CV Visto' ? 'bg-yellow-100 text-yellow-800' :
                              'bg-gray-100 text-gray-800')">
                             {{ postulante.estado }}
                         </span>
                     </td>
                     <td class="px-4 py-3">{{ postulante.created_at | date: 'short' }}</td>
-                    <td class="px-4 py-3 flex items-center justify-end">
+                    <td class="px-4 py-3 flex items-center justify-end space-x-2">
+                        <button *ngIf="postulante.cv_pdf; else noCvButton" 
+                                (click)="verCV(postulante)"
+                                class="bg-green-600 hover:bg-green-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors duration-200">
+                            Ver CV
+                        </button>
+                        <ng-template #noCvButton>
+                            <button disabled 
+                                    class="bg-gray-400 cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg text-sm">
+                                Sin CV
+                            </button>
+                        </ng-template>
                         <button 
                             (click)="abrirModalContacto(postulante)"
-                            [disabled]="postulante.estado === 'En proceso'"
-                            [class]="postulante.estado === 'En proceso' 
+                            [disabled]="postulante.estado === 'Contactado' || postulante.estado === 'Rechazado'"
+                            [class]="postulante.estado === 'Contactado' || postulante.estado === 'Rechazado'
                                 ? 'bg-gray-400 cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg text-sm' 
                                 : 'bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors duration-200'">
-                            {{ postulante.estado === 'En proceso' ? 'Ya contactado' : 'Contactar' }}
+                            {{ postulante.estado === 'Contactado' ? 'Ya contactado' : 'Contactar' }}
+                        </button>
+                        <button 
+                            (click)="abrirModalRechazo(postulante)"
+                            [disabled]="postulante.estado === 'Contactado' || postulante.estado === 'Rechazado'"
+                            [class]="postulante.estado === 'Contactado' || postulante.estado === 'Rechazado'
+                                ? 'bg-gray-400 cursor-not-allowed text-white font-medium py-2 px-4 rounded-lg text-sm' 
+                                : 'bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg text-sm transition-colors duration-200'">
+                            {{ postulante.estado === 'Rechazado' ? 'Rechazado' : 'Rechazar' }}
                         </button>
                     </td>
                 </tr>
@@ -183,6 +200,7 @@
     <!-- Paginación -->
 <section
   class="w-full flex items-center justify-center mb-20"
+  [ngClass]="{'invisible': totalPages <= 1}"
   *ngIf="displayedPostulantes.length !== 0"
 >
   <nav class="mt-6 flex items-center justify-center sm:mt-8" aria-label="Page navigation example">
@@ -236,18 +254,59 @@
       <div class="space-y-4">
         <button 
           (click)="contactarEstudiante('personal')"
-          class="w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200">
+          [disabled]="enviandoEmail"
+          [class]="enviandoEmail 
+            ? 'w-full bg-gray-400 cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg' 
+            : 'w-full bg-green-600 hover:bg-green-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200'">
           Contactar personalmente
         </button>
         
         <button 
           (click)="contactarEstudiante('web')"
-          class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200">
-          Enviar aviso
+          [disabled]="enviandoEmail"
+          [class]="enviandoEmail 
+            ? 'w-full bg-gray-400 cursor-not-allowed text-white font-medium py-3 px-4 rounded-lg flex items-center justify-center' 
+            : 'w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200'">
+          <span *ngIf="!enviandoEmail">Enviar aviso</span>
+          <div *ngIf="enviandoEmail" class="flex items-center">
+            <div class="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
+            Enviando email...
+          </div>
         </button>
         
         <button 
           (click)="cerrarModal()"
+          [disabled]="enviandoEmail"
+          [class]="enviandoEmail 
+            ? 'w-full bg-gray-200 cursor-not-allowed text-gray-400 font-medium py-3 px-4 rounded-lg' 
+            : 'w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors duration-200'">
+          Cancelar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal de Rechazo -->
+<div *ngIf="showModalRechazo" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg max-w-md w-full mx-4">
+    <div class="p-6">
+      <h3 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">
+        Rechazar a {{ postulanteParaRechazar?.name }}
+      </h3>
+      <p class="text-gray-600 dark:text-gray-300 mb-6">
+        ¿Estás seguro que deseas rechazar la postulación de este estudiante? Esta acción no se puede deshacer.
+      </p>
+      
+      <div class="space-y-4">
+        <button 
+          (click)="rechazarEstudiante()"
+          class="w-full bg-red-600 hover:bg-red-700 text-white font-medium py-3 px-4 rounded-lg transition-colors duration-200">
+          Confirmar rechazo
+        </button>
+        
+        <button 
+          (click)="cerrarModalRechazo()"
           class="w-full bg-gray-300 hover:bg-gray-400 text-gray-700 font-medium py-3 px-4 rounded-lg transition-colors duration-200">
           Cancelar
         </button>

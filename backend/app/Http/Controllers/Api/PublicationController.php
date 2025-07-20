@@ -885,7 +885,7 @@ public function estudianteVisita(Request $request)
         // Validar los datos de entrada
         $validator = Validator::make($request->all(), [
             'publication_id' => 'required|exists:publications,id',
-            'estudiante_id' => 'required|exists:estudiantes,id'
+            'estudiante_id' => 'required|exists:estudiante,id'
         ]);
 
         if ($validator->fails()) {

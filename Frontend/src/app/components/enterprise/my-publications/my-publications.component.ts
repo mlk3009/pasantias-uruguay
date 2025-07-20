@@ -18,6 +18,33 @@ import { forkJoin } from 'rxjs';
 })
 export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
 
+  // Controla si se ha confirmado el cambio de promoción
+  promocionCambiada: boolean = false;
+
+
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 2000);
+    }
+  }
+
+  alertCustomClose() {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    if (modal) modal.style.display = 'none';
+  }
+
   publicaciones: any[] = [];
   empresa: any;
   loading: boolean = false;
@@ -27,6 +54,7 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
   isPhoneAccess: boolean = false;
   userImageUrl: string = '';
   saldos: any[] = []; 
+  saldosAgrupados: any[] = []; // Saldos fusionados para selects
   necesitaData: any[] = []; // Para almacenar datos de saldos disponibles 
 
   newPublication: any = {
@@ -177,7 +205,18 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
       next: (response) => {
         this.saldos = response.data;
         this.necesitaData = response.data; // Los datos ya incluyen quantity
-        console.log('Datos de saldos y cantidades cargados:', this.necesitaData);
+        // Agrupar saldos por type y days
+        const agrupados: any = {};
+        response.data.forEach((saldo: any) => {
+          const key = saldo.type + '-' + saldo.days;
+          if (!agrupados[key]) {
+            agrupados[key] = { ...saldo, quantity: 0, ids: [] };
+          }
+          agrupados[key].quantity += saldo.quantity;
+          agrupados[key].ids.push(saldo.saldo_id);
+        });
+        this.saldosAgrupados = Object.values(agrupados);
+        console.log('Saldos agrupados:', this.saldosAgrupados);
       },
       error: (error) => {
         console.error('Error al obtener los saldos:', error);
@@ -187,7 +226,6 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
 
   loadPublicationData(publication: any): void {
     this.newPublication = { ...publication };
-    
     // Cargar etiquetas de la publicación para edición
     if (publication.etiquetas && Array.isArray(publication.etiquetas)) {
       this.selectedEtiquetasEdit = publication.etiquetas.map((etiquetaName: string) => {
@@ -196,10 +234,13 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
     } else {
       this.selectedEtiquetasEdit = [];
     }
-
     const [startDate, endDate] = publication.time ? publication.time.split(' - ') : ['', ''];
     this.startDate = startDate;
     this.endDate = endDate;
+    // Si la publicación está eliminada, forzar selección de nuevo saldo
+    if (publication.is_deleted) {
+      this.newPublication.saldo_id = null;
+    }
   }
 
   modalDelete(id: number) {
@@ -218,11 +259,12 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
     if (this.deletePublicationId !== null) {
       this.publicationService.destroyPublication(this.deletePublicationId).subscribe(
         response => {
-          // Actualiza la lista después de eliminar
+          this.showAlertCustom('¡Publicación eliminada exitosamente!');
           this.obtenerPublicaciones(this.empresa.id);
           this.modalDeleteClose();
         },
         error => {
+          this.showAlertCustom('Error al eliminar la publicación.');
           console.error('Error al eliminar la publicación:', error);
           this.modalDeleteClose();
         }
@@ -265,12 +307,12 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
     if (this.disablePublicationId !== null) {
       this.publicationService.softDeletePublication(this.disablePublicationId).subscribe(
         response => {
-          console.log('Publicación deshabilitada exitosamente:', response);
-          // Actualizar la lista después de deshabilitar
+          this.showAlertCustom('¡Publicación deshabilitada exitosamente!');
           this.obtenerPublicaciones(this.empresa.id);
           this.modalDeshabilitarClose();
         },
         error => {
+          this.showAlertCustom('Error al deshabilitar la publicación.');
           console.error('Error al deshabilitar la publicación:', error);
           this.modalDeshabilitarClose();
         }
@@ -463,11 +505,12 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
 
     this.publicationService.updatePartial(id, updatedPublication).subscribe(
       response => {
-        console.log('Publication updated successfully:', response);
+        this.showAlertCustom('¡Publicación editada exitosamente!');
         this.obtenerPublicaciones(this.empresa.id);
         this.modalModificarClose();
       },
       error => {
+        this.showAlertCustom('Error al editar la publicación.');
         console.error('Error updating publication:', error);
       }
     );
@@ -829,11 +872,10 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
 
   confirmPromocionChange(): void {
     if (this.selectedNewPromocion) {
-      // Actualizar la publicación con la nueva promoción
+      // Solo asignar el saldo y cerrar el modal, habilitando el botón de edición
       this.newPublication.saldo_id = parseInt(this.selectedNewPromocion);
+      this.promocionCambiada = true;
       this.closePromocionModal();
-      // Llamar al método de actualización con la promoción
-      this.updatePartialWithPromocion(this.newPublication.id, this.newPublication);
     }
   }
 
@@ -851,7 +893,7 @@ export class MyPublicationsComponent implements OnInit, OnChanges, OnDestroy {
         console.log('Publicación actualizada con promoción:', response);
         this.ngOnInit();
         this.modalModificarClose();
-        alert('Publicación actualizada y promoción cambiada exitosamente');
+        this.showAlertCustom('Publicación actualizada y promoción cambiada exitosamente');
       },
       error: (error: any) => {
         console.error('Error al actualizar publicación con promoción:', error);

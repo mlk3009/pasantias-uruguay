@@ -99,9 +99,13 @@ softDeletePublication(id: number): Observable<any> {
   }
 
   createPostulacion(postulacion: any): Observable<any> {
-    const headers = new HttpHeaders({
+    const token = this.getToken();
+    let headers = new HttpHeaders({
       'Content-Type': 'application/json',
     });
+    if (token) {
+      headers = headers.set('Authorization', `Bearer ${token}`);
+    }
 
     return this._http.post<any>(`${global.url}postular`, postulacion, { headers: headers }).pipe(
       map(response => response)
@@ -213,12 +217,20 @@ searchPublications(params: any): Observable<any[]> {
 }
 
 registrarVisita(publicationId: number, estudianteId: number): Observable<any> {
+  const token = this.getToken();
   const data = {
     publication_id: publicationId,
     estudiante_id: estudianteId
   };
   
-  return this._http.post(global.url + 'publicaciones/visita', data);
+  let headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  if (token) {
+    headers = headers.set('Authorization', `Bearer ${token}`);
+  }
+  
+  return this._http.post(global.url + 'publicaciones/visita', data, { headers: headers });
 }
 
 /**
