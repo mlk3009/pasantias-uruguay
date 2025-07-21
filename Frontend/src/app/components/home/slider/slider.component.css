@@ -177,7 +177,7 @@ h5:hover {
     min-height: 19.9rem;
     max-width: 19.9rem;
     max-height: 19.9rem;
-    background-image: url('../../../../assets/img/hoverpub.jpg'); 
+    background-image: url('http://localhost:8000/images/hoverpub.jpg'); 
     background-size: cover;
     background-position: center;
     opacity: 0;
@@ -188,6 +188,7 @@ h5:hover {
     opacity: 1;
     transition: opacity 0.4s;
 }
+
 
 .category:hover {
     transform: scale(1.02);

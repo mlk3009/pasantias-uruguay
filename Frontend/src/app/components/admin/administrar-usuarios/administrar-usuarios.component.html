@@ -105,6 +105,7 @@
                           <div class="space-y-6">
 
 
+                    <ng-container *ngIf="displayedUsers.length > 0; else noUsersMsg">
 
                     <!-- user card inicio -->
                     <div class="rounded-lg border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 md:p-6" *ngFor="let user of displayedUsers">
@@ -181,7 +182,10 @@
                         </button>
                       </div>
                     </div>
-
+                    </ng-container>
+                    <ng-template #noUsersMsg>
+                      <div class="text-center text-gray-400 py-8 text-lg">No hay usuarios para mostrar.</div>
+                    </ng-template>
             </div>
         </div>
     </div>

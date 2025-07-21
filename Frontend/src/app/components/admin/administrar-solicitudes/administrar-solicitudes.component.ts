@@ -31,6 +31,24 @@ export class AdministrarSolicitudesComponent {
 isFiltering: boolean = false;
 activeFilters: any = {};
 
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 2000);
+    }
+  }
+
 
   constructor(private _userService: UserService, private _adminService: AdminService) {}
 
@@ -152,11 +170,12 @@ previousPage(): void {
     if (this.userIdSeleccionado !== null) {
       this._adminService.rejectUser(this.userIdSeleccionado, this.descripcionRechazo).subscribe({
         next: (response) => {
-          console.log('Usuario rechazado:', response);
+          this.showAlertCustom('Solicitud rechazada correctamente');
           this.getAllMensajes(true); 
           this.modalRejectClose(); 
         },
         error: (error) => {
+          this.showAlertCustom('Error al rechazar solicitud');
           console.error('Error rejecting usuario:', error);
         }
       });
@@ -167,11 +186,12 @@ previousPage(): void {
     if (this.userIdSeleccionado !== null) {
       this._adminService.approveUser(this.userIdSeleccionado).subscribe({
         next: (response) => {
-          console.log('Usuario aprobado:', response);
+          this.showAlertCustom('Solicitud aceptada correctamente');
           this.getAllMensajes(true); 
           this.modalApproveClose(); 
         },
         error: (error) => {
+          this.showAlertCustom('Error al aceptar solicitud');
           console.error('Error approving usuario:', error);
         }
       });

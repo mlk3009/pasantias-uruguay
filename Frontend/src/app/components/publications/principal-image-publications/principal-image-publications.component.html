@@ -5,6 +5,10 @@
     />
 </head>
 <section class="principalImage">
+  <!-- ALERTA CUSTOM -->
+  <div id="alert-container-custom" style="display:none;position:fixed;top:30px;left:0;right:0;z-index:9999;justify-content:center;align-items:center;pointer-events:none;">
+    <div style="background:rgba(30,41,59,0.98);color:#fff;padding:18px 32px;border-radius:12px;box-shadow:0 4px 24px #0008;font-size:1.1em;min-width:220px;max-width:90vw;text-align:center;pointer-events:auto;opacity:0.97;transition:all .3s;" id="alert-custom-message"></div>
+  </div>
     <h1 class="animate__animated animate__backInDown animate__faster">¡Es momento de un rumbo diferente!</h1>
     <div class="searcher">
         <form (ngSubmit)="buscarPublicaciones(filtroForm.value)" #filtroForm="ngForm">

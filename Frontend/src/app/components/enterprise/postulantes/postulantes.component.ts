@@ -268,10 +268,8 @@ if (this.fechaFiltro === 'reciente') {
     });
   }
 
-  // --- ALERTA VISUAL PERSONALIZADA ---
-  // ...existing code...
 
-  // --- ALERTA VISUAL PERSONALIZADA ---
+  
   showAlertCustom(message: string): void {
     const modal = document.getElementById('alert-container-custom') as HTMLElement;
     const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;

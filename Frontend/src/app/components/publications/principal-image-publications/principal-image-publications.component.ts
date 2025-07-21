@@ -48,23 +48,52 @@ selectLugar(dep: string) {
 }
 
 buscarPublicaciones(params: any) {
-  // Elimina el campo location si es "Lugar" o vacío
   if (!params.location || params.location === 'Lugar') {
     delete params.location;
   }
-  // Marca que es una búsqueda filtrada
   this.publicationService.setFiltered(true);
   this.publicationService.searchPublications(params).subscribe({
-    next: (data) => {
+    next: (data: any[] = []) => {
       this.publicaciones = data;
       this.errorMsg = '';
-      // Navega a /publications-in después de obtener los datos
-      this.router.navigate(['/publications-in']);
+      if (!data || data.length === 0) {
+        this.showAlertCustom('No se encontraron resultados');
+        return;
+      }
+      this.router.navigate(['/publications-in']).then(() => {
+        setTimeout(() => {
+          const el = document.getElementById('top');
+          if (el) {
+            el.scrollIntoView({ behavior: 'smooth' });
+          }
+        }, 300);
+      });
     },
     error: (error: HttpErrorResponse | Error) => {
       this.publicaciones = [];
       this.errorMsg = error.message;
+      if (error && error.message && error.message.includes('No se encontraron publicaciones')) {
+        this.showAlertCustom('No se encontraron resultados');
+      }
     }
   });
+}
+
+showAlertCustom(message: string): void {
+  const modal = document.getElementById('alert-container-custom') as HTMLElement;
+  const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+  if (modal && msgSpan) {
+    msgSpan.textContent = message;
+    modal.style.display = 'flex';
+    modal.classList.add('fade-in');
+    setTimeout(() => {
+      modal.classList.remove('fade-in');
+      modal.classList.add('fade-out');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('fade-out');
+      }, 500);
+    }, 2000);
+  }
 }
 }

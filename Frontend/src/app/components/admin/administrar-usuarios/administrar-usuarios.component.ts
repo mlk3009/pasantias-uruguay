@@ -1,3 +1,4 @@
+
 import { Component, OnInit } from '@angular/core';
 import { NavComponent } from '../../home/nav/nav.component';
 import { UserService } from '../../../services/user.service';
@@ -29,6 +30,24 @@ export class AdministrarUsuariosComponent implements OnInit {
     location: '',
     rol: ''
   };
+
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 2000);
+    }
+  }
 
   constructor(
     private _userService: UserService,
@@ -122,11 +141,12 @@ export class AdministrarUsuariosComponent implements OnInit {
     if (id !== null) {
       this._adminService.deactivateUser(id).subscribe(
         (response) => {
-          console.log('User deactivated:', response);
+          this.showAlertCustom('Usuario suspendido correctamente');
           this.getAllUsers(this.currentPage); // Refresh the users list
           this.modalBanClose(); // Close the modal
         },
         (error) => {
+          this.showAlertCustom('Error al suspender usuario');
           console.error('Error deactivating user:', error);
         }
       );
@@ -137,11 +157,12 @@ export class AdministrarUsuariosComponent implements OnInit {
     if (id !== null) {
       this._adminService.deleteUser(id).subscribe(
         (response) => {
-          console.log('User deleted:', response);
+          this.showAlertCustom('Usuario eliminado correctamente');
           this.getAllUsers(this.currentPage); // Refresh the users list
           this.modalDeleteClose(); // Close the modal
         },
         (error) => {
+          this.showAlertCustom('Error al eliminar usuario');
           console.error('Error deleting user:', error);
         }
       );
@@ -153,8 +174,12 @@ export class AdministrarUsuariosComponent implements OnInit {
       (response) => {
         this.users = response;
         this.updateDisplayedUsers();
+        if (!this.users || this.users.length === 0) {
+          this.showAlertCustom('No se encontraron usuarios con ese filtro');
+        }
       },
       (error) => {
+        this.showAlertCustom('Error al buscar usuarios');
         console.error('Error searching users:', error);
       }
     );

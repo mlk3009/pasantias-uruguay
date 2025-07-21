@@ -67,3 +67,35 @@ ul.flex.h-8.items-center li a {
     user-select: none;
     cursor: pointer;
 }
+.image-container {
+    position: relative;
+}
+
+.image-container img {
+    display: block;
+    width: 100%;
+    height: auto;
+    transition: opacity 0.4s; /* Aumenta la duración de la transición */
+}
+
+.image-container::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 19.9rem;
+    min-height: 19.9rem;
+    max-width: 19.9rem;
+    max-height: 19.9rem;
+    background-image: url('http://localhost:8000/images/hoverpub.jpg'); 
+    background-size: cover;
+    background-position: center;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.image-container:hover::after {
+    opacity: 1;
+    transition: opacity 0.4s;
+}

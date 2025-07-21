@@ -91,12 +91,7 @@
 
 
                 <section class="bg-gray-50 dark:bg-gray-900 w-11/12 my-10">
-                <h2 class="text-2xl font-semibold text-gray-900 text-center mb-8 mt-4">Solicitudes</h2>
-                <!-- Mensajes -->
-                <div *ngIf="mensajes.length === 0" class="text-gray-500 text-center mt-4">
-                  No se encontraron mensajes.
-                </div>
-                
+                <ng-container *ngIf="mensajes.length > 0; else noSolicitudesMsg">
                   <div *ngFor="let mensaje of mensajes; let i = index" [ngClass]="{'ml-20': i % 2 !== 0}" class="mb-10 shadow-md rounded-xl border">
                     <div class="py-4 px-8">
                       <div class="flex items-center justify-between flex-row w-full">
@@ -132,34 +127,36 @@
                       </div>
                     </div>
                   </div>
+                </ng-container>
+                <ng-template #noSolicitudesMsg>
+                  <div class="text-center text-gray-400 py-8 text-lg">No hay solicitudes para mostrar.</div>
+                </ng-template>
                 </section>
                 
-                <div class="prev-next mt-16 mb-16 flex flex-col items-center">
-                  <div class="inline-flex mt-2 xs:mt-0">
-                    <!-- Botones de paginación -->
-                    <button (click)="previousPage()" [disabled]="currentPage === 1" class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                      <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
-                      </svg>
-                      Prev
-                    </button>
-                    <div class="span">
-                      <span class="text-sm text-gray-700 dark:text-gray-400">
-                        Mostrando <span class="font-semibold text-gray-900 dark:text-white">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>-<span class="font-semibold text-gray-900 dark:text-white">{{ getEndIndex() }}</span> de <span class="font-semibold text-gray-900 dark:text-white">{{ totalMensajes }}</span> mensajes
-                      </span>
+                <ng-container *ngIf="mensajes.length > 0">
+                  <div class="prev-next mt-16 mb-16 flex flex-col items-center">
+                    <div class="inline-flex mt-2 xs:mt-0">
+                      <!-- Botones de paginación -->
+                      <button (click)="previousPage()" [disabled]="currentPage === 1" class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4"/>
+                        </svg>
+                        Prev
+                      </button>
+                      <div class="span">
+                        <span class="text-sm text-gray-700 dark:text-gray-400">
+                          Mostrando <span class="font-semibold text-gray-900 dark:text-white">{{ (currentPage - 1) * itemsPerPage + 1 }}</span>-<span class="font-semibold text-gray-900 dark:text-white">{{ getEndIndex() }}</span> de <span class="font-semibold text-gray-900 dark:text-white">{{ totalMensajes }}</span> mensajes
+                        </span>
+                      </div>
+                      <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
+                        Next
+                        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
+                          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
+                        </svg>
+                      </button>
                     </div>
-                    <button (click)="nextPage()" [disabled]="currentPage === totalPages" class="button flex items-center justify-center px-4 h-10 text-base font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                      Next
-                      <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                      </svg>
-                    </button>
                   </div>
-                </div>
-
-            
-                  <p class="text-gray-500 text-sm"> Tienda morrocoyo los derechos de mi tio reservado adentro de mi c...</p>
-
+                </ng-container>
             </div>
         </div>
     </div>

@@ -52,7 +52,43 @@ buscarPublicaciones(params: any) {
   if (!payload.location || payload.location === 'Lugar') {
     delete payload.location;
   }
-  this.publicationService.searchPublications(payload).subscribe(publications => {
+  this.publicationService.setFiltered(true);
+  this.publicationService.searchPublications(payload).subscribe({
+    next: (result: any[] = []) => {
+      if (!result || result.length === 0) {
+        this.showAlertCustom('No se encontraron resultados');
+        return;
+      }
+      setTimeout(() => {
+        const el = document.getElementById('top');
+        if (el) {
+          el.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 300);
+    },
+    error: (error: HttpErrorResponse | Error) => {
+      if (error && error.message && error.message.includes('No se encontraron publicaciones')) {
+        this.showAlertCustom('No se encontraron resultados');
+      }
+    }
   });
+}
+
+showAlertCustom(message: string): void {
+  const modal = document.getElementById('alert-container-custom') as HTMLElement;
+  const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+  if (modal && msgSpan) {
+    msgSpan.textContent = message;
+    modal.style.display = 'flex';
+    modal.classList.add('fade-in');
+    setTimeout(() => {
+      modal.classList.remove('fade-in');
+      modal.classList.add('fade-out');
+      setTimeout(() => {
+        modal.style.display = 'none';
+        modal.classList.remove('fade-out');
+      }, 500);
+    }, 2000);
+  }
 }
 }

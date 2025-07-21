@@ -34,28 +34,28 @@ export class PublicationsInComponent implements OnInit {
 ngOnInit(): void {
   // Scroll to top when component loads
   window.scrollTo(0, 0);
-  
+
   // Capturar el parámetro de categoría de la ruta
   this.route.paramMap.subscribe(params => {
     this.category = params.get('category') || undefined;
     console.log('Categoría capturada:', this.category);
-    
+
     // Scroll to top when category changes
     window.scrollTo(0, 0);
-    
-    // Cargar publicaciones con la categoría especificada
+
+    // Si hay publicaciones filtradas, no recargar
+    if (this.publicationService.isFiltered() && this.publications.length > 0) {
+      // Ya hay publicaciones filtradas, solo limpiar el flag para la próxima navegación
+      this.publicationService.setFiltered(false);
+      return;
+    }
+    // Si no hay publicaciones, cargar normalmente
     this.getPublications(this.category);
   });
 
   this.publicationService.publications$.subscribe(data => {
     this.publications = data;
   });
-
-  if (!this.publicationService.isFiltered()) {
-    this.getPublications(this.category);
-  } else {
-    this.publicationService.setFiltered(false);
-  }
 }
 
   buscarPublicaciones(params: any) {

@@ -32,6 +32,24 @@ export class AdministrarPublicacionesComponent implements OnInit {
     featured: false,
     is_deleted: false
   };
+
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 2000);
+    }
+  }
 noPublicationsMessage: string = '';
 
 
@@ -159,11 +177,12 @@ searchPublications(): void {
     if (id !== null) {
       this._adminService.destroyPublication(id).subscribe(
         (response) => {
-          console.log('Publication destroyed:', response);
+          this.showAlertCustom('Publicación eliminada permanentemente');
           this.getPublications(); // Refresh the publications list
           this.modalDeleteClose(); // Close the modal
         },
         (error) => {
+          this.showAlertCustom('Error al eliminar publicación');
           console.error('Error destroying publication:', error);
         }
       );
@@ -174,11 +193,12 @@ searchPublications(): void {
     if (id !== null) {
       this._adminService.softDeletePublication(id).subscribe(
         (response) => {
-          console.log('Publication soft deleted:', response);
+          this.showAlertCustom('Publicación suspendida correctamente');
           this.getPublications(); 
           this.modalBanClose(); 
         },
         (error) => {
+          this.showAlertCustom('Error al suspender publicación');
           console.error('Error soft deleting publication:', error);
         }
       );
