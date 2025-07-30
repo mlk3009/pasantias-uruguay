@@ -222,7 +222,7 @@ class CompanyController extends Controller
 public function actualizarEstadoPostulacion(Request $request, $publication_id, $estudiante_id)
 {
     $validator = Validator::make($request->all(), [
-        'estado' => 'required|in:aprobado,rechazado,pendiente,interesado'
+        'estado' => 'required|in:Pendiente,CV Visto,Contactado,Rechazado'
     ]);
 
     if ($validator->fails()) {
@@ -307,7 +307,7 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
                 ], 400);
             }
 
-            // Actualizar el estado de la postulación a "En proceso"
+            // Actualizar el estado de la postulación a "Contactado"
             $postulacion = Postula::where('publication_id', $request->publication_id)
                                  ->where('estudiante_id', $request->estudiante_id)
                                  ->first();
@@ -323,7 +323,7 @@ public function actualizarEstadoPostulacion(Request $request, $publication_id, $
             DB::table('postula')
                 ->where('publication_id', $request->publication_id)
                 ->where('estudiante_id', $request->estudiante_id)
-                ->update(['estado' => 'En proceso']);
+                ->update(['estado' => 'Contactado']);
 
             // Si es contacto por web, enviar email
             if ($request->tipo_contacto === 'web') {

@@ -18,6 +18,21 @@ use Illuminate\Support\Facades\Log;
 class AdminController extends Controller
 {
 
+    public function deleteMensaje($id)
+    {
+        if (Auth::user()->rol !== 'administrador') {
+            return response()->json(['message' => 'No autorizado'], 403);
+        }
+
+        $mensaje = Mensaje::find($id);
+        if (!$mensaje) {
+            return response()->json(['message' => 'Mensaje no encontrado'], 404);
+        }
+
+        $mensaje->delete();
+        return response()->json(['message' => 'Mensaje eliminado', 'status' => 200], 200);
+    }
+
 
     public function getAllUsers(Request $request)
     {

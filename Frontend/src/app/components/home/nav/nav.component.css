@@ -1,3 +1,17 @@
+/* Texto más claro y grande para tooltips */
+.tooltip-text {
+  color: #fff;
+  font-size: 1.22rem;
+  line-height: 1.5;
+  margin-bottom: 0.3em;
+  font-weight: 500;
+}
+.tooltip-text-blue {
+  color: #e0f2ff;
+}
+.tooltip-text-yellow {
+  color: #fffbe0;
+}
 .nav001{
 /*    background-color: #000220; */
     background-color: transparent;
@@ -371,48 +385,55 @@ nav.down{
 }
 
 /* Estilos específicos para tooltips del sidebar */
-.tooltip {
+
+/* Tooltip saldo a la izquierda */
+
+.saldo-item-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  user-select: none;
+}
+.saldo-item-container .tooltip {
   position: absolute;
-  right: 100%;
   top: 50%;
-  transform: translateY(-50%);
+  left: auto;
+  right: 100%;
+  transform: translateY(-50%) translateX(-24px);
   background-color: #374151;
-  color: white;
-  padding: 8px 12px;
-  border-radius: 6px;
-  font-size: 0.875rem;
-  white-space: nowrap;
+  color: #fff;
+  padding: 22px 32px;
+  border-radius: 12px;
+  font-size: 1.15rem;
+  white-space: normal;
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s, visibility 0.3s, transform 0.3s;
   z-index: 1000;
-  margin-right: 8px;
+  min-width: 320px;
+  max-width: 650px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  pointer-events: none;
+  text-align: left;
 }
-
-.tooltip::after {
+.saldo-item-container .tooltip::after {
   content: '';
   position: absolute;
   top: 50%;
   left: 100%;
   transform: translateY(-50%);
-  border: 5px solid transparent;
+  border: 10px solid transparent;
   border-left-color: #374151;
 }
-
-/* Ajuste específico para el contenedor del sidebar */
-.sidebar .saldo-item-container {
-  overflow: visible;
-}
-
-/* Mejorar el posicionamiento del tooltip */
-.saldo-item-container {
-  position: relative;
-}
-
-.saldo-item-container:hover .tooltip {
+.saldo-item-container:hover .tooltip,
+.saldo-item-container:focus-within .tooltip {
   opacity: 1;
   visibility: visible;
-  transform: translateY(-50%) translateX(-8px);
+  pointer-events: auto;
+}
+.select-none {
+  user-select: none !important;
 }
 
 /* Estilo para el indicador de saldo */
@@ -909,4 +930,60 @@ nav.down{
 .btn-iniciar-sesion:hover {
   background-color: #00bfdf !important;
   color: white !important;
+}
+
+.alert-container7{
+  position: fixed;
+  width: 25vw;
+  display: none;
+  justify-content: center;
+  align-items: start;
+  z-index: 100;
+  top: 5px;
+  left: 0;
+  margin-inline: 38%;
+}
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+.fade-out {
+  animation: fadeOut 0.5s forwards;
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+.cross{
+  margin-left: -8px;
+}
+.alerta{
+  z-index: 100;
+}
+.saldo-tooltip {
+  display: none;
+  position: absolute;
+  top: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 140px;
+  background: #fff;
+  color: #222;
+  border-radius: 8px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+  padding: 10px 14px;
+  z-index: 2000;
+  font-size: 0.95em;
+  border: 1px solid #e5e7eb;
+  white-space: nowrap;
+}
+.group:hover > .saldo-tooltip,
+.group:focus-within > .saldo-tooltip {
+  display: block;
+}
+.saldo-tooltip .font-semibold {
+  font-size: 1em;
 }

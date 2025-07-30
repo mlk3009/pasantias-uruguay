@@ -33,6 +33,11 @@ export class PostulantesComponent implements OnInit {
   // Modal de contacto
   showModalContacto: boolean = false;
   postulanteSeleccionado: any = null;
+  enviandoEmail: boolean = false;
+
+  // Modal de rechazo
+  showModalRechazo: boolean = false;
+  postulanteParaRechazar: any = null;
 
 
   constructor(
@@ -179,8 +184,8 @@ if (this.fechaFiltro === 'reciente') {
   }
 
   abrirModalContacto(postulante: any): void {
-    // No abrir el modal si el estudiante ya está en proceso
-    if (postulante.estado === 'En proceso') {
+    // No abrir el modal si el estudiante ya está contactado o rechazado
+    if (postulante.estado === 'Contactado' || postulante.estado === 'Rechazado') {
       return;
     }
     
@@ -191,10 +196,47 @@ if (this.fechaFiltro === 'reciente') {
   cerrarModal(): void {
     this.showModalContacto = false;
     this.postulanteSeleccionado = null;
+    this.enviandoEmail = false;
+  }
+
+  abrirModalRechazo(postulante: any): void {
+    // No abrir el modal si el estudiante ya está rechazado o contactado
+    if (postulante.estado === 'Rechazado' || postulante.estado === 'Contactado') {
+      return;
+    }
+    
+    this.postulanteParaRechazar = postulante;
+    this.showModalRechazo = true;
+  }
+
+  cerrarModalRechazo(): void {
+    this.showModalRechazo = false;
+    this.postulanteParaRechazar = null;
+  }
+
+  rechazarEstudiante(): void {
+    if (!this.postulanteParaRechazar) return;
+
+    this.actualizarEstadoPostulacion(
+      this.postulanteParaRechazar.publication_id,
+      this.postulanteParaRechazar.id,
+      'Rechazado'
+    );
+
+    // Mostrar alerta visual personalizada
+    this.showAlertCustom('Postulante rechazado exitosamente.');
+    
+    // Cerrar modal
+    this.cerrarModalRechazo();
   }
 
   contactarEstudiante(tipoContacto: string): void {
     if (!this.postulanteSeleccionado) return;
+
+    // Activar barra de carga solo para envío web
+    if (tipoContacto === 'web') {
+      this.enviandoEmail = true;
+    }
 
     this.companyService.contactarEstudiante(
       this.postulanteSeleccionado.publication_id,
@@ -204,24 +246,65 @@ if (this.fechaFiltro === 'reciente') {
     ).subscribe({
       next: (response) => {
         console.log('Contacto realizado exitosamente:', response);
-        
-        // Mostrar mensaje de éxito
+        // Desactivar barra de carga
+        this.enviandoEmail = false;
+        // Mostrar alerta visual personalizada
         if (tipoContacto === 'web') {
-          alert('Contacto realizado exitosamente. Se ha enviado un email al estudiante.');
+          this.showAlertCustom('Contacto realizado exitosamente. Se ha enviado un email al estudiante.');
         } else {
-          alert('Estado actualizado a "En proceso". Puedes contactar al estudiante directamente.');
+          this.showAlertCustom('La empresa se encargará de contactar personalmente al estudiante.');
         }
-        
         // Actualizar la lista de postulantes para reflejar el cambio de estado
         this.obtenerPostulantes(this.empresa.id);
-        
         // Cerrar modal
         this.cerrarModal();
       },
       error: (error) => {
         console.error('Error al contactar estudiante:', error);
+        // Desactivar barra de carga en caso de error
+        this.enviandoEmail = false;
         alert('Error al contactar estudiante. Por favor, inténtalo de nuevo.');
       }
     });
+  }
+
+
+  
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 2000);
+    }
+  }
+
+  alertCustomClose() {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    if (modal) modal.style.display = 'none';
+  }
+
+  verCV(postulante: any): void {
+    // Abrir el CV en una nueva pestaña
+    const cvUrl = this.cvLink + postulante.cv_pdf + '.pdf';
+    window.open(cvUrl, '_blank');
+
+    // Solo actualizar el estado si es "Pendiente" (no cambiar si ya está contactado o rechazado)
+    if (postulante.estado === 'Pendiente') {
+      this.actualizarEstadoPostulacion(
+        postulante.publication_id,
+        postulante.id,
+        'CV Visto'
+      );
+    }
   }
 }

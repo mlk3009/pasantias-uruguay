@@ -21,16 +21,18 @@ class PostulaSeeder extends Seeder
 
         // Estados posibles para las postulaciones
         $estados = [
-            'Postulado',   // Recién postulado
+            'Pendiente',   // Recién postulado
             'CV Visto',    // La empresa revisó el CV
-            'En proceso'   // Está en proceso de selección
+            'Contactado',  // Está en proceso de selección
+            'Rechazado'    // Fue rechazado
         ];
 
-        // Pesos para hacer más realistas los estados (más postulados)
+        // Pesos para hacer más realistas los estados (más pendientes)
         $estadosConPeso = [
-            'Postulado' => 60,   // La mayoría están recién postulados
+            'Pendiente' => 50,   // La mayoría están recién postulados
             'CV Visto' => 30,    // Algunos ya fueron revisados
-            'En proceso' => 10   // Pocos están en proceso avanzado
+            'Contactado' => 15,  // Pocos están contactados
+            'Rechazado' => 5     // Muy pocos rechazados
         ];
 
         // Crear array ponderado de estados

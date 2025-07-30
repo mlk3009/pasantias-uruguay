@@ -133,8 +133,6 @@
                 <section class="borders w-9/12 mx-auto my-20">
                     <div class="w-full">
                         <div class="w-full flex flex-col items-start justify-start">
-                            <input [(ngModel)]="desc3Title" name="desc3Title" type="text" class="max-w-lg mb-2 text-start w-full text-xl p-2 border border-gray-300 rounded-lg shadow-sm" placeholder="Título acercatívo">
-                            <textarea [(ngModel)]="desc3Paragraph" name="desc3Paragraph" class="max-w-2xl my-2 text-gray-900 h-28 text-start w-full text-md p-2 border border-gray-300 rounded-lg shadow-sm" placeholder="Descripción justificatíva"></textarea>
                             <button class="cursor-not-allowed inline-flex items-center text-white font-medium rounded-lg text-sm pl-2 text-center dark:focus:ring-primary-900">
                                 <a class="inline-flex items-center font-medium text button1 rounded-lg py-2 px-4 dark:text-primary-500 dark:hover:text-primary-700">
                                     Ver publicaciones
@@ -145,44 +143,6 @@
                     </div>
                 </section>
 
-                
-                <section class="body-nh2 my-10 mt-20">
-                    <div>
-                        <h2 class="text-3xl font-bold text-gray-900 dark:text-white text-center mb-6">Publicaciones destacadas</h2>
-                        <p class="text-lg text-gray-500 dark:text-gray-400 text-center mb-8">Aquí saldrán las ultimas ofertas subidas.</p>
-                    </div>
-                    <section class="section1">
-                        <i id="left" class="fa-solid fa-angle-left text-black" (click)="onArrowLeftClick($event)"></i>
-                        <section id="carousel" class="carousel">
-
-
-                            <div *ngFor="let publication of displayedPublications" class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-                                <a [href]="'/publication/' + publication.id">
-                                    <div class="image-container">
-                                        <img class="rounded-t-lg size" [src]="publication.imageUrl" alt="" draggable="false" />
-                                    </div>
-                                </a>
-                                <div class="zona-texto p-5">
-                                    <a class="" [href]="'/publication/' + publication.id">
-                                        <h5 class="card-title mb-2 text-2xl font-bold tracking-tight text-black dark:text-white">{{ publication.title }}</h5>
-                                    </a>
-                                    <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">{{ publication.description || 'Estamos buscando un Ingeniero de Software Senior con más de 5 años de experiencia en desarrollo full-stack. Únete a nuestro equipo dinámico para trabajar en proyectos de vanguardia.' }}</p>
-                                    <div class="mb-3">
-                                        <span class="font-bold text-xl" *ngIf="publication.salary !== null">${{ publication.salary }}</span>
-                                    </div>
-                                    <a [href]="'/publication/' + publication.id" class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-sky-800 rounded-lg hover:bg-sky-700 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                        Mas info
-                                        <svg class="rtl:rotate-180 w-3.5 h-3.5 ms-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9"/>
-                                        </svg>
-                                    </a>
-                                </div>
-                            </div>
-
-                        </section>
-                        <i id="right" class="fa-solid fa-angle-right text-black" (click)="onArrowRightClick($event)"></i>
-                    </section>
-                </section>
 
 
 

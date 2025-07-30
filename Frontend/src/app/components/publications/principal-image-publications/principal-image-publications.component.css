@@ -1,3 +1,18 @@
+/* ALERTA CUSTOM */
+#alert-container-custom.fade-in {
+  animation: fadeInAlert .4s;
+}
+#alert-container-custom.fade-out {
+  animation: fadeOutAlert .5s;
+}
+@keyframes fadeInAlert {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeOutAlert {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-30px); }
+}
 .principalImage{
     background-image: url(../../../../assets/img/principalimage_edit2.jpg);
     height: 65vh;

@@ -70,6 +70,7 @@ estadisticas: any = {
     if (phone && /^\d{8,9}$/.test(phone)) {
       // Si hay un número en la URL, usarlo como parámetro
       this.isPhoneAccess = true; // Indicar que se accedió mediante phone
+      this.selectedView = 'cliente'; // Establecer vista de cliente por defecto cuando se accede por teléfono
       this.companyService.obtenerEmpresaByPhone(phone).subscribe({
         next: (response) => {
           this.empresa = response.data;

@@ -23,6 +23,7 @@ export class PublicationComponent implements OnInit {
   descripcion: string = '';
   isPublicationSaved: boolean = false;
   isAlreadyApplied: boolean = false;
+  enviandoEmail: boolean = false;
   
   // Variables para el carrusel de imágenes
   publicationImages: any[] = [];
@@ -258,12 +259,15 @@ export class PublicationComponent implements OnInit {
     const asunto = this.asunto;
     const descripcion = this.descripcion;
 
+    this.enviandoEmail = true;
     this.userService.contactMe(email, asunto, descripcion, emailDestino).subscribe(
       (response) => {
+        this.enviandoEmail = false;
         this.showAlert8();
         this.modalClose();
       },
       (error) => {
+        this.enviandoEmail = false;
         console.error('Error al enviar el correo', error);
         this.modalClose();
       }

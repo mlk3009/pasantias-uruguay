@@ -22,8 +22,32 @@ import { CompanyService } from '../../../services/company.service';
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent implements AfterViewInit {
+
+
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 5000);
+    }
+  }
+
+  alertCustomClose() {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    if (modal) modal.style.display = 'none';
+  }
   isDropdownVisible = false;
-  isHistorialModalVisible = false;
+  // isHistorialModalVisible eliminado
   public token: string = '';
   public username: string = '';
   public dropdown = false;
@@ -39,11 +63,7 @@ export class NavComponent implements AfterViewInit {
   
   // Propiedades para empresa
   public saldosEmpresa: any[] = [];
-  public historialPublicaciones: any[] = [];
-  public historialPublicacionesCompleto: any[] = [];
-  public mostrarSoloDeshabilitadas = false;
   public loadingSaldo = false;
-  public loadingHistorial = false;
   
   // Propiedades para saldos disponibles (precios dinámicos desde BD)
   public saldosDisponibles: any[] = [];
@@ -375,69 +395,6 @@ logout() {
     );
   }
 
-  openHistorialModal() {
-    this.isHistorialModalVisible = true;
-    this.loadHistorialPublicaciones();
-  }
-
-  closeHistorialModal() {
-    this.isHistorialModalVisible = false;
-  }
-
-  loadHistorialPublicaciones() {
-    if (this.data.rol !== 'empresa') return;
-    
-    this.loadingHistorial = true;
-    this._companyService.obtenerEmpresa(this.token).subscribe(
-      (response: any) => {
-        if (response && response.data && response.data.id) {
-          this._companyService.obtenerPublicaciones(response.data.id).subscribe(
-            (publicationsResponse: any) => {
-              // Guardar todas las publicaciones primero
-              this.historialPublicacionesCompleto = (publicationsResponse.data || []).map((pub: any) => ({
-                id: pub.id,
-                title: pub.title,
-                salary: pub.salary,
-                created_at: pub.created_at,
-                featured: pub.featured,
-                is_deleted: pub.is_deleted,
-                postulaciones_count: pub.postulaciones_count || 0
-              }));
-              
-              // Aplicar filtro inicial
-              this.aplicarFiltroPublicaciones();
-              this.loadingHistorial = false;
-            },
-            (error: any) => {
-              console.error('Error al cargar historial de publicaciones:', error);
-              this.loadingHistorial = false;
-            }
-          );
-        }
-      },
-      (error: any) => {
-        console.error('Error al obtener empresa:', error);
-        this.loadingHistorial = false;
-      }
-    );
-  }
-
-  aplicarFiltroPublicaciones() {
-    if (this.mostrarSoloDeshabilitadas) {
-      this.historialPublicaciones = this.historialPublicacionesCompleto.filter(pub => pub.is_deleted);
-    } else {
-      this.historialPublicaciones = [...this.historialPublicacionesCompleto];
-    }
-  }
-
-  getPublicacionesHabilitadas(): number {
-    return this.historialPublicacionesCompleto.filter(p => !p.is_deleted).length;
-  }
-
-  getPublicacionesSuspendidas(): number {
-    return this.historialPublicacionesCompleto.filter(p => p.is_deleted).length;
-  }
-
   getTotalSaldo(): number {
     return this.saldosEmpresa.reduce((total, saldo) => total + (saldo.quantity || 0), 0);
   }
@@ -511,13 +468,7 @@ updatePrecioPackDestacada(event: any): void {
   this.precioPackDestacada = this.preciosPackDestacada[this.cantidadPackDestacado] || 0;
 }
 
-  getPublicacionesDestacadas(): number {
-    return this.historialPublicaciones.filter(p => p.featured).length;
-  }
-
-  getTotalPostulaciones(): number {
-    return this.historialPublicaciones.reduce((total, p) => total + p.postulaciones_count, 0);
-  }
+  // getPublicacionesDestacadas y getTotalPostulaciones eliminados
 
   hasSaldos(): boolean {
     return this.saldosEmpresa.length > 0;
@@ -627,14 +578,16 @@ updatePrecioPackDestacada(event: any): void {
 
   // Métodos para confirmar compras
   confirmarCompraNormalIndividual() {
+    // Obtener el valor seleccionado del select
+    const select = document.getElementById('normal-days') as HTMLSelectElement;
+    const diasSeleccionados = select ? parseInt(select.value) : 15;
     const saldoSeleccionado = this.saldosDisponibles.find(s => 
-      s.type === 'Normal' && s.pack === 1 && s.days === 15
+      s.type === 'Normal' && s.pack === 1 && s.days === diasSeleccionados
     );
-    
     this.selectedCompra = {
       tipo: 'normal_individual',
       titulo: 'Publicación Normal Individual',
-      descripcion: `1 Publicación Normal por 15 días`,
+      descripcion: `1 Publicación Normal por ${diasSeleccionados} días`,
       precio: this.precioNormalIndividual,
       saldo: saldoSeleccionado
     };
@@ -658,14 +611,16 @@ confirmarCompraPackNormal() {
 }
 
   confirmarCompraDestacadaIndividual() {
+    // Obtener el valor seleccionado del select
+    const select = document.getElementById('featured-days') as HTMLSelectElement;
+    const diasSeleccionados = select ? parseInt(select.value) : 15;
     const saldoSeleccionado = this.saldosDisponibles.find(s => 
-      s.type === 'Destacada' && s.pack === 1 && s.days === 15
+      s.type === 'Destacada' && s.pack === 1 && s.days === diasSeleccionados
     );
-    
     this.selectedCompra = {
       tipo: 'destacada_individual',
       titulo: '✨ Publicación Destacada Individual',
-      descripcion: `1 Publicación Destacada por 15 días`,
+      descripcion: `1 Publicación Destacada por ${diasSeleccionados} días`,
       precio: this.precioDestacadaIndividual,
       saldo: saldoSeleccionado
     };
@@ -697,7 +652,7 @@ confirmarCompraPackDestacada() {
 
   ejecutarCompra() {
     if (!this.selectedCompra || !this.selectedCompra.saldo) {
-      alert('Error: No se pudo procesar la compra. Inténtalo de nuevo.');
+      this.showAlertCustom('Error: No se pudo procesar la compra. Inténtalo de nuevo.');
       return;
     }
 
@@ -706,28 +661,23 @@ confirmarCompraPackDestacada() {
     this._companyService.comprarSaldo(this.selectedCompra.saldo.id).subscribe(
       (response: any) => {
         console.log('Compra exitosa:', response);
-        
         // Mostrar mensaje de éxito
-        alert(`¡Compra realizada exitosamente!\n${this.selectedCompra.descripcion}\nTotal pagado: $${this.selectedCompra.precio}`);
-        
+        this.showAlertCustom(`¡Compra realizada exitosamente!\n${this.selectedCompra.descripcion}\nTotal pagado: $${this.selectedCompra.precio}`);
         // Cerrar modal
         this.cerrarModalConfirmacion();
-        
         // Recargar saldos de la empresa
         this.loadCompanySaldos();
-        
         // Cerrar modal de compra principal
         this.modalClose();
       },
       (error: any) => {
         console.error('Error en la compra:', error);
         this.processingPurchase = false;
-        
         let errorMsg = 'Error al procesar la compra. Inténtalo de nuevo.';
         if (error.error && error.error.message) {
           errorMsg = error.error.message;
         }
-        alert(errorMsg);
+        this.showAlertCustom(errorMsg);
       }
     );
   }
@@ -828,13 +778,6 @@ confirmarCompraPackDestacada() {
     return 'Saldo disponible';
   }
 
-  getPublicacionesTooltip(): string {
-    const saldoNormal = this.getSaldoPorTipo('normal');
-    const saldoDestacada = this.getSaldoPorTipo('destacada');
-    
-    return `Publicaciones normales: ${saldoNormal}\nPublicaciones destacadas: ${saldoDestacada}`;
-  }
-
   // Funciones de navegación mejoradas (mantener compatibilidad con existentes)
   navigateToPublicationsImproved() {
     this.closeMobileMenu(); // Cerrar menú móvil al navegar
@@ -843,14 +786,7 @@ confirmarCompraPackDestacada() {
     });
   }
 
-  // Aliases para mantener compatibilidad
-  mostrarHistorialModal() {
-    this.openHistorialModal();
-  }
-
-  cerrarHistorialModal() {
-    this.closeHistorialModal();
-  }
+  // Aliases y métodos de historial de publicaciones eliminados
 
   // Funciones de modal de compra mejoradas
   mostrarConfirmacionCompra(compra: any) {
@@ -867,52 +803,4 @@ confirmarCompraPackDestacada() {
   confirmarCompra() {
     this.ejecutarCompra();
   }
-
-  // Funciones de historial mejoradas (aliases y wrappers)
-  loadHistorialPublicacionesWithId(empresaId: number) {
-    this.loadingHistorial = true;
-    this._companyService.obtenerPublicaciones(empresaId.toString()).subscribe(
-      (response: any) => {
-        this.historialPublicacionesCompleto = response.data || [];
-        this.filtrarHistorial(); // Aplicar filtro inicial
-        this.loadingHistorial = false;
-      },
-      (error: any) => {
-        this.loadingHistorial = false;
-      }
-    );
-  }
-
-  // Método para filtrar el historial según el estado
-  filtrarHistorial() {
-    this.aplicarFiltroPublicaciones();
-  }
-
-  // Método para alternar el filtro de deshabilitadas
-  toggleFiltroDeshabilitadas() {
-    this.mostrarSoloDeshabilitadas = !this.mostrarSoloDeshabilitadas;
-    this.filtrarHistorial();
-  }
-
-  // Método para obtener el texto del estado
-  getEstadoTexto(estado: number): string {
-    return estado === 1 ? 'Activa' : 'Deshabilitada';
-  }
-
-  // Método para obtener la clase CSS del estado
-  getEstadoClase(estado: number): string {
-    return estado === 1 ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800';
-  }
-
-  // Método para formatear fecha
-  formatearFecha(fecha: string): string {
-    if (!fecha) return 'N/A';
-    const date = new Date(fecha);
-    return date.toLocaleDateString('es-ES', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric'
-    });
-  }
-
 }

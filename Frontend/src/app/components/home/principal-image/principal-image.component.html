@@ -5,32 +5,46 @@
     />
   </head>
 <section id="inicio" class="principalImage lowwave">
+  <!-- ALERTA CUSTOM -->
+  <div id="alert-container-custom" style="display:none;position:fixed;top:30px;left:0;right:0;z-index:9999;justify-content:center;align-items:center;pointer-events:none;">
+    <div style="background:rgba(30,41,59,0.98);color:#fff;padding:18px 32px;border-radius:12px;box-shadow:0 4px 24px #0008;font-size:1.1em;min-width:220px;max-width:90vw;text-align:center;pointer-events:auto;opacity:0.97;transition:all .3s;" id="alert-custom-message"></div>
+  </div>
     <h1 class="animate__animated animate__backInDown animate__faster max-w-96 md:max-w-xl mx-auto">¡Es momento de un rumbo diferente!</h1>
     <div class="searcher mx-auto">
-        <form class="max-w-lg mx-auto">
+        <form (ngSubmit)="buscarPublicaciones(filtroForm.value)" #filtroForm="ngForm" class="max-w-lg mx-auto">
             <div class="flex">
-                <label for="search-dropdown" class="mb-2 text-sm font-medium text-gray-900 sr-only dark:text-white">Your Email</label>
-                <button id="dropdown-button" data-dropdown-toggle="dropdown" class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600" type="button">Lugar <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
-                </svg></button>
-                <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                    <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdown-button">
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Montevideo</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Maldonado</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Artigas</button>
-                    </li>
-                    <li>
-                        <button type="button" class="inline-flex w-full px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Tacuarembó</button>
-                    </li>
-                    </ul>
+                <!-- Dropdown Lugar -->
+                <div style="position: relative;">
+                    <button
+                        id="dropdown-button"
+                        (click)="toggleDropdown()"
+                        class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-4 text-sm font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+                        type="button"
+                        style="height: 100%; min-width: 120px;"
+                    >
+                        {{ selectedLugar }}
+                        <svg class="w-2.5 h-2.5 ms-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                        </svg>
+                    </button>
+                    <!-- Limpiar selección -->
+                    <button *ngIf="selectedLugar !== 'Lugar'" (click)="selectLugar('Lugar')" type="button" aria-label="Limpiar selección" class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 bg-transparent p-1" style="z-index: 20;">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <div *ngIf="isDropdownOpen" style="position: absolute; top: 100%; left: 0; max-height: 200px; overflow-y: auto; width: 180px; z-index: 50;" class="bg-white border border-gray-300 rounded shadow">
+                        <ul>
+                            <li *ngFor="let dep of departamentos">
+                                <button type="button" (click)="selectLugar(dep)" [value]="dep" class="inline-flex w-full px-4 py-2 text-left hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ dep }}</button>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
+                <input type="hidden" name="location" [(ngModel)]="selectedLugar" />
+                <!-- Input de búsqueda -->
                 <div class="relative w-full mx-auto min-w-64 max-w-64 md:max-w-lg md:min-w-96">
-                    <input type="search" id="search-dropdown" class=" block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Cargo o categoría" required />
+                    <input type="search" id="search-dropdown" name="search" ngModel class="block p-2.5 w-full z-20 text-sm text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 dark:bg-gray-700 dark:border-s-gray-700  dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500" placeholder="Cargo o empresa" required />
                     <button type="submit" class="button1 absolute top-0 end-0 p-2.5 text-sm font-medium h-full text-white bg-blue-700 rounded-e-lg border border-goldenrod hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                         <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>

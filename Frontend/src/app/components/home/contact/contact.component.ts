@@ -16,17 +16,40 @@ export class ContactComponent implements OnInit {
   isLoggedIn: boolean = false;
   userEmail: string = '';
 
+  isLoading: boolean = false;
+
   constructor(private userService: UserService, private route: ActivatedRoute) {}
 
 
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 2000);
+    }
+  }
+
   contactUs(asunto: string, descripcion: string): void {
+    this.isLoading = true;
     this.userService.contactUs(this.userEmail, asunto, descripcion).subscribe(
       response => {
-        console.log('Correo enviado correctamente', response);
-        window.location.reload();
+        this.showAlertCustom('Mensaje enviado correctamente');
+        this.isLoading = false;
+        // window.location.reload();
       },
       error => {
-        console.error('Error al enviar el correo', error);
+        this.showAlertCustom('Error al enviar el mensaje');
+        this.isLoading = false;
       }
     );
   }

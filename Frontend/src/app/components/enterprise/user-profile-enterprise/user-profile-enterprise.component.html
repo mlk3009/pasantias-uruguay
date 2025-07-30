@@ -23,7 +23,7 @@
                         {{ empresa.name }}
                         </h1>
                         <h2 class="text-gray-500 text-lg">{{ empresa.location }}</h2>
-                        <div class="mx-auto flex flex-row justify-center items-center mt-4 bg-gray-200 rounded-full gap-1">
+                        <div class="mx-auto flex flex-row justify-center items-center mt-4 bg-gray-200 rounded-full gap-1" *ngIf="!isPhoneAccess">
                             <button
                             (click)="setView('empresarial')"
                             [ngClass]="{

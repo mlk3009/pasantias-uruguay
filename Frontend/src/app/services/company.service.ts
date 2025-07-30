@@ -145,16 +145,23 @@ obtenerEstadisticasEmpresa(empresaId: string): Observable<any> {
   }
 }
 
-  contactarEstudiante(publicationId: number, estudianteId: number, tipoContacto: string, empresaId: number): Observable<any> {
+contactarEstudiante(publicationId: number, estudianteId: number, tipoContacto: string, empresaId: number): Observable<any> {
+  const token = this.getToken();
+  if (token) {
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+    });
     const data = {
       publication_id: publicationId,
       estudiante_id: estudianteId,
       tipo_contacto: tipoContacto,
       empresa_id: empresaId
     };
-    
-    return this._http.post(global.url + 'empresa/contactar-estudiante', data);
+    return this._http.post(global.url + 'empresa/contactar-estudiante', data, { headers: headers });
+  } else {
+    throw new Error('Token no encontrado');
   }
+}
 
   obtenerSaldosDisponibles(): Observable<any> {
     const token = this.getToken();

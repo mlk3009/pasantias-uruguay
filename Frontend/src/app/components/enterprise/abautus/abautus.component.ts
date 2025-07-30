@@ -35,6 +35,30 @@ export class AbautusComponent implements OnInit {
     private userService: UserService
   ) {}
 
+
+  showAlertCustom(message: string): void {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    const msgSpan = document.getElementById('alert-custom-message') as HTMLElement;
+    if (modal && msgSpan) {
+      msgSpan.textContent = message;
+      modal.style.display = 'flex';
+      modal.classList.add('fade-in');
+      setTimeout(() => {
+        modal.classList.remove('fade-in');
+        modal.classList.add('fade-out');
+        setTimeout(() => {
+          modal.style.display = 'none';
+          modal.classList.remove('fade-out');
+        }, 500);
+      }, 2000);
+    }
+  }
+
+  alertCustomClose() {
+    const modal = document.getElementById('alert-container-custom') as HTMLElement;
+    if (modal) modal.style.display = 'none';
+  }
+
   ngOnInit(): void {
     this.loading = true;
     const token = this.companyService.getToken();
@@ -162,7 +186,7 @@ export class AbautusComponent implements OnInit {
     this.userService.contactMe(email, asunto, descripcion, emailDestino).subscribe({
         next: (response) => {
             console.log('Correo enviado correctamente', response);
-            alert('Correo enviado correctamente');
+            this.showAlertCustom('Correo enviado correctamente');
         },
         error: (error) => {
             console.error('Error al enviar el correo:', error);
