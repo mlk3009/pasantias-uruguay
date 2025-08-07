@@ -13,6 +13,15 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit-educacion.component.css']
 })
 export class EditEducacionComponent implements OnInit {
+  // Validación: todos los campos requeridos deben estar completos, excepto descripción
+  isFormValid(): boolean {
+    return this.estudios.every(estudio =>
+      estudio.nivel.trim() !== '' &&
+      estudio.institucion.trim() !== '' &&
+      estudio.titulo.trim() !== '' &&
+      estudio.fecha_inicio.trim() !== ''
+    );
+  }
   public token: any;
   public estudios: any[] = [];
   public onSave = new EventEmitter<any>();
@@ -34,7 +43,7 @@ export class EditEducacionComponent implements OnInit {
   loadDataFromEditContext(): void {
     // Intentar obtener datos desde el servicio
     const cvData = this.servicioCv.getCurrentEditData();
-    console.log('Datos del CV recibidos en edit-educacion:', cvData);
+    // ...eliminado log...
     
     if (cvData && cvData.educacion) {
       this.estudios = cvData.educacion.map((edu: any) => ({
@@ -48,9 +57,9 @@ export class EditEducacionComponent implements OnInit {
         descripcion: edu.descripcion || ''
       }));
       
-      console.log('Datos de educación cargados:', this.estudios);
+      // ...eliminado log...
     } else {
-      console.log('No hay datos de educación en el servicio, intentando localStorage...');
+      // ...eliminado log...
       this.loadFromLocalStorage();
     }
 
@@ -114,23 +123,21 @@ export class EditEducacionComponent implements OnInit {
     // Guardar en localStorage específico para edición
     localStorage.setItem('edit-educacion', JSON.stringify(this.estudios));
     
-    console.log('Datos de educación guardados en localStorage:', this.estudios);
+    // ...eliminado log...
   }
 
   saveAndGoBack(): void {
-    this.saveToLocalStorage();
-    
-    // Emitir evento para notificar al componente padre
-    this.onSave.emit(this.estudios);
-    
-    // Notificar al servicio que se guardaron los cambios
-    this.servicioCv.change.emit({ data: 'back', section: 'educacion' });
+    if (this.isFormValid()) {
+      this.saveToLocalStorage();
+      this.onSave.emit(this.estudios);
+      this.servicioCv.change.emit({ data: 'back', section: 'educacion' });
+    }
   }
 
   nextSection(): void {
-    this.saveToLocalStorage();
-    
-    // Notificar al servicio para ir a la siguiente sección (habilidades e idiomas)
-    this.servicioCv.change.emit({ data: 'next', section: 'habilidades-idiomas' });
+    if (this.isFormValid()) {
+      this.saveToLocalStorage();
+      this.servicioCv.change.emit({ data: 'next', section: 'habilidades-idiomas' });
+    }
   }
 }

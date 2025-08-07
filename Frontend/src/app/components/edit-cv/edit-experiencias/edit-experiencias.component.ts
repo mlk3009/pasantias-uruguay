@@ -13,6 +13,14 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit-experiencias.component.css']
 })
 export class EditExperienciasComponent implements OnInit {
+  // Validación: todos los campos requeridos deben estar completos, excepto descripción
+  isFormValid(): boolean {
+    return this.experiencias.every(exp =>
+      exp.puesto.trim() !== '' &&
+      exp.empresa.trim() !== '' &&
+      exp.fecha_inicio.trim() !== ''
+    );
+  }
   public token: any;
   public experiencias: any[] = [];
   public onSave = new EventEmitter<any>();
@@ -34,7 +42,7 @@ export class EditExperienciasComponent implements OnInit {
   loadDataFromEditContext(): void {
     // Intentar obtener datos desde el servicio
     const cvData = this.servicioCv.getCurrentEditData();
-    console.log('Datos del CV recibidos en edit-experiencias:', cvData);
+    // ...eliminado log...
     
     if (cvData && cvData.experiencias) {
       this.experiencias = cvData.experiencias.map((exp: any) => ({
@@ -47,9 +55,9 @@ export class EditExperienciasComponent implements OnInit {
         descripcion: exp.descripcion || ''
       }));
       
-      console.log('Datos de experiencias cargados:', this.experiencias);
+      // ...eliminado log...
     } else {
-      console.log('No hay datos de experiencias en el servicio, intentando localStorage...');
+      // ...eliminado log...
       this.loadFromLocalStorage();
     }
 
@@ -112,23 +120,29 @@ export class EditExperienciasComponent implements OnInit {
     // Guardar en localStorage específico para edición
     localStorage.setItem('edit-experiencias', JSON.stringify(this.experiencias));
     
-    console.log('Datos de experiencias guardados en localStorage:', this.experiencias);
+    // ...eliminado log...
   }
 
   saveAndGoBack(): void {
-    this.saveToLocalStorage();
-    
-    // Emitir evento para notificar al componente padre
-    this.onSave.emit(this.experiencias);
-    
-    // Notificar al servicio que se guardaron los cambios
-    this.servicioCv.change.emit({ data: 'back', section: 'experiencias' });
+    if (this.isFormValid()) {
+      this.saveToLocalStorage();
+      this.onSave.emit(this.experiencias);
+      this.servicioCv.change.emit({ data: 'back', section: 'experiencias' });
+    }
   }
 
   finishEditing(): void {
-    this.saveToLocalStorage();
-    
-    // Notificar al servicio para finalizar la edición
-    this.servicioCv.change.emit({ data: 'finish', section: 'experiencias' });
+    if (this.isFormValid()) {
+      this.saveToLocalStorage();
+      this.servicioCv.change.emit({ data: 'finish', section: 'experiencias' });
+    }
+  }
+
+  // Botón omitir: borra datos de experiencias laborales del localStorage y notifica avance
+  omitExperiencias(): void {
+    localStorage.removeItem('edit-experiencias');
+    this.experiencias = [];
+    this.onSave.emit(this.experiencias);
+    this.servicioCv.change.emit({ data: 'back', section: 'experiencias' });
   }
 }

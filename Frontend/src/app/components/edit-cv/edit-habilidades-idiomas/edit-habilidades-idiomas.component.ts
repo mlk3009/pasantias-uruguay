@@ -13,6 +13,11 @@ import { Router, ActivatedRoute } from '@angular/router';
   styleUrls: ['./edit-habilidades-idiomas.component.css']
 })
 export class EditHabilidadesIdiomasComponent implements OnInit {
+  // Validación: todos los campos requeridos deben estar completos
+  isFormValid(): boolean {
+    return this.idiomas.every(idioma => idioma.idioma.trim() !== '' && idioma.nivel.trim() !== '') &&
+      this.habilidades.every(habilidad => habilidad.habilidad.trim() !== '' && habilidad.nivel.trim() !== '');
+  }
   public token: any;
   public idiomas: any[] = [];
   public habilidades: any[] = [];
@@ -35,7 +40,7 @@ export class EditHabilidadesIdiomasComponent implements OnInit {
   loadDataFromEditContext(): void {
     // Intentar obtener datos desde el servicio
     const cvData = this.servicioCv.getCurrentEditData();
-    console.log('Datos del CV recibidos en edit-habilidades-idiomas:', cvData);
+    // ...eliminado log...
     
     if (cvData) {
       // Cargar idiomas
@@ -54,10 +59,10 @@ export class EditHabilidadesIdiomasComponent implements OnInit {
         }));
       }
       
-      console.log('Idiomas cargados:', this.idiomas);
-      console.log('Habilidades cargadas:', this.habilidades);
+      // ...eliminado log...
+      // ...eliminado log...
     } else {
-      console.log('No hay datos en el servicio, intentando localStorage...');
+      // ...eliminado log...
       this.loadFromLocalStorage();
     }
 
@@ -139,24 +144,22 @@ export class EditHabilidadesIdiomasComponent implements OnInit {
     localStorage.setItem('edit-idiomas', JSON.stringify(this.idiomas));
     localStorage.setItem('edit-habilidades', JSON.stringify(this.habilidades));
     
-    console.log('Idiomas guardados en localStorage:', this.idiomas);
-    console.log('Habilidades guardadas en localStorage:', this.habilidades);
+    // ...eliminado log...
+    // ...eliminado log...
   }
 
   saveAndGoBack(): void {
-    this.saveToLocalStorage();
-    
-    // Emitir evento para notificar al componente padre
-    this.onSave.emit({ idiomas: this.idiomas, habilidades: this.habilidades });
-    
-    // Notificar al servicio que se guardaron los cambios
-    this.servicioCv.change.emit({ data: 'back', section: 'habilidades-idiomas' });
+    if (this.isFormValid()) {
+      this.saveToLocalStorage();
+      this.onSave.emit({ idiomas: this.idiomas, habilidades: this.habilidades });
+      this.servicioCv.change.emit({ data: 'back', section: 'habilidades-idiomas' });
+    }
   }
 
   nextSection(): void {
-    this.saveToLocalStorage();
-    
-    // Notificar al servicio para ir a la siguiente sección (experiencias)
-    this.servicioCv.change.emit({ data: 'next', section: 'experiencias' });
+    if (this.isFormValid()) {
+      this.saveToLocalStorage();
+      this.servicioCv.change.emit({ data: 'next', section: 'experiencias' });
+    }
   }
 }

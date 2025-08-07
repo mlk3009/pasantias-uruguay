@@ -38,7 +38,7 @@ export class EditDatosEstudianteComponent implements OnInit {
   loadDataFromEditContext(): void {
     // Intentar obtener datos desde el servicio
     const cvData = this.servicioCv.getCurrentEditData();
-    console.log('Datos del CV recibidos en edit-datos-estudiante:', cvData);
+    // ...eliminado log...
     
     if (cvData && cvData.cv) {
       // Datos del CV
@@ -55,9 +55,9 @@ export class EditDatosEstudianteComponent implements OnInit {
         this.loadUserData();
       }
       
-      console.log('Datos del estudiante cargados:', this.studentData);
+      // ...eliminado log...
     } else {
-      console.log('No hay datos del CV en el servicio, intentando localStorage...');
+      // ...eliminado log...
       // Fallback a localStorage si no hay datos en el servicio
       this.loadFromLocalStorage();
     }
@@ -82,14 +82,10 @@ export class EditDatosEstudianteComponent implements OnInit {
             if (!this.studentData.credencial_civica) {
               this.studentData.credencial_civica = '';
             }
-            console.log('Datos adicionales del usuario cargados:', {
-              email: this.studentData.email,
-              cel: this.studentData.cel
-            });
           }
         },
         error: (error: any) => {
-          console.error('Error obteniendo datos adicionales del usuario:', error);
+          // ...eliminado log...
         }
       });
     }
@@ -100,7 +96,7 @@ export class EditDatosEstudianteComponent implements OnInit {
     if (savedData) {
       const parsedData = JSON.parse(savedData);
       this.studentData = { ...this.studentData, ...parsedData };
-      console.log('Datos del estudiante cargados desde localStorage:', this.studentData);
+      // ...eliminado log...
     }
   }
 
@@ -135,7 +131,7 @@ export class EditDatosEstudianteComponent implements OnInit {
     // Guardar en la nueva clave de localStorage para edición
     localStorage.setItem('edit-student', JSON.stringify(this.studentData));
     
-    console.log('Datos del estudiante guardados en edit-student:', this.studentData);
+    // ...eliminado log...
   }
 
   saveAndGoBack(): void {
