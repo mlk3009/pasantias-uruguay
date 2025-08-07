@@ -123,11 +123,11 @@
                   <option value="UI/UX Designer">UI/UX Designer</option>
                   <option value="Licensed Driver">Licensed Driver</option>
                 </select>
-                <label class="flex items-center hover:cursor-pointer">
+                <label class="hidden md:flex items-center hover:cursor-pointer">
                   <input type="checkbox" [(ngModel)]="searchParams.featured" name="featured" class="form-checkbox h-4 w-4 text-primary-600 transition duration-150 ease-in-out">
                   <span class="ml-2 text-gray-700">Solo destacados</span>
                 </label>
-                <label class="flex items-center hover:cursor-pointer">
+                <label class="hidden md:flex items-center hover:cursor-pointer">
                   <input type="checkbox" [(ngModel)]="searchParams.is_deleted" name="is_deleted" class="form-checkbox h-4 w-4 text-primary-600 transition duration-150 ease-in-out">
                   <span class="ml-2 text-gray-700">Suspendidos</span>
                 </label>

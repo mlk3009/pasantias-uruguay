@@ -1,3 +1,88 @@
+/* Efectos hover solo en escritorio */
+@media (min-width: 601px) {
+  .category:hover {
+    background-color: #f3f4f6 !important;
+    border-color: #d1d5db !important;
+    color: #111827 !important;
+    transform: scale(1.025) rotate(-0.5deg);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.10), 0 1px 4px rgba(0,0,0,0.06);
+  }
+  .category:hover::after {
+    opacity: 0.18;
+    animation: gradientMove 1.2s ease-in-out infinite alternate;
+  }
+  .category:hover::before {
+    opacity: 0.5;
+    transform: rotate(20deg) scale(1.05) translateX(20%);
+    transition: opacity 0.12s, transform 0.3s cubic-bezier(0.4, 0.2, 0.2, 1);
+  }
+  .button-color:hover {
+    background-color: #15c3c3 !important;
+  }
+  .card:hover {
+    transform: scale(1.02);
+  }
+  .card:hover .card-title::after {
+    width: 100%;
+  }
+  .body-nh2 i:hover {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+}
+
+/* Desactivar hover en celular */
+@media (max-width: 600px) {
+  .category:hover,
+  .category:hover::after,
+  .category:hover::before {
+    background-color: inherit !important;
+    border-color: inherit !important;
+    color: inherit !important;
+    box-shadow: none !important;
+    opacity: 0 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+  .button-color:hover {
+    background-color: inherit !important;
+  }
+  .card:hover {
+    transform: none !important;
+  }
+  .card:hover .card-title::after {
+    width: 0 !important;
+  }
+  .body-nh2 i:hover {
+    background: transparent !important;
+    cursor: pointer;
+  }
+}
+h1.text-center {
+  font-size: 1.7em !important;
+}
+h2.text-center {
+  font-size: 1.3em !important;
+}
+    .mobile-image-container {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        background: #fff;
+        border-radius: 1rem 1rem 0 0;
+    }
+    .mobile-image {
+        width: 80%;
+        height: auto;
+        max-width: 140px;
+        max-height: 90px;
+        object-fit: cover;
+        border-radius: 1rem 1rem 0 0;
+        display: block;
+        margin: 0 auto;
+    }
 .title{
     padding-bottom: 5vh;
     margin-top: 5vh;
@@ -15,17 +100,17 @@
     align-items: center;
 }
 .title h1{
-    font-size: 3em;
+    font-size: 2.2em;
     font-weight: 600;
     color: #000000;
 }
 .title2 h3{
-    font-size: 3em;
+    font-size: 2.2em;
     font-weight: 600;
     color: #000000;
 }
 .title h2{
-    font-size: 1.8em;
+    font-size: 1.2em;
     font-weight: 400;
     color: #3a3a3a;
 }
@@ -80,7 +165,7 @@
     height: 60px; /* Set height */
     width: 60px; /* Set width */
     cursor: pointer;
-    font-size: 1.5rem; /* Set font size */
+    font-size: 1.1rem; /* Set font size */
     text-align: center;
     line-height: 60px; /* Match the height */
     background: transparent; /* Remove background color */
@@ -100,7 +185,7 @@
 .section-title{
     margin: 0 auto;
     width: 85%;
-    font-size: 1.7em;
+    font-size: 1.1em;
     font-weight: 400;
     color: #656565;
     margin-bottom: 2vh;
@@ -109,7 +194,7 @@
 .section-title2{
     margin: 0 auto;
     width: 85%;
-    font-size: 1.7em;
+    font-size: 1.1em;
     font-weight: 400;
     color: #656565;
     padding-top: 10vh;
@@ -182,9 +267,7 @@
   position: relative;
   overflow: hidden;
   z-index: 1;
-  transition: 
-    transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1),
-    box-shadow 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
+  transition: transform 0.18s cubic-bezier(0.4, 0.2, 0.2, 1), box-shadow 0.18s cubic-bezier(0.4, 0.2, 0.2, 1);
 }
 
 /* Efecto de brillo sutil */
@@ -266,27 +349,29 @@
 @media (max-width: 600px) {
     .section1{
         width: 100%;
-        margin: none;
-        padding: none;
+        margin: 0;
+        padding: 0;
     }
     .body-nh2{
         width: 100%;
         margin: 0;
-        padding: none;
+        padding: 0;
     }
     .size{
-        min-width: 13rem;
-        min-height: 10rem;
-        max-width: 13rem;
-        max-height: 10rem;
+        width: 90%;
+        height: auto;
+        max-width: 180px;
+        max-height: 120px;
+        object-fit: cover;
         position: relative;
+        display: block;
     }
 
     .body-nh2 i{
         height: 60px; /* Set height */
         width: 60px; /* Set width */
         cursor: pointer;
-        font-size: 1.5rem; /* Set font size */
+        font-size: 1.1rem; /* Set font size */
         text-align: center;
         line-height: 60px; /* Match the height */
         background: transparent; /* Remove background color */
@@ -305,12 +390,25 @@
         flex-direction: column;
         justify-content: space-between;
         align-items: center;
+        width: 100%;
+        min-width: unset;
+        max-width: unset;
     }
     .zona-texto{
         height: 100%;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
+    }
+    .left, .right {
+        display: none !important;
+    }
+    .scroll-indicator {
+        width: 100%;
+        text-align: center;
+        margin-top: 0.5rem;
+        color: #888;
+        font-size: 0.85rem;
     }
 }
 

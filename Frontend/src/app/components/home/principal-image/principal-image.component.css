@@ -1,3 +1,59 @@
+.svg-bottom-bg {
+  height: 150px;
+  overflow: hidden;
+}
+@media (max-width: 640px) {
+  .searcher form > div {
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+  }
+  .svg-bottom-bg {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 80px;
+    z-index: 2;
+  }
+  .principalImage {
+    min-height: 100vh;
+    height: auto;
+    position: relative;
+    padding-bottom: 80px;
+  }
+  .principalImage h1 {
+    font-size: 1.1em;
+    padding-top: 7vh;
+    max-width: 90vw;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .searcher {
+    margin-top: 3vh;
+  }
+  h2 {
+    font-size: 1em;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
+  }
+  .stats {
+    margin-top: 1vh;
+  }
+  #fullWidthTabContent .p-4, #fullWidthTabContent .md\:p-8 {
+    padding: 0.5rem !important;
+  }
+  #stats dl {
+    gap: 0.5rem !important;
+    padding: 0.5rem !important;
+  }
+  #stats dt {
+    font-size: 1.1em !important;
+    margin-bottom: 0.2em !important;
+  }
+  #stats dd {
+    font-size: 0.8em !important;
+  }
+}
 /* ALERTA CUSTOM */
 #alert-container-custom.fade-in {
   animation: fadeInAlert .4s;

@@ -13,6 +13,7 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './slider.component.css'
 })
 export class SliderComponent implements OnInit, AfterViewInit {
+  isMobile: boolean = false;
   @ViewChild('carousel', { static: false }) carousel: ElementRef | undefined;
   @ViewChildren('card') cards: QueryList<ElementRef> | undefined;
 
@@ -22,7 +23,12 @@ export class SliderComponent implements OnInit, AfterViewInit {
     private publicationService: PublicationService,
     private userService: UserService,
     private route: ActivatedRoute
-  ) {}
+  ) {
+    this.isMobile = window.innerWidth < 768;
+    window.addEventListener('resize', () => {
+      this.isMobile = window.innerWidth < 768;
+    });
+  }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {
