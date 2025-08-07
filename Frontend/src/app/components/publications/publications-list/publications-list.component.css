@@ -74,10 +74,9 @@ h2.text-center {
         border-radius: 1rem 1rem 0 0;
     }
     .mobile-image {
-        width: 80%;
+        width: 100%;
+        max-width: 100%;
         height: auto;
-        max-width: 140px;
-        max-height: 90px;
         object-fit: cover;
         border-radius: 1rem 1rem 0 0;
         display: block;
