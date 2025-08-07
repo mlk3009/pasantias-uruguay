@@ -4,7 +4,7 @@
       href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
     />
 </head>
-<section class="principalImage">
+<section class="principalImage principalImage-mobile-height">
   <!-- ALERTA CUSTOM -->
   <div id="alert-container-custom" style="display:none;position:fixed;top:30px;left:0;right:0;z-index:9999;justify-content:center;align-items:center;pointer-events:none;">
     <div style="background:rgba(30,41,59,0.98);color:#fff;padding:18px 32px;border-radius:12px;box-shadow:0 4px 24px #0008;font-size:1.1em;min-width:220px;max-width:90vw;text-align:center;pointer-events:auto;opacity:0.97;transition:all .3s;" id="alert-custom-message"></div>
@@ -13,38 +13,27 @@
     <div class="searcher">
         <form (ngSubmit)="buscarPublicaciones(filtroForm.value)" #filtroForm="ngForm">
             <div class="form">
-<div style="position: relative; display: inline-block;">
-<div class="flex w-full max-w-2xl">
+<div style="position: relative; display: block;">
+<div class="filter-stack w-full max-w-2xl">
   <!-- Botón a la izquierda -->
 <!-- Contenedor principal en flex para alinear botón e input -->
-<div class="flex w-full">
+<div class="flex w-full md:flex-row flex-col">
   <!-- Botón a la izquierda con dropdown -->
 <div style="position: relative;">
   <button
     id="dropdown-button"
     (click)="toggleDropdown()"
-    class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-6 text-base font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 rounded-s-lg hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600"
+    class="flex-shrink-0 z-10 inline-flex items-center py-2.5 px-6 text-base font-medium text-center text-gray-900 bg-gray-100 border border-gray-300 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-700 dark:text-white dark:border-gray-600 select-rounded-top select-margin-bottom"
+    style="height: 100%; min-width: 170px;"
     type="button"
     style="height: 100%; min-width: 170px;"
   >
-    {{ selectedLugar }}
+    <span>{{ selectedLugar }}</span>
     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
       <path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7" />
     </svg>
   </button>
   <!-- Cruz para limpiar selección -->
-  <button
-    *ngIf="selectedLugar !== 'Lugar'"
-    (click)="selectLugar('Lugar')"
-    type="button"
-    aria-label="Limpiar selección"
-    class="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400 hover:text-red-500 bg-transparent p-1"
-    style="z-index: 20;"
-  >
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-    </svg>
-  </button>
   <div
     *ngIf="isDropdownOpen"
     style="position: absolute; top: 100%; left: 0; max-height: 200px; overflow-y: auto; width: 250px; z-index: 50;"
@@ -74,7 +63,7 @@
     id="search-dropdown"
     name="search"
     ngModel
-    class="block p-2.5 w-full z-20 text-base text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500"
+    class="block p-2.5 w-full z-20 text-base text-gray-900 bg-gray-50 rounded-e-lg border-s-gray-50 border-s-2 border border-gray-300 dark:bg-gray-700 dark:border-s-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-blue-500 input-rounded-right-desktop input-rounded-bottom-mobile input-margin-bottom-mobile"
     placeholder="Cargo o empresa"
     required
     style="min-width: 300px;"

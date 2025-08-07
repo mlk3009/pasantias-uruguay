@@ -46,7 +46,7 @@
                         <div class="w-full md:block md:w-auto pt-4">
                         <ul class="text-center font-medium flex flex-col items-center p-4 md:p-0 md:px-14 mt-4 md:shadow-md md:rounded-full md:bg-gray-50 md:flex-row md:space-x-8 rtl:space-x-reverse md:mt-0 dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700">
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
-                                <a [routerLink]="isPhoneAccess ? ['/enterprise-profile', empresa.phone] : ['/enterprise-profile']" class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg" aria-current="page">Home</a>
+                                <a [routerLink]="isPhoneAccess ? ['/enterprise-profile', empresa.phone] : ['/enterprise-profile']" class="bg-sky-700 hover:text-white flex flex-row text-white rounded-full px-4 py-1 md:p-2 md:px-4 dark:text-white md:dark:text-blue-500 md:text-lg py-2 px-2" aria-current="page">Home</a>
                             </li>
                             <li class="py-2 px-3 flex border-b-2 md:border-b-0">
                                 <a [routerLink]="isPhoneAccess ? ['/enterprise-abaut-us', empresa.phone] : ['/enterprise-abaut-us']" class="group hover:bg-sky-700 hover:text-white flex flex-row items-center text-gray-800 rounded-full md:p-2 md:px-4 dark:text-white md:dark:hover:text-blue-500 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent md:text-lg">Sobre nosotros</a>
@@ -175,8 +175,8 @@
                 <!--Solo empresas view-->
 
 
-                <section *ngIf="selectedView === 'empresarial'" class="flex flex-col justify-center items-center w-10/12 mx-auto my-10 bg-gray-50 shadow-lg h-72 rounded-lg">
-                    <div class="w-full flex justify-center items-center pt-4">
+                <section *ngIf="selectedView === 'empresarial'" class="flex flex-col justify-center items-center w-10/12 mx-auto my-10 bg-gray-50 shadow-lg md:h-72 rounded-lg">
+                    <div class="w-full flex justify-center items-center pt-4 py-4 md:py-0">
                         <h2 class="text-3xl font-semibold">Estadísticas</h2>
                     </div>
                     <div class="w-full h-full grid grid-cols-1 md:grid-cols-2">
@@ -232,8 +232,8 @@
                     </div>
                 </section>
                 
-                <section *ngIf="selectedView === 'empresarial'" class="flex flex-row justify-center w-full my-10 px-4 gap-4">
-                    <div class="flex flex-col items-center justify-between max-h-60 max-w-md mt-10">
+                <section *ngIf="selectedView === 'empresarial'" class="flex flex-col md:flex-row justify-center w-full my-10 px-4 gap-4">
+                    <div class="flex flex-col items-center justify-between md:max-h-60 max-w-md mt-10">
                         <h2 class="text-3xl text-gray-900 font-semibold"><span class="text-sky-900">Usuarios</span> que han visitado tu perfil en esta semana</h2>
                         <p class="text-lg text-gray-600">Esta gráfica muestra la cantidad de personas que visitaron tu perfil durante la última semana, comparado con la semana anterior. Podés visualizar claramente el cambio en la actividad, identificar tendencias y evaluar el alcance de tu presencia. Un aumento puede reflejar mayor visibilidad o interacción, mientras que una baja puede ser una oportunidad para mejorar tu contenido o estrategia.</p>
                     </div>
@@ -268,8 +268,12 @@
                     </div>
                 </section>
 
-                <section *ngIf="selectedView === 'empresarial'" class="flex flex-row justify-center w-full my-10 px-4 gap-4">
-                    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 p-4 md:p-6">
+                <section *ngIf="selectedView === 'empresarial'" class="flex flex-col md:flex-row justify-center w-full my-10 px-4 gap-4">
+                    <div class="flex md:hidden flex-col items-center justify-between max-h-64 max-w-md mt-10">
+                        <h2 class="text-3xl text-gray-900 font-semibold">Porcentaje de <span class="text-sky-900">postulaciones</span> en relación a las vistas</h2>
+                        <p class="text-lg text-gray-600 text-justify">Esta gráfica compara la cantidad de personas que visualizaron tu publicación con aquellas que se postularon efectivamente. Te permite evaluar el nivel de interés real en tu oferta laboral y la efectividad del anuncio. Una gran diferencia entre vistas y postulaciones puede indicar oportunidades de mejora en el contenido, requisitos o atractivo de la oferta.</p>
+                    </div>
+                    <div class="w-full bg-white rounded-lg shadow-sm dark:bg-gray-800 mt-24 md:mt-0 p-4 md:p-6">
                         <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center">
                             <div class="w-12 h-12 rounded-lg bg-white dark:bg-gray-700 flex items-center justify-center me-3">
@@ -311,7 +315,7 @@
                         </div>
                     </div>
 
-                    <div class="flex flex-col items-center justify-between max-h-64 max-w-md mt-10">
+                    <div class="hidden md:flex flex-col items-center justify-between max-h-64 max-w-md mt-10">
                         <h2 class="text-3xl text-gray-900 font-semibold text-end">Porcentaje de <span class="text-sky-900">postulaciones</span> en relación a las vistas</h2>
                         <p class="text-lg text-gray-600 text-justify">Esta gráfica compara la cantidad de personas que visualizaron tu publicación con aquellas que se postularon efectivamente. Te permite evaluar el nivel de interés real en tu oferta laboral y la efectividad del anuncio. Una gran diferencia entre vistas y postulaciones puede indicar oportunidades de mejora en el contenido, requisitos o atractivo de la oferta.</p>
                     </div>

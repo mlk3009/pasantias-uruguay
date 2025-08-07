@@ -133,8 +133,8 @@
 
             <div *ngFor="let publication of displayedPublications" class="card my-3.5 max-w-xs bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 flex flex-col">
                 <a [href]="'/publication/' + publication.id">
-                    <div class="image-container">
-                        <img class="card-title rounded-t-lg size" [src]="publication.imageUrl" alt="" draggable="false" />
+                    <div class="image-container mobile-image-container">
+                        <img class="card-title rounded-t-lg size mobile-image" [src]="publication.imageUrl" alt="" draggable="false" />
                     </div>
                 </a>
                 <div class="zona-texto p-5 flex-1 flex flex-col">
@@ -161,6 +161,10 @@
         </section>
         <i id="right" class="right fa-solid fa-angle-right" (click)="onArrowRightClick($event)"></i>
     </section>
+        <!-- Mobile scroll indicator -->
+        <div class="scroll-indicator md:hidden flex justify-center items-center mt-2">
+          <span class="text-xs text-gray-400">Desliza para ver más &rarr;</span>
+        </div>
 </section>
 
 

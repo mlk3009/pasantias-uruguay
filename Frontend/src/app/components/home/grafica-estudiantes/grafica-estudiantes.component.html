@@ -1,66 +1,58 @@
-<main class="flex flex-col w-4/5 justify-between mx-auto pb-40 borde">
-    
-<section class="py-12 pb-24">
-    <h1 class="mb-4 text-4xl tracking-tight font-bold text-center text-black dark:text-white">Usuarios activos</h1>
-</section>
-
-<section class="flex flex-row justify-between">
-    <div class="max-w-xl">
-    <div class="my-auto h-3/4 items-center max-w-screen-xl lg:px-6">
-        <div class="flex flex-col justify-arround pt-4 h-2/4 text-gray-500 sm:text-lg dark:text-gray-400">
-            <h2 class="mb-4 text-3xl tracking-tight font-semibold text-black dark:text-white">Usuarios que frecuentan la plataforma</h2>
-            <article>
-                <p class="text-black dark:text-white text-2xl">Esta es una gráfica con la cantidad de usuarios que han frecuentado la plataforma esta semana, para así facilitar el cálculo del alcance de sus publicaciones.</p>
-            </article>
+<main class="flex flex-col w-4/5 mx-auto pb-10 sm:pb-40">
+  <section class="py-6 sm:py-12">
+    <h1 class="mb-2 sm:mb-4 text-3xl sm:text-4xl tracking-tight font-bold text-center text-black dark:text-white">Usuarios activos</h1>
+  </section>
+  <section class="flex flex-col sm:flex-row sm:justify-between gap-4">
+    <div class="max-w-xl w-full mx-auto sm:mx-0">
+      <div class="my-auto h-3/4 items-center max-w-screen-xl lg:px-6">
+        <div class="flex flex-col justify-arround pt-2 sm:pt-4 h-2/4 text-gray-500 text-sm sm:text-lg dark:text-gray-400">
+          <h2 class="mb-2 sm:mb-4 text-xl sm:text-3xl tracking-tight font-semibold text-black dark:text-white">Usuarios que frecuentan la plataforma</h2>
+          <article>
+            <p class="text-black dark:text-white text-lg sm:text-2xl">Esta es una gráfica con la cantidad de usuarios que han frecuentado la plataforma esta semana, para así facilitar el cálculo del alcance de sus publicaciones.</p>
+          </article>
         </div>
+      </div>
     </div>
-</div>
-
-<div class="mx-auto max-w-3xl w-full bg-white rounded-lg shadow-xl dark:bg-gray-800 p-4 md:p-6">
-  <div class="flex justify-between">
-    <div>
-      <h5 class="leading-none text-3xl font-bold text-gray-900 dark:text-white pb-2">
-        <span *ngIf="isLoading">Cargando...</span>
-        <span *ngIf="!isLoading && !error">{{ getTotalActiveUsers() }}</span>
-        <span *ngIf="error">--</span>
-      </h5>
-      <p class="text-base font-normal text-gray-500 dark:text-gray-400">
-        {{ activeUsersData?.period || 'Usuarios semanales' }}
-      </p>
+    <div class="mx-auto max-w-3xl w-full bg-white rounded-lg shadow-xl dark:bg-gray-800 p-2 sm:p-4 md:p-6">
+      <div class="flex flex-col sm:flex-row sm:justify-between">
+        <div>
+          <h5 class="leading-none text-xl sm:text-3xl font-bold text-gray-900 dark:text-white pb-1 sm:pb-2">
+            <span *ngIf="isLoading">Cargando...</span>
+            <span *ngIf="!isLoading && !error">{{ getTotalActiveUsers() }}</span>
+            <span *ngIf="error">--</span>
+          </h5>
+          <p class="text-xs sm:text-base font-normal text-gray-500 dark:text-gray-400">
+            {{ activeUsersData?.period || 'Usuarios semanales' }}
+          </p>
+        </div>
+        <div
+          class="flex items-center px-1 sm:px-2.5 py-0.5 text-xs sm:text-base font-semibold text-center"
+          [ngClass]="{'text-green-500': !error, 'text-gray-400': error}">
+          <span *ngIf="!error && !isLoading">{{ getTotalActiveUsers() > 0 ? '+' : '' }}</span>
+          <span *ngIf="!error && !isLoading">{{ getTotalActiveUsers() }}</span>
+          <span *ngIf="error || isLoading">--</span>
+          <svg *ngIf="!error && getTotalActiveUsers() > 0" class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
+          </svg>
+        </div>
+      </div>
+      <div *ngIf="error" class="py-4 sm:py-8 text-center text-gray-500 dark:text-gray-400">
+        <p>{{ error }}</p>
+        <p class="text-xs sm:text-sm">Mostrando datos por defecto</p>
+      </div>
+      <div id="area-chart"></div>
+      <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
+        <div class="flex justify-between items-center pt-3 sm:pt-5">
+          <a
+            href="/publications"
+            class="uppercase text-xs sm:text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-2 sm:px-3 py-1 sm:py-2">
+            Ir a publicaciones
+            <svg class="w-2 h-2 sm:w-2.5 sm:h-2.5 ms-1 sm:ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
+            </svg>
+          </a>
+        </div>
+      </div>
     </div>
-    <div
-      class="flex items-center px-2.5 py-0.5 text-base font-semibold text-center"
-      [ngClass]="{'text-green-500': !error, 'text-gray-400': error}">
-      <span *ngIf="!error && !isLoading">{{ getTotalActiveUsers() > 0 ? '+' : '' }}</span>
-      <span *ngIf="!error && !isLoading">{{ getTotalActiveUsers() }}</span>
-      <span *ngIf="error || isLoading">--</span>
-      <svg *ngIf="!error && getTotalActiveUsers() > 0" class="w-3 h-3 ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 14">
-        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13V1m0 0L1 5m4-4 4 4"/>
-      </svg>
-    </div>
-  </div>
-  
-  <div *ngIf="error" class="py-8 text-center text-gray-500 dark:text-gray-400">
-    <p>{{ error }}</p>
-    <p class="text-sm">Mostrando datos por defecto</p>
-  </div>
-  
-  <div id="area-chart"></div>
-  
-  <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between">
-    <div class="flex justify-between items-center pt-5">
-      
-      <a
-        href="/publications"
-        class="uppercase text-sm font-semibold inline-flex items-center rounded-lg text-blue-600 hover:text-blue-700 dark:hover:text-blue-500  hover:bg-gray-100 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700 px-3 py-2">
-        Ir a publicaciones
-        <svg class="w-2.5 h-2.5 ms-1.5 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-        </svg>
-      </a>
-    </div>
-  </div>
-</div>
-</section>
-
+  </section>
 </main>

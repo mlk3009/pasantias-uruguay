@@ -1,3 +1,58 @@
+/* Efectos hover solo en escritorio */
+@media (min-width: 601px) {
+  .category:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s;
+  }
+  .button-color:hover {
+    background-color: #15c3c3 !important;
+  }
+  .card:hover {
+    transform: scale(1.02);
+  }
+  .card:hover .card-title::after {
+    width: 100%;
+  }
+  .body-nh2 i:hover {
+    background: rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+  .price:hover {
+    transform: scale(1.01);
+    cursor: pointer;
+  }
+  h5:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* Desactivar hover en celular */
+@media (max-width: 600px) {
+  .category:hover {
+    transform: none !important;
+    transition: none !important;
+  }
+  .button-color:hover {
+    background-color: inherit !important;
+  }
+  .card:hover {
+    transform: none !important;
+  }
+  .card:hover .card-title::after {
+    width: 0 !important;
+  }
+  .body-nh2 i:hover {
+    background: transparent !important;
+    cursor: pointer;
+  }
+  .price:hover {
+    transform: none !important;
+    cursor: pointer;
+  }
+  h5:hover {
+    transform: none !important;
+  }
+}
 .title{
     padding-bottom: 5vh;
     margin-top: 5vh;
@@ -49,7 +104,6 @@
     overflow: hidden;
     box-shadow: none;
     padding: 0 30px;
-    padding-bottom: 10vh;
     border-bottom: 1px solid #efefef;
 }
 .body-nh2 {
@@ -206,13 +260,16 @@ h5:hover {
         margin: 0;
         padding: none;
     }
+    /* .size solo para escritorio, no para móvil */
+@media (min-width: 601px) {
     .size{
-        min-width: 13rem;
-        min-height: 10rem;
-        max-width: 13rem;
-        max-height: 10rem;
+        min-width: 19.9rem;
+        min-height: 19.9rem;
+        max-width: 19.9rem;
+        max-height: 19.9rem;
         position: relative;
     }
+}
 
     .body-nh2 i{
         height: 60px; /* Set height */
