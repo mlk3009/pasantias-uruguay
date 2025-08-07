@@ -19,6 +19,19 @@ import { switchMap, catchError } from 'rxjs/operators';
   providers: [UserService, CvService, PublicationService],
 })
 export class UserProfileStudentComponent {
+  downloadPDF(): void {
+    if (this.data.cv) {
+      const pdfUrl = `http://localhost:8000/pdfs/cv_${this.data.cv}.pdf`;
+      const link = document.createElement('a');
+      link.href = pdfUrl;
+      link.download = `cv_${this.data.cv}.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      alert('No tienes un CV disponible o el PDF no ha sido generado.');
+    }
+  }
   loading: boolean = false;
   dataLoaded: boolean = false; // Nueva propiedad para controlar si los datos están cargados
   data: any = {};

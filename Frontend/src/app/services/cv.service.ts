@@ -59,13 +59,10 @@ export class CvService {
   }
 
   getFicha(token: string, id: string): Observable<any> {
-    console.log('getFicha - Token enviado:', token);
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`,
     });
 
-    console.log('getFicha - Headers:', headers);
-    console.log('getFicha - URL completa:', global.url + 'cv-for-edit');
 
     // Usar cv-for-edit para obtener todos los datos del CV para edición
     return this._http.get(global.url + 'cv-for-edit', { headers: headers });

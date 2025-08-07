@@ -1,3 +1,4 @@
+<!-- ...formulario experiencias... -->
 <div class="bg-white p-8 rounded-lg px-16">
     <h2 class="text-gray-500 mb-3 text-lg sm:mb-0 pb-1">Editar experiencias:</h2>
     
@@ -96,21 +97,34 @@
       </div>
     </div>
 
-    <!-- Botones de navegación -->
+    <!-- Botones de navegación y omitir al final del formulario -->
     <div class="grid grid-cols-2 w-full gap-6 mt-8">
         <button
           (click)="saveAndGoBack()"
           type="button"
-          class="bg-green-600 hover:bg-green-700 text-white focus:ring-4 focus:outline-none focus:ring-green-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          [disabled]="!isFormValid()"
+          [ngClass]="{'bg-gray-300 text-gray-400 cursor-not-allowed': !isFormValid(), 'bg-green-600 hover:bg-green-700 text-white': isFormValid()}"
+          class="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
         >
           Guardar cambios
         </button>
         <button
           (click)="finishEditing()"
           type="button"
-          class="bg-blue-600 hover:bg-blue-700 text-white focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+          [disabled]="!isFormValid()"
+          [ngClass]="{'bg-gray-300 text-gray-400 cursor-not-allowed': !isFormValid(), 'bg-blue-600 hover:bg-blue-700 text-white': isFormValid()}"
+          class="focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
         >
           Finalizar edición →
         </button>
+    </div>
+    <div class="w-full mt-4">
+      <button
+        (click)="omitExperiencias()"
+        type="button"
+        class="bg-gray-300 hover:bg-gray-400 text-gray-700 focus:ring-4 focus:outline-none font-medium rounded-lg text-sm w-full px-5 py-2.5 text-center"
+      >
+        Omitir experiencias laborales
+      </button>
     </div>
 </div>
